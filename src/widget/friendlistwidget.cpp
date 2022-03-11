@@ -85,9 +85,9 @@ Time getTimeBucket(const QDateTime& date)
     return Time::LongAgo;
 }
 
-QDateTime getActiveTimeFriend(const Friend* contact)
+QDateTime getActiveTimeFriend(const Friend* contact, Settings& settings)
 {
-    return Settings::getInstance().getFriendActivity(contact->getPublicKey());
+    return settings.getFriendActivity(contact->getPublicKey());
 }
 
 qint64 timeUntilTomorrow()
@@ -99,9 +99,11 @@ qint64 timeUntilTomorrow()
 }
 } // namespace
 
-FriendListWidget::FriendListWidget(const Core &_core, Widget* parent, bool groupsOnTop)
+FriendListWidget::FriendListWidget(const Core &core_, Widget* parent,
+    Settings& settings_, bool groupsOnTop)
     : QWidget(parent)
-    , core{_core}
+    , core{core_}
+    , settings{settings_}
 {
     int countContacts = core.getFriendList().size();
     manager = new FriendListManager(countContacts, this);
@@ -114,7 +116,7 @@ FriendListWidget::FriendListWidget(const Core &_core, Widget* parent, bool group
     listLayout->setSpacing(0);
     listLayout->setMargin(0);
 
-    mode = Settings::getInstance().getFriendSortingMode();
+    mode = settings.getFriendSortingMode();
 
     dayTimer = new QTimer(this);
     dayTimer->setTimerType(Qt::VeryCoarseTimer);
@@ -126,7 +128,7 @@ FriendListWidget::FriendListWidget(const Core &_core, Widget* parent, bool group
 
 FriendListWidget::~FriendListWidget()
 {
-    for (int i = 0; i < Settings::getInstance().getCircleCount(); ++i) {
+    for (int i = 0; i < settings.getCircleCount(); ++i) {
         CircleWidget* circle = CircleWidget::getFromID(i);
         delete circle;
     }
@@ -138,7 +140,7 @@ void FriendListWidget::setMode(SortingMode mode_)
         return;
 
     mode = mode_;
-    Settings::getInstance().setFriendSortingMode(mode);
+    settings.setFriendSortingMode(mode);
 
     manager->setSortRequired();
 }
@@ -153,7 +155,7 @@ void FriendListWidget::sortByMode()
 
         cleanMainLayout();
 
-        for (int i = 0; i < Settings::getInstance().getCircleCount(); ++i) {
+        for (int i = 0; i < settings.getCircleCount(); ++i) {
             addCircleWidget(i);
         }
 
@@ -188,7 +190,7 @@ void FriendListWidget::sortByMode()
         if (!manager->needHideCircles()) {
             //Sorts circles alphabetically and adds them to the layout
             QVector<CircleWidget*> circles;
-            for (int i = 0; i < Settings::getInstance().getCircleCount(); ++i) {
+            for (int i = 0; i < settings.getCircleCount(); ++i) {
                 circles.push_back(CircleWidget::getFromID(i));
             }
 
@@ -215,7 +217,7 @@ void FriendListWidget::sortByMode()
         }
         cleanMainLayout();
 
-        QLocale ql(Settings::getInstance().getTranslation());
+        QLocale ql(settings.getTranslation());
         QDate today = QDate::currentDate();
 #define COMMENT "Category for sorting friends by activity"
         // clang-format off
@@ -242,9 +244,9 @@ void FriendListWidget::sortByMode()
         }
 
         activityLayout = new QVBoxLayout();
-        bool compact = Settings::getInstance().getCompactLayout();
+        bool compact = settings.getCompactLayout();
         for (Time t : names.keys()) {
-            CategoryWidget* category = new CategoryWidget(compact, this);
+            CategoryWidget* category = new CategoryWidget(compact, settings, this);
             category->setName(names[t]);
             activityLayout->addWidget(category);
         }
@@ -336,7 +338,7 @@ FriendListWidget::getItemsFromCircle(CircleWidget *circle) const
 
 CategoryWidget* FriendListWidget::getTimeCategoryWidget(const Friend* frd) const
 {
-    const auto activityTime = getActiveTimeFriend(frd);
+    const auto activityTime = getActiveTimeFriend(frd, settings);
     int timeIndex = static_cast<int>(getTimeBucket(activityTime));
     QWidget* widget = activityLayout->itemAt(timeIndex)->widget();
     return qobject_cast<CategoryWidget*>(widget);
@@ -371,7 +373,7 @@ void FriendListWidget::removeGroupWidget(GroupWidget* w)
 void FriendListWidget::removeFriendWidget(FriendWidget* w)
 {
     const Friend* contact = w->getFriend();
-    int id = Settings::getInstance().getFriendCircleID(contact->getPublicKey());
+    int id = settings.getFriendCircleID(contact->getPublicKey());
     CircleWidget* circleWidget = CircleWidget::getFromID(id);
     if (circleWidget != nullptr) {
         circleWidget->removeFriendWidget(w, contact->getStatus());
@@ -454,7 +456,7 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
             return;
         }
 
-        const auto activityTime = getActiveTimeFriend(friendWidget->getFriend());
+        const auto activityTime = getActiveTimeFriend(friendWidget->getFriend(), settings);
         index = static_cast<int>(getTimeBucket(activityTime));
         QWidget* widget_ = activityLayout->itemAt(index)->widget();
         CategoryWidget* categoryWidget = qobject_cast<CategoryWidget*>(widget_);
@@ -541,7 +543,7 @@ void FriendListWidget::dropEvent(QDropEvent* event)
         return;
 
     // Save CircleWidget before changing the Id
-    int circleId = Settings::getInstance().getFriendCircleID(f->getPublicKey());
+    int circleId = settings.getFriendCircleID(f->getPublicKey());
     CircleWidget* circleWidget = CircleWidget::getFromID(circleId);
 
     moveWidget(widget, f->getStatus(), true);
@@ -568,12 +570,12 @@ void FriendListWidget::moveWidget(FriendWidget* widget, Status::Status s, bool a
 {
     if (mode == SortingMode::Name) {
         const Friend* f = widget->getFriend();
-        int circleId = Settings::getInstance().getFriendCircleID(f->getPublicKey());
+        int circleId = settings.getFriendCircleID(f->getPublicKey());
         CircleWidget* circleWidget = CircleWidget::getFromID(circleId);
 
         if (circleWidget == nullptr || add) {
             if (circleId != -1) {
-                Settings::getInstance().setFriendCircleID(f->getPublicKey(), -1);
+                settings.setFriendCircleID(f->getPublicKey(), -1);
                 manager->setSortRequired();
             } else {
                 itemsChanged();
@@ -607,13 +609,13 @@ void FriendListWidget::updateActivityTime(const QDateTime& time)
 CircleWidget* FriendListWidget::createCircleWidget(int id)
 {
     if (id == -1)
-        id = Settings::getInstance().addCircle();
+        id = settings.addCircle();
 
     if (CircleWidget::getFromID(id) != nullptr) {
         return CircleWidget::getFromID(id);
     }
 
-    CircleWidget* circleWidget = new CircleWidget(core, this, id);
+    CircleWidget* circleWidget = new CircleWidget(core, this, id, settings);
     emit connectCircleWidget(*circleWidget);
     connect(this, &FriendListWidget::onCompactChanged, circleWidget, &CircleWidget::onCompactChanged);
     connect(circleWidget, &CircleWidget::renameRequested, this, &FriendListWidget::renameCircleWidget);

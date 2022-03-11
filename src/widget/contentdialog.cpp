@@ -53,23 +53,22 @@ const QSize minSize(minHeight, minWidget);
 const QSize defaultSize(720, 400);
 } // namespace
 
-ContentDialog::ContentDialog(const Core &core, QWidget* parent)
+ContentDialog::ContentDialog(const Core &core, Settings& settings_, QWidget* parent)
     : ActivateDialog(parent, Qt::Window)
     , splitter{new QSplitter(this)}
     , friendLayout{new FriendListLayout(this)}
     , activeChatroomWidget(nullptr)
     , videoSurfaceSize(QSize())
     , videoCount(0)
+    , settings{settings_}
 {
-    const Settings& s = Settings::getInstance();
-
     friendLayout->setMargin(0);
     friendLayout->setSpacing(0);
 
     layouts = {friendLayout->getLayoutOnline(), groupLayout.getLayout(),
                friendLayout->getLayoutOffline()};
 
-    if (s.getGroupchatPosition()) {
+    if (settings.getGroupchatPosition()) {
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 13, 0))
         layouts.swapItemsAt(0, 1);
 #else
@@ -82,7 +81,7 @@ ContentDialog::ContentDialog(const Core &core, QWidget* parent)
     friendWidget->setAutoFillBackground(true);
     friendWidget->setLayout(friendLayout);
 
-    onGroupchatPositionChanged(s.getGroupchatPosition());
+    onGroupchatPositionChanged(settings.getGroupchatPosition());
 
     friendScroll = new QScrollArea(this);
     friendScroll->setMinimumWidth(minWidget);
@@ -95,7 +94,7 @@ ContentDialog::ContentDialog(const Core &core, QWidget* parent)
     QWidget* contentWidget = new QWidget(this);
     contentWidget->setAutoFillBackground(true);
 
-    contentLayout = new ContentLayout(contentWidget);
+    contentLayout = new ContentLayout(settings, contentWidget);
     contentLayout->setMargin(0);
     contentLayout->setSpacing(0);
 
@@ -113,7 +112,7 @@ ContentDialog::ContentDialog(const Core &core, QWidget* parent)
     setAttribute(Qt::WA_DeleteOnClose);
     setObjectName("detached");
 
-    QByteArray geometry = s.getDialogGeometry();
+    QByteArray geometry = settings.getDialogGeometry();
 
     if (!geometry.isNull()) {
         restoreGeometry(geometry);
@@ -122,7 +121,7 @@ ContentDialog::ContentDialog(const Core &core, QWidget* parent)
     }
 
     SplitterRestorer restorer(splitter);
-    restorer.restore(s.getDialogSplitterState(), size());
+    restorer.restore(settings.getDialogSplitterState(), size());
 
     username = core.getUsername();
 
@@ -136,7 +135,7 @@ ContentDialog::ContentDialog(const Core &core, QWidget* parent)
     new QShortcut(Qt::CTRL + Qt::Key_PageUp, this, SLOT(previousContact()));
     new QShortcut(Qt::CTRL + Qt::Key_PageDown, this, SLOT(nextContact()));
 
-    connect(&s, &Settings::groupchatPositionChanged, this, &ContentDialog::onGroupchatPositionChanged);
+    connect(&settings, &Settings::groupchatPositionChanged, this, &ContentDialog::onGroupchatPositionChanged);
     connect(splitter, &QSplitter::splitterMoved, this, &ContentDialog::saveSplitterState);
 
     Translator::registerHandler(std::bind(&ContentDialog::retranslateUi, this), this);
@@ -155,10 +154,10 @@ void ContentDialog::closeEvent(QCloseEvent* event)
 
 FriendWidget* ContentDialog::addFriend(std::shared_ptr<FriendChatroom> chatroom, GenericChatForm* form)
 {
-    const auto compact = Settings::getInstance().getCompactLayout();
+    const auto compact = settings.getCompactLayout();
     auto frnd = chatroom->getFriend();
     const auto& friendPk = frnd->getPublicKey();
-    auto friendWidget = new FriendWidget(chatroom, compact);
+    auto friendWidget = new FriendWidget(chatroom, compact, settings);
     emit connectFriendWidget(*friendWidget);
     contactWidgets[friendPk] = friendWidget;
     friendLayout->addFriendWidget(friendWidget, frnd->getStatus());
@@ -179,8 +178,8 @@ GroupWidget* ContentDialog::addGroup(std::shared_ptr<GroupChatroom> chatroom, Ge
 {
     const auto g = chatroom->getGroup();
     const auto& groupId = g->getPersistentId();
-    const auto compact = Settings::getInstance().getCompactLayout();
-    auto groupWidget = new GroupWidget(chatroom, compact);
+    const auto compact = settings.getCompactLayout();
+    auto groupWidget = new GroupWidget(chatroom, compact, settings);
     contactWidgets[groupId] = groupWidget;
     groupLayout.addSortedWidget(groupWidget);
     contactChatForms[groupId] = form;
@@ -312,7 +311,7 @@ void ContentDialog::cycleContacts(bool forward, bool inverse)
     }
 
     if (!inverse && index == currentLayout->count() - 1) {
-        bool groupsOnTop = Settings::getInstance().getGroupchatPosition();
+        bool groupsOnTop = settings.getGroupchatPosition();
         bool offlineEmpty = friendLayout->getLayoutOffline()->isEmpty();
         bool onlineEmpty = friendLayout->getLayoutOnline()->isEmpty();
         bool groupsEmpty = groupLayout.getLayout()->isEmpty();
@@ -439,8 +438,8 @@ void ContentDialog::setUsername(const QString& newName)
 
 void ContentDialog::reloadTheme()
 {
-    setStyleSheet(Style::getStylesheet("contentDialog/contentDialog.css"));
-    friendScroll->setStyleSheet(Style::getStylesheet("friendList/friendList.css"));
+    setStyleSheet(Style::getStylesheet("contentDialog/contentDialog.css", settings));
+    friendScroll->setStyleSheet(Style::getStylesheet("friendList/friendList.css", settings));
 }
 
 bool ContentDialog::event(QEvent* event)
@@ -677,7 +676,7 @@ void ContentDialog::retranslateUi()
  */
 void ContentDialog::saveDialogGeometry()
 {
-    Settings::getInstance().setDialogGeometry(saveGeometry());
+    settings.setDialogGeometry(saveGeometry());
 }
 
 /**
@@ -685,7 +684,7 @@ void ContentDialog::saveDialogGeometry()
  */
 void ContentDialog::saveSplitterState()
 {
-    Settings::getInstance().setDialogSplitterState(splitter->saveState());
+    settings.setDialogSplitterState(splitter->saveState());
 }
 
 bool ContentDialog::hasContact(const ContactId& contactId) const

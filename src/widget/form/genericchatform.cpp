@@ -121,7 +121,7 @@ namespace
 {
 
 template <class T, class Fun>
-QPushButton* createButton(const QString& name, T* self, Fun onClickSlot)
+QPushButton* createButton(const QString& name, T* self, Fun onClickSlot, Settings& settings)
 {
     QPushButton* btn = new QPushButton();
     // Fix for incorrect layouts on OS X as per
@@ -129,7 +129,7 @@ QPushButton* createButton(const QString& name, T* self, Fun onClickSlot)
     btn->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     btn->setObjectName(name);
     btn->setProperty("state", "green");
-    btn->setStyleSheet(Style::getStylesheet(STYLE_PATH));
+    btn->setStyleSheet(Style::getStylesheet(STYLE_PATH, settings));
     QObject::connect(btn, &QPushButton::clicked, self, onClickSlot);
     return btn;
 }
@@ -138,7 +138,7 @@ QPushButton* createButton(const QString& name, T* self, Fun onClickSlot)
 
 GenericChatForm::GenericChatForm(const Core& core_, const Contact* contact, IChatLog& chatLog_,
                                  IMessageDispatcher& messageDispatcher_, DocumentCache& documentCache,
-                                 SmileyPack& smileyPack_, QWidget* parent_)
+                                 SmileyPack& smileyPack_, Settings& settings_, QWidget* parent_)
     : QWidget(parent_, Qt::Window)
     , core{core_}
     , audioInputFlag(false)
@@ -146,33 +146,34 @@ GenericChatForm::GenericChatForm(const Core& core_, const Contact* contact, ICha
     , chatLog(chatLog_)
     , messageDispatcher(messageDispatcher_)
     , smileyPack{smileyPack_}
+    , settings{settings_}
 {
     curRow = 0;
-    headWidget = new ChatFormHeader();
-    searchForm = new SearchForm();
+    headWidget = new ChatFormHeader(settings);
+    searchForm = new SearchForm(settings);
     dateInfo = new QLabel(this);
-    chatWidget = new ChatWidget(chatLog_, core, documentCache, smileyPack, this);
+    chatWidget = new ChatWidget(chatLog_, core, documentCache, smileyPack,
+        settings, this);
     searchForm->hide();
     dateInfo->setAlignment(Qt::AlignHCenter);
     dateInfo->setVisible(false);
 
     // settings
-    const Settings& s = Settings::getInstance();
-    connect(&s, &Settings::emojiFontPointSizeChanged, chatWidget, &ChatWidget::forceRelayout);
-    connect(&s, &Settings::chatMessageFontChanged, this, &GenericChatForm::onChatMessageFontChanged);
+    connect(&settings, &Settings::emojiFontPointSizeChanged, chatWidget, &ChatWidget::forceRelayout);
+    connect(&settings, &Settings::chatMessageFontChanged, this, &GenericChatForm::onChatMessageFontChanged);
 
     msgEdit = new ChatTextEdit();
 #ifdef SPELL_CHECKING
-    if (s.getSpellCheckingEnabled()) {
+    if (settings.getSpellCheckingEnabled()) {
         decorator = new Sonnet::SpellCheckDecorator(msgEdit);
     }
 #endif
 
-    sendButton = createButton("sendButton", this, &GenericChatForm::onSendTriggered);
-    emoteButton = createButton("emoteButton", this, &GenericChatForm::onEmoteButtonClicked);
+    sendButton = createButton("sendButton", this, &GenericChatForm::onSendTriggered, settings);
+    emoteButton = createButton("emoteButton", this, &GenericChatForm::onEmoteButtonClicked, settings);
 
-    fileButton = createButton("fileButton", this, &GenericChatForm::onAttachClicked);
-    screenshotButton = createButton("screenshotButton", this, &GenericChatForm::onScreenshotClicked);
+    fileButton = createButton("fileButton", this, &GenericChatForm::onAttachClicked, settings);
+    screenshotButton = createButton("screenshotButton", this, &GenericChatForm::onScreenshotClicked, settings);
 
     // TODO: Make updateCallButtons (see ChatForm) abstract
     //       and call here to set tooltips.
@@ -351,15 +352,14 @@ QDateTime GenericChatForm::getLatestTime() const
 
 void GenericChatForm::reloadTheme()
 {
-    const Settings& s = Settings::getInstance();
-    setStyleSheet(Style::getStylesheet("genericChatForm/genericChatForm.css"));
-    msgEdit->setStyleSheet(Style::getStylesheet("msgEdit/msgEdit.css")
-                           + fontToCss(s.getChatMessageFont(), "QTextEdit"));
+    setStyleSheet(Style::getStylesheet("genericChatForm/genericChatForm.css", settings));
+    msgEdit->setStyleSheet(Style::getStylesheet("msgEdit/msgEdit.css", settings)
+                           + fontToCss(settings.getChatMessageFont(), "QTextEdit"));
 
-    emoteButton->setStyleSheet(Style::getStylesheet(STYLE_PATH));
-    fileButton->setStyleSheet(Style::getStylesheet(STYLE_PATH));
-    screenshotButton->setStyleSheet(Style::getStylesheet(STYLE_PATH));
-    sendButton->setStyleSheet(Style::getStylesheet(STYLE_PATH));
+    emoteButton->setStyleSheet(Style::getStylesheet(STYLE_PATH, settings));
+    fileButton->setStyleSheet(Style::getStylesheet(STYLE_PATH, settings));
+    screenshotButton->setStyleSheet(Style::getStylesheet(STYLE_PATH, settings));
+    sendButton->setStyleSheet(Style::getStylesheet(STYLE_PATH, settings));
 }
 
 void GenericChatForm::setName(const QString& newName)
@@ -456,7 +456,7 @@ void GenericChatForm::onEmoteButtonClicked()
     if (smileyPack.getEmoticons().empty())
         return;
 
-    EmoticonsWidget widget(smileyPack);
+    EmoticonsWidget widget(smileyPack, settings);
     connect(&widget, SIGNAL(insertEmoticon(QString)), this, SLOT(onEmoteInsertRequested(QString)));
     widget.installEventFilter(this);
 
@@ -494,7 +494,7 @@ void GenericChatForm::onChatMessageFontChanged(const QFont& font)
     chatWidget->fontChanged(font);
     chatWidget->forceRelayout();
     // message editor
-    msgEdit->setStyleSheet(Style::getStylesheet("msgEdit/msgEdit.css")
+    msgEdit->setStyleSheet(Style::getStylesheet("msgEdit/msgEdit.css", settings)
                            + fontToCss(font, "QTextEdit"));
 }
 
@@ -708,7 +708,7 @@ void GenericChatForm::updateShowDateInfo(const ChatLine::Ptr& prevLine, const Ch
     const auto date = getTime(effectiveTopLine);
 
     if (date.isValid() && date.date() != QDate::currentDate()) {
-        const auto dateText = QStringLiteral("<b>%1<\b>").arg(date.toString(Settings::getInstance().getDateFormat()));
+        const auto dateText = QStringLiteral("<b>%1<\b>").arg(date.toString(settings.getDateFormat()));
         dateInfo->setText(dateText);
         dateInfo->setVisible(true);
     } else {

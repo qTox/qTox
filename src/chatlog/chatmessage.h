@@ -29,6 +29,7 @@ class CoreFile;
 class QGraphicsScene;
 class DocumentCache;
 class SmileyPack;
+class Settings;
 
 class ChatMessage : public ChatLine
 {
@@ -49,7 +50,7 @@ public:
         ALERT,
     };
 
-    explicit ChatMessage(DocumentCache& documentCache);
+    ChatMessage(DocumentCache&, Settings&);
     ~ChatMessage();
     ChatMessage(const ChatMessage&) = default;
     ChatMessage(ChatMessage&&) = default;
@@ -57,14 +58,14 @@ public:
     static ChatMessage::Ptr createChatMessage(const QString& sender, const QString& rawMessage,
                                               MessageType type, bool isMe, MessageState state,
                                               const QDateTime& date, DocumentCache&,
-                                              SmileyPack& smileyPack, bool colorizeName = false);
+                                              SmileyPack&, Settings&, bool colorizeName = false);
     static ChatMessage::Ptr createChatInfoMessage(const QString& rawMessage, SystemMessageType type,
-                                                  const QDateTime& date, DocumentCache&);
+                                                  const QDateTime& date, DocumentCache&, Settings&);
     static ChatMessage::Ptr createFileTransferMessage(const QString& sender, CoreFile& coreFile,
                                                       ToxFile file, bool isMe, const QDateTime& date,
-                                                      DocumentCache&);
-    static ChatMessage::Ptr createTypingNotification(DocumentCache&);
-    static ChatMessage::Ptr createBusyNotification(DocumentCache&);
+                                                      DocumentCache&, Settings&);
+    static ChatMessage::Ptr createTypingNotification(DocumentCache&, Settings&);
+    static ChatMessage::Ptr createBusyNotification(DocumentCache&, Settings&);
 
     void markAsDelivered(const QDateTime& time);
     void markAsBroken();
@@ -81,4 +82,5 @@ protected:
 private:
     bool action = false;
     DocumentCache& documentCache;
+    Settings& settings;
 };

@@ -189,9 +189,9 @@ bool IPC::isCurrentOwner()
  * @brief Register a handler for an IPC event
  * @param handler The handler callback. Should not block for more than a second, at worst
  */
-void IPC::registerEventHandler(const QString& name, IPCEventHandler handler)
+void IPC::registerEventHandler(const QString& name, IPCEventHandler handler, void* userData)
 {
-    eventHandlers[name] = handler;
+    eventHandlers[name] = {handler, userData};
 }
 
 bool IPC::isEventAccepted(time_t time)
@@ -269,11 +269,11 @@ IPC::IPCEvent* IPC::fetchEvent()
     return nullptr;
 }
 
-bool IPC::runEventHandler(IPCEventHandler handler, const QByteArray& arg)
+bool IPC::runEventHandler(IPCEventHandler handler, const QByteArray& arg, void* userData)
 {
     bool result = false;
     if (QThread::currentThread() == qApp->thread()) {
-        result = handler(arg);
+        result = handler(arg, userData);
     } else {
         QMetaObject::invokeMethod(this, "runEventHandler", Qt::BlockingQueuedConnection,
                                   Q_RETURN_ARG(bool, result), Q_ARG(IPCEventHandler, handler),
@@ -313,7 +313,7 @@ void IPC::processEvents()
         QString name = QString::fromUtf8(evt->name);
         auto it = eventHandlers.find(name);
         if (it != eventHandlers.end()) {
-            evt->accepted = runEventHandler(it.value(), evt->data);
+            evt->accepted = runEventHandler(it.value().handler, evt->data, it.value().userData);
             qDebug() << "Processed event:" << name << "posted:" << evt->posted
                      << "accepted:" << evt->accepted;
             if (evt->dest == 0) {

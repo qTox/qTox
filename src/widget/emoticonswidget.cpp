@@ -31,10 +31,11 @@
 
 #include <math.h>
 
-EmoticonsWidget::EmoticonsWidget(SmileyPack& smileyPack, QWidget* parent)
+EmoticonsWidget::EmoticonsWidget(SmileyPack& smileyPack, Settings& settings,
+    QWidget* parent)
     : QMenu(parent)
 {
-    setStyleSheet(Style::getStylesheet("emoticonWidget/emoticonWidget.css"));
+    setStyleSheet(Style::getStylesheet("emoticonWidget/emoticonWidget.css", settings));
     setLayout(&layout);
     layout.addWidget(&stack);
 
@@ -57,7 +58,7 @@ EmoticonsWidget::EmoticonsWidget(SmileyPack& smileyPack, QWidget* parent)
     int col = 0;
 
     // respect configured emoticon size
-    const int px = Settings::getInstance().getEmojiFontPointSize();
+    const int px = settings.getEmojiFontPointSize();
     const QSize size(px, px);
 
     // create pages

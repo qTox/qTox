@@ -32,6 +32,7 @@ class QLabel;
 class QPushButton;
 class QScrollArea;
 class QSignalMapper;
+class Settings;
 
 namespace Ui {
 class MainWindow;
@@ -41,7 +42,7 @@ class GroupInviteForm : public QWidget
 {
     Q_OBJECT
 public:
-    GroupInviteForm();
+    explicit GroupInviteForm(Settings&);
     ~GroupInviteForm();
 
     void show(ContentLayout* contentLayout);
@@ -67,4 +68,5 @@ private:
     QGroupBox* inviteBox;
     QList<GroupInviteWidget*> invites;
     QScrollArea* scroll;
+    Settings& settings;
 };

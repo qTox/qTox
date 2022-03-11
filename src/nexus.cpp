@@ -63,9 +63,7 @@ Nexus::Nexus(QObject* parent)
     : QObject(parent)
     , profile{nullptr}
     , widget{nullptr}
-    , cameraSource(new CameraSource())
 {
-    assert(cameraSource);
 }
 
 Nexus::~Nexus()
@@ -163,7 +161,7 @@ int Nexus::showLogin(const QString& profileName)
     delete profile;
     profile = nullptr;
 
-    LoginScreen loginScreen{profileName};
+    LoginScreen loginScreen{*settings, profileName};
     connectLoginScreen(loginScreen);
 
     QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
@@ -198,6 +196,7 @@ void Nexus::bootstrapWithProfile(Profile* p)
 
 void Nexus::setSettings(Settings* settings_)
 {
+    cameraSource = std::unique_ptr<CameraSource>(new CameraSource{*settings_});
     if (settings) {
         QObject::disconnect(this, &Nexus::saveGlobal, settings, &Settings::saveGlobal);
     }
@@ -231,7 +230,7 @@ void Nexus::showMainGUI()
     assert(profile);
 
     // Create GUI
-    widget = new Widget(*profile, *audioControl, *cameraSource);
+    widget = new Widget(*profile, *audioControl, *cameraSource, *settings);
 
     // Start GUI
     widget->init();

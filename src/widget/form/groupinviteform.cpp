@@ -45,12 +45,13 @@
  * @brief This form contains all group invites you received
  */
 
-GroupInviteForm::GroupInviteForm()
+GroupInviteForm::GroupInviteForm(Settings& settings_)
     : headWidget(new QWidget(this))
     , headLabel(new QLabel(this))
     , createButton(new QPushButton(this))
     , inviteBox(new QGroupBox(this))
     , scroll(new QScrollArea(this))
+    , settings{settings_}
 {
     QVBoxLayout* layout = new QVBoxLayout(this);
     connect(createButton, &QPushButton::clicked,
@@ -123,7 +124,7 @@ bool GroupInviteForm::addGroupInvite(const GroupInvite& inviteInfo)
         }
     }
 
-    GroupInviteWidget* widget = new GroupInviteWidget(this, inviteInfo);
+    GroupInviteWidget* widget = new GroupInviteWidget(this, inviteInfo, settings);
     scroll->widget()->layout()->addWidget(widget);
     invites.append(widget);
     connect(widget, &GroupInviteWidget::accepted, [this] (const GroupInvite& inviteInfo_) {

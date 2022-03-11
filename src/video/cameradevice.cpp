@@ -79,14 +79,16 @@ AvFindInputFormatRet iformat{nullptr};
 QHash<QString, CameraDevice*> CameraDevice::openDevices;
 QMutex CameraDevice::openDeviceLock, CameraDevice::iformatLock;
 
-CameraDevice::CameraDevice(const QString& devName_, AVFormatContext* context_)
+CameraDevice::CameraDevice(const QString& devName_, AVFormatContext* context_,
+    Settings& settings_)
     : devName{devName_}
     , context{context_}
     , refcount{1}
+    , settings{settings_}
 {
 }
 
-CameraDevice* CameraDevice::open(QString devName, AVDictionary** options)
+CameraDevice* CameraDevice::open(Settings& settings, QString devName, AVDictionary** options)
 {
     openDeviceLock.lock();
     AVFormatContext* fctx = nullptr;
@@ -131,7 +133,7 @@ CameraDevice* CameraDevice::open(QString devName, AVDictionary** options)
     fctx->max_analyze_duration = aduration;
 #endif
 
-    dev = new CameraDevice{devName, fctx};
+    dev = new CameraDevice{devName, fctx, settings};
     openDevices[devName] = dev;
 
 out:
@@ -151,7 +153,7 @@ out:
  * @param mode Mode of device to open.
  * @return CameraDevice if the device could be opened, nullptr otherwise.
  */
-CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
+CameraDevice* CameraDevice::open(Settings& settings, QString devName, VideoMode mode)
 {
     if (!getDefaultInputFormat())
         return nullptr;
@@ -237,7 +239,7 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
         std::ignore = mode;
     }
 
-    CameraDevice* dev = open(devName, &options);
+    CameraDevice* dev = open(settings, devName, &options);
     if (options) {
         av_dict_free(&options);
     }
@@ -395,9 +397,9 @@ QVector<QPair<QString, QString>> CameraDevice::getDeviceList()
  * @return The short name of the default device
  * This is either the device in the settings or the system default.
  */
-QString CameraDevice::getDefaultDeviceName()
+QString CameraDevice::getDefaultDeviceName(Settings& settings)
 {
-    QString defaultdev = Settings::getInstance().getVideoDev();
+    QString defaultdev = settings.getVideoDev();
 
     if (!getDefaultInputFormat())
         return defaultdev;

@@ -27,9 +27,10 @@
 #include <QDebug>
 #include <QThread>
 
-DesktopNotify::DesktopNotify()
+DesktopNotify::DesktopNotify(Settings& settings_)
     : notifyCore{Snore::SnoreCore::instance()}
     , snoreIcon{":/img/icons/qtox.svg"}
+    , settings{settings_}
 {
 
     notifyCore.loadPlugins(Snore::SnorePlugin::Backend);
@@ -44,8 +45,7 @@ DesktopNotify::DesktopNotify()
 
 void DesktopNotify::notifyMessage(const NotificationData& notificationData)
 {
-    const Settings& s = Settings::getInstance();
-    if(!(s.getNotify() && s.getDesktopNotify())) {
+    if(!(settings.getNotify() && settings.getDesktopNotify())) {
         return;
     }
 

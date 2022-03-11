@@ -27,6 +27,7 @@
 namespace Ui {
 class UserInterfaceSettings;
 }
+class Settings;
 
 class SmileyPack;
 
@@ -34,7 +35,7 @@ class UserInterfaceForm : public GenericForm
 {
     Q_OBJECT
 public:
-    UserInterfaceForm(SmileyPack&, SettingsWidget* myParent);
+    UserInterfaceForm(SmileyPack&, Settings&, SettingsWidget* myParent);
     ~UserInterfaceForm();
     QString getFormName() final
     {
@@ -77,4 +78,5 @@ private:
     Ui::UserInterfaceSettings* bodyUI;
     const int MAX_FORMAT_LENGTH = 128;
     SmileyPack& smileyPack;
+    Settings& settings;
 };

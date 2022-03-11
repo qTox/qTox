@@ -29,15 +29,16 @@ class Friend;
 class QByteArray;
 class QString;
 class ToxPk;
+class Settings;
 
 class FriendList
 {
 public:
-    static Friend* addFriend(uint32_t friendId, const ToxPk& friendPk);
+    static Friend* addFriend(uint32_t friendId, const ToxPk& friendPk, Settings&);
     static Friend* findFriend(const ToxPk& friendPk);
     static const ToxPk& id2Key(uint32_t friendId);
     static QList<Friend*> getAllFriends();
-    static void removeFriend(const ToxPk& friendPk, bool fake = false);
+    static void removeFriend(const ToxPk& friendPk, Settings&, bool fake = false);
     static void clear();
     static QString decideNickname(const ToxPk& friendPk, const QString& origName);
 

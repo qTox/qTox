@@ -41,30 +41,30 @@
  * Is also contains "Reset settings" button and "Make portable" checkbox.
  */
 
-AdvancedForm::AdvancedForm()
+AdvancedForm::AdvancedForm(Settings& settings_)
     : GenericForm(QPixmap(":/img/settings/general.png"))
     , bodyUI(new Ui::AdvancedSettings)
+    , settings{settings_}
 {
     bodyUI->setupUi(this);
 
     // block all child signals during initialization
     const RecursiveSignalBlocker signalBlocker(this);
 
-    Settings& s = Settings::getInstance();
-    bodyUI->cbEnableIPv6->setChecked(s.getEnableIPv6());
-    bodyUI->cbMakeToxPortable->setChecked(Settings::getInstance().getMakeToxPortable());
-    bodyUI->proxyAddr->setText(s.getProxyAddr());
-    quint16 port = s.getProxyPort();
+    bodyUI->cbEnableIPv6->setChecked(settings.getEnableIPv6());
+    bodyUI->cbMakeToxPortable->setChecked(settings.getMakeToxPortable());
+    bodyUI->proxyAddr->setText(settings.getProxyAddr());
+    quint16 port = settings.getProxyPort();
     if (port > 0) {
         bodyUI->proxyPort->setValue(port);
     }
 
-    int index = static_cast<int>(s.getProxyType());
+    int index = static_cast<int>(settings.getProxyType());
     bodyUI->proxyType->setCurrentIndex(index);
     on_proxyType_currentIndexChanged(index);
-    const bool udpEnabled = !s.getForceTCP() && (s.getProxyType() == Settings::ProxyType::ptNone);
+    const bool udpEnabled = !settings.getForceTCP() && (settings.getProxyType() == Settings::ProxyType::ptNone);
     bodyUI->cbEnableUDP->setChecked(udpEnabled);
-    bodyUI->cbEnableLanDiscovery->setChecked(s.getEnableLanDiscovery() && udpEnabled);
+    bodyUI->cbEnableLanDiscovery->setChecked(settings.getEnableLanDiscovery() && udpEnabled);
     bodyUI->cbEnableLanDiscovery->setEnabled(udpEnabled);
 
     QString warningBody = tr("Unless you %1 know what you are doing, "
@@ -95,7 +95,7 @@ AdvancedForm::~AdvancedForm()
 
 void AdvancedForm::on_cbMakeToxPortable_stateChanged()
 {
-    Settings::getInstance().setMakeToxPortable(bodyUI->cbMakeToxPortable->isChecked());
+    settings.setMakeToxPortable(bodyUI->cbMakeToxPortable->isChecked());
 }
 void AdvancedForm::on_btnExportLog_clicked()
 {
@@ -107,7 +107,7 @@ void AdvancedForm::on_btnExportLog_clicked()
         return;
     }
 
-    QString logFileDir = Settings::getInstance().getPaths().getAppCacheDirPath();
+    QString logFileDir = settings.getPaths().getAppCacheDirPath();
     QString logfile = logFileDir + "qtox.log";
 
     QFile file(logfile);
@@ -126,7 +126,7 @@ void AdvancedForm::on_btnExportLog_clicked()
 
 void AdvancedForm::on_btnCopyDebug_clicked()
 {
-    QString logFileDir = Settings::getInstance().getPaths().getAppCacheDirPath();
+    QString logFileDir = settings.getPaths().getAppCacheDirPath();
     QString logfile = logFileDir + "qtox.log";
 
     QFile file(logfile);
@@ -163,32 +163,32 @@ void AdvancedForm::on_resetButton_clicked()
     if (!result)
         return;
 
-    Settings::getInstance().resetToDefault();
+    settings.resetToDefault();
     GUI::showInfo(titile, "Changes will take effect after restart");
 }
 
 void AdvancedForm::on_cbEnableIPv6_stateChanged()
 {
-    Settings::getInstance().setEnableIPv6(bodyUI->cbEnableIPv6->isChecked());
+    settings.setEnableIPv6(bodyUI->cbEnableIPv6->isChecked());
 }
 
 void AdvancedForm::on_cbEnableUDP_stateChanged()
 {
     const bool enableUdp = bodyUI->cbEnableUDP->isChecked();
-    Settings::getInstance().setForceTCP(!enableUdp);
-    const bool enableLanDiscovery = Settings::getInstance().getEnableLanDiscovery();
+    settings.setForceTCP(!enableUdp);
+    const bool enableLanDiscovery = settings.getEnableLanDiscovery();
     bodyUI->cbEnableLanDiscovery->setEnabled(enableUdp);
     bodyUI->cbEnableLanDiscovery->setChecked(enableUdp && enableLanDiscovery);
 }
 
 void AdvancedForm::on_cbEnableLanDiscovery_stateChanged()
 {
-    Settings::getInstance().setEnableLanDiscovery(bodyUI->cbEnableLanDiscovery->isChecked());
+    settings.setEnableLanDiscovery(bodyUI->cbEnableLanDiscovery->isChecked());
 }
 
 void AdvancedForm::on_proxyAddr_editingFinished()
 {
-    Settings::getInstance().setProxyAddr(bodyUI->proxyAddr->text());
+    settings.setProxyAddr(bodyUI->proxyAddr->text());
 }
 
 void AdvancedForm::on_proxyPort_valueChanged(int port)
@@ -197,7 +197,7 @@ void AdvancedForm::on_proxyPort_valueChanged(int port)
         port = 0;
     }
 
-    Settings::getInstance().setProxyPort(port);
+    settings.setProxyPort(port);
 }
 
 void AdvancedForm::on_proxyType_currentIndexChanged(int index)
@@ -211,7 +211,7 @@ void AdvancedForm::on_proxyType_currentIndexChanged(int index)
     bodyUI->cbEnableUDP->setEnabled(!proxyEnabled);
     bodyUI->cbEnableUDP->setChecked(!proxyEnabled);
 
-    Settings::getInstance().setProxyType(proxytype);
+    settings.setProxyType(proxytype);
 }
 
 /**

@@ -35,6 +35,7 @@ class QTimer;
 class ChatLineContent;
 struct ToxFile;
 class SmileyPack;
+class Settings;
 
 class ChatLineStorage;
 
@@ -44,7 +45,7 @@ class ChatWidget : public QGraphicsView
     Q_OBJECT
 public:
     ChatWidget(IChatLog& chatLog_, const Core& core_, DocumentCache&, SmileyPack&,
-        QWidget* parent = nullptr);
+        Settings&, QWidget* parent = nullptr);
     virtual ~ChatWidget();
 
     void insertChatlines(std::map<ChatLogIdx, ChatLine::Ptr> chatLines);
@@ -218,4 +219,5 @@ private:
     std::vector<std::function<void(void)>> renderCompletionFns;
     DocumentCache& documentCache;
     SmileyPack& smileyPack;
+    Settings& settings;
 };

@@ -30,13 +30,14 @@
 
 class CameraDevice;
 struct AVCodecContext;
+class Settings;
 
 class CameraSource : public VideoSource
 {
     Q_OBJECT
 
 public:
-    CameraSource();
+    explicit CameraSource(Settings&);
     ~CameraSource();
     void setupDefault();
     bool isNone() const;
@@ -76,4 +77,5 @@ private:
 
     std::atomic_bool isNone_;
     std::atomic_int subscriptions;
+    Settings& settings;
 };

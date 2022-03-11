@@ -132,7 +132,8 @@ fail:
  * @return Pointer to the tox encryption key.
  */
 std::unique_ptr<ToxEncrypt> createToxData(const QString& name, const QString& password,
-                                          const QString& filePath, CreateToxDataError& error)
+                                          const QString& filePath, CreateToxDataError& error,
+                                          Paths& paths)
 {
     std::unique_ptr<ToxEncrypt> newKey;
     if (!password.isEmpty()) {
@@ -153,7 +154,7 @@ std::unique_ptr<ToxEncrypt> createToxData(const QString& name, const QString& pa
         return nullptr;
     }
 
-    if (!ProfileLocker::lock(name)) {
+    if (!ProfileLocker::lock(name, paths)) {
         error = CreateToxDataError::LOCK_FAILED;
         return nullptr;
     }
@@ -318,14 +319,14 @@ Profile* Profile::loadProfile(const QString& name, const QString& password, Sett
         return nullptr;
     }
 
-    if (!ProfileLocker::lock(name)) {
+    Paths& paths = settings.getPaths();
+    if (!ProfileLocker::lock(name, paths)) {
         qWarning() << "Failed to lock profile " << name;
         return nullptr;
     }
 
     LoadToxDataError error;
     QByteArray toxsave = QByteArray();
-    Paths& paths = settings.getPaths();
     QString path = paths.getSettingsDirPath() + name + ".tox";
     std::unique_ptr<ToxEncrypt> tmpKey = loadToxData(password, path, toxsave, error);
     if (logLoadToxDataError(error, path)) {
@@ -359,7 +360,7 @@ Profile* Profile::createProfile(const QString& name, const QString& password, Se
     CreateToxDataError error;
     Paths& paths = settings.getPaths();
     QString path = paths.getSettingsDirPath() + name + ".tox";
-    std::unique_ptr<ToxEncrypt> tmpKey = createToxData(name, password, path, error);
+    std::unique_ptr<ToxEncrypt> tmpKey = createToxData(name, password, path, error, paths);
 
     if (logCreateToxDataError(error, name)) {
         return nullptr;
@@ -385,7 +386,7 @@ Profile::~Profile()
     onSaveToxSave();
     settings.savePersonal(this);
     settings.sync();
-    ProfileLocker::assertLock();
+    ProfileLocker::assertLock(paths);
     assert(ProfileLocker::getCurLockName() == name);
     ProfileLocker::unlock();
 }
@@ -395,9 +396,9 @@ Profile::~Profile()
  * @param extension Raw extension, e.g. "jpeg" not ".jpeg".
  * @return Vector of filenames.
  */
-QStringList Profile::getFilesByExt(QString extension)
+QStringList Profile::getFilesByExt(QString extension, Settings& settings)
 {
-    QDir dir(Settings::getInstance().getPaths().getSettingsDirPath());
+    QDir dir(settings.getPaths().getSettingsDirPath());
     QStringList out;
     dir.setFilter(QDir::Files | QDir::NoDotAndDotDot);
     dir.setNameFilters(QStringList("*." + extension));
@@ -414,13 +415,13 @@ QStringList Profile::getFilesByExt(QString extension)
  * @brief Scan for profile, automatically importing them if needed.
  * @warning NOT thread-safe.
  */
-const QStringList Profile::getAllProfileNames()
+const QStringList Profile::getAllProfileNames(Settings& settings)
 {
     profiles.clear();
-    QStringList toxfiles = getFilesByExt("tox"), inifiles = getFilesByExt("ini");
+    QStringList toxfiles = getFilesByExt("tox", settings), inifiles = getFilesByExt("ini", settings);
     for (const QString& toxfile : toxfiles) {
         if (!inifiles.contains(toxfile)) {
-            Settings::getInstance().createPersonal(toxfile);
+            settings.createPersonal(toxfile);
         }
 
         profiles.append(toxfile);
@@ -490,7 +491,7 @@ void Profile::onAvatarOfferReceived(uint32_t friendId, uint32_t fileId, const QB
 bool Profile::saveToxSave(QByteArray data)
 {
     assert(!isRemoved);
-    ProfileLocker::assertLock();
+    ProfileLocker::assertLock(paths);
     assert(ProfileLocker::getCurLockName() == name);
 
     QString path = paths.getSettingsDirPath() + name + ".tox";
@@ -634,9 +635,10 @@ void Profile::loadDatabase(QString password)
     // At this point it's too early to load the personal settings (Nexus will do it), so we always
     // load
     // the history, and if it fails we can't change the setting now, but we keep a nullptr
-    database = std::make_shared<RawDatabase>(getDbPath(name), password, salt);
+    database = std::make_shared<RawDatabase>(getDbPath(name, settings.getPaths()),
+        password, salt);
     if (database && database->isOpen()) {
-        history.reset(new History(database));
+        history.reset(new History(database, settings));
     } else {
         qWarning() << "Failed to open database for profile" << name;
         GUI::showError(QObject::tr("Error"),
@@ -804,9 +806,9 @@ void Profile::removeAvatar(const ToxPk& owner)
     }
 }
 
-bool Profile::exists(QString name)
+bool Profile::exists(QString name, Paths& paths)
 {
-    QString path = Settings::getInstance().getPaths().getSettingsDirPath() + name;
+    QString path = paths.getSettingsDirPath() + name;
     return QFile::exists(path + ".tox");
 }
 
@@ -825,10 +827,10 @@ bool Profile::isEncrypted() const
  * @param name Profile name.
  * @return True if profile is encrypted, false otherwise.
  */
-bool Profile::isEncrypted(QString name)
+bool Profile::isEncrypted(QString name, Paths& paths)
 {
     uint8_t data[TOX_PASS_ENCRYPTION_EXTRA_LENGTH] = {0};
-    QString path = Settings::getInstance().getPaths().getSettingsDirPath() + name + ".tox";
+    QString path = paths.getSettingsDirPath() + name + ".tox";
     QFile saveFile(path);
     if (!saveFile.open(QIODevice::ReadOnly)) {
         qWarning() << "Couldn't open tox save " << path;
@@ -879,7 +881,7 @@ QStringList Profile::remove()
         qWarning() << "Could not remove file " << profileConfig.fileName();
     }
 
-    QString dbPath = getDbPath(name);
+    QString dbPath = getDbPath(name, settings.getPaths());
     if (database && database->isOpen() && !database->remove() && QFile::exists(dbPath)) {
         ret.push_back(dbPath);
         qWarning() << "Could not remove file " << dbPath;
@@ -901,7 +903,7 @@ bool Profile::rename(QString newName)
     QString path = paths.getSettingsDirPath() + name,
             newPath = paths.getSettingsDirPath() + newName;
 
-    if (!ProfileLocker::lock(newName)) {
+    if (!ProfileLocker::lock(newName, paths)) {
         return false;
     }
 
@@ -985,7 +987,7 @@ QString Profile::setPassword(const QString& newPassword)
  * @param profileName Profile name.
  * @return Path to database.
  */
-QString Profile::getDbPath(const QString& profileName)
+QString Profile::getDbPath(const QString& profileName, Paths& paths)
 {
-    return Settings::getInstance().getPaths().getSettingsDirPath() + profileName + ".db";
+    return paths.getSettingsDirPath() + profileName + ".db";
 }

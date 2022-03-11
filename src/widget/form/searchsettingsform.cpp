@@ -23,9 +23,10 @@
 #include "src/widget/style.h"
 #include "src/widget/form/loadhistorydialog.h"
 
-SearchSettingsForm::SearchSettingsForm(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::SearchSettingsForm)
+SearchSettingsForm::SearchSettingsForm(Settings& settings_, QWidget *parent)
+    : QWidget(parent)
+    , ui(new Ui::SearchSettingsForm)
+    , settings{settings_}
 {
     ui->setupUi(this);
 
@@ -99,13 +100,13 @@ ParameterSearch SearchSettingsForm::getParameterSearch()
 
 void SearchSettingsForm::reloadTheme()
 {
-    ui->choiceDateButton->setStyleSheet(Style::getStylesheet(QStringLiteral("chatForm/buttons.css")));
-    ui->startDateLabel->setStyleSheet(Style::getStylesheet(QStringLiteral("chatForm/labels.css")));
+    ui->choiceDateButton->setStyleSheet(Style::getStylesheet(QStringLiteral("chatForm/buttons.css"), settings));
+    ui->startDateLabel->setStyleSheet(Style::getStylesheet(QStringLiteral("chatForm/labels.css"), settings));
 }
 
 void SearchSettingsForm::updateStartDateLabel()
 {
-    ui->startDateLabel->setText(startDate.toString(Settings::getInstance().getDateFormat()));
+    ui->startDateLabel->setText(startDate.toString(settings.getDateFormat()));
 }
 
 void SearchSettingsForm::setUpdate(const bool isUpdate_)
@@ -121,7 +122,7 @@ void SearchSettingsForm::onStartSearchSelected(const int index)
         ui->startDateLabel->setEnabled(true);
 
         ui->choiceDateButton->setProperty("state", QStringLiteral("green"));
-        ui->choiceDateButton->setStyleSheet(Style::getStylesheet(QStringLiteral("chatForm/buttons.css")));
+        ui->choiceDateButton->setStyleSheet(Style::getStylesheet(QStringLiteral("chatForm/buttons.css"), settings));
 
         if (startDate.isNull()) {
             startDate = QDate::currentDate();
@@ -133,7 +134,7 @@ void SearchSettingsForm::onStartSearchSelected(const int index)
         ui->startDateLabel->setEnabled(false);
 
         ui->choiceDateButton->setProperty("state", QString());
-        ui->choiceDateButton->setStyleSheet(Style::getStylesheet(QStringLiteral("chatForm/buttons.css")));
+        ui->choiceDateButton->setStyleSheet(Style::getStylesheet(QStringLiteral("chatForm/buttons.css"), settings));
     }
 
     setUpdate(true);

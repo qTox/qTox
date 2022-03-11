@@ -47,12 +47,14 @@ const int BTN_PANEL_WIDTH = 250;
 const auto BTN_STYLE_SHEET_PATH = QStringLiteral("chatForm/fullScreenButtons.css");
 }
 
-NetCamView::NetCamView(ToxPk friendPk_, CameraSource& cameraSource_, QWidget* parent)
+NetCamView::NetCamView(ToxPk friendPk_, CameraSource& cameraSource_,
+    Settings& settings_, QWidget* parent)
     : QWidget(parent)
     , selfFrame{nullptr}
     , friendPk{friendPk_}
     , e(false)
     , cameraSource{cameraSource_}
+    , settings{settings_}
 {
     verLayout = new QVBoxLayout(this);
     setWindowTitle(tr("Tox video"));
@@ -77,7 +79,7 @@ NetCamView::NetCamView(ToxPk friendPk_, CameraSource& cameraSource_, QWidget* pa
 
     setStyleSheet("NetCamView { background-color: #c1c1c1; }");
     buttonPanel = new QFrame(this);
-    buttonPanel->setStyleSheet(Style::getStylesheet(BTN_STYLE_SHEET_PATH));
+    buttonPanel->setStyleSheet(Style::getStylesheet(BTN_STYLE_SHEET_PATH, settings));
     buttonPanel->setGeometry(0, 0, BTN_PANEL_WIDTH, BTN_PANEL_HEIGHT);
 
     QHBoxLayout* buttonPanelLayout = new QHBoxLayout(buttonPanel);
@@ -155,7 +157,7 @@ NetCamView::NetCamView(ToxPk friendPk_, CameraSource& cameraSource_, QWidget* pa
                                    videoSurface->setAvatar(pixmap);
                            });
 
-    QRect videoSize = Settings::getInstance().getCamVideoRes();
+    QRect videoSize = settings.getCamVideoRes();
     qDebug() << "SIZER" << videoSize;
 }
 
@@ -239,7 +241,7 @@ void NetCamView::setShowMessages(bool show, bool notify)
     toggleMessagesButton->setText(tr("Show messages"));
 
     if (notify) {
-        toggleMessagesButton->setIcon(QIcon(Style::getImagePath("chatArea/info.svg")));
+        toggleMessagesButton->setIcon(QIcon(Style::getImagePath("chatArea/info.svg", settings)));
     }
 }
 
@@ -301,7 +303,7 @@ QPushButton* NetCamView::createButton(const QString& name, const QString& state)
     btn->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     btn->setObjectName(name);
     btn->setProperty("state", QVariant(state));
-    btn->setStyleSheet(Style::getStylesheet(BTN_STYLE_SHEET_PATH));
+    btn->setStyleSheet(Style::getStylesheet(BTN_STYLE_SHEET_PATH, settings));
 
     return btn;
 }
@@ -324,7 +326,7 @@ void NetCamView::toggleButtonState(QPushButton* btn)
         btn->setProperty("state", BTN_STATE_RED);
     }
 
-    btn->setStyleSheet(Style::getStylesheet(BTN_STYLE_SHEET_PATH));
+    btn->setStyleSheet(Style::getStylesheet(BTN_STYLE_SHEET_PATH, settings));
 }
 
 void NetCamView::updateButtonState(QPushButton* btn, bool active)
@@ -335,7 +337,7 @@ void NetCamView::updateButtonState(QPushButton* btn, bool active)
         btn->setProperty("state", BTN_STATE_RED);
     }
 
-    btn->setStyleSheet(Style::getStylesheet(BTN_STYLE_SHEET_PATH));
+    btn->setStyleSheet(Style::getStylesheet(BTN_STYLE_SHEET_PATH, settings));
 }
 
 void NetCamView::keyPressEvent(QKeyEvent *event)

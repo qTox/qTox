@@ -26,6 +26,7 @@
 
 class QTextDocument;
 class DocumentCache;
+class Settings;
 
 class Text : public ChatLineContent
 {
@@ -39,7 +40,7 @@ public:
         CUSTOM
     };
 
-    Text(DocumentCache&, const QString& txt = "", const QFont& font = QFont(),
+    Text(DocumentCache&, Settings&, const QString& txt = "", const QFont& font = QFont(),
         bool enableElide = false, const QString& rawText = QString(),
         const TextType& type = NORMAL,
         const QColor& custom = Style::getColor(Style::MainText));
@@ -113,4 +114,5 @@ private:
     QColor color;
     QColor customColor;
     DocumentCache& documentCache;
+    Settings& settings;
 };

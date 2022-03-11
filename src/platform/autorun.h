@@ -21,10 +21,10 @@
 
 #ifdef QTOX_PLATFORM_EXT
 
-
+class Settings;
 namespace Platform {
-bool setAutorun(bool on);
-bool getAutorun();
+bool setAutorun(const Settings&, bool on);
+bool getAutorun(const Settings&);
 }
 
 #endif // QTOX_PLATFORM_EXT
