@@ -25,7 +25,7 @@
 
 GenericChatItemWidget::GenericChatItemWidget(bool compact_, QWidget* parent)
     : QFrame(parent)
-    , compact(false)
+    , compact(compact_)
 {
     setProperty("compact", compact_);
 
