@@ -39,15 +39,6 @@ GroupId::GroupId()
 }
 
 /**
- * @brief The copy constructor.
- * @param other GroupId to copy
- */
-GroupId::GroupId(const GroupId& other)
-    : ContactId(other.id)
-{
-}
-
-/**
  * @brief Constructs a GroupId from bytes.
  * @param rawId The bytes to construct the GroupId from. The lenght must be exactly
  *              TOX_CONFERENCE_UID_SIZE, else the GroupId will be empty.

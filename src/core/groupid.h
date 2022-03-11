@@ -27,7 +27,6 @@ class GroupId : public ContactId
 {
 public:
     GroupId();
-    GroupId(const GroupId& other);
     explicit GroupId(const QByteArray& rawId);
     explicit GroupId(const uint8_t* rawId);
     int getSize() const override;

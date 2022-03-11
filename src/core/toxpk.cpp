@@ -43,15 +43,6 @@ ToxPk::ToxPk()
 }
 
 /**
- * @brief The copy constructor.
- * @param other ToxPk to copy
- */
-ToxPk::ToxPk(const ToxPk& other)
-    : ContactId(other.id)
-{
-}
-
-/**
  * @brief Constructs a ToxPk from bytes.
  * @param rawId The bytes to construct the ToxPk from. The lenght must be exactly
  *              TOX_PUBLIC_KEY_SIZE, else the ToxPk will be empty.
