@@ -33,7 +33,11 @@ class SmileyPack : public QObject
     Q_OBJECT
 
 public:
-    static SmileyPack& getInstance();
+    SmileyPack();
+    SmileyPack(SmileyPack&) = delete;
+    SmileyPack& operator=(const SmileyPack&) = delete;
+    ~SmileyPack() override;
+
     static QList<QPair<QString, QString>> listSmileyPacks(const QStringList& paths);
     static QList<QPair<QString, QString>> listSmileyPacks();
 
@@ -47,11 +51,6 @@ private slots:
     void cleanupIconsCache();
 
 private:
-    SmileyPack();
-    SmileyPack(SmileyPack&) = delete;
-    SmileyPack& operator=(const SmileyPack&) = delete;
-    ~SmileyPack() override;
-
     bool load(const QString& filename);
     void constructRegex();
 

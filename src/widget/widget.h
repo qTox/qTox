@@ -83,8 +83,7 @@ class UpdateCheck;
 class Settings;
 class IChatLog;
 class ChatHistory;
-class DocumentCache;
-
+class SmileyPack;
 class Widget final : public QMainWindow
 {
     Q_OBJECT
@@ -382,6 +381,7 @@ private:
     QAction* nextConversationAction;
     QAction* previousConversationAction;
 #endif
+    std::unique_ptr<SmileyPack> smileyPack;
     std::unique_ptr<DocumentCache> documentCache;
 };
 

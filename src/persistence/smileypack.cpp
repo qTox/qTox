@@ -145,15 +145,6 @@ void SmileyPack::cleanupIconsCache()
 }
 
 /**
- * @brief Returns the singleton instance.
- */
-SmileyPack& SmileyPack::getInstance()
-{
-    static SmileyPack smileyPack;
-    return smileyPack;
-}
-
-/**
  * @brief Does the same as listSmileyPaths, but with default paths
  */
 QList<QPair<QString, QString>> SmileyPack::listSmileyPacks()

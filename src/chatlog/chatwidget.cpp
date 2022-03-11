@@ -71,7 +71,8 @@ ChatMessage::Ptr createDateMessage(QDateTime timestamp, DocumentCache& documentC
 }
 
 ChatMessage::Ptr createMessage(const QString& displayName, bool isSelf, bool colorizeNames,
-                               const ChatLogMessage& chatLogMessage, DocumentCache& documentCache)
+                               const ChatLogMessage& chatLogMessage, DocumentCache& documentCache,
+                               SmileyPack& smileyPack)
 {
     auto messageType = chatLogMessage.message.isAction ? ChatMessage::MessageType::ACTION
                                                        : ChatMessage::MessageType::NORMAL;
@@ -89,12 +90,12 @@ ChatMessage::Ptr createMessage(const QString& displayName, bool isSelf, bool col
     const auto timestamp = chatLogMessage.message.timestamp;
     return ChatMessage::createChatMessage(displayName, chatLogMessage.message.content, messageType,
                                           isSelf, chatLogMessage.state, timestamp, documentCache,
-                                          colorizeNames);
+                                          smileyPack, colorizeNames);
 }
 
 void renderMessageRaw(const QString& displayName, bool isSelf, bool colorizeNames,
                    const ChatLogMessage& chatLogMessage, ChatLine::Ptr& chatLine,
-                   DocumentCache& documentCache)
+                   DocumentCache& documentCache, SmileyPack& smileyPack)
 {
     // HACK: This is kind of gross, but there's not an easy way to fit this into
     // the existing architecture. This shouldn't ever fail since we should only
@@ -110,7 +111,8 @@ void renderMessageRaw(const QString& displayName, bool isSelf, bool colorizeName
             chatMessage->markAsBroken();
         }
     } else {
-        chatLine = createMessage(displayName, isSelf, colorizeNames, chatLogMessage, documentCache);
+        chatLine = createMessage(displayName, isSelf, colorizeNames, chatLogMessage,
+            documentCache, smileyPack);
     }
 }
 
@@ -207,12 +209,13 @@ ChatLogIdx clampedAdd(ChatLogIdx idx, int val, IChatLog& chatLog)
 
 
 ChatWidget::ChatWidget(IChatLog& chatLog_, const Core& core_, DocumentCache& documentCache_,
-    QWidget* parent)
+    SmileyPack& smileyPack_, QWidget* parent)
     : QGraphicsView(parent)
     , chatLog(chatLog_)
     , core(core_)
     , chatLineStorage(new ChatLineStorage())
     , documentCache(documentCache_)
+    , smileyPack{smileyPack_}
 {
     // Create the scene
     busyScene = new QGraphicsScene(this);
@@ -1414,7 +1417,7 @@ void ChatWidget::renderItem(const ChatLogItem& item, bool hideName, bool coloriz
         const auto& chatLogMessage = item.getContentAsMessage();
 
         renderMessageRaw(item.getDisplayName(), isSelf, colorizeNames_, chatLogMessage,
-            chatMessage, documentCache);
+            chatMessage, documentCache, smileyPack);
 
         break;
     }

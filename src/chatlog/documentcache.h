@@ -22,11 +22,12 @@
 #include <QStack>
 
 class QTextDocument;
+class SmileyPack;
 
 class DocumentCache
 {
 public:
-    DocumentCache() = default;
+    DocumentCache(SmileyPack& smileyPack);
     ~DocumentCache();
     DocumentCache(DocumentCache&) = delete;
     DocumentCache& operator=(const DocumentCache&) = delete;
@@ -35,4 +36,5 @@ public:
     void push(QTextDocument* doc);
 private:
     QStack<QTextDocument*> documents;
+    SmileyPack& smileyPack;
 };

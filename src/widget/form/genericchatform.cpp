@@ -138,19 +138,20 @@ QPushButton* createButton(const QString& name, T* self, Fun onClickSlot)
 
 GenericChatForm::GenericChatForm(const Core& core_, const Contact* contact, IChatLog& chatLog_,
                                  IMessageDispatcher& messageDispatcher_, DocumentCache& documentCache,
-                                 QWidget* parent_)
+                                 SmileyPack& smileyPack_, QWidget* parent_)
     : QWidget(parent_, Qt::Window)
     , core{core_}
     , audioInputFlag(false)
     , audioOutputFlag(false)
     , chatLog(chatLog_)
     , messageDispatcher(messageDispatcher_)
+    , smileyPack{smileyPack_}
 {
     curRow = 0;
     headWidget = new ChatFormHeader();
     searchForm = new SearchForm();
     dateInfo = new QLabel(this);
-    chatWidget = new ChatWidget(chatLog_, core, documentCache, this);
+    chatWidget = new ChatWidget(chatLog_, core, documentCache, smileyPack, this);
     searchForm->hide();
     dateInfo->setAlignment(Qt::AlignHCenter);
     dateInfo->setVisible(false);
@@ -452,10 +453,10 @@ void GenericChatForm::onSendTriggered()
 void GenericChatForm::onEmoteButtonClicked()
 {
     // don't show the smiley selection widget if there are no smileys available
-    if (SmileyPack::getInstance().getEmoticons().empty())
+    if (smileyPack.getEmoticons().empty())
         return;
 
-    EmoticonsWidget widget;
+    EmoticonsWidget widget(smileyPack);
     connect(&widget, SIGNAL(insertEmoticon(QString)), this, SLOT(onEmoteInsertRequested(QString)));
     widget.installEventFilter(this);
 

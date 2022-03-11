@@ -80,6 +80,7 @@
 #include "src/widget/style.h"
 #include "src/widget/translator.h"
 #include "tool/removefrienddialog.h"
+#include "src/persistence/smileypack.h"
 
 bool toxActivateEventHandler(const QByteArray&)
 {
@@ -148,7 +149,8 @@ Widget::Widget(Profile &profile_, IAudioControl& audio_, QWidget* parent)
     , eventIcon(false)
     , audio(audio_)
     , settings(Settings::getInstance())
-    , documentCache(new DocumentCache())
+    , smileyPack(new SmileyPack())
+    , documentCache(new DocumentCache(*smileyPack))
 {
     installEventFilter(this);
     QString locale = settings.getTranslation();
@@ -290,7 +292,7 @@ void Widget::init()
     updateCheck = std::unique_ptr<UpdateCheck>(new UpdateCheck(settings));
     connect(updateCheck.get(), &UpdateCheck::updateAvailable, this, &Widget::onUpdateAvailable);
 #endif
-    settingsWidget = new SettingsWidget(updateCheck.get(), audio, core, this);
+    settingsWidget = new SettingsWidget(updateCheck.get(), audio, core, *smileyPack, this);
 #if UPDATE_CHECK_ENABLED
     updateCheck->checkForUpdate();
 #endif
@@ -1188,7 +1190,7 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
         std::make_shared<ChatHistory>(*newfriend, history, *core, settings,
                                       *friendMessageDispatcher);
     auto friendForm = new ChatForm(profile, newfriend, *chatHistory,
-        *friendMessageDispatcher, *documentCache);
+        *friendMessageDispatcher, *documentCache, *smileyPack);
     connect(friendForm, &ChatForm::updateFriendActivity, this, &Widget::updateFriendActivity);
 
     friendMessageDispatchers[friendPk] = friendMessageDispatcher;
@@ -2171,7 +2173,8 @@ Group* Widget::createGroup(uint32_t groupnumber, const GroupId& groupId)
         connect(messageDispatcher.get(), &IMessageDispatcher::messageReceived, notifyReceivedCallback);
     groupAlertConnections.insert(groupId, notifyReceivedConnection);
 
-    auto form = new GroupChatForm(*core, newgroup, *groupChatLog, *messageDispatcher, settings, *documentCache);
+    auto form = new GroupChatForm(*core, newgroup, *groupChatLog, *messageDispatcher,
+        settings, *documentCache, *smileyPack);
     connect(&settings, &Settings::nameColorsChanged, form, &GenericChatForm::setColorizedNames);
     form->setColorizedNames(settings.getEnableGroupChatsColor());
     groupMessageDispatchers[groupId] = messageDispatcher;

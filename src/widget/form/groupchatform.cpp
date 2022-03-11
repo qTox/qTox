@@ -83,8 +83,9 @@ QString editName(const QString& name)
  */
 
 GroupChatForm::GroupChatForm(Core& core_, Group* chatGroup, IChatLog& chatLog_,
-    IMessageDispatcher& messageDispatcher_, IGroupSettings& settings_, DocumentCache& documentCache_)
-    : GenericChatForm(core_, chatGroup, chatLog_, messageDispatcher_, documentCache_)
+    IMessageDispatcher& messageDispatcher_, IGroupSettings& settings_, DocumentCache& documentCache_,
+        SmileyPack& smileyPack_)
+    : GenericChatForm(core_, chatGroup, chatLog_, messageDispatcher_, documentCache_, smileyPack_)
     , core{core_}
     , group(chatGroup)
     , inCall(false)

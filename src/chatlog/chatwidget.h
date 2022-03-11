@@ -34,6 +34,7 @@ class QMouseEvent;
 class QTimer;
 class ChatLineContent;
 struct ToxFile;
+class SmileyPack;
 
 class ChatLineStorage;
 
@@ -42,7 +43,7 @@ class ChatWidget : public QGraphicsView
 {
     Q_OBJECT
 public:
-    ChatWidget(IChatLog& chatLog_, const Core& core_, DocumentCache&,
+    ChatWidget(IChatLog& chatLog_, const Core& core_, DocumentCache&, SmileyPack&,
         QWidget* parent = nullptr);
     virtual ~ChatWidget();
 
@@ -216,4 +217,5 @@ private:
 
     std::vector<std::function<void(void)>> renderCompletionFns;
     DocumentCache& documentCache;
+    SmileyPack& smileyPack;
 };

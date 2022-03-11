@@ -28,6 +28,7 @@
 class CoreFile;
 class QGraphicsScene;
 class DocumentCache;
+class SmileyPack;
 
 class ChatMessage : public ChatLine
 {
@@ -56,7 +57,7 @@ public:
     static ChatMessage::Ptr createChatMessage(const QString& sender, const QString& rawMessage,
                                               MessageType type, bool isMe, MessageState state,
                                               const QDateTime& date, DocumentCache&,
-                                            bool colorizeName = false);
+                                              SmileyPack& smileyPack, bool colorizeName = false);
     static ChatMessage::Ptr createChatInfoMessage(const QString& rawMessage, SystemMessageType type,
                                                   const QDateTime& date, DocumentCache&);
     static ChatMessage::Ptr createFileTransferMessage(const QString& sender, CoreFile& coreFile,
