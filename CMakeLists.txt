@@ -646,6 +646,7 @@ link_libraries(coverage_config)
 add_subdirectory(util)
 add_subdirectory(audio)
 add_subdirectory(translations)
+add_subdirectory(cmake/warnings)
 
 add_library(${PROJECT_NAME}_static
   STATIC
@@ -659,6 +660,7 @@ target_link_libraries(${PROJECT_NAME}_static
 target_link_libraries(${PROJECT_NAME}_static util_library)
 target_link_libraries(${PROJECT_NAME}_static audio_library)
 target_link_libraries(${PROJECT_NAME}_static translations_library)
+target_link_libraries(${PROJECT_NAME}_static qtox::warnings)
 
 add_executable(${PROJECT_NAME}
   WIN32
