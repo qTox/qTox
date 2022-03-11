@@ -103,4 +103,4 @@ namespace ExifTransform
         image = image.transformed(exifTransform);
         return image;
     }
-};
+} // namespace ExifTransform

@@ -24,4 +24,4 @@ class SettingsSerializer;
 namespace PersonalSettingsUpgrader
 {
     bool doUpgrade(SettingsSerializer& settingsSerializer, int fromVer, int toVer);
-};
+}

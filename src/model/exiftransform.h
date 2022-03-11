@@ -42,4 +42,4 @@ namespace ExifTransform
 
     Orientation getOrientation(QByteArray imageData);
     QImage applyTransformation(QImage image, Orientation orientation);
-};
+}

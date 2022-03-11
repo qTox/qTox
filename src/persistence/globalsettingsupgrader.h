@@ -24,4 +24,4 @@ class Settings;
 namespace GlobalSettingsUpgrader
 {
     bool doUpgrade(Settings& settings, int fromVer, int toVer);
-};
+}

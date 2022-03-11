@@ -536,5 +536,5 @@ std::unique_ptr<FriendListManager> TestFriendListManager::createManagerWithItems
     return manager;
 }
 
-QTEST_GUILESS_MAIN(TestFriendListManager);
+QTEST_GUILESS_MAIN(TestFriendListManager)
 #include "friendlistmanager_test.moc"
