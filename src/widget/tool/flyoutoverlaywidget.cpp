@@ -87,7 +87,7 @@ bool FlyoutOverlayWidget::isBeingShown() const
 
 void FlyoutOverlayWidget::animateShow()
 {
-    if (percent == 1.0f)
+    if (percent == 1.0)
         return;
 
     if (animation->state() != QAbstractAnimation::Running)

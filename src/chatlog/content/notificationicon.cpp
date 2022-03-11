@@ -61,7 +61,7 @@ void NotificationIcon::paint(QPainter* painter, const QStyleOptionGraphicsItem* 
     std::ignore = widget;
 }
 
-void NotificationIcon::setWidth(qreal width)
+void NotificationIcon::setWidth(float width)
 {
     std::ignore = width;
 }

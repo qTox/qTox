@@ -52,12 +52,12 @@ void MovableWidget::setBoundary(QRect newBoundary)
         return;
     }
 
-    float changeX = newBoundary.width() / static_cast<float>(boundaryRect.width());
-    float changeY = newBoundary.height() / static_cast<float>(boundaryRect.height());
+    qreal changeX = newBoundary.width() / static_cast<qreal>(boundaryRect.width());
+    qreal changeY = newBoundary.height() / static_cast<qreal>(boundaryRect.height());
 
-    float percentageX = (x() - boundaryRect.x()) / static_cast<float>(boundaryRect.width() - width());
-    float percentageY =
-        (y() - boundaryRect.y()) / static_cast<float>(boundaryRect.height() - height());
+    qreal percentageX = (x() - boundaryRect.x()) / static_cast<qreal>(boundaryRect.width() - width());
+    qreal percentageY =
+        (y() - boundaryRect.y()) / static_cast<qreal>(boundaryRect.height() - height());
 
     actualSize.setWidth(actualSize.width() * changeX);
     actualSize.setHeight(actualSize.height() * changeY);

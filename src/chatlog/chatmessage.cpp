@@ -96,7 +96,7 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QSt
     QColor color = Style::getColor(Style::MainText);
     if (colorizeName) {
         QByteArray hash = QCryptographicHash::hash((sender.toUtf8()), QCryptographicHash::Sha256);
-        float lightness = color.lightnessF();
+        auto lightness = color.lightnessF();
         // Adapt as good as possible to Light/Dark themes
         lightness = lightness*0.5 + 0.3;
 

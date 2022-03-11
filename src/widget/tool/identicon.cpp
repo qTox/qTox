@@ -92,7 +92,7 @@ Identicon::Identicon(const QByteArray& data)
  * @param bytes Bytes to convert to a color
  * @return Value in the range of 0.0..1.0
  */
-float Identicon::bytesToColor(QByteArray bytes)
+qreal Identicon::bytesToColor(QByteArray bytes)
 {
     static_assert(IDENTICON_COLOR_BYTES <= 8, "IDENTICON_COLOR max value is 8");
     const uint8_t* const bytesChr = reinterpret_cast<const uint8_t*>(bytes.constData());
@@ -108,8 +108,8 @@ float Identicon::bytesToColor(QByteArray bytes)
     }
 
     // normalize to 0.0 ... 1.0
-    return (static_cast<float>(hue))
-           / (static_cast<float>(((static_cast<uint64_t>(1)) << (8 * IDENTICON_COLOR_BYTES)) - 1));
+    return (static_cast<qreal>(hue))
+           / (static_cast<qreal>(((static_cast<uint64_t>(1)) << (8 * IDENTICON_COLOR_BYTES)) - 1));
 }
 
 /**

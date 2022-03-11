@@ -36,7 +36,7 @@ public:
 
     int getColumn() const;
 
-    virtual void setWidth(qreal width) = 0;
+    virtual void setWidth(float width) = 0;
     int type() const final;
 
     virtual void selectionMouseMove(QPointF scenePos);

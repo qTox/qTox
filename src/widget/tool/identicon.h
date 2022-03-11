@@ -27,7 +27,7 @@ class Identicon
 public:
     Identicon(const QByteArray& data);
     QImage toImage(int scaleFactor = 1);
-    static float bytesToColor(QByteArray bytes);
+    static qreal bytesToColor(QByteArray bytes);
 
 public:
     static constexpr int IDENTICON_ROWS = 5;

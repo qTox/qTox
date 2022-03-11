@@ -91,7 +91,7 @@ void Text::deselectText()
     update();
 }
 
-void Text::setWidth(qreal w)
+void Text::setWidth(float w)
 {
     width = w;
     dirty = true;

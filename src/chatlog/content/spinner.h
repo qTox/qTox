@@ -36,7 +36,7 @@ public:
     QRectF boundingRect() const override;
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
                        QWidget* widget) override;
-    void setWidth(qreal width) override;
+    void setWidth(float width) override;
     qreal getAscent() const override;
 
 private slots:
@@ -46,8 +46,8 @@ private:
     static constexpr int framerate = 30; // 30Hz
     QSize size;
     QPixmap pmap;
-    qreal rotSpeed;
-    qreal curRot;
+    float rotSpeed;
+    float curRot;
     QTimer timer;
     qreal alpha = 0.0;
     QVariantAnimation* blendAnimation;

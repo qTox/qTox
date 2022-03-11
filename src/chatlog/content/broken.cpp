@@ -45,7 +45,7 @@ void Broken::paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
 
 }
 
-void Broken::setWidth(qreal width)
+void Broken::setWidth(float width)
 {
     std::ignore = width;
 }

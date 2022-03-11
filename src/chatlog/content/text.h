@@ -47,7 +47,7 @@ public:
     void selectText(const QRegularExpression& exp, const std::pair<int, int>& point);
     void deselectText();
 
-    void setWidth(qreal width) final;
+    void setWidth(float width) final;
 
     void selectionMouseMove(QPointF scenePos) final;
     void selectionStarted(QPointF scenePos) final;

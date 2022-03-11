@@ -50,7 +50,7 @@ void Image::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWi
     std::ignore = widget;
 }
 
-void Image::setWidth(qreal width)
+void Image::setWidth(float width)
 {
     std::ignore = width;
 }

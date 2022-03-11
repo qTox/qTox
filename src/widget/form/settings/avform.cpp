@@ -172,7 +172,7 @@ void AVForm::rescanDevices()
 
 void AVForm::setVolume(float value)
 {
-    volumeDisplay->setValue(getStepsFromValue(value, audio.minOutputVolume(), audio.maxOutputVolume()));
+    volumeDisplay->setValue(getStepsFromValue(static_cast<qreal>(value), audio.minOutputVolume(), audio.maxOutputVolume()));
 }
 
 void AVForm::on_videoModescomboBox_currentIndexChanged(int index)
@@ -310,7 +310,7 @@ void AVForm::fillCameraModesComboBox()
         QString str;
         std::string pixelFormat = CameraDevice::getPixelFormatString(mode.pixel_format).toStdString();
         qDebug("width: %d, height: %d, FPS: %f, pixel format: %s", mode.width, mode.height,
-               mode.FPS, pixelFormat.c_str());
+               static_cast<double>(mode.FPS), pixelFormat.c_str());
 
         if (mode.height && mode.width) {
             str += QString("%1p").arg(mode.height);
@@ -352,7 +352,7 @@ void AVForm::fillScreenModesComboBox()
         VideoMode mode = videoModes[i];
         std::string pixelFormat = CameraDevice::getPixelFormatString(mode.pixel_format).toStdString();
         qDebug("%dx%d+%d,%d FPS: %f, pixel format: %s\n", mode.width, mode.height, mode.x, mode.y,
-               mode.FPS, pixelFormat.c_str());
+               static_cast<double>(mode.FPS), pixelFormat.c_str());
 
         QString name;
         if (mode.width && mode.height)
@@ -651,5 +651,5 @@ int AVForm::getStepsFromValue(qreal val, qreal valMin, qreal valMax)
 
 qreal AVForm::getValueFromSteps(int steps, qreal valMin, qreal valMax)
 {
-    return (static_cast<float>(steps) / totalSliderSteps) * (valMax - valMin) + valMin;
+    return (static_cast<qreal>(steps) / totalSliderSteps) * (valMax - valMin) + valMin;
 }
