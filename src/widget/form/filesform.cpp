@@ -248,7 +248,7 @@ namespace FileTransferList
     {
         const auto row = index.row();
         if (row < 0 || static_cast<size_t>(row) > files.size()) {
-            qWarning("Invalid file transfer row %d (files: %lu)", row, files.size());
+            qWarning("Invalid file transfer row %d (files: %zu)", row, files.size());
             return QVariant();
         }
 
