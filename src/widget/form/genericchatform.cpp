@@ -580,7 +580,8 @@ bool GenericChatForm::eventFilter(QObject* object, QEvent* event)
     if (object != fileButton && object != fileFlyout)
         return false;
 
-    if (!qobject_cast<QWidget*>(object)->isEnabled())
+    auto wObject = qobject_cast<QWidget*>(object);
+    if (!wObject || !wObject->isEnabled())
         return false;
 
     switch (event->type()) {
