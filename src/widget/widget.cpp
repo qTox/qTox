@@ -692,43 +692,44 @@ void Widget::onSelfAvatarLoaded(const QPixmap& pic)
 
 void Widget::onCoreChanged(Core& core_)
 {
-    connect(&core_, &Core::connected, this, &Widget::onConnected);
-    connect(&core_, &Core::disconnected, this, &Widget::onDisconnected);
-    connect(&core_, &Core::statusSet, this, &Widget::onStatusSet);
-    connect(&core_, &Core::usernameSet, this, &Widget::setUsername);
-    connect(&core_, &Core::statusMessageSet, this, &Widget::setStatusMessage);
-    connect(&core_, &Core::friendAdded, this, &Widget::addFriend);
-    connect(&core_, &Core::failedToAddFriend, this, &Widget::addFriendFailed);
-    connect(&core_, &Core::friendUsernameChanged, this, &Widget::onFriendUsernameChanged);
-    connect(&core_, &Core::friendStatusChanged, this, &Widget::onCoreFriendStatusChanged);
-    connect(&core_, &Core::friendStatusMessageChanged, this, &Widget::onFriendStatusMessageChanged);
-    connect(&core_, &Core::friendRequestReceived, this, &Widget::onFriendRequestReceived);
-    connect(&core_, &Core::friendMessageReceived, this, &Widget::onFriendMessageReceived);
-    connect(&core_, &Core::receiptRecieved, this, &Widget::onReceiptReceived);
-    connect(&core_, &Core::groupInviteReceived, this, &Widget::onGroupInviteReceived);
-    connect(&core_, &Core::groupMessageReceived, this, &Widget::onGroupMessageReceived);
-    connect(&core_, &Core::groupPeerlistChanged, this, &Widget::onGroupPeerlistChanged);
-    connect(&core_, &Core::groupPeerNameChanged, this, &Widget::onGroupPeerNameChanged);
-    connect(&core_, &Core::groupTitleChanged, this, &Widget::onGroupTitleChanged);
-    connect(&core_, &Core::groupPeerAudioPlaying, this, &Widget::onGroupPeerAudioPlaying);
-    connect(&core_, &Core::emptyGroupCreated, this, &Widget::onEmptyGroupCreated);
-    connect(&core_, &Core::groupJoined, this, &Widget::onGroupJoined);
-    connect(&core_, &Core::friendTypingChanged, this, &Widget::onFriendTypingChanged);
-    connect(&core_, &Core::groupSentFailed, this, &Widget::onGroupSendFailed);
-    connect(&core_, &Core::usernameSet, this, &Widget::refreshPeerListsLocal);
+    core = &core_;
+    connect(core, &Core::connected, this, &Widget::onConnected);
+    connect(core, &Core::disconnected, this, &Widget::onDisconnected);
+    connect(core, &Core::statusSet, this, &Widget::onStatusSet);
+    connect(core, &Core::usernameSet, this, &Widget::setUsername);
+    connect(core, &Core::statusMessageSet, this, &Widget::setStatusMessage);
+    connect(core, &Core::friendAdded, this, &Widget::addFriend);
+    connect(core, &Core::failedToAddFriend, this, &Widget::addFriendFailed);
+    connect(core, &Core::friendUsernameChanged, this, &Widget::onFriendUsernameChanged);
+    connect(core, &Core::friendStatusChanged, this, &Widget::onCoreFriendStatusChanged);
+    connect(core, &Core::friendStatusMessageChanged, this, &Widget::onFriendStatusMessageChanged);
+    connect(core, &Core::friendRequestReceived, this, &Widget::onFriendRequestReceived);
+    connect(core, &Core::friendMessageReceived, this, &Widget::onFriendMessageReceived);
+    connect(core, &Core::receiptRecieved, this, &Widget::onReceiptReceived);
+    connect(core, &Core::groupInviteReceived, this, &Widget::onGroupInviteReceived);
+    connect(core, &Core::groupMessageReceived, this, &Widget::onGroupMessageReceived);
+    connect(core, &Core::groupPeerlistChanged, this, &Widget::onGroupPeerlistChanged);
+    connect(core, &Core::groupPeerNameChanged, this, &Widget::onGroupPeerNameChanged);
+    connect(core, &Core::groupTitleChanged, this, &Widget::onGroupTitleChanged);
+    connect(core, &Core::groupPeerAudioPlaying, this, &Widget::onGroupPeerAudioPlaying);
+    connect(core, &Core::emptyGroupCreated, this, &Widget::onEmptyGroupCreated);
+    connect(core, &Core::groupJoined, this, &Widget::onGroupJoined);
+    connect(core, &Core::friendTypingChanged, this, &Widget::onFriendTypingChanged);
+    connect(core, &Core::groupSentFailed, this, &Widget::onGroupSendFailed);
+    connect(core, &Core::usernameSet, this, &Widget::refreshPeerListsLocal);
 
-    auto coreExt = core_.getExt();
+    auto coreExt = core->getExt();
 
     connect(coreExt, &CoreExt::extendedMessageReceived, this, &Widget::onFriendExtMessageReceived);
     connect(coreExt, &CoreExt::extendedReceiptReceived, this, &Widget::onExtReceiptReceived);
     connect(coreExt, &CoreExt::extendedMessageSupport, this, &Widget::onExtendedMessageSupport);
 
-    connect(this, &Widget::statusSet, &core_, &Core::setStatus);
-    connect(this, &Widget::friendRequested, &core_, &Core::requestFriendship);
-    connect(this, &Widget::friendRequestAccepted, &core_, &Core::acceptFriendRequest);
-    connect(this, &Widget::changeGroupTitle, &core_, &Core::changeGroupTitle);
+    connect(this, &Widget::statusSet, core, &Core::setStatus);
+    connect(this, &Widget::friendRequested, core, &Core::requestFriendship);
+    connect(this, &Widget::friendRequestAccepted, core, &Core::acceptFriendRequest);
+    connect(this, &Widget::changeGroupTitle, core, &Core::changeGroupTitle);
 
-    sharedMessageProcessorParams->setPublicKey(core_.getSelfPublicKey().toString());
+    sharedMessageProcessorParams->setPublicKey(core->getSelfPublicKey().toString());
 }
 
 void Widget::onConnected()
