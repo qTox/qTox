@@ -67,7 +67,6 @@ void cleanup()
     s.sync();
 
     Nexus::destroyInstance();
-    CameraSource::destroyInstance();
     Settings::destroyInstance();
     qDebug() << "Cleanup success";
 
@@ -400,13 +399,13 @@ int main(int argc, char* argv[])
     //  note: Because Settings is shouldering global settings as well as model specific ones it
     //  cannot be integrated into a central model object yet
     nexus.setSettings(&settings);
-
+    auto& cameraSource = Nexus::getCameraSource();
     // Autologin
     // TODO (kriby): Shift responsibility of linking views to model objects from nexus
     // Further: generate view instances separately (loginScreen, mainGUI, audio)
     Profile* profile = nullptr;
     if (autoLogin && Profile::exists(profileName) && !Profile::isEncrypted(profileName)) {
-        profile = Profile::loadProfile(profileName, QString(), settings, &parser);
+        profile = Profile::loadProfile(profileName, QString(), settings, &parser, cameraSource);
         if (!profile) {
             QMessageBox::information(nullptr, QObject::tr("Error"),
                                      QObject::tr("Failed to load profile automatically."));

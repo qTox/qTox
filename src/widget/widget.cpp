@@ -139,7 +139,8 @@ void Widget::acceptFileTransfer(const ToxFile& file, const QString& path)
 
 Widget* Widget::instance{nullptr};
 
-Widget::Widget(Profile &profile_, IAudioControl& audio_, QWidget* parent)
+Widget::Widget(Profile &profile_, IAudioControl& audio_, CameraSource& cameraSource_,
+    QWidget* parent)
     : QMainWindow(parent)
     , profile{profile_}
     , trayMenu{nullptr}
@@ -151,6 +152,7 @@ Widget::Widget(Profile &profile_, IAudioControl& audio_, QWidget* parent)
     , settings(Settings::getInstance())
     , smileyPack(new SmileyPack())
     , documentCache(new DocumentCache(*smileyPack))
+    , cameraSource{cameraSource_}
 {
     installEventFilter(this);
     QString locale = settings.getTranslation();
@@ -292,7 +294,8 @@ void Widget::init()
     updateCheck = std::unique_ptr<UpdateCheck>(new UpdateCheck(settings));
     connect(updateCheck.get(), &UpdateCheck::updateAvailable, this, &Widget::onUpdateAvailable);
 #endif
-    settingsWidget = new SettingsWidget(updateCheck.get(), audio, core, *smileyPack, this);
+    settingsWidget = new SettingsWidget(updateCheck.get(), audio, core, *smileyPack,
+        cameraSource, this);
 #if UPDATE_CHECK_ENABLED
     updateCheck->checkForUpdate();
 #endif
@@ -1190,7 +1193,7 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
         std::make_shared<ChatHistory>(*newfriend, history, *core, settings,
                                       *friendMessageDispatcher);
     auto friendForm = new ChatForm(profile, newfriend, *chatHistory,
-        *friendMessageDispatcher, *documentCache, *smileyPack);
+        *friendMessageDispatcher, *documentCache, *smileyPack, cameraSource);
     connect(friendForm, &ChatForm::updateFriendActivity, this, &Widget::updateFriendActivity);
 
     friendMessageDispatchers[friendPk] = friendMessageDispatcher;
