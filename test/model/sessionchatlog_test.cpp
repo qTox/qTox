@@ -24,7 +24,7 @@
 #include <QtTest/QtTest>
 
 namespace {
-static const QString TEST_USERNAME = "qTox Tester #1";
+const QString TEST_USERNAME = "qTox Tester #1";
 
 Message createMessage(const QString& content)
 {

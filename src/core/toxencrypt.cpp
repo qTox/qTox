@@ -25,12 +25,98 @@
 #include <QString>
 #include <memory>
 
-// functions for nice debug output
-static QString getKeyDerivationError(Tox_Err_Key_Derivation error);
-static QString getEncryptionError(Tox_Err_Encryption error);
-static QString getDecryptionError(Tox_Err_Decryption error);
-static QString getSaltError(Tox_Err_Get_Salt error);
+namespace {
+/**
+ * @brief Gets the error string for Tox_Err_Key_Derivation errors.
+ * @param error The error number.
+ * @return The verbose error message.
+ */
+QString getKeyDerivationError(Tox_Err_Key_Derivation error)
+{
+    switch (error) {
+    case TOX_ERR_KEY_DERIVATION_OK:
+        return QStringLiteral("The function returned successfully.");
+    case TOX_ERR_KEY_DERIVATION_NULL:
+        return QStringLiteral(
+            "One of the arguments to the function was NULL when it was not expected.");
+    case TOX_ERR_KEY_DERIVATION_FAILED:
+        return QStringLiteral(
+            "The crypto lib was unable to derive a key from the given passphrase.");
+    default:
+        return QStringLiteral("Unknown key derivation error.");
+    }
+}
 
+/**
+ * @brief Gets the error string for Tox_Err_Encryption errors.
+ * @param error The error number.
+ * @return The verbose error message.
+ */
+QString getEncryptionError(Tox_Err_Encryption error)
+{
+    switch (error) {
+    case TOX_ERR_ENCRYPTION_OK:
+        return QStringLiteral("The function returned successfully.");
+    case TOX_ERR_ENCRYPTION_NULL:
+        return QStringLiteral(
+            "One of the arguments to the function was NULL when it was not expected.");
+    case TOX_ERR_ENCRYPTION_KEY_DERIVATION_FAILED:
+        return QStringLiteral(
+            "The crypto lib was unable to derive a key from the given passphrase.");
+    case TOX_ERR_ENCRYPTION_FAILED:
+        return QStringLiteral("The encryption itself failed.");
+    default:
+        return QStringLiteral("Unknown encryption error.");
+    }
+}
+
+/**
+ * @brief Gets the error string for Tox_Err_Decryption errors.
+ * @param error The error number.
+ * @return The verbose error message.
+ */
+QString getDecryptionError(Tox_Err_Decryption error)
+{
+    switch (error) {
+    case TOX_ERR_DECRYPTION_OK:
+        return QStringLiteral("The function returned successfully.");
+    case TOX_ERR_DECRYPTION_NULL:
+        return QStringLiteral(
+            "One of the arguments to the function was NULL when it was not expected.");
+    case TOX_ERR_DECRYPTION_INVALID_LENGTH:
+        return QStringLiteral(
+            "The input data was shorter than TOX_PASS_ENCRYPTION_EXTRA_LENGTH bytes.");
+    case TOX_ERR_DECRYPTION_BAD_FORMAT:
+        return QStringLiteral("The input data is missing the magic number or is corrupted.");
+    case TOX_ERR_DECRYPTION_KEY_DERIVATION_FAILED:
+        return QStringLiteral("The crypto lib was unable to derive a key from the given passphrase.");
+    case TOX_ERR_DECRYPTION_FAILED:
+        return QStringLiteral("Decryption failed. Either the data was corrupted or the password/key was incorrect.");
+    default:
+        return QStringLiteral("Unknown decryption error.");
+    }
+}
+
+/**
+ * @brief Gets the error string for Tox_Err_Get_Salt errors.
+ * @param error The error number.
+ * @return The verbose error message.
+ */
+QString getSaltError(Tox_Err_Get_Salt error)
+{
+    switch (error) {
+    case TOX_ERR_GET_SALT_OK:
+        return QStringLiteral("The function returned successfully.");
+    case TOX_ERR_GET_SALT_NULL:
+        return QStringLiteral(
+            "One of the arguments to the function was NULL when it was not expected.");
+    case TOX_ERR_GET_SALT_BAD_FORMAT:
+        return QStringLiteral("The input data is missing the magic number or is corrupted.");
+    default:
+        return QStringLiteral("Unknown salt error.");
+    }
+}
+}
 /**
   * @class ToxEncrypt
   * @brief Encapsulates the toxencrypsave API.
@@ -261,95 +347,4 @@ QByteArray ToxEncrypt::decrypt(const QByteArray& ciphertext) const
     }
 
     return plaintext;
-}
-
-/**
- * @brief Gets the error string for Tox_Err_Key_Derivation errors.
- * @param error The error number.
- * @return The verbose error message.
- */
-QString getKeyDerivationError(Tox_Err_Key_Derivation error)
-{
-    switch (error) {
-    case TOX_ERR_KEY_DERIVATION_OK:
-        return QStringLiteral("The function returned successfully.");
-    case TOX_ERR_KEY_DERIVATION_NULL:
-        return QStringLiteral(
-            "One of the arguments to the function was NULL when it was not expected.");
-    case TOX_ERR_KEY_DERIVATION_FAILED:
-        return QStringLiteral(
-            "The crypto lib was unable to derive a key from the given passphrase.");
-    default:
-        return QStringLiteral("Unknown key derivation error.");
-    }
-}
-
-/**
- * @brief Gets the error string for Tox_Err_Encryption errors.
- * @param error The error number.
- * @return The verbose error message.
- */
-QString getEncryptionError(Tox_Err_Encryption error)
-{
-    switch (error) {
-    case TOX_ERR_ENCRYPTION_OK:
-        return QStringLiteral("The function returned successfully.");
-    case TOX_ERR_ENCRYPTION_NULL:
-        return QStringLiteral(
-            "One of the arguments to the function was NULL when it was not expected.");
-    case TOX_ERR_ENCRYPTION_KEY_DERIVATION_FAILED:
-        return QStringLiteral(
-            "The crypto lib was unable to derive a key from the given passphrase.");
-    case TOX_ERR_ENCRYPTION_FAILED:
-        return QStringLiteral("The encryption itself failed.");
-    default:
-        return QStringLiteral("Unknown encryption error.");
-    }
-}
-
-/**
- * @brief Gets the error string for Tox_Err_Decryption errors.
- * @param error The error number.
- * @return The verbose error message.
- */
-QString getDecryptionError(Tox_Err_Decryption error)
-{
-    switch (error) {
-    case TOX_ERR_DECRYPTION_OK:
-        return QStringLiteral("The function returned successfully.");
-    case TOX_ERR_DECRYPTION_NULL:
-        return QStringLiteral(
-            "One of the arguments to the function was NULL when it was not expected.");
-    case TOX_ERR_DECRYPTION_INVALID_LENGTH:
-        return QStringLiteral(
-            "The input data was shorter than TOX_PASS_ENCRYPTION_EXTRA_LENGTH bytes.");
-    case TOX_ERR_DECRYPTION_BAD_FORMAT:
-        return QStringLiteral("The input data is missing the magic number or is corrupted.");
-    case TOX_ERR_DECRYPTION_KEY_DERIVATION_FAILED:
-        return QStringLiteral("The crypto lib was unable to derive a key from the given passphrase.");
-    case TOX_ERR_DECRYPTION_FAILED:
-        return QStringLiteral("Decryption failed. Either the data was corrupted or the password/key was incorrect.");
-    default:
-        return QStringLiteral("Unknown decryption error.");
-    }
-}
-
-/**
- * @brief Gets the error string for Tox_Err_Get_Salt errors.
- * @param error The error number.
- * @return The verbose error message.
- */
-QString getSaltError(Tox_Err_Get_Salt error)
-{
-    switch (error) {
-    case TOX_ERR_GET_SALT_OK:
-        return QStringLiteral("The function returned successfully.");
-    case TOX_ERR_GET_SALT_NULL:
-        return QStringLiteral(
-            "One of the arguments to the function was NULL when it was not expected.");
-    case TOX_ERR_GET_SALT_BAD_FORMAT:
-        return QStringLiteral("The input data is missing the magic number or is corrupted.");
-    default:
-        return QStringLiteral("Unknown salt error.");
-    }
 }

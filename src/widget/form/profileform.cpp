@@ -49,7 +49,8 @@
 #include <QMouseEvent>
 #include <QWindow>
 
-static const QMap<IProfileInfo::SetAvatarResult, QString> SET_AVATAR_ERROR = {
+namespace {
+const QMap<IProfileInfo::SetAvatarResult, QString> SET_AVATAR_ERROR = {
     { IProfileInfo::SetAvatarResult::CanNotOpen,
       ProfileForm::tr("Unable to open this file.") },
     { IProfileInfo::SetAvatarResult::CanNotRead,
@@ -60,7 +61,7 @@ static const QMap<IProfileInfo::SetAvatarResult, QString> SET_AVATAR_ERROR = {
       ProfileForm::tr("Empty path is unavaliable") },
 };
 
-static const QMap<IProfileInfo::RenameResult, QPair<QString, QString>> RENAME_ERROR = {
+const QMap<IProfileInfo::RenameResult, QPair<QString, QString>> RENAME_ERROR = {
     { IProfileInfo::RenameResult::Error,
       { ProfileForm::tr("Failed to rename"),
         ProfileForm::tr("Couldn't rename the profile to \"%1\"") }
@@ -75,7 +76,7 @@ static const QMap<IProfileInfo::RenameResult, QPair<QString, QString>> RENAME_ER
     },
 };
 
-static const QMap<IProfileInfo::SaveResult, QPair<QString, QString>> SAVE_ERROR = {
+const QMap<IProfileInfo::SaveResult, QPair<QString, QString>> SAVE_ERROR = {
     { IProfileInfo::SaveResult::NoWritePermission,
       { ProfileForm::tr("Location not writable", "Title of permissions popup"),
         ProfileForm::tr("You do not have permission to write to that location. Choose "
@@ -91,11 +92,12 @@ static const QMap<IProfileInfo::SaveResult, QPair<QString, QString>> SAVE_ERROR 
     },
 };
 
-static const QPair<QString, QString> CAN_NOT_CHANGE_PASSWORD = {
+const QPair<QString, QString> CAN_NOT_CHANGE_PASSWORD = {
     ProfileForm::tr("Couldn't change password"),
     ProfileForm::tr("Couldn't change database password, "
     "it may be corrupted or use the old password.")
 };
+} // namespace
 
 ProfileForm::ProfileForm(IProfileInfo* profileInfo_, QWidget* parent)
     : QWidget{parent}

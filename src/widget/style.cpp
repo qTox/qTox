@@ -64,10 +64,9 @@
  */
 
 namespace {
-    const QLatin1String ThemeSubFolder{"themes/"};
-    const QLatin1String BuiltinThemeDefaultPath{":themes/default/"};
-    const QLatin1String BuiltinThemeDarkPath{":themes/dark/"};
-}
+const QLatin1String ThemeSubFolder{"themes/"};
+const QLatin1String BuiltinThemeDefaultPath{":themes/default/"};
+const QLatin1String BuiltinThemeDarkPath{":themes/dark/"};
 
 // helper functions
 QFont appFont(int pixelSize, int weight)
@@ -83,13 +82,13 @@ QString qssifyFont(QFont font)
     return QString("%1 %2px \"%3\"").arg(font.weight() * 8).arg(font.pixelSize()).arg(font.family());
 }
 
-static QMap<Style::ColorPalette, QColor> palette;
+QMap<Style::ColorPalette, QColor> palette;
 
-static QMap<QString, QString> dictColor;
-static QMap<QString, QString> dictFont;
-static QMap<QString, QString> dictTheme;
+QMap<QString, QString> dictColor;
+QMap<QString, QString> dictFont;
+QMap<QString, QString> dictTheme;
 
-static const QList<Style::ThemeNameColor> themeNameColors = {
+const QList<Style::ThemeNameColor> themeNameColors = {
     {Style::Light, QObject::tr("Default"), QColor()},
     {Style::Light, QObject::tr("Blue"), QColor("#004aa4")},
     {Style::Light, QObject::tr("Olive"), QColor("#97ba00")},
@@ -101,6 +100,35 @@ static const QList<Style::ThemeNameColor> themeNameColors = {
     {Style::Dark, QObject::tr("Dark red"), QColor("#7a210d")},
     {Style::Dark, QObject::tr("Dark violet"), QColor("#280d6c")}
 };
+
+const QMap<Style::ColorPalette, QString> aliasColors = {
+    {Style::TransferGood, "transferGood"},
+    {Style::TransferWait, "transferWait"},
+    {Style::TransferBad, "transferBad"},
+    {Style::TransferMiddle, "transferMiddle"},
+    {Style::MainText,"mainText"},
+    {Style::NameActive, "nameActive"},
+    {Style::StatusActive,"statusActive"},
+    {Style::GroundExtra, "groundExtra"},
+    {Style::GroundBase, "groundBase"},
+    {Style::Orange, "orange"},
+    {Style::Yellow, "yellow"},
+    {Style::ThemeDark, "themeDark"},
+    {Style::ThemeMediumDark, "themeMediumDark"},
+    {Style::ThemeMedium, "themeMedium"},
+    {Style::ThemeLight, "themeLight"},
+    {Style::Action, "action"},
+    {Style::Link, "link"},
+    {Style::SearchHighlighted, "searchHighlighted"},
+    {Style::SelectText, "selectText"},
+};
+
+// stylesheet filename, font -> stylesheet
+// QString implicit sharing deduplicates stylesheets rather than constructing a new one each time
+std::map<std::pair<const QString, const QFont>, const QString> stylesheetsCache;
+
+QStringList existingImagesCache;
+} // namespace
 
 QStringList Style::getThemeColorNames()
 {
@@ -135,33 +163,6 @@ QString Style::getThemeFolder()
     return fullPath % QDir::separator();
 }
 
-
-static const QMap<Style::ColorPalette, QString> aliasColors = {
-    {Style::TransferGood, "transferGood"},
-    {Style::TransferWait, "transferWait"},
-    {Style::TransferBad, "transferBad"},
-    {Style::TransferMiddle, "transferMiddle"},
-    {Style::MainText,"mainText"},
-    {Style::NameActive, "nameActive"},
-    {Style::StatusActive,"statusActive"},
-    {Style::GroundExtra, "groundExtra"},
-    {Style::GroundBase, "groundBase"},
-    {Style::Orange, "orange"},
-    {Style::Yellow, "yellow"},
-    {Style::ThemeDark, "themeDark"},
-    {Style::ThemeMediumDark, "themeMediumDark"},
-    {Style::ThemeMedium, "themeMedium"},
-    {Style::ThemeLight, "themeLight"},
-    {Style::Action, "action"},
-    {Style::Link, "link"},
-    {Style::SearchHighlighted, "searchHighlighted"},
-    {Style::SelectText, "selectText"},
-};
-
-// stylesheet filename, font -> stylesheet
-// QString implicit sharing deduplicates stylesheets rather than constructing a new one each time
-static std::map<std::pair<const QString, const QFont>, const QString> stylesheetsCache;
-
 const QString Style::getStylesheet(const QString& filename, const QFont& baseFont)
 {
     const QString fullPath = getThemeFolder() + filename;
@@ -178,7 +179,6 @@ const QString Style::getStylesheet(const QString& filename, const QFont& baseFon
     return newStylesheet;
 }
 
-static QStringList existingImagesCache;
 const QString Style::getImagePath(const QString& filename)
 {
     QString fullPath = getThemeFolder() + filename;

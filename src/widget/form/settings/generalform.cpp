@@ -34,8 +34,9 @@
 #include "src/widget/translator.h"
 #include "src/widget/widget.h"
 
+namespace {
 // clang-format off
-static QStringList locales = {
+QStringList locales = {
     "ar",
     "be",
     "ber",
@@ -88,6 +89,7 @@ static QStringList locales = {
     "zh_TW"
 };
 // clang-format on
+} // namespace
 
 /**
  * @class GeneralForm

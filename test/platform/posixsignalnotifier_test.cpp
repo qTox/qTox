@@ -53,7 +53,9 @@ void TestPosixSignalNotifier::checkUsrSignalHandling()
     QCOMPARE(args.first().toInt(), SIGUSR1);
 }
 
+namespace {
 void sighandler(int) {
+}
 }
 
 void TestPosixSignalNotifier::checkIgnoreExtraSignals()

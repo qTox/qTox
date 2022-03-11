@@ -63,12 +63,12 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QSt
 
     // quotes (green text)
     text = detectQuotes(text, type);
-    text = highlightURI(text);
+    text = TextFormatter::highlightURI(text);
 
     // text styling
     Settings::StyleType styleType = Settings::getInstance().getStylePreference();
     if (styleType != Settings::StyleType::NONE) {
-        text = applyMarkdown(text, styleType == Settings::StyleType::WITH_CHARS);
+        text = TextFormatter::applyMarkdown(text, styleType == Settings::StyleType::WITH_CHARS);
     }
 
 

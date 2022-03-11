@@ -26,17 +26,19 @@
  * @brief Restore splitter from saved state and reset to default
  */
 
+namespace {
 /**
  * @brief The width of the default splitter handles.
  * By default, this property contains a value that depends on the user's
  * platform and style preferences.
  */
-static int defaultWidth = 0;
+int defaultWidth = 0;
 
 /**
  * @brief Width of left splitter size in percents.
  */
-const static int leftWidthPercent = 33;
+const int leftWidthPercent = 33;
+} // namespace
 
 SplitterRestorer::SplitterRestorer(QSplitter* splitter_)
     : splitter{splitter_}

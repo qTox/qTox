@@ -24,7 +24,9 @@
 #include <QSettings>
 #include <QStandardPaths>
 
-static int state;
+namespace {
+int state;
+} // namespace
 
 bool Platform::setAutorun(bool on)
 {

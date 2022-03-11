@@ -37,7 +37,9 @@ private slots:
     void testExtendedMessageCoordination();
 };
 
+namespace {
 void completionFn(bool) {}
+} // namespace
 
 void TestOfflineMsgEngine::testReceiptBeforeMessage()
 {

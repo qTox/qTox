@@ -29,6 +29,14 @@
 class SettingsSerializer
 {
 public:
+    enum class RecordTag : uint8_t
+    {
+        Value = 0,
+        GroupStart = 1,
+        ArrayStart = 2,
+        ArrayValue = 3,
+        ArrayEnd = 4,
+    };
     SettingsSerializer(QString filePath_, const ToxEncrypt* passKey_ = nullptr);
 
     static bool isSerializedFormat(QString filePath);
@@ -48,17 +56,6 @@ public:
     QVariant value(const QString& key, const QVariant& defaultValue = QVariant()) const;
 
 private:
-    enum class RecordTag : uint8_t
-    {
-        Value = 0,
-        GroupStart = 1,
-        ArrayStart = 2,
-        ArrayValue = 3,
-        ArrayEnd = 4,
-    };
-    friend QDataStream& writeStream(QDataStream& dataStream, const SettingsSerializer::RecordTag& tag);
-    friend QDataStream& readStream(QDataStream& dataStream, SettingsSerializer::RecordTag& tag);
-
     struct Value
     {
         Value()

@@ -23,7 +23,7 @@
 #include <QDir>
 #include <QProcessEnvironment>
 
-namespace Platform {
+namespace {
 QString getAutostartDirPath()
 {
     QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
@@ -55,7 +55,7 @@ inline QString profileRunCommand()
     return "\"" + currentBinPath() + "\" -p \""
            + Settings::getInstance().getCurrentProfile() + "\"";
 }
-}
+} // namespace
 
 bool Platform::setAutorun(bool on)
 {

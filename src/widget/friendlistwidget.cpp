@@ -37,6 +37,7 @@
 #include <QTimer>
 #include <cassert>
 
+namespace {
 enum class Time
 {
     Today,
@@ -52,7 +53,7 @@ enum class Time
     Never
 };
 
-static const int LAST_TIME = static_cast<int>(Time::Never);
+const int LAST_TIME = static_cast<int>(Time::Never);
 
 Time getTimeBucket(const QDateTime& date)
 {
@@ -96,6 +97,7 @@ qint64 timeUntilTomorrow()
     tomorrow.setTime(QTime());           // Midnight.
     return now.msecsTo(tomorrow);
 }
+} // namespace
 
 FriendListWidget::FriendListWidget(const Core &_core, Widget* parent, bool groupsOnTop)
     : QWidget(parent)

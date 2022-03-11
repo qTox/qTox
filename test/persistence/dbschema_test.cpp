@@ -33,6 +33,7 @@ struct SqliteMasterEntry {
     QString sql;
 };
 
+bool operator==(const SqliteMasterEntry& lhs, const SqliteMasterEntry& rhs);
 bool operator==(const SqliteMasterEntry& lhs, const SqliteMasterEntry& rhs)
 {
     return lhs.name == rhs.name &&

@@ -52,7 +52,6 @@ const auto LABEL_PEER_TYPE_MUTED = QVariant(QStringLiteral("muted"));
 const auto LABEL_PEER_PLAYING_AUDIO = QVariant(QStringLiteral("true"));
 const auto LABEL_PEER_NOT_PLAYING_AUDIO = QVariant(QStringLiteral("false"));
 const auto PEER_LABEL_STYLE_SHEET_PATH = QStringLiteral("chatArea/chatHead.css");
-}
 
 /**
  * @brief Edit name for correct representation if it is needed
@@ -72,6 +71,7 @@ QString editName(const QString& name)
     result.chop(len - pos);
     result.append(QStringLiteral("…")); // \u2026 Unicode symbol, not just three separate dots
     return result;
+}
 }
 
 /**

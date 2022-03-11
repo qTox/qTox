@@ -30,16 +30,17 @@
 #include <QLabel>
 #include <QPainter>
 
-/**
- * @var std::atomic_bool VideoSurface::frameLock
- * @brief Fast lock for lastFrame.
- */
-
+namespace {
 float getSizeRatio(const QSize size)
 {
     return size.width() / static_cast<float>(size.height());
 }
+} // namespace
 
+/**
+ * @var std::atomic_bool VideoSurface::frameLock
+ * @brief Fast lock for lastFrame.
+ */
 VideoSurface::VideoSurface(const QPixmap& avatar_, QWidget* parent, bool expanding_)
     : QWidget{parent}
     , source{nullptr}

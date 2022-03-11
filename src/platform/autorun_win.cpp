@@ -23,6 +23,7 @@
 #include <string>
 #include <windows.h>
 
+namespace {
 #ifdef UNICODE
 /**
  * tstring is either std::wstring or std::string, depending on whether the user
@@ -30,17 +31,18 @@
  * easier to reuse and compatible with both setups.
  */
 using tstring = std::wstring;
-static inline tstring toTString(QString s)
+inline tstring toTString(QString s)
 {
     return s.toStdWString();
 }
 #else
 using tstring = std::string;
-static inline tstring toTString(QString s)
+inline tstring toTString(QString s)
 {
     return s.toStdString();
 }
 #endif
+} // namespace
 
 namespace Platform {
 inline tstring currentCommandLine()

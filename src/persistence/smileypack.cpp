@@ -52,15 +52,16 @@
  * @brief Contains all directories where smileys could be found
  */
 
+namespace {
 QStringList loadDefaultPaths();
 
-static const QStringList DEFAULT_PATHS = loadDefaultPaths();
+const QStringList DEFAULT_PATHS = loadDefaultPaths();
 
-static const QString RICH_TEXT_PATTERN = QStringLiteral("<img title=\"%1\" src=\"key:%1\"\\>");
+const QString RICH_TEXT_PATTERN = QStringLiteral("<img title=\"%1\" src=\"key:%1\"\\>");
 
-static const QString EMOTICONS_FILE_NAME = QStringLiteral("emoticons.xml");
+const QString EMOTICONS_FILE_NAME = QStringLiteral("emoticons.xml");
 
-static constexpr int CLEANUP_TIMEOUT = 5 * 60 * 1000; // 5 minutes
+constexpr int CLEANUP_TIMEOUT = 5 * 60 * 1000; // 5 minutes
 
 /**
  * @brief Construct list of standard directories with "emoticons" sub dir, whether these directories
@@ -95,22 +96,14 @@ QStringList loadDefaultPaths()
     return paths;
 }
 
-/**
- * @brief Wraps passed string into smiley HTML image reference
- * @param key Describes which smiley is needed
- * @return Key that wrapped into image ref
- */
-QString getAsRichText(const QString& key)
-{
-    return RICH_TEXT_PATTERN.arg(key);
-}
-
 bool isAscii(const QString& string)
 {
     constexpr auto asciiExtMask = 0x80;
 
     return (string.toUtf8()[0] & asciiExtMask) == 0;
 }
+
+} // namespace
 
 SmileyPack::SmileyPack()
     : cleanupTimer{new QTimer(this)}
@@ -126,6 +119,16 @@ SmileyPack::SmileyPack()
 SmileyPack::~SmileyPack()
 {
     delete cleanupTimer;
+}
+
+/**
+ * @brief Wraps passed string into smiley HTML image reference
+ * @param key Describes which smiley is needed
+ * @return Key that wrapped into image ref
+ */
+QString SmileyPack::getAsRichText(const QString& key)
+{
+    return RICH_TEXT_PATTERN.arg(key);
 }
 
 void SmileyPack::cleanupIconsCache()
@@ -311,7 +314,7 @@ QString SmileyPack::smileyfied(const QString& msg)
         QRegularExpressionMatch match = iter.next();
         int startPos = match.capturedStart();
         int keyLength = match.capturedLength();
-        QString imgRichText = getAsRichText(match.captured());
+        QString imgRichText = SmileyPack::getAsRichText(match.captured());
         result.replace(startPos + replaceDiff, keyLength, imgRichText);
         replaceDiff += imgRichText.length() - keyLength;
     }

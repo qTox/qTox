@@ -24,8 +24,9 @@
 
 // clang-format off
 
+namespace {
 // Note: escaping of '\' is only needed because QStringLiteral is broken by linebreak
-static const QString SINGLE_SIGN_PATTERN = QStringLiteral("(?<=^|\\s)"
+const QString SINGLE_SIGN_PATTERN = QStringLiteral("(?<=^|\\s)"
                                                           "[%1]"
                                                           "(?!\\s)"
                                                           "([^%1\\n]+?)"
@@ -33,7 +34,7 @@ static const QString SINGLE_SIGN_PATTERN = QStringLiteral("(?<=^|\\s)"
                                                           "[%1]"
                                                           "(?=$|\\s)");
 
-static const QString SINGLE_SLASH_PATTERN = QStringLiteral("(?<=^|\\s)"
+const QString SINGLE_SLASH_PATTERN = QStringLiteral("(?<=^|\\s)"
                                                            "/"
                                                            "(?!\\s)"
                                                            "([^/\\n]+?)"
@@ -41,7 +42,7 @@ static const QString SINGLE_SLASH_PATTERN = QStringLiteral("(?<=^|\\s)"
                                                            "/"
                                                            "(?=$|\\s)");
 
-static const QString DOUBLE_SIGN_PATTERN = QStringLiteral("(?<=^|\\s)"
+const QString DOUBLE_SIGN_PATTERN = QStringLiteral("(?<=^|\\s)"
                                                           "[%1]{2}"
                                                           "(?!\\s)"
                                                           "([^\\n]+?)"
@@ -49,7 +50,7 @@ static const QString DOUBLE_SIGN_PATTERN = QStringLiteral("(?<=^|\\s)"
                                                           "[%1]{2}"
                                                           "(?=$|\\s)");
 
-static const QString MULTILINE_CODE = QStringLiteral("(?<=^|\\s)"
+const QString MULTILINE_CODE = QStringLiteral("(?<=^|\\s)"
                                                      "```"
                                                      "(?!`)"
                                                      "((.|\\n)+?)"
@@ -60,7 +61,7 @@ static const QString MULTILINE_CODE = QStringLiteral("(?<=^|\\s)"
 #define REGEXP_WRAPPER_PAIR(pattern, wrapper)\
 {QRegularExpression(pattern,QRegularExpression::UseUnicodePropertiesOption),QStringLiteral(wrapper)}
 
-static const QPair<QRegularExpression, QString> REGEX_TO_WRAPPER[] {
+const QPair<QRegularExpression, QString> REGEX_TO_WRAPPER[] {
     REGEXP_WRAPPER_PAIR(SINGLE_SLASH_PATTERN, "<i>%1</i>"),
     REGEXP_WRAPPER_PAIR(SINGLE_SIGN_PATTERN.arg('*'), "<b>%1</b>"),
     REGEXP_WRAPPER_PAIR(SINGLE_SIGN_PATTERN.arg('_'), "<u>%1</u>"),
@@ -75,14 +76,14 @@ static const QPair<QRegularExpression, QString> REGEX_TO_WRAPPER[] {
 
 #undef REGEXP_WRAPPER_PAIR
 
-static const QString HREF_WRAPPER = QStringLiteral(R"(<a href="%1">%1</a>)");
-static const QString WWW_WRAPPER = QStringLiteral(R"(<a href="http://%1">%1</a>)");
+const QString HREF_WRAPPER = QStringLiteral(R"(<a href="%1">%1</a>)");
+const QString WWW_WRAPPER = QStringLiteral(R"(<a href="http://%1">%1</a>)");
 
-static const QVector<QRegularExpression> WWW_WORD_PATTERN = {
+const QVector<QRegularExpression> WWW_WORD_PATTERN = {
         QRegularExpression(QStringLiteral(R"((?<=^|\s)\S*((www\.)\S+))"))
 };
 
-static const QVector<QRegularExpression> URI_WORD_PATTERNS = {
+const QVector<QRegularExpression> URI_WORD_PATTERNS = {
     // Note: This does not match only strictly valid URLs, but we broaden search to any string following scheme to
     // allow UTF-8 "IRI"s instead of ASCII-only URLs
     QRegularExpression(QStringLiteral(R"((?<=^|\s)\S*((((http[s]?)|ftp)://)\S+))")),
@@ -103,7 +104,7 @@ struct MatchingUri {
 };
 
 // pairs of characters that are ignored when surrounding a URI
-static const QPair<QString, QString> URI_WRAPPING_CHARS[] = {
+const QPair<QString, QString> URI_WRAPPING_CHARS[] = {
         {QString("("), QString(")")},
         {QString("["), QString("]")},
         {QString("&quot;"), QString("&quot;")},
@@ -111,7 +112,7 @@ static const QPair<QString, QString> URI_WRAPPING_CHARS[] = {
 };
 
 // characters which are ignored from the end of URI
-static const QChar URI_ENDING_CHARS[] = {
+const QChar URI_ENDING_CHARS[] = {
         QChar::fromLatin1('?'),
         QChar::fromLatin1('.'),
         QChar::fromLatin1('!'),
@@ -195,23 +196,11 @@ QString highlight(const QString& message, const QVector<QRegularExpression>& pat
 }
 
 /**
- * @brief Highlights URLs within passed message string
- * @param message Where search for URLs
- * @return Copy of message with highlighted URLs
- */
-QString highlightURI(const QString& message)
-{
-    QString result = highlight(message, URI_WORD_PATTERNS, HREF_WRAPPER);
-    result = highlight(result, WWW_WORD_PATTERN, WWW_WRAPPER);
-    return result;
-}
-
-/**
  * @brief Checks HTML tags intersection while applying styles to the message text
  * @param str Checking string
  * @return True, if tag intersection detected
  */
-static bool isTagIntersection(const QString& str)
+bool isTagIntersection(const QString& str)
 {
     const QRegularExpression TAG_PATTERN("(?<=<)/?[a-zA-Z0-9]+(?=>)");
 
@@ -224,6 +213,19 @@ static bool isTagIntersection(const QString& str)
     }
     return openingTagCount != closingTagCount;
 }
+} // namespace
+
+/**
+ * @brief Highlights URLs within passed message string
+ * @param message Where search for URLs
+ * @return Copy of message with highlighted URLs
+ */
+QString TextFormatter::highlightURI(const QString& message)
+{
+    QString result = highlight(message, URI_WORD_PATTERNS, HREF_WRAPPER);
+    result = highlight(result, WWW_WORD_PATTERN, WWW_WRAPPER);
+    return result;
+}
 
 /**
  * @brief Applies markdown to passed message string
@@ -232,7 +234,7 @@ static bool isTagIntersection(const QString& str)
  * string
  * @return Copy of message with markdown applied
  */
-QString applyMarkdown(const QString& message, bool showFormattingSymbols)
+QString TextFormatter::applyMarkdown(const QString& message, bool showFormattingSymbols)
 {
     QString result = message;
     for (const QPair<QRegularExpression, QString>& pair : REGEX_TO_WRAPPER) {

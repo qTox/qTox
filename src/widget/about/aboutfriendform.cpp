@@ -26,6 +26,16 @@
 #include <QFileDialog>
 #include <QMessageBox>
 
+namespace {
+QString getAutoAcceptDir(const QString& dir)
+{
+    //: popup title
+    const QString title = AboutFriendForm::tr("Choose an auto-accept directory");
+    return QFileDialog::getExistingDirectory(Q_NULLPTR, title, dir);
+}
+
+} // namespace
+
 AboutFriendForm::AboutFriendForm(std::unique_ptr<IAboutFriend> _about, QWidget* parent)
     : QDialog(parent)
     , ui(new Ui::AboutFriendForm)
@@ -70,13 +80,6 @@ AboutFriendForm::AboutFriendForm(std::unique_ptr<IAboutFriend> _about, QWidget* 
     connect(&GUI::getInstance(), &GUI::themeReload, this, &AboutFriendForm::reloadTheme);
 
     reloadTheme();
-}
-
-static QString getAutoAcceptDir(const QString& dir)
-{
-    //: popup title
-    const QString title = AboutFriendForm::tr("Choose an auto-accept directory");
-    return QFileDialog::getExistingDirectory(Q_NULLPTR, title, dir);
 }
 
 void AboutFriendForm::onAutoAcceptDirClicked()

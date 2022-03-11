@@ -40,6 +40,7 @@ public:
     QString smileyfied(const QString& msg);
     QList<QStringList> getEmoticons() const;
     std::shared_ptr<QIcon> getAsIcon(const QString& key) const;
+    static QString getAsRichText(const QString& key);
 
 private slots:
     void onSmileyPackChanged();

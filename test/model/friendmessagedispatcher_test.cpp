@@ -28,8 +28,9 @@
 #include <set>
 #include <deque>
 
-static constexpr uint64_t testMaxExtendedMessageSize = 10 * 1024 * 1024;
-
+namespace {
+constexpr uint64_t testMaxExtendedMessageSize = 10 * 1024 * 1024;
+}
 
 class MockCoreExtPacket : public ICoreExtPacket
 {

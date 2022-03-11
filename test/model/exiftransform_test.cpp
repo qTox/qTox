@@ -22,8 +22,9 @@
 #include <QPainter>
 #include <QTest>
 
-static const auto rowColor = QColor(Qt::green).rgb();
-static const auto colColor = QColor(Qt::blue).rgb();
+namespace {
+const auto rowColor = QColor(Qt::green).rgb();
+const auto colColor = QColor(Qt::blue).rgb();
 
 enum class Side
 {
@@ -33,7 +34,7 @@ enum class Side
     right
 };
 
-static QPoint getPosition(Side side)
+QPoint getPosition(Side side)
 {
     int x, y;
     switch (side)
@@ -67,11 +68,11 @@ static QPoint getPosition(Side side)
     return {x, y};
 }
 
-static QRgb getColor(const QImage& image, Side side)
+QRgb getColor(const QImage& image, Side side)
 {
     return image.pixel(getPosition(side));
 }
-
+} // namespace
 
 class TestExifTransform : public QObject
 {

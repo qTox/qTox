@@ -69,10 +69,11 @@
  *
  * @brief stopNotification Tell others to stop notification of a call.
  */
-
-static constexpr int CHAT_WIDGET_MIN_HEIGHT = 50;
-static constexpr int SCREENSHOT_GRABBER_OPENING_DELAY = 500;
-static constexpr int TYPING_NOTIFICATION_DURATION = 3000;
+namespace {
+constexpr int CHAT_WIDGET_MIN_HEIGHT = 50;
+constexpr int SCREENSHOT_GRABBER_OPENING_DELAY = 500;
+constexpr int TYPING_NOTIFICATION_DURATION = 3000;
+} // namespace
 
 const QString ChatForm::ACTION_PREFIX = QStringLiteral("/me ");
 

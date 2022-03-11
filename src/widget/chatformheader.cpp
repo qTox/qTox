@@ -36,12 +36,12 @@
 #include <QTextDocument>
 #include <QToolButton>
 
-static const QSize AVATAR_SIZE{40, 40};
-static const short HEAD_LAYOUT_SPACING = 5;
-static const short MIC_BUTTONS_LAYOUT_SPACING = 4;
-static const short BUTTONS_LAYOUT_HOR_SPACING = 4;
-
 namespace {
+const QSize AVATAR_SIZE{40, 40};
+const short HEAD_LAYOUT_SPACING = 5;
+const short MIC_BUTTONS_LAYOUT_SPACING = 4;
+const short BUTTONS_LAYOUT_HOR_SPACING = 4;
+
 const QString STYLE_PATH = QStringLiteral("chatForm/buttons.css");
 
 const QString STATE_NAME[] = {

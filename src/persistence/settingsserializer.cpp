@@ -50,15 +50,12 @@
  * @var ArrayEnd
  * Not followed by any data
  */
-enum class RecordTag : uint8_t
-{
-
-};
-/**
+ /**
  * @var static const char magic[];
  * @brief Little endian ASCII "QTOX" magic
  */
 const char SettingsSerializer::magic[] = {0x51, 0x54, 0x4F, 0x58};
+namespace {
 
 QDataStream& writeStream(QDataStream& dataStream, const SettingsSerializer::RecordTag& tag)
 {
@@ -98,6 +95,7 @@ QDataStream& readStream(QDataStream& dataStream, QByteArray& data)
     dataStream.readRawData(data.data(), num);
     return dataStream;
 }
+} // namespace
 
 SettingsSerializer::SettingsSerializer(QString filePath_, const ToxEncrypt* passKey_)
     : path{filePath_}

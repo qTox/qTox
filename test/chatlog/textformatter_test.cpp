@@ -29,7 +29,8 @@
 
 using StringPair = QPair<QString, QString>;
 
-static const StringPair TAGS[] {
+namespace {
+const StringPair TAGS[] {
     PAIR_FORMAT("<b>", "</b>"),
     PAIR_FORMAT("<i>", "</i>"),
     PAIR_FORMAT("<u>", "</u>"),
@@ -55,7 +56,7 @@ struct MarkdownToTags
     StringPair htmlTags;
 };
 
-static const QVector<MarkdownToTags> SINGLE_SIGN_MARKDOWN {
+const QVector<MarkdownToTags> SINGLE_SIGN_MARKDOWN {
     {QStringLiteral("*"), TAGS[StyleType::BOLD]},
     {QStringLiteral("/"), TAGS[StyleType::ITALIC]},
     {QStringLiteral("_"), TAGS[StyleType::UNDERLINE]},
@@ -63,14 +64,14 @@ static const QVector<MarkdownToTags> SINGLE_SIGN_MARKDOWN {
     {QStringLiteral("`"), TAGS[StyleType::CODE]},
 };
 
-static const QVector<MarkdownToTags> DOUBLE_SIGN_MARKDOWN {
+const QVector<MarkdownToTags> DOUBLE_SIGN_MARKDOWN {
     {QStringLiteral("**"), TAGS[StyleType::BOLD]},
     {QStringLiteral("//"), TAGS[StyleType::ITALIC]},
     {QStringLiteral("__"), TAGS[StyleType::UNDERLINE]},
     {QStringLiteral("~~"), TAGS[StyleType::STRIKE]},
 };
 
-static const QVector<MarkdownToTags> MULTI_SIGN_MARKDOWN {
+const QVector<MarkdownToTags> MULTI_SIGN_MARKDOWN {
     {QStringLiteral("```"), TAGS[StyleType::CODE]},
 };
 
@@ -78,7 +79,7 @@ static const QVector<MarkdownToTags> MULTI_SIGN_MARKDOWN {
  * @brief Creates single container from two
  */
 template<class Container>
-static Container concat(const Container& first, const Container& last)
+Container concat(const Container& first, const Container& last)
 {
     Container result;
     result.reserve(first.size() + last.size());
@@ -87,15 +88,15 @@ static Container concat(const Container& first, const Container& last)
     return result;
 }
 
-static const QVector<MarkdownToTags> ALL_MARKDOWN_TYPES = concat(concat(SINGLE_SIGN_MARKDOWN,
+const QVector<MarkdownToTags> ALL_MARKDOWN_TYPES = concat(concat(SINGLE_SIGN_MARKDOWN,
                                                                         DOUBLE_SIGN_MARKDOWN),
                                                                  MULTI_SIGN_MARKDOWN);
 
-static const QVector<MarkdownToTags> SINGLE_AND_DOUBLE_MARKDOWN = concat(SINGLE_SIGN_MARKDOWN,
+const QVector<MarkdownToTags> SINGLE_AND_DOUBLE_MARKDOWN = concat(SINGLE_SIGN_MARKDOWN,
                                                                          DOUBLE_SIGN_MARKDOWN);
 
 // any markdown type must work for this data the same way
-static const QVector<StringPair> COMMON_WORK_CASES {
+const QVector<StringPair> COMMON_WORK_CASES {
     PAIR_FORMAT("%1a%1", "%2%1a%1%3"),
     PAIR_FORMAT("%1aa%1", "%2%1aa%1%3"),
     PAIR_FORMAT("%1aaa%1", "%2%1aaa%1%3"),
@@ -103,7 +104,7 @@ static const QVector<StringPair> COMMON_WORK_CASES {
     PAIR_FORMAT("%1aaa%1 %1aaa%1", "%2%1aaa%1%3 %2%1aaa%1%3"),
 };
 
-static const QVector<StringPair> SINGLE_SIGN_WORK_CASES {
+const QVector<StringPair> SINGLE_SIGN_WORK_CASES {
     PAIR_FORMAT("a %1a%1", "a %2%1a%1%3"),
     PAIR_FORMAT("%1a%1 a", "%2%1a%1%3 a"),
     PAIR_FORMAT("a %1a%1 a", "a %2%1a%1%3 a"),
@@ -112,7 +113,7 @@ static const QVector<StringPair> SINGLE_SIGN_WORK_CASES {
 };
 
 // only double-sign markdown must work for this data
-static const QVector<StringPair> DOUBLE_SIGN_WORK_CASES {
+const QVector<StringPair> DOUBLE_SIGN_WORK_CASES {
     // Must apply formatting to strings which contain reserved symbols
     PAIR_FORMAT("%1aaa%2%1", "%3%1aaa%2%1%4"),
     PAIR_FORMAT("%1%2aaa%1", "%3%1%2aaa%1%4"),
@@ -123,7 +124,7 @@ static const QVector<StringPair> DOUBLE_SIGN_WORK_CASES {
 };
 
 // only multi-sign markdown must work for this data
-static const QVector<StringPair> MULTI_SIGN_WORK_CASES {
+const QVector<StringPair> MULTI_SIGN_WORK_CASES {
     PAIR_FORMAT("%1int main()\n{    return 0;\n}%1", "%2%1"
                                                      "int main()\n{    return 0;\n}"
                                                      "%1%3"),
@@ -137,7 +138,7 @@ static const QVector<StringPair> MULTI_SIGN_WORK_CASES {
 };
 
 // any type of markdown must fail for this data
-static const QVector<QString> COMMON_EXCEPTIONS {
+const QVector<QString> COMMON_EXCEPTIONS {
     // No empty formatting string
     QStringLiteral("%1%1"),
     // Formatting string must be enclosed by whitespace symbols, newlines or message start/end
@@ -146,7 +147,7 @@ static const QVector<QString> COMMON_EXCEPTIONS {
     QStringLiteral("a\n%1aa%1a"), QStringLiteral("a%1aa%1\na"),
 };
 
-static const QVector<QString> SINGLE_AND_DOUBLE_SIGN_EXCEPTIONS {
+const QVector<QString> SINGLE_AND_DOUBLE_SIGN_EXCEPTIONS {
     // Formatting text must not start/end with whitespace symbols
     QStringLiteral("%1 %1"), QStringLiteral("%1 a%1"), QStringLiteral("%1a %1"),
     // No newlines
@@ -155,13 +156,13 @@ static const QVector<QString> SINGLE_AND_DOUBLE_SIGN_EXCEPTIONS {
 };
 
 // only single-sign markdown must fail for this data
-static const QVector<QString> SINGLE_SIGN_EXCEPTIONS {
+const QVector<QString> SINGLE_SIGN_EXCEPTIONS {
     // Reserved symbols within formatting string are disallowed
     QStringLiteral("%1aa%1a%1"), QStringLiteral("%1aa%1%1"), QStringLiteral("%1%1aa%1"),
     QStringLiteral("%1%1%1"),
 };
 
-static const QVector<StringPair> MIXED_FORMATTING_SPECIAL_CASES {
+const QVector<StringPair> MIXED_FORMATTING_SPECIAL_CASES {
     // Must allow mixed formatting if there is no tag overlap in result
     PAIR_FORMAT("aaa *aaa /aaa/ aaa*", "aaa <b>aaa <i>aaa</i> aaa</b>"),
     PAIR_FORMAT("aaa *aaa /aaa* aaa/", "aaa *aaa <i>aaa* aaa</i>"),
@@ -170,7 +171,7 @@ static const QVector<StringPair> MIXED_FORMATTING_SPECIAL_CASES {
 #define MAKE_LINK(url) "<a href=\"" url "\">" url "</a>"
 #define MAKE_WWW_LINK(url) "<a href=\"http://" url "\">" url "</a>"
 
-static const QVector<QPair<QString, QString>> URL_CASES {
+const QVector<QPair<QString, QString>> URL_CASES {
     PAIR_FORMAT("https://github.com/qTox/qTox/issues/4233",
                 MAKE_LINK("https://github.com/qTox/qTox/issues/4233")),
     PAIR_FORMAT("www.youtube.com", MAKE_WWW_LINK("www.youtube.com")),
@@ -254,7 +255,7 @@ using OutputProcessor = std::function<QString(const QString&, const MarkdownToTa
  * depending on user need
  * @param processOutput Same as previous parameter but is applied to markdown output
  */
-static void workCasesTest(MarkdownFunction applyMarkdown,
+void workCasesTest(MarkdownFunction applyMarkdown,
                           const QVector<MarkdownToTags>& markdownToTags,
                           const QVector<StringPair>& testData,
                           bool showSymbols,
@@ -282,7 +283,7 @@ static void workCasesTest(MarkdownFunction applyMarkdown,
  * @param showSymbols True if it is supposed to leave markdown symbols after formatting, false
  * otherwise
  */
-static void exceptionsTest(MarkdownFunction applyMarkdown,
+void exceptionsTest(MarkdownFunction applyMarkdown,
                            const QVector<MarkdownToTags>& markdownToTags,
                            const QVector<QString>& exceptions,
                            bool showSymbols)
@@ -301,7 +302,7 @@ static void exceptionsTest(MarkdownFunction applyMarkdown,
  * @param pairs Collection of "source message - markdown result" pairs representing cases where
  * markdown must not to work
  */
-static void specialCasesTest(MarkdownFunction applyMarkdown,
+void specialCasesTest(MarkdownFunction applyMarkdown,
                              const QVector<StringPair>& pairs)
 {
     for (const auto& p : pairs) {
@@ -316,13 +317,73 @@ using UrlHighlightFunction = QString(*)(const QString&);
  * @brief Function for testing URL highlighting
  * @param data Test data - map of "URL - HTML-wrapped URL"
  */
-static void urlHighlightTest(UrlHighlightFunction function, const QVector<QPair<QString, QString>>& data)
+void urlHighlightTest(UrlHighlightFunction function, const QVector<QPair<QString, QString>>& data)
 {
     for (const QPair<QString, QString>& p : data) {
         QString result = function(p.first);
         QVERIFY(p.second == result);
     }
 }
+
+QString commonWorkCasesProcessInput(const QString& str, const MarkdownToTags& mtt)
+{
+    return str.arg(mtt.markdownSequence);
+}
+
+QString commonWorkCasesProcessOutput(const QString& str,
+                                            const MarkdownToTags& mtt,
+                                            bool showSymbols)
+{
+    const StringPair& tags = mtt.htmlTags;
+    return str.arg(showSymbols ? mtt.markdownSequence : QString{}).arg(tags.first).arg(tags.second);
+}
+
+QString singleSignWorkCasesProcessInput(const QString& str, const MarkdownToTags& mtt)
+{
+    return str.arg(mtt.markdownSequence);
+}
+
+QString singleSignWorkCasesProcessOutput(const QString& str,
+                                                const MarkdownToTags& mtt,
+                                                bool showSymbols)
+{
+    const StringPair& tags = mtt.htmlTags;
+    return str.arg(showSymbols ? mtt.markdownSequence : "")
+              .arg(tags.first)
+              .arg(tags.second)
+              .arg(mtt.markdownSequence);
+}
+
+QString doubleSignWorkCasesProcessInput(const QString& str, const MarkdownToTags& mtt)
+{
+    return str.arg(mtt.markdownSequence).arg(mtt.markdownSequence[0]);
+}
+
+QString doubleSignWorkCasesProcessOutput(const QString& str,
+                                                const MarkdownToTags& mtt,
+                                                bool showSymbols)
+{
+    const StringPair& tags = mtt.htmlTags;
+    return str.arg(showSymbols ? mtt.markdownSequence : "")
+              .arg(mtt.markdownSequence[0])
+              .arg(tags.first)
+              .arg(tags.second);
+}
+
+QString multiSignWorkCasesProcessInput(const QString& str, const MarkdownToTags& mtt)
+{
+    return str.arg(mtt.markdownSequence);
+}
+
+QString multiSignWorkCasesProcessOutput(const QString& str,
+                                                const MarkdownToTags& mtt,
+                                                bool showSymbols)
+{
+    const auto tags = mtt.htmlTags;
+    return str.arg(showSymbols ? mtt.markdownSequence : "", tags.first, tags.second);
+}
+
+} // namespace
 
 class TestTextFormatter : public QObject
 {
@@ -345,22 +406,9 @@ private slots:
     void mixedFormattingSpecialCases();
     void urlTest();
 private:
-    const MarkdownFunction markdownFunction = applyMarkdown;
-    UrlHighlightFunction urlHighlightFunction = highlightURI;
+    const MarkdownFunction markdownFunction = TextFormatter::applyMarkdown;
+    UrlHighlightFunction urlHighlightFunction = TextFormatter::highlightURI;
 };
-
-static QString commonWorkCasesProcessInput(const QString& str, const MarkdownToTags& mtt)
-{
-    return str.arg(mtt.markdownSequence);
-}
-
-static QString commonWorkCasesProcessOutput(const QString& str,
-                                            const MarkdownToTags& mtt,
-                                            bool showSymbols)
-{
-    const StringPair& tags = mtt.htmlTags;
-    return str.arg(showSymbols ? mtt.markdownSequence : QString{}).arg(tags.first).arg(tags.second);
-}
 
 void TestTextFormatter::commonWorkCasesShowSymbols()
 {
@@ -380,22 +428,6 @@ void TestTextFormatter::commonWorkCasesHideSymbols()
                   false,
                   commonWorkCasesProcessInput,
                   commonWorkCasesProcessOutput);
-}
-
-static QString singleSignWorkCasesProcessInput(const QString& str, const MarkdownToTags& mtt)
-{
-    return str.arg(mtt.markdownSequence);
-}
-
-static QString singleSignWorkCasesProcessOutput(const QString& str,
-                                                const MarkdownToTags& mtt,
-                                                bool showSymbols)
-{
-    const StringPair& tags = mtt.htmlTags;
-    return str.arg(showSymbols ? mtt.markdownSequence : "")
-              .arg(tags.first)
-              .arg(tags.second)
-              .arg(mtt.markdownSequence);
 }
 
 void TestTextFormatter::singleSignWorkCasesShowSymbols()
@@ -418,22 +450,6 @@ void TestTextFormatter::singleSignWorkCasesHideSymbols()
                   singleSignWorkCasesProcessOutput);
 }
 
-static QString doubleSignWorkCasesProcessInput(const QString& str, const MarkdownToTags& mtt)
-{
-    return str.arg(mtt.markdownSequence).arg(mtt.markdownSequence[0]);
-}
-
-static QString doubleSignWorkCasesProcessOutput(const QString& str,
-                                                const MarkdownToTags& mtt,
-                                                bool showSymbols)
-{
-    const StringPair& tags = mtt.htmlTags;
-    return str.arg(showSymbols ? mtt.markdownSequence : "")
-              .arg(mtt.markdownSequence[0])
-              .arg(tags.first)
-              .arg(tags.second);
-}
-
 void TestTextFormatter::doubleSignWorkCasesShowSymbols()
 {
     workCasesTest(markdownFunction,
@@ -452,19 +468,6 @@ void TestTextFormatter::doubleSignWorkCasesHideSymbols()
                   false,
                   doubleSignWorkCasesProcessInput,
                   doubleSignWorkCasesProcessOutput);
-}
-
-static QString multiSignWorkCasesProcessInput(const QString& str, const MarkdownToTags& mtt)
-{
-    return str.arg(mtt.markdownSequence);
-}
-
-static QString multiSignWorkCasesProcessOutput(const QString& str,
-                                                const MarkdownToTags& mtt,
-                                                bool showSymbols)
-{
-    const auto tags = mtt.htmlTags;
-    return str.arg(showSymbols ? mtt.markdownSequence : "", tags.first, tags.second);
 }
 
 void TestTextFormatter::multiSignWorkCasesHideSymbols()
@@ -535,4 +538,3 @@ void TestTextFormatter::urlTest()
 
 QTEST_GUILESS_MAIN(TestTextFormatter)
 #include "textformatter_test.moc"
-

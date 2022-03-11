@@ -28,7 +28,9 @@
 
 #include <QDebug>
 
-static const int MAX_GROUP_TITLE_LENGTH = 128;
+namespace {
+const int MAX_GROUP_TITLE_LENGTH = 128;
+} // namespace
 
 Group::Group(int groupId_, const GroupId persistentGroupId, const QString& name, bool isAvGroupchat,
              const QString& selfName_, ICoreGroupQuery& groupQuery_, ICoreIdHandler& idHandler_)

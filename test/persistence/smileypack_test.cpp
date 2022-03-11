@@ -28,8 +28,6 @@
 
 #include <memory>
 
-QString getAsRichText(const QString& key);
-
 class TestSmileyPack : public QObject
 {
     Q_OBJECT
@@ -63,10 +61,10 @@ void TestSmileyPack::testSmilifySingleCharEmoji()
     auto& smileyPack = SmileyPack::getInstance();
 
     auto result = smileyPack.smileyfied("😊");
-    QVERIFY(result == getAsRichText("😊"));
+    QVERIFY(result == SmileyPack::getAsRichText("😊"));
 
     result = smileyPack.smileyfied("Some😊Letters");
-    QVERIFY(result == "Some" + getAsRichText("😊") + "Letters");
+    QVERIFY(result == "Some" + SmileyPack::getAsRichText("😊") + "Letters");
 }
 
 /**
@@ -78,15 +76,15 @@ void TestSmileyPack::testSmilifyMultiCharEmoji()
     auto& smileyPack = SmileyPack::getInstance();
 
     auto result = smileyPack.smileyfied("🇬🇧");
-    QVERIFY(result == getAsRichText("🇬🇧"));
+    QVERIFY(result == SmileyPack::getAsRichText("🇬🇧"));
 
     result = smileyPack.smileyfied("Some🇬🇧Letters");
-    QVERIFY(result == "Some" + getAsRichText("🇬🇧") + "Letters");
+    QVERIFY(result == "Some" + SmileyPack::getAsRichText("🇬🇧") + "Letters");
 
     // This verifies that multi-char emojis are not accidentally
     // considered a multichar ascii smiley
     result = smileyPack.smileyfied("🇫🇷🇬🇧");
-    QVERIFY(result == getAsRichText("🇫🇷") + getAsRichText("🇬🇧"));
+    QVERIFY(result == SmileyPack::getAsRichText("🇫🇷") + SmileyPack::getAsRichText("🇬🇧"));
 }
 
 
@@ -99,7 +97,7 @@ void TestSmileyPack::testSmilifyAsciiEmoticon()
     auto& smileyPack = SmileyPack::getInstance();
 
     auto result = smileyPack.smileyfied(":-)");
-    QVERIFY(result == getAsRichText(":-)"));
+    QVERIFY(result == SmileyPack::getAsRichText(":-)"));
 
     constexpr auto testMsg = "Some:-)Letters";
     result = smileyPack.smileyfied(testMsg);
@@ -109,7 +107,7 @@ void TestSmileyPack::testSmilifyAsciiEmoticon()
     QVERIFY(result == testMsg);
 
     result = smileyPack.smileyfied("  :-)  ");
-    QVERIFY(result == "  " + getAsRichText(":-)") + "  ");
+    QVERIFY(result == "  " + SmileyPack::getAsRichText(":-)") + "  ");
 }
 
 

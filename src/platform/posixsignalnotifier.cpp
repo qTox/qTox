@@ -36,12 +36,12 @@
  * @brief Class for converting POSIX signals to Qt signals
  */
 
-namespace detail {
+namespace {
 
-static std::atomic_flag g_signalSocketUsageFlag = ATOMIC_FLAG_INIT;
-static std::array<int, 2> g_signalSocketPair;
+std::atomic_flag g_signalSocketUsageFlag = ATOMIC_FLAG_INIT;
+std::array<int, 2> g_signalSocketPair;
 
-static void signalHandler(int signum)
+void signalHandler(int signum)
 {
     // DO NOT call any Qt functions directly, only limited amount of so-called async-signal-safe
     // functions can be called in signal handlers.
@@ -63,17 +63,17 @@ static void signalHandler(int signum)
     g_signalSocketUsageFlag.clear();
 }
 
-} // namespace detail
+} // namespace
 
 PosixSignalNotifier::~PosixSignalNotifier()
 {
-    while (detail::g_signalSocketUsageFlag.test_and_set()) {
+    while (g_signalSocketUsageFlag.test_and_set()) {
         // spin-loop until we aquire flag (signal handler might be running and have flag in use)
     }
 
     // do not leak sockets
-    ::close(detail::g_signalSocketPair[0]);
-    ::close(detail::g_signalSocketPair[1]);
+    ::close(g_signalSocketPair[0]);
+    ::close(g_signalSocketPair[1]);
 
     // do not clear the usage flag here, signal handler cannot use socket any more!
 }
@@ -85,7 +85,7 @@ void PosixSignalNotifier::watchSignal(int signum)
     sigaddset(&blockMask, signum); // do not prefix with ::, it's a macro on macOS
 
     struct sigaction action = {}; // all zeroes by default
-    action.sa_handler = detail::signalHandler;
+    action.sa_handler = signalHandler;
     action.sa_mask = blockMask; // allow old signal to finish before new is raised
 
     if (::sigaction(signum, &action, nullptr)) {
@@ -114,7 +114,7 @@ PosixSignalNotifier& PosixSignalNotifier::globalInstance()
 void PosixSignalNotifier::onSignalReceived()
 {
     int signum{0};
-    if (::read(detail::g_signalSocketPair[1], &signum, sizeof(signum)) == -1) {
+    if (::read(g_signalSocketPair[1], &signum, sizeof(signum)) == -1) {
         qFatal("Failed to read from signal socket, error = %d", errno);
     }
 
@@ -124,10 +124,10 @@ void PosixSignalNotifier::onSignalReceived()
 
 PosixSignalNotifier::PosixSignalNotifier()
 {
-    if (::socketpair(AF_UNIX, SOCK_STREAM, 0, detail::g_signalSocketPair.data())) {
+    if (::socketpair(AF_UNIX, SOCK_STREAM, 0, g_signalSocketPair.data())) {
        qFatal("Failed to create socket pair, error = %d", errno);
     }
 
-    notifier = new QSocketNotifier(detail::g_signalSocketPair[1], QSocketNotifier::Read, this);
+    notifier = new QSocketNotifier(g_signalSocketPair[1], QSocketNotifier::Read, this);
     connect(notifier, &QSocketNotifier::activated, this, &PosixSignalNotifier::onSignalReceived);
 }

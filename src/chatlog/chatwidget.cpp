@@ -48,9 +48,9 @@ namespace
 {
 
 // Maximum number of rendered messages at any given time
-static int constexpr maxWindowSize = 300;
+int constexpr maxWindowSize = 300;
 // Amount of messages to purge when removing messages
-static int constexpr windowChunkSize = 100;
+int constexpr windowChunkSize = 100;
 
 template <class T>
 T clamp(T x, T min, T max)

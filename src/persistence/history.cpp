@@ -27,7 +27,7 @@
 #include "src/core/toxpk.h"
 
 namespace {
-static constexpr int SCHEMA_VERSION = 9;
+constexpr int SCHEMA_VERSION = 9;
 
 bool createCurrentSchema(RawDatabase& db)
 {

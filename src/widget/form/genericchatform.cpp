@@ -64,11 +64,12 @@
  * elements and methods to work with chat messages.
  */
 
-static const QSize FILE_FLYOUT_SIZE{24, 24};
-static const short FOOT_BUTTONS_SPACING = 2;
-static const short MESSAGE_EDIT_HEIGHT = 50;
-static const short MAIN_FOOT_LAYOUT_SPACING = 5;
-static const QString FONT_STYLE[]{"normal", "italic", "oblique"};
+namespace {
+const QSize FILE_FLYOUT_SIZE{24, 24};
+const short FOOT_BUTTONS_SPACING = 2;
+const short MESSAGE_EDIT_HEIGHT = 50;
+const short MAIN_FOOT_LAYOUT_SPACING = 5;
+const QString FONT_STYLE[]{"normal", "italic", "oblique"};
 
 /**
  * @brief Creates CSS style string for needed class with specified font
@@ -76,7 +77,7 @@ static const QString FONT_STYLE[]{"normal", "italic", "oblique"};
  * @param name Class name
  * @return Style string
  */
-static QString fontToCss(const QFont& font, const QString& name)
+QString fontToCss(const QFont& font, const QString& name)
 {
     QString result{"%1{"
                    "font-family: \"%2\"; "
@@ -85,6 +86,7 @@ static QString fontToCss(const QFont& font, const QString& name)
                    "font-weight: normal;}"};
     return result.arg(name).arg(font.family()).arg(font.pixelSize()).arg(FONT_STYLE[font.style()]);
 }
+} // namespace
 
 /**
  * @brief Searches for name (possibly alias) of someone with specified public key among all of your

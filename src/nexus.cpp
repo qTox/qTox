@@ -55,7 +55,9 @@
 
 Q_DECLARE_OPAQUE_POINTER(ToxAV*)
 
-static Nexus* nexus{nullptr};
+namespace {
+Nexus* nexus{nullptr};
+} // namespace
 
 Nexus::Nexus(QObject* parent)
     : QObject(parent)

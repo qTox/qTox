@@ -71,11 +71,13 @@ using AvFindInputFormatRet = decltype(av_find_input_format(""));
  * @brief Number of times the device was opened
  */
 
+namespace {
+AvFindInputFormatRet idesktopFormat{nullptr};
+AvFindInputFormatRet iformat{nullptr};
+} // namespace
 
 QHash<QString, CameraDevice*> CameraDevice::openDevices;
 QMutex CameraDevice::openDeviceLock, CameraDevice::iformatLock;
-static AvFindInputFormatRet idesktopFormat{nullptr};
-static AvFindInputFormatRet iformat{nullptr};
 
 CameraDevice::CameraDevice(const QString& devName_, AVFormatContext* context_)
     : devName{devName_}
