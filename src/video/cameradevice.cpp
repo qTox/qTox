@@ -114,7 +114,7 @@ CameraDevice* CameraDevice::open(QString devName, AVDictionary** options)
     }
 
 // Fix avformat_find_stream_info hanging on garbage input
-#if FF_API_PROBESIZE_32
+#if defined FF_API_PROBESIZE_32 && FF_API_PROBESIZE_32
     aduration = fctx->max_analyze_duration2 = 0;
 #else
     aduration = fctx->max_analyze_duration = 0;
@@ -125,7 +125,7 @@ CameraDevice* CameraDevice::open(QString devName, AVDictionary** options)
         goto out;
     }
 
-#if FF_API_PROBESIZE_32
+#if defined FF_API_PROBESIZE_32 && FF_API_PROBESIZE_32
     fctx->max_analyze_duration2 = aduration;
 #else
     fctx->max_analyze_duration = aduration;
