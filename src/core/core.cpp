@@ -1670,7 +1670,7 @@ uint32_t Core::joinGroupchat(const GroupInvite& inviteInfo)
     case TOX_CONFERENCE_TYPE_AV: {
         qDebug() << QString("Trying to join AV groupchat invite sent by friend %1").arg(friendId);
         groupNum = toxav_join_av_groupchat(tox.get(), friendId, cookie, cookieLength,
-                                           CoreAV::groupCallCallback, const_cast<Core*>(this));
+                                           CoreAV::groupCallCallback, this);
         break;
     }
     default:

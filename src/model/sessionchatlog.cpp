@@ -98,7 +98,7 @@ std::map<ChatLogIdx, ChatLogItem>::const_iterator
 firstItemAfterDate(QDate date, const std::map<ChatLogIdx, ChatLogItem>& items)
 {
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
-    return std::lower_bound(items.begin(), items.end(), QDateTime(date.startOfDay()),
+    return std::lower_bound(items.begin(), items.end(), date.startOfDay(),
 #else
     return std::lower_bound(items.begin(), items.end(), QDateTime(date),
 #endif
