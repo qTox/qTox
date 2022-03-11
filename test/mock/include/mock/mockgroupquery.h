@@ -38,11 +38,13 @@ public:
 
     GroupId getGroupPersistentId(uint32_t groupNumber) const override
     {
+        std::ignore = groupNumber;
         return GroupId(0);
     }
 
     uint32_t getGroupNumberPeers(int groupId) const override
     {
+        std::ignore = groupId;
         if (emptyGroup) {
             return 1;
         }
@@ -52,17 +54,20 @@ public:
 
     QString getGroupPeerName(int groupId, int peerId) const override
     {
+        std::ignore = groupId;
         return QString("peer") + peerId;
     }
 
     ToxPk getGroupPeerPk(int groupId, int peerId) const override
     {
+        std::ignore = groupId;
         uint8_t id[TOX_PUBLIC_KEY_SIZE] = {static_cast<uint8_t>(peerId)};
         return ToxPk(id);
     }
 
     QStringList getGroupPeerNames(int groupId) const override
     {
+        std::ignore = groupId;
         if (emptyGroup) {
             return QStringList({QString("me")});
         }
@@ -71,6 +76,7 @@ public:
 
     bool getGroupAvEnabled(int groupId) const override
     {
+        std::ignore = groupId;
         return false;
     }
 

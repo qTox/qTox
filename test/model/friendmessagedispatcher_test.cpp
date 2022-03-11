@@ -73,6 +73,7 @@ public:
 
 std::unique_ptr<ICoreExtPacket> MockCoreExtPacketAllocator::getPacket(uint32_t friendId)
 {
+    std::ignore = friendId;
     return std::unique_ptr<MockCoreExtPacket>(new MockCoreExtPacket(numSentMessages, currentReceiptId));
 }
 
@@ -91,6 +92,8 @@ public:
 
 bool MockFriendMessageSender::sendAction(uint32_t friendId, const QString& action, ReceiptNum& receipt)
 {
+    std::ignore = friendId;
+    std::ignore = action;
     if (canSend) {
         numSentActions++;
         receipt = receiptNum;
@@ -101,6 +104,8 @@ bool MockFriendMessageSender::sendAction(uint32_t friendId, const QString& actio
 
 bool MockFriendMessageSender::sendMessage(uint32_t friendId, const QString& message, ReceiptNum& receipt)
 {
+    std::ignore = friendId;
+    std::ignore = message;
     if (canSend) {
         numSentMessages++;
         receipt = receiptNum;
@@ -144,6 +149,7 @@ private slots:
 
     void onMessageReceived(const ToxPk& sender, Message message)
     {
+        std::ignore = sender;
         receivedMessages.push_back(std::move(message));
     }
 

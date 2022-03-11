@@ -91,6 +91,7 @@ void ChatTextEdit::sendKeyEvent(QKeyEvent* event)
 
 bool ChatTextEdit::pasteIfImage(QKeyEvent* event)
 {
+    std::ignore = event;
     const QClipboard* const clipboard = QApplication::clipboard();
     if (!clipboard) {
         return false;

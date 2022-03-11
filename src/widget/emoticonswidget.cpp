@@ -192,6 +192,6 @@ void EmoticonsWidget::PageButtonsUpdate()
 
 void EmoticonsWidget::keyPressEvent(QKeyEvent* e)
 {
-    Q_UNUSED(e)
+    std::ignore = e;
     hide();
 }

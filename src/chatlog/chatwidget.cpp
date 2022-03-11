@@ -1304,6 +1304,7 @@ void ChatWidget::showEvent(QShowEvent*)
 
 void ChatWidget::hideEvent(QHideEvent* event)
 {
+    std::ignore = event;
     // Purge accumulated lines from the chatlog. We do not purge messages while
     // the chatlog is open because it causes flickers. When a user leaves the
     // chat we take the opportunity to remove old messages. If a user only has

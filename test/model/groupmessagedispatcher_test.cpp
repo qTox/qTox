@@ -48,11 +48,15 @@ public:
 
 void MockGroupMessageSender::sendGroupAction(int groupId, const QString& action)
 {
+    std::ignore = groupId;
+    std::ignore = action;
     numSentActions++;
 }
 
 void MockGroupMessageSender::sendGroupMessage(int groupId, const QString& message)
 {
+    std::ignore = groupId;
+    std::ignore = message;
     numSentMessages++;
 }
 
@@ -66,7 +70,7 @@ public:
     SIGNAL_IMPL(MockGroupSettings, blackListChanged, QStringList const& blist)
 
     bool getShowGroupJoinLeaveMessages() const override { return true; };
-    void setShowGroupJoinLeaveMessages(bool newValue) override {};
+    void setShowGroupJoinLeaveMessages(bool newValue) override { std::ignore = newValue; };
     SIGNAL_IMPL(MockGroupSettings, showGroupJoinLeaveMessagesChanged, bool show)
 
 private:
@@ -115,6 +119,7 @@ private slots:
 
     void onMessageReceived(const ToxPk& sender, Message message)
     {
+        std::ignore = sender;
         receivedMessages.push_back(std::move(message));
     }
 

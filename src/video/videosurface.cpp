@@ -201,7 +201,7 @@ void VideoSurface::resizeEvent(QResizeEvent* event)
 
 void VideoSurface::showEvent(QShowEvent* e)
 {
-    Q_UNUSED(e)
+    std::ignore = e;
     // emit ratioChanged();
 }
 

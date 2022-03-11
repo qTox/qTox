@@ -166,10 +166,12 @@ void TestFileTransferList::testControl()
     bool pauseCalled = false;
 
     QObject::connect(&model, &Model::cancel, [&] (ToxFile file) {
+        std::ignore = file;
         cancelCalled = true;
     });
 
     QObject::connect(&model, &Model::togglePause, [&] (ToxFile file) {
+        std::ignore = file;
         pauseCalled = true;
     });
 

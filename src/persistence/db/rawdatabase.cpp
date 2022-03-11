@@ -933,6 +933,7 @@ void RawDatabase::regexpSensitive(sqlite3_context* ctx, int argc, sqlite3_value*
 
 void RawDatabase::regexp(sqlite3_context* ctx, int argc, sqlite3_value** argv, const QRegularExpression::PatternOptions cs)
 {
+    std::ignore = argc;
     QRegularExpression regex;
     const QString str1(reinterpret_cast<const char*>(sqlite3_value_text(argv[0])));
     const QString str2(reinterpret_cast<const char*>(sqlite3_value_text(argv[1])));

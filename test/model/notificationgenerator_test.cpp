@@ -32,25 +32,25 @@ namespace
     {
         virtual bool getNotify() const override { return true; }
 
-        virtual void setNotify(bool newValue) override {}
+        virtual void setNotify(bool newValue) override { std::ignore = newValue; }
 
         virtual bool getShowWindow() const override { return true; }
-        virtual void setShowWindow(bool newValue) override {}
+        virtual void setShowWindow(bool newValue) override { std::ignore = newValue; }
 
         virtual bool getDesktopNotify() const override { return true; }
-        virtual void setDesktopNotify(bool enabled) override {}
+        virtual void setDesktopNotify(bool enabled) override { std::ignore = enabled; }
 
         virtual bool getNotifySound() const override { return true; }
-        virtual void setNotifySound(bool newValue) override {}
+        virtual void setNotifySound(bool newValue) override { std::ignore = newValue; }
 
         virtual bool getNotifyHide() const override { return notifyHide; }
         virtual void setNotifyHide(bool newValue) override { notifyHide = newValue; };
 
         virtual bool getBusySound() const override { return true; }
-        virtual void setBusySound(bool newValue) override {}
+        virtual void setBusySound(bool newValue) override { std::ignore = newValue; }
 
         virtual bool getGroupAlwaysNotify() const override { return true; }
-        virtual void setGroupAlwaysNotify(bool newValue) override {}
+        virtual void setGroupAlwaysNotify(bool newValue) override { std::ignore = newValue; }
     private:
         bool notifyHide = false;
     };

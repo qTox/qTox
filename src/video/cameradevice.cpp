@@ -232,7 +232,7 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
 #endif
     else if (mode) {
         qWarning().nospace() << "No known options for " << iformat->name << ", using defaults.";
-        Q_UNUSED(mode)
+        std::ignore = mode;
     }
 
     CameraDevice* dev = open(devName, &options);
@@ -450,7 +450,7 @@ QVector<VideoMode> CameraDevice::getScreenModes()
  */
 QVector<VideoMode> CameraDevice::getVideoModes(QString devName)
 {
-    Q_UNUSED(devName)
+    std::ignore = devName;
 
     if (!iformat)
         ;
@@ -484,6 +484,7 @@ QString CameraDevice::getPixelFormatString(uint32_t pixel_format)
 #if USING_V4L
     return v4l2::getPixelFormatString(pixel_format);
 #else
+    std::ignore = pixel_format;
     return QString("unknown");
 #endif
 }
@@ -500,6 +501,8 @@ bool CameraDevice::betterPixelFormat(uint32_t a, uint32_t b)
 #if USING_V4L
     return v4l2::betterPixelFormat(a, b);
 #else
+    std::ignore = a;
+    std::ignore = b;
     return false;
 #endif
 }

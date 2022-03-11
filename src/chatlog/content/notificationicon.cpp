@@ -57,13 +57,13 @@ void NotificationIcon::paint(QPainter* painter, const QStyleOptionGraphicsItem* 
         updateTimer.start();
     }
 
-    Q_UNUSED(option)
-    Q_UNUSED(widget)
+    std::ignore = option;
+    std::ignore = widget;
 }
 
 void NotificationIcon::setWidth(qreal width)
 {
-    Q_UNUSED(width)
+    std::ignore = width;
 }
 
 qreal NotificationIcon::getAscent() const

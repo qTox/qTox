@@ -234,11 +234,13 @@ namespace FileTransferList
 
     int Model::rowCount(const QModelIndex& parent) const
     {
+        std::ignore = parent;
         return files.size();
     }
 
     int Model::columnCount(const QModelIndex& parent) const
     {
+        std::ignore = parent;
         return static_cast<int>(Column::invalid);
     }
 
@@ -293,6 +295,7 @@ namespace FileTransferList
 
     bool Model::setData(const QModelIndex &index, const QVariant &value, int role)
     {
+        std::ignore = role;
         const auto column = toFileTransferListColumn(index.column());
 
         if (column != Column::control) {

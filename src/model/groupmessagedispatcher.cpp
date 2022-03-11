@@ -68,6 +68,7 @@ GroupMessageDispatcher::sendMessage(bool isAction, QString const& content)
 std::pair<DispatchedMessageId, DispatchedMessageId>
 GroupMessageDispatcher::sendExtendedMessage(const QString& content, ExtensionSet extensions)
 {
+    std::ignore = extensions;
     // Stub this api to immediately fail
     auto messageId = nextMessageId++;
     auto messages = processor.processOutgoingMessage(false, content, ExtensionSet());

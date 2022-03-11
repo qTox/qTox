@@ -141,7 +141,7 @@ void SearchSettingsForm::onStartSearchSelected(const int index)
 
 void SearchSettingsForm::onRegisterClicked(const bool checked)
 {
-    Q_UNUSED(checked)
+    std::ignore = checked;
     setUpdate(true);
 }
 

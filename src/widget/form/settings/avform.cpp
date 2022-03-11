@@ -462,6 +462,7 @@ void AVForm::on_videoDevCombobox_currentIndexChanged(int index)
 
 void AVForm::on_audioQualityComboBox_currentIndexChanged(int index)
 {
+    std::ignore = index;
     audioSettings->setAudioBitrate(audioQualityComboBox->currentData().toInt());
 }
 

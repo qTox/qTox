@@ -177,14 +177,14 @@ void ScreenGrabberChooserRectItem::mouseRelease(QGraphicsSceneMouseEvent* event)
 
 void ScreenGrabberChooserRectItem::mouseDoubleClick(QGraphicsSceneMouseEvent* event)
 {
-    Q_UNUSED(event)
+    std::ignore = event;
     emit doubleClicked();
 }
 
 void ScreenGrabberChooserRectItem::mousePressHandle(int x, int y, QGraphicsSceneMouseEvent* event)
 {
-    Q_UNUSED(x)
-    Q_UNUSED(y)
+    std::ignore = x;
+    std::ignore = y;
 
     if (event->button() == Qt::LeftButton)
         state = HandleResizing;
@@ -223,8 +223,8 @@ void ScreenGrabberChooserRectItem::mouseMoveHandle(int x, int y, QGraphicsSceneM
 
 void ScreenGrabberChooserRectItem::mouseReleaseHandle(int x, int y, QGraphicsSceneMouseEvent* event)
 {
-    Q_UNUSED(x)
-    Q_UNUSED(y)
+    std::ignore = x;
+    std::ignore = y;
 
     if (event->button() == Qt::LeftButton)
         state = None;

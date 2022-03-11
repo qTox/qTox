@@ -958,7 +958,7 @@ void Settings::setAutorun(bool newValue)
         emit autorunChanged(autorun);
     }
 #else
-    Q_UNUSED(newValue)
+    std::ignore = newValue;
 #endif
 }
 
@@ -1970,7 +1970,7 @@ void Settings::setFriendActivity(const ToxPk& id, const QDateTime& activity)
 
 void Settings::saveFriendSettings(const ToxPk& id)
 {
-    Q_UNUSED(id)
+    std::ignore = id;
     savePersonal();
 }
 

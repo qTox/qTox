@@ -40,14 +40,14 @@ void Broken::paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
     painter->setRenderHint(QPainter::SmoothPixmapTransform);
     painter->drawPixmap(0, 0, pmap);
 
-    Q_UNUSED(option)
-    Q_UNUSED(widget)
+    std::ignore = option;
+    std::ignore = widget;
 
 }
 
 void Broken::setWidth(qreal width)
 {
-    Q_UNUSED(width)
+    std::ignore = width;
 }
 
 qreal Broken::getAscent() const

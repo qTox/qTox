@@ -29,16 +29,20 @@ AboutFriend::AboutFriend(const Friend* f_, IFriendSettings* const settings_)
     , settings{settings_}
 {
     settings->connectTo_contactNoteChanged(this, [=](const ToxPk& pk, const QString& note) {
+        std::ignore = pk;
         emit noteChanged(note);
     });
     settings->connectTo_autoAcceptCallChanged(this,
             [=](const ToxPk& pk, IFriendSettings::AutoAcceptCallFlags flag) {
+        std::ignore = pk;
         emit autoAcceptCallChanged(flag);
     });
     settings->connectTo_autoAcceptDirChanged(this, [=](const ToxPk& pk, const QString& dir) {
+        std::ignore = pk;
         emit autoAcceptDirChanged(dir);
     });
     settings->connectTo_autoGroupInviteChanged(this, [=](const ToxPk& pk, bool enable) {
+        std::ignore = pk;
         emit autoGroupInviteChanged(enable);
     });
 }

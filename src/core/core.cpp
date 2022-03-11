@@ -955,6 +955,7 @@ void Core::onConnectionStatusChanged(Tox*, uint32_t friendId, Tox_Connection sta
 void Core::onGroupInvite(Tox* tox, uint32_t friendId, Tox_Conference_Type type,
                          const uint8_t* cookie, size_t length, void* vCore)
 {
+    std::ignore = tox;
     Core* core = static_cast<Core*>(vCore);
     const QByteArray data(reinterpret_cast<const char*>(cookie), length);
     const GroupInvite inviteInfo(friendId, type, data);

@@ -71,13 +71,13 @@ void Spinner::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, Q
         timer.start(); // update bounding rectangle for next frame
     }
 
-    Q_UNUSED(option)
-    Q_UNUSED(widget)
+    std::ignore = option;
+    std::ignore = widget;
 }
 
 void Spinner::setWidth(qreal width)
 {
-    Q_UNUSED(width)
+    std::ignore = width;
 }
 
 qreal Spinner::getAscent() const

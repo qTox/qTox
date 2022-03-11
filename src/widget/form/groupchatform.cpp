@@ -238,6 +238,7 @@ void GroupChatForm::updateUserNames()
 
 void GroupChatForm::onUserJoined(const ToxPk& user, const QString& name)
 {
+    std::ignore = user;
     if (settings.getShowGroupJoinLeaveMessages()) {
         addSystemInfoMessage(QDateTime::currentDateTime(), SystemMessageType::userJoinedGroup, {name});
     }
@@ -246,6 +247,7 @@ void GroupChatForm::onUserJoined(const ToxPk& user, const QString& name)
 
 void GroupChatForm::onUserLeft(const ToxPk& user, const QString& name)
 {
+    std::ignore = user;
     if (settings.getShowGroupJoinLeaveMessages()) {
         addSystemInfoMessage(QDateTime::currentDateTime(), SystemMessageType::userLeftGroup, {name});
     }
@@ -254,6 +256,7 @@ void GroupChatForm::onUserLeft(const ToxPk& user, const QString& name)
 
 void GroupChatForm::onPeerNameChanged(const ToxPk& peer, const QString& oldName, const QString& newName)
 {
+    std::ignore = peer;
     addSystemInfoMessage(QDateTime::currentDateTime(), SystemMessageType::peerNameChanged,
                          {oldName, newName});
     updateUserNames();

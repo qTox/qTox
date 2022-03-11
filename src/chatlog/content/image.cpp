@@ -46,11 +46,11 @@ void Image::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWi
     painter->translate(-size.width() / 2.0, -size.height() / 2.0);
     painter->drawPixmap(0, 0, pmap);
 
-    Q_UNUSED(option)
-    Q_UNUSED(widget)
+    std::ignore = option;
+    std::ignore = widget;
 }
 
 void Image::setWidth(qreal width)
 {
-    Q_UNUSED(width)
+    std::ignore = width;
 }

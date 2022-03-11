@@ -456,6 +456,7 @@ void ChatForm::onFriendStatusChanged(const ToxPk& friendPk, Status::Status statu
 {
     // Disable call buttons if friend is offline
     assert(friendPk == f->getPublicKey());
+    std::ignore = friendPk;
 
     if (!Status::isOnline(f->getStatus())) {
         // Hide the "is typing" message when a friend goes offline

@@ -174,6 +174,7 @@ void AboutForm::replaceVersions()
 
 void AboutForm::onUpdateAvailable(QString latestVersion, QUrl link)
 {
+    std::ignore = latestVersion;
     QObject::disconnect(linkConnection);
     linkConnection = connect(bodyUI->updateAvailableButton, &QPushButton::clicked,
                              [link]() { QDesktopServices::openUrl(link); });

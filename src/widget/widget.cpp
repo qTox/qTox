@@ -1204,6 +1204,7 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
 
 
     auto notifyReceivedCallback = [this, friendPk](const ToxPk& author, const Message& message) {
+        std::ignore = author;
         newFriendMessageAlert(friendPk, message.content);
     };
 
@@ -1498,11 +1499,11 @@ void Widget::addFriendDialog(const Friend* frnd, ContentDialog* dialog)
             [=](QContextMenuEvent* event) { emit widget->contextMenuCalled(event); });
 
     connect(friendWidget, &FriendWidget::chatroomWidgetClicked, [=](GenericChatroomWidget* w) {
-        Q_UNUSED(w)
+        std::ignore = w;
         emit widget->chatroomWidgetClicked(widget);
     });
     connect(friendWidget, &FriendWidget::newWindowOpened, [=](GenericChatroomWidget* w) {
-        Q_UNUSED(w)
+        std::ignore = w;
         emit widget->newWindowOpened(widget);
     });
     // FIXME: emit should be removed
@@ -1549,12 +1550,12 @@ void Widget::addGroupDialog(const Group* group, ContentDialog* dialog)
     // ContentDialog) to the `widget` (which shown in main widget)
     // FIXME: emit should be removed
     connect(groupWidget, &GroupWidget::chatroomWidgetClicked, [=](GenericChatroomWidget* w) {
-        Q_UNUSED(w)
+        std::ignore = w;
         emit widget->chatroomWidgetClicked(widget);
     });
 
     connect(groupWidget, &GroupWidget::newWindowOpened, [=](GenericChatroomWidget* w) {
-        Q_UNUSED(w)
+        std::ignore = w;
         emit widget->newWindowOpened(widget);
     });
 
@@ -1602,6 +1603,10 @@ bool Widget::newFriendMessageAlert(const ToxPk& friendId, const QString& text, b
         auto notificationData = filename.isEmpty() ? notificationGenerator->friendMessageNotification(f, text)
                                                    : notificationGenerator->fileTransferNotification(f, filename, filesize);
         notifier.notifyMessage(notificationData);
+#else
+        std::ignore = text;
+        std::ignore = filename;
+        std::ignore = filesize;
 #endif
 
         if (contentDialog == nullptr) {
@@ -1644,6 +1649,9 @@ bool Widget::newGroupMessageAlert(const GroupId& groupId, const ToxPk& authorPk,
 #if DESKTOP_NOTIFICATIONS
     auto notificationData = notificationGenerator->groupMessageNotification(g, authorPk, message);
     notifier.notifyMessage(notificationData);
+#else
+    std::ignore = authorPk;
+    std::ignore = message;
 #endif
 
     if (contentDialog == nullptr) {
@@ -2399,8 +2407,8 @@ void Widget::saveSplitterGeometry()
 
 void Widget::onSplitterMoved(int pos, int index)
 {
-    Q_UNUSED(pos)
-    Q_UNUSED(index)
+    std::ignore = pos;
+    std::ignore = index;
     saveSplitterGeometry();
 }
 
@@ -2502,6 +2510,9 @@ inline QIcon Widget::prepareIcon(QString path, int w, int h)
             return QIcon(pm);
         }
     }
+#else
+    std::ignore = w;
+    std::ignore = h;
 #endif
     return QIcon(path);
 }

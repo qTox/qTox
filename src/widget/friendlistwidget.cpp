@@ -349,7 +349,7 @@ void FriendListWidget::addGroupWidget(GroupWidget* widget)
 {
     Group* g = widget->getGroup();
     connect(g, &Group::titleChanged, [=](const QString& author, const QString& name) {
-        Q_UNUSED(author)
+        std::ignore = author;
         renameGroupWidget(widget, name);
     });
 
@@ -414,6 +414,8 @@ void FriendListWidget::searchChatrooms(const QString& searchString, bool hideOnl
 
 void FriendListWidget::renameGroupWidget(GroupWidget* groupWidget, const QString& newName)
 {
+    std::ignore = groupWidget;
+    std::ignore = newName;
     itemsChanged();
 }
 
