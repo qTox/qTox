@@ -530,8 +530,6 @@ void ChatWidget::insertChatlines(std::map<ChatLogIdx, ChatLine::Ptr> chatLines)
         auto idx = chatLine.first;
         auto const& l = chatLine.second;
 
-        auto insertedMessageIt = chatLineStorage->insertChatMessage(idx, chatLog.at(idx).getTimestamp(), l);
-
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
         auto date = chatLog.at(idx).getTimestamp().date().startOfDay();
 #else
@@ -864,8 +862,6 @@ void ChatWidget::handleSearchResult(SearchResult result, SearchDirection directi
     disableSearchText();
 
     searchPos = result.pos;
-
-    auto const firstRenderedIdx = (chatLineStorage->hasIndexedMessage()) ? chatLineStorage->firstIdx() : chatLog.getNextIdx();
 
     auto selectText = [this, result] {
         // With fast changes our callback could become invalid, ensure that the
