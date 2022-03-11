@@ -41,12 +41,3 @@ void DocumentCache::push(QTextDocument* doc)
         documents.push(doc);
     }
 }
-
-/**
- * @brief Returns the singleton instance.
- */
-DocumentCache& DocumentCache::getInstance()
-{
-    static DocumentCache instance;
-    return instance;
-}

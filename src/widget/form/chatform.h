@@ -42,12 +42,14 @@ class QPixmap;
 class QHideEvent;
 class QMoveEvent;
 class ImagePreviewButton;
+class DocumentCache;
 
 class ChatForm : public GenericChatForm
 {
     Q_OBJECT
 public:
-    ChatForm(Profile& profile, Friend* chatFriend, IChatLog& chatLog_, IMessageDispatcher& messageDispatcher_);
+    ChatForm(Profile& profile, Friend* chatFriend, IChatLog& chatLog_,
+        IMessageDispatcher& messageDispatcher_, DocumentCache&);
     ~ChatForm() override;
     void setStatusMessage(const QString& newMessage);
 

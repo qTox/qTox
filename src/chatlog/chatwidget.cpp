@@ -62,16 +62,16 @@ T clamp(T x, T min, T max)
     return x;
 }
 
-ChatMessage::Ptr createDateMessage(QDateTime timestamp)
+ChatMessage::Ptr createDateMessage(QDateTime timestamp, DocumentCache& documentCache)
 {
     const auto& s = Settings::getInstance();
     const auto date = timestamp.date();
     auto dateText = date.toString(s.getDateFormat());
-    return ChatMessage::createChatInfoMessage(dateText, ChatMessage::INFO, QDateTime());
+    return ChatMessage::createChatInfoMessage(dateText, ChatMessage::INFO, QDateTime(), documentCache);
 }
 
 ChatMessage::Ptr createMessage(const QString& displayName, bool isSelf, bool colorizeNames,
-                               const ChatLogMessage& chatLogMessage)
+                               const ChatLogMessage& chatLogMessage, DocumentCache& documentCache)
 {
     auto messageType = chatLogMessage.message.isAction ? ChatMessage::MessageType::ACTION
                                                        : ChatMessage::MessageType::NORMAL;
@@ -88,11 +88,13 @@ ChatMessage::Ptr createMessage(const QString& displayName, bool isSelf, bool col
 
     const auto timestamp = chatLogMessage.message.timestamp;
     return ChatMessage::createChatMessage(displayName, chatLogMessage.message.content, messageType,
-                                          isSelf, chatLogMessage.state, timestamp, colorizeNames);
+                                          isSelf, chatLogMessage.state, timestamp, documentCache,
+                                          colorizeNames);
 }
 
 void renderMessageRaw(const QString& displayName, bool isSelf, bool colorizeNames,
-                   const ChatLogMessage& chatLogMessage, ChatLine::Ptr& chatLine)
+                   const ChatLogMessage& chatLogMessage, ChatLine::Ptr& chatLine,
+                   DocumentCache& documentCache)
 {
     // HACK: This is kind of gross, but there's not an easy way to fit this into
     // the existing architecture. This shouldn't ever fail since we should only
@@ -108,7 +110,7 @@ void renderMessageRaw(const QString& displayName, bool isSelf, bool colorizeName
             chatMessage->markAsBroken();
         }
     } else {
-        chatLine = createMessage(displayName, isSelf, colorizeNames, chatLogMessage);
+        chatLine = createMessage(displayName, isSelf, colorizeNames, chatLogMessage, documentCache);
     }
 }
 
@@ -204,11 +206,13 @@ ChatLogIdx clampedAdd(ChatLogIdx idx, int val, IChatLog& chatLog)
 } // namespace
 
 
-ChatWidget::ChatWidget(IChatLog& chatLog_, const Core& core_, QWidget* parent)
+ChatWidget::ChatWidget(IChatLog& chatLog_, const Core& core_, DocumentCache& documentCache_,
+    QWidget* parent)
     : QGraphicsView(parent)
     , chatLog(chatLog_)
     , core(core_)
     , chatLineStorage(new ChatLineStorage())
+    , documentCache(documentCache_)
 {
     // Create the scene
     busyScene = new QGraphicsScene(this);
@@ -216,7 +220,7 @@ ChatWidget::ChatWidget(IChatLog& chatLog_, const Core& core_, QWidget* parent)
     scene->setItemIndexMethod(QGraphicsScene::BspTreeIndex);
     setScene(scene);
 
-    busyNotification = ChatMessage::createBusyNotification();
+    busyNotification = ChatMessage::createBusyNotification(documentCache);
     busyNotification->addToScene(busyScene);
     busyNotification->visibilityChanged(true);
 
@@ -539,7 +543,7 @@ void ChatWidget::insertChatlines(std::map<ChatLogIdx, ChatLine::Ptr> chatLines)
         if (!chatLineStorage->contains(date)) {
             // If there is no dateline for the given date we need to insert it
             // above the line we'd like to insert.
-            auto dateLine = createDateMessage(date);
+            auto dateLine = createDateMessage(date, documentCache);
             chatLineStorage->insertDateLine(date, dateLine);
             dateLine->addToScene(scene);
             dateLine->visibilityChanged(false);
@@ -1391,7 +1395,7 @@ bool ChatWidget::isActiveFileTransfer(ChatLine::Ptr l)
 
 void ChatWidget::setTypingNotification()
 {
-    typingNotification = ChatMessage::createTypingNotification();
+    typingNotification = ChatMessage::createTypingNotification(documentCache);
     typingNotification->visibilityChanged(true);
     typingNotification->setVisible(false);
     typingNotification->addToScene(scene);
@@ -1409,7 +1413,8 @@ void ChatWidget::renderItem(const ChatLogItem& item, bool hideName, bool coloriz
     case ChatLogItem::ContentType::message: {
         const auto& chatLogMessage = item.getContentAsMessage();
 
-        renderMessageRaw(item.getDisplayName(), isSelf, colorizeNames_, chatLogMessage, chatMessage);
+        renderMessageRaw(item.getDisplayName(), isSelf, colorizeNames_, chatLogMessage,
+            chatMessage, documentCache);
 
         break;
     }
@@ -1422,7 +1427,8 @@ void ChatWidget::renderItem(const ChatLogItem& item, bool hideName, bool coloriz
         const auto& systemMessage = item.getContentAsSystemMessage();
 
         auto chatMessageType = getChatMessageType(systemMessage);
-        chatMessage = ChatMessage::createChatInfoMessage(systemMessage.toString(), chatMessageType, QDateTime::currentDateTime());
+        chatMessage = ChatMessage::createChatInfoMessage(systemMessage.toString(),
+            chatMessageType, QDateTime::currentDateTime(), documentCache);
         // Ignore caller's decision to hide the name. We show the icon in the
         // slot of the sender's name so we always want it visible
         hideName = false;
@@ -1441,7 +1447,8 @@ void ChatWidget::renderFile(QString displayName, ToxFile file, bool isSelf, QDat
     if (!chatMessage) {
         CoreFile* coreFile = core.getCoreFile();
         assert(coreFile);
-        chatMessage = ChatMessage::createFileTransferMessage(displayName, *coreFile, file, isSelf, timestamp);
+        chatMessage = ChatMessage::createFileTransferMessage(displayName, *coreFile,
+            file, isSelf, timestamp, documentCache);
     } else {
         auto proxy = static_cast<ChatLineContentProxy*>(chatMessage->getContent(1));
         assert(proxy->getWidgetType() == ChatLineContentProxy::FileTransferWidgetType);

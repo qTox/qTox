@@ -49,6 +49,7 @@
 #include "splitterrestorer.h"
 #include "form/groupchatform.h"
 #include "src/chatlog/content/filetransferwidget.h"
+#include "src/chatlog/documentcache.h"
 #include "src/core/core.h"
 #include "src/core/coreav.h"
 #include "src/core/corefile.h"
@@ -147,6 +148,7 @@ Widget::Widget(Profile &profile_, IAudioControl& audio_, QWidget* parent)
     , eventIcon(false)
     , audio(audio_)
     , settings(Settings::getInstance())
+    , documentCache(new DocumentCache())
 {
     installEventFilter(this);
     QString locale = settings.getTranslation();
@@ -1185,7 +1187,8 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     auto chatHistory =
         std::make_shared<ChatHistory>(*newfriend, history, *core, settings,
                                       *friendMessageDispatcher);
-    auto friendForm = new ChatForm(profile, newfriend, *chatHistory, *friendMessageDispatcher);
+    auto friendForm = new ChatForm(profile, newfriend, *chatHistory,
+        *friendMessageDispatcher, *documentCache);
     connect(friendForm, &ChatForm::updateFriendActivity, this, &Widget::updateFriendActivity);
 
     friendMessageDispatchers[friendPk] = friendMessageDispatcher;
@@ -2168,7 +2171,7 @@ Group* Widget::createGroup(uint32_t groupnumber, const GroupId& groupId)
         connect(messageDispatcher.get(), &IMessageDispatcher::messageReceived, notifyReceivedCallback);
     groupAlertConnections.insert(groupId, notifyReceivedConnection);
 
-    auto form = new GroupChatForm(*core, newgroup, *groupChatLog, *messageDispatcher, settings);
+    auto form = new GroupChatForm(*core, newgroup, *groupChatLog, *messageDispatcher, settings, *documentCache);
     connect(&settings, &Settings::nameColorsChanged, form, &GenericChatForm::setColorizedNames);
     form->setColorizedNames(settings.getEnableGroupChatsColor());
     groupMessageDispatchers[groupId] = messageDispatcher;

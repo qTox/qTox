@@ -25,6 +25,7 @@
 #include <QFont>
 
 class QTextDocument;
+class DocumentCache;
 
 class Text : public ChatLineContent
 {
@@ -38,8 +39,10 @@ public:
         CUSTOM
     };
 
-    Text(const QString& txt = "", const QFont& font = QFont(), bool enableElide = false,
-         const QString& rawText = QString(), const TextType& type = NORMAL, const QColor& custom = Style::getColor(Style::MainText));
+    Text(DocumentCache&, const QString& txt = "", const QFont& font = QFont(),
+        bool enableElide = false, const QString& rawText = QString(),
+        const TextType& type = NORMAL,
+        const QColor& custom = Style::getColor(Style::MainText));
     virtual ~Text();
 
     void setText(const QString& txt);
@@ -109,4 +112,5 @@ private:
     TextType textType;
     QColor color;
     QColor customColor;
+    DocumentCache& documentCache;
 };

@@ -31,14 +31,16 @@
 #include <QTextBlock>
 #include <QTextFragment>
 
-Text::Text(const QString& txt, const QFont& font, bool enableElide, const QString& rwText,
-           const TextType& type, const QColor& custom)
+Text::Text(DocumentCache& documentCache_, const QString& txt, const QFont& font,
+    bool enableElide, const QString& rwText, const TextType& type,
+    const QColor& custom)
     : rawText(rwText)
     , elide(enableElide)
     , defFont(font)
     , defStyleSheet(Style::getStylesheet(QStringLiteral("chatArea/innerStyle.css"), font))
     , textType(type)
     , customColor(custom)
+    , documentCache(documentCache_)
 {
     color = textColor();
     setText(txt);
@@ -49,7 +51,7 @@ Text::Text(const QString& txt, const QFont& font, bool enableElide, const QStrin
 Text::~Text()
 {
     if (doc)
-        DocumentCache::getInstance().push(doc);
+        documentCache.push(doc);
 }
 
 void Text::setText(const QString& txt)
@@ -315,7 +317,7 @@ QString Text::getLinkAt(QPointF scenePos) const
 void Text::regenerate()
 {
     if (!doc) {
-        doc = DocumentCache::getInstance().pop();
+        doc = documentCache.pop();
         dirty = true;
     }
 
@@ -362,7 +364,7 @@ void Text::regenerate()
 
 void Text::freeResources()
 {
-    DocumentCache::getInstance().push(doc);
+    documentCache.push(doc);
     doc = nullptr;
 }
 

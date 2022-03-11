@@ -137,7 +137,8 @@ QPushButton* createButton(const QString& name, T* self, Fun onClickSlot)
 } // namespace
 
 GenericChatForm::GenericChatForm(const Core& core_, const Contact* contact, IChatLog& chatLog_,
-                                 IMessageDispatcher& messageDispatcher_, QWidget* parent_)
+                                 IMessageDispatcher& messageDispatcher_, DocumentCache& documentCache,
+                                 QWidget* parent_)
     : QWidget(parent_, Qt::Window)
     , core{core_}
     , audioInputFlag(false)
@@ -149,7 +150,7 @@ GenericChatForm::GenericChatForm(const Core& core_, const Contact* contact, ICha
     headWidget = new ChatFormHeader();
     searchForm = new SearchForm();
     dateInfo = new QLabel(this);
-    chatWidget = new ChatWidget(chatLog_, core, this);
+    chatWidget = new ChatWidget(chatLog_, core, documentCache, this);
     searchForm->hide();
     dateInfo->setAlignment(Qt::AlignHCenter);
     dateInfo->setVisible(false);

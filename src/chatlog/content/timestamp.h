@@ -24,12 +24,14 @@
 #include <QTextDocument>
 
 class QTextDocument;
+class DocumentCache;
 
 class Timestamp : public Text
 {
     Q_OBJECT
 public:
-    Timestamp(const QDateTime& time_, const QString& format, const QFont& font);
+    Timestamp(const QDateTime& time_, const QString& format, const QFont& font,
+        DocumentCache&);
     QDateTime getTime();
 
 protected:

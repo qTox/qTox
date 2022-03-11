@@ -83,6 +83,7 @@ class UpdateCheck;
 class Settings;
 class IChatLog;
 class ChatHistory;
+class DocumentCache;
 
 class Widget final : public QMainWindow
 {
@@ -381,6 +382,7 @@ private:
     QAction* nextConversationAction;
     QAction* previousConversationAction;
 #endif
+    std::unique_ptr<DocumentCache> documentCache;
 };
 
 bool toxActivateEventHandler(const QByteArray& data);

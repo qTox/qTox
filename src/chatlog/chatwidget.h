@@ -42,7 +42,8 @@ class ChatWidget : public QGraphicsView
 {
     Q_OBJECT
 public:
-    explicit ChatWidget(IChatLog& chatLog_, const Core& core_, QWidget* parent = nullptr);
+    ChatWidget(IChatLog& chatLog_, const Core& core_, DocumentCache&,
+        QWidget* parent = nullptr);
     virtual ~ChatWidget();
 
     void insertChatlines(std::map<ChatLogIdx, ChatLine::Ptr> chatLines);
@@ -214,4 +215,5 @@ private:
     std::unique_ptr<ChatLineStorage> chatLineStorage;
 
     std::vector<std::function<void(void)>> renderCompletionFns;
+    DocumentCache& documentCache;
 };

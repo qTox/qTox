@@ -19,8 +19,8 @@
 
 #include "timestamp.h"
 
-Timestamp::Timestamp(const QDateTime& time_, const QString& format, const QFont& font)
-    : Text(time_.toString(format), font, false, time_.toString(format))
+Timestamp::Timestamp(const QDateTime& time_, const QString& format, const QFont& font, DocumentCache& documentCache_)
+    : Text(documentCache_, time_.toString(format), font, false, time_.toString(format))
 {
     time = time_;
 }

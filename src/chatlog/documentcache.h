@@ -26,17 +26,13 @@ class QTextDocument;
 class DocumentCache
 {
 public:
-    static DocumentCache& getInstance();
-
-    QTextDocument* pop();
-    void push(QTextDocument* doc);
-
-private:
     DocumentCache() = default;
     ~DocumentCache();
     DocumentCache(DocumentCache&) = delete;
     DocumentCache& operator=(const DocumentCache&) = delete;
 
+    QTextDocument* pop();
+    void push(QTextDocument* doc);
 private:
     QStack<QTextDocument*> documents;
 };
