@@ -99,9 +99,10 @@ bool tryRemoveFile(const QString& filepath)
  * @param profile Pointer to Profile.
  * @note All pointers parameters shouldn't be null.
  */
-ProfileInfo::ProfileInfo(Core* core_, Profile* profile_)
+ProfileInfo::ProfileInfo(Core* core_, Profile* profile_, Settings& settings_)
     : profile{profile_}
     , core{core_}
+    , settings{settings_}
 {
     connect(core_, &Core::idSet, this, &ProfileInfo::idChanged);
     connect(core_, &Core::usernameSet, this, &ProfileInfo::usernameChanged);
@@ -193,7 +194,7 @@ IProfileInfo::RenameResult ProfileInfo::renameProfile(const QString& name)
 
     QString newName = sanitize(name);
 
-    if (Profile::exists(newName)) {
+    if (Profile::exists(newName, settings.getPaths())) {
         return RenameResult::ProfileAlreadyExists;
     }
 
@@ -220,7 +221,7 @@ IProfileInfo::SaveResult ProfileInfo::exportProfile(const QString& path) const
         return SaveResult::NoWritePermission;
     }
 
-    if (!QFile::copy(Settings::getInstance().getPaths().getSettingsDirPath() + current, path)) {
+    if (!QFile::copy(settings.getPaths().getSettingsDirPath() + current, path)) {
         return SaveResult::Error;
     }
 
@@ -244,9 +245,9 @@ QStringList ProfileInfo::removeProfile()
 void ProfileInfo::logout()
 {
     // TODO(kriby): Refactor all of these invokeMethod calls with connect() properly when possible
-    Settings::getInstance().saveGlobal();
+    settings.saveGlobal();
     QMetaObject::invokeMethod(&Nexus::getInstance(), "showLogin",
-                              Q_ARG(QString, Settings::getInstance().getCurrentProfile()));
+                              Q_ARG(QString, settings.getCurrentProfile()));
 }
 
 /**

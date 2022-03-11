@@ -35,13 +35,14 @@ class QKeyEvent;
 class QCloseEvent;
 class QShowEvent;
 class CameraSource;
+class Settings;
 
 class NetCamView : public QWidget
 {
     Q_OBJECT
 
 public:
-    NetCamView(ToxPk friendPk_, CameraSource&, QWidget* parent = nullptr);
+    NetCamView(ToxPk friendPk_, CameraSource&, Settings&, QWidget* parent = nullptr);
     ~NetCamView();
 
     virtual void show(VideoSource* source, const QString& title);
@@ -97,4 +98,5 @@ private:
     QPushButton* endVideoButton = nullptr;
     QPushButton* exitFullScreenButton = nullptr;
     CameraSource& cameraSource;
+    Settings& settings;
 };

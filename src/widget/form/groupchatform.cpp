@@ -37,6 +37,7 @@
 #include "src/widget/tool/croppinglabel.h"
 #include "src/widget/translator.h"
 #include "src/persistence/igroupsettings.h"
+#include "src/persistence/settings.h"
 
 #include <QDragEnterEvent>
 #include <QMimeData>
@@ -83,9 +84,9 @@ QString editName(const QString& name)
  */
 
 GroupChatForm::GroupChatForm(Core& core_, Group* chatGroup, IChatLog& chatLog_,
-    IMessageDispatcher& messageDispatcher_, IGroupSettings& settings_, DocumentCache& documentCache_,
+    IMessageDispatcher& messageDispatcher_, Settings& settings_, DocumentCache& documentCache_,
         SmileyPack& smileyPack_)
-    : GenericChatForm(core_, chatGroup, chatLog_, messageDispatcher_, documentCache_, smileyPack_)
+    : GenericChatForm(core_, chatGroup, chatLog_, messageDispatcher_, documentCache_, smileyPack_, settings_)
     , core{core_}
     , group(chatGroup)
     , inCall(false)
@@ -216,7 +217,7 @@ void GroupChatForm::updateUserNames()
             label->setProperty("peerType", LABEL_PEER_TYPE_MUTED);
         }
 
-        label->setStyleSheet(Style::getStylesheet(PEER_LABEL_STYLE_SHEET_PATH));
+        label->setStyleSheet(Style::getStylesheet(PEER_LABEL_STYLE_SHEET_PATH, settings));
         peerLabels.insert(peerPk, label);
     }
 
@@ -285,7 +286,7 @@ void GroupChatForm::peerAudioPlaying(ToxPk peerPk)
         });
     }
 
-    peerLabels[peerPk]->setStyleSheet(Style::getStylesheet(PEER_LABEL_STYLE_SHEET_PATH));
+    peerLabels[peerPk]->setStyleSheet(Style::getStylesheet(PEER_LABEL_STYLE_SHEET_PATH, settings));
     peerAudioTimers[peerPk]->start(500);
 }
 
@@ -433,7 +434,7 @@ void GroupChatForm::onLabelContextMenuRequested(const QPoint& localPos)
     } else {
         toggleMuteAction = contextMenu->addAction(muteString);
     }
-    contextMenu->setStyleSheet(Style::getStylesheet(PEER_LABEL_STYLE_SHEET_PATH));
+    contextMenu->setStyleSheet(Style::getStylesheet(PEER_LABEL_STYLE_SHEET_PATH, settings));
 
     const QAction* selectedItem = contextMenu->exec(pos);
     if (selectedItem == toggleMuteAction) {

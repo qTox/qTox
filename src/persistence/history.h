@@ -38,6 +38,7 @@
 
 class Profile;
 class HistoryKeeper;
+class Settings;
 
 enum class HistMessageContentType
 {
@@ -185,7 +186,7 @@ public:
     };
 
 public:
-    explicit History(std::shared_ptr<RawDatabase> db);
+    History(std::shared_ptr<RawDatabase> db, Settings&);
     ~History();
 
     bool isValid();
@@ -245,4 +246,5 @@ private:
 
     // This needs to be a shared pointer to avoid callback lifetime issues
     QHash<QString, FileInfo> fileInfos;
+    Settings& settings;
 };

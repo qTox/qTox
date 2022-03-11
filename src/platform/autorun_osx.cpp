@@ -28,7 +28,7 @@ namespace {
 int state;
 } // namespace
 
-bool Platform::setAutorun(bool on)
+bool Platform::setAutorun(const Settings&, bool on)
 {
     QString qtoxPlist =
         QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
@@ -45,7 +45,7 @@ bool Platform::setAutorun(bool on)
     return true;
 }
 
-bool Platform::getAutorun()
+bool Platform::getAutorun(const Settings&)
 {
     return state;
 }

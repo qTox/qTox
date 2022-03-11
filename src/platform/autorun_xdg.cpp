@@ -33,9 +33,9 @@ QString getAutostartDirPath()
     return config + "/autostart";
 }
 
-QString getAutostartFilePath(QString dir)
+QString getAutostartFilePath(const Settings& settings, QString dir)
 {
-    return dir + "/qTox - " + Settings::getInstance().getCurrentProfile() + ".desktop";
+    return dir + "/qTox - " + settings.getCurrentProfile() + ".desktop";
 }
 
 QString currentBinPath()
@@ -50,17 +50,17 @@ QString currentBinPath()
     }
 }
 
-inline QString profileRunCommand()
+inline QString profileRunCommand(const Settings& settings)
 {
     return "\"" + currentBinPath() + "\" -p \""
-           + Settings::getInstance().getCurrentProfile() + "\"";
+           + settings.getCurrentProfile() + "\"";
 }
 } // namespace
 
-bool Platform::setAutorun(bool on)
+bool Platform::setAutorun(const Settings& settings, bool on)
 {
     QString dirPath = getAutostartDirPath();
-    QFile desktop(getAutostartFilePath(dirPath));
+    QFile desktop(getAutostartFilePath(settings, dirPath));
     if (on) {
         if (!QDir().mkpath(dirPath) || !desktop.open(QFile::WriteOnly | QFile::Truncate))
             return false;
@@ -68,7 +68,7 @@ bool Platform::setAutorun(bool on)
         desktop.write("Type=Application\n");
         desktop.write("Name=qTox\n");
         desktop.write("Exec=");
-        desktop.write(profileRunCommand().toUtf8());
+        desktop.write(profileRunCommand(settings).toUtf8());
         desktop.write("\n");
         desktop.close();
         return true;
@@ -76,7 +76,7 @@ bool Platform::setAutorun(bool on)
         return desktop.remove();
 }
 
-bool Platform::getAutorun()
+bool Platform::getAutorun(const Settings& settings)
 {
-    return QFile(getAutostartFilePath(getAutostartDirPath())).exists();
+    return QFile(getAutostartFilePath(settings, getAutostartDirPath())).exists();
 }

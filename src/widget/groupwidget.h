@@ -27,11 +27,13 @@
 
 #include <memory>
 
+class Settings;
+
 class GroupWidget final : public GenericChatroomWidget, public IFriendListItem
 {
     Q_OBJECT
 public:
-    GroupWidget(std::shared_ptr<GroupChatroom> chatroom_, bool compact);
+    GroupWidget(std::shared_ptr<GroupChatroom> chatroom_, bool compact, Settings&);
     ~GroupWidget();
     void setAsInactiveChatroom() final;
     void setAsActiveChatroom() final;

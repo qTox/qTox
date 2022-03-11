@@ -34,6 +34,7 @@
 
 class ContentLayout;
 class QTableView;
+class Settings;
 
 namespace FileTransferList
 {
@@ -88,16 +89,18 @@ namespace FileTransferList
     class Delegate : public QStyledItemDelegate
     {
     public:
-        Delegate(QWidget* parent = nullptr);
+        Delegate(Settings&, QWidget* parent = nullptr);
         void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 
         bool editorEvent(QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option, const QModelIndex& index) override;
+    private:
+        Settings& settings;
     };
 
     class View : public QTableView
     {
     public:
-        View(QAbstractItemModel* model, QWidget* parent = nullptr);
+        View(QAbstractItemModel* model, Settings&, QWidget* parent = nullptr);
         ~View();
 
     };
@@ -108,7 +111,7 @@ class FilesForm : public QObject
     Q_OBJECT
 
 public:
-    FilesForm(CoreFile& coreFile);
+    FilesForm(CoreFile& coreFile, Settings&);
     ~FilesForm();
 
     bool isShown() const;

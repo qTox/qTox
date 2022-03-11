@@ -74,11 +74,11 @@ public:
 
     bool rename(QString newName);
 
-    static const QStringList getAllProfileNames();
+    static const QStringList getAllProfileNames(Settings&);
 
-    static bool exists(QString name);
-    static bool isEncrypted(QString name);
-    static QString getDbPath(const QString& profileName);
+    static bool exists(QString name, Paths&);
+    static bool isEncrypted(QString name, Paths&);
+    static QString getDbPath(const QString& profileName, Paths&);
 
 signals:
     void selfAvatarChanged(const QPixmap& pixmap);
@@ -106,7 +106,7 @@ private slots:
 
 private:
     Profile(const QString& name_, std::unique_ptr<ToxEncrypt> passkey_, Paths& paths_, Settings &settings_);
-    static QStringList getFilesByExt(QString extension);
+    static QStringList getFilesByExt(QString extension, Settings& settings);
     QString avatarPath(const ToxPk& owner, bool forceUnencrypted = false);
     bool saveToxSave(QByteArray data);
     void initCore(const QByteArray& toxsave, Settings &s, bool isNewProfile, CameraSource&);

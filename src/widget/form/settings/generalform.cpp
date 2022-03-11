@@ -96,9 +96,10 @@ QStringList locales = {
  *
  * This form contains all settings that are not suited to other forms
  */
-GeneralForm::GeneralForm(SettingsWidget* myParent)
+GeneralForm::GeneralForm(SettingsWidget* myParent, Settings& settings_)
     : GenericForm(QPixmap(":/img/settings/general.png"))
     , bodyUI(new Ui::GeneralSettings)
+    , settings{settings_}
 {
     parent = myParent;
 
@@ -106,8 +107,6 @@ GeneralForm::GeneralForm(SettingsWidget* myParent)
 
     // block all child signals during initialization
     const RecursiveSignalBlocker signalBlocker(this);
-
-    Settings& s = Settings::getInstance();
 
 #ifndef UPDATE_CHECK_ENABLED
     bodyUI->checkUpdates->setVisible(false);
@@ -117,7 +116,7 @@ GeneralForm::GeneralForm(SettingsWidget* myParent)
     bodyUI->cbSpellChecking->setVisible(false);
 #endif
 
-    bodyUI->checkUpdates->setChecked(s.getCheckUpdates());
+    bodyUI->checkUpdates->setChecked(settings.getCheckUpdates());
 
     for (int i = 0; i < locales.size(); ++i) {
         QString langName;
@@ -136,29 +135,29 @@ GeneralForm::GeneralForm(SettingsWidget* myParent)
         bodyUI->transComboBox->insertItem(i, langName);
     }
 
-    bodyUI->transComboBox->setCurrentIndex(locales.indexOf(s.getTranslation()));
+    bodyUI->transComboBox->setCurrentIndex(locales.indexOf(settings.getTranslation()));
 
-    bodyUI->cbAutorun->setChecked(s.getAutorun());
+    bodyUI->cbAutorun->setChecked(settings.getAutorun());
 
-    bodyUI->cbSpellChecking->setChecked(s.getSpellCheckingEnabled());
-    bodyUI->lightTrayIcon->setChecked(s.getLightTrayIcon());
-    bool showSystemTray = s.getShowSystemTray();
+    bodyUI->cbSpellChecking->setChecked(settings.getSpellCheckingEnabled());
+    bodyUI->lightTrayIcon->setChecked(settings.getLightTrayIcon());
+    bool showSystemTray = settings.getShowSystemTray();
 
     bodyUI->showSystemTray->setChecked(showSystemTray);
-    bodyUI->startInTray->setChecked(s.getAutostartInTray());
+    bodyUI->startInTray->setChecked(settings.getAutostartInTray());
     bodyUI->startInTray->setEnabled(showSystemTray);
-    bodyUI->minimizeToTray->setChecked(s.getMinimizeToTray());
+    bodyUI->minimizeToTray->setChecked(settings.getMinimizeToTray());
     bodyUI->minimizeToTray->setEnabled(showSystemTray);
-    bodyUI->closeToTray->setChecked(s.getCloseToTray());
+    bodyUI->closeToTray->setChecked(settings.getCloseToTray());
     bodyUI->closeToTray->setEnabled(showSystemTray);
 
-    bodyUI->statusChanges->setChecked(s.getStatusChangeNotificationEnabled());
-    bodyUI->groupJoinLeaveMessages->setChecked(s.getShowGroupJoinLeaveMessages());
+    bodyUI->statusChanges->setChecked(settings.getStatusChangeNotificationEnabled());
+    bodyUI->groupJoinLeaveMessages->setChecked(settings.getShowGroupJoinLeaveMessages());
 
-    bodyUI->autoAwaySpinBox->setValue(s.getAutoAwayTime());
-    bodyUI->autoSaveFilesDir->setText(s.getGlobalAutoAcceptDir());
-    bodyUI->maxAutoAcceptSizeMB->setValue(static_cast<double>(s.getMaxAutoAcceptSize()) / 1024 / 1024);
-    bodyUI->autoacceptFiles->setChecked(s.getAutoSaveEnabled());
+    bodyUI->autoAwaySpinBox->setValue(settings.getAutoAwayTime());
+    bodyUI->autoSaveFilesDir->setText(settings.getGlobalAutoAcceptDir());
+    bodyUI->maxAutoAcceptSizeMB->setValue(static_cast<double>(settings.getMaxAutoAcceptSize()) / 1024 / 1024);
+    bodyUI->autoacceptFiles->setChecked(settings.getAutoSaveEnabled());
 
 
 #ifndef QTOX_PLATFORM_EXT
@@ -179,71 +178,71 @@ GeneralForm::~GeneralForm()
 void GeneralForm::on_transComboBox_currentIndexChanged(int index)
 {
     const QString& locale = locales[index];
-    Settings::getInstance().setTranslation(locale);
+    settings.setTranslation(locale);
     Translator::translate(locale);
 }
 
 void GeneralForm::on_cbAutorun_stateChanged()
 {
-    Settings::getInstance().setAutorun(bodyUI->cbAutorun->isChecked());
+    settings.setAutorun(bodyUI->cbAutorun->isChecked());
 }
 
 void GeneralForm::on_cbSpellChecking_stateChanged()
 {
-    Settings::getInstance().setSpellCheckingEnabled(bodyUI->cbSpellChecking->isChecked());
+    settings.setSpellCheckingEnabled(bodyUI->cbSpellChecking->isChecked());
 }
 
 void GeneralForm::on_showSystemTray_stateChanged()
 {
-    Settings::getInstance().setShowSystemTray(bodyUI->showSystemTray->isChecked());
-    Settings::getInstance().saveGlobal();
+    settings.setShowSystemTray(bodyUI->showSystemTray->isChecked());
+    settings.saveGlobal();
 }
 
 void GeneralForm::on_startInTray_stateChanged()
 {
-    Settings::getInstance().setAutostartInTray(bodyUI->startInTray->isChecked());
+    settings.setAutostartInTray(bodyUI->startInTray->isChecked());
 }
 
 void GeneralForm::on_closeToTray_stateChanged()
 {
-    Settings::getInstance().setCloseToTray(bodyUI->closeToTray->isChecked());
+    settings.setCloseToTray(bodyUI->closeToTray->isChecked());
 }
 
 void GeneralForm::on_lightTrayIcon_stateChanged()
 {
-    Settings::getInstance().setLightTrayIcon(bodyUI->lightTrayIcon->isChecked());
+    settings.setLightTrayIcon(bodyUI->lightTrayIcon->isChecked());
     emit updateIcons();
 }
 
 void GeneralForm::on_minimizeToTray_stateChanged()
 {
-    Settings::getInstance().setMinimizeToTray(bodyUI->minimizeToTray->isChecked());
+    settings.setMinimizeToTray(bodyUI->minimizeToTray->isChecked());
 }
 
 void GeneralForm::on_statusChanges_stateChanged()
 {
-    Settings::getInstance().setStatusChangeNotificationEnabled(bodyUI->statusChanges->isChecked());
+    settings.setStatusChangeNotificationEnabled(bodyUI->statusChanges->isChecked());
 }
 
 void GeneralForm::on_groupJoinLeaveMessages_stateChanged()
 {
-    Settings::getInstance().setShowGroupJoinLeaveMessages(bodyUI->groupJoinLeaveMessages->isChecked());
+    settings.setShowGroupJoinLeaveMessages(bodyUI->groupJoinLeaveMessages->isChecked());
 }
 
 void GeneralForm::on_autoAwaySpinBox_editingFinished()
 {
     int minutes = bodyUI->autoAwaySpinBox->value();
-    Settings::getInstance().setAutoAwayTime(minutes);
+    settings.setAutoAwayTime(minutes);
 }
 
 void GeneralForm::on_autoacceptFiles_stateChanged()
 {
-    Settings::getInstance().setAutoSaveEnabled(bodyUI->autoacceptFiles->isChecked());
+    settings.setAutoSaveEnabled(bodyUI->autoacceptFiles->isChecked());
 }
 
 void GeneralForm::on_autoSaveFilesDir_clicked()
 {
-    QString previousDir = Settings::getInstance().getGlobalAutoAcceptDir();
+    QString previousDir = settings.getGlobalAutoAcceptDir();
     QString directory =
         QFileDialog::getExistingDirectory(Q_NULLPTR,
                                           tr("Choose an auto accept directory", "popup title"),
@@ -251,7 +250,7 @@ void GeneralForm::on_autoSaveFilesDir_clicked()
     if (directory.isEmpty()) // cancel was pressed
         directory = previousDir;
 
-    Settings::getInstance().setGlobalAutoAcceptDir(directory);
+    settings.setGlobalAutoAcceptDir(directory);
     bodyUI->autoSaveFilesDir->setText(directory);
 }
 
@@ -260,12 +259,12 @@ void GeneralForm::on_maxAutoAcceptSizeMB_editingFinished()
     auto newMaxSizeMB = bodyUI->maxAutoAcceptSizeMB->value();
     auto newMaxSizeB = std::lround(newMaxSizeMB * 1024 * 1024);
 
-    Settings::getInstance().setMaxAutoAcceptSize(newMaxSizeB);
+    settings.setMaxAutoAcceptSize(newMaxSizeB);
 }
 
 void GeneralForm::on_checkUpdates_stateChanged()
 {
-    Settings::getInstance().setCheckUpdates(bodyUI->checkUpdates->isChecked());
+    settings.setCheckUpdates(bodyUI->checkUpdates->isChecked());
 }
 
 /**

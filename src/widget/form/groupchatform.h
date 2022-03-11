@@ -21,6 +21,7 @@
 
 #include "genericchatform.h"
 #include "src/core/toxpk.h"
+#include "src/persistence/igroupsettings.h"
 #include <QMap>
 
 namespace Ui {
@@ -34,7 +35,6 @@ class GroupId;
 class IMessageDispatcher;
 struct Message;
 class Settings;
-class IGroupSettings;
 class DocumentCache;
 class SmileyPack;
 
@@ -43,7 +43,7 @@ class GroupChatForm : public GenericChatForm
     Q_OBJECT
 public:
     GroupChatForm(Core& core_, Group* chatGroup, IChatLog& chatLog_,
-        IMessageDispatcher& messageDispatcher_, IGroupSettings& settings_,
+        IMessageDispatcher& messageDispatcher_, Settings& settings_,
         DocumentCache&, SmileyPack&);
     ~GroupChatForm();
 
@@ -84,5 +84,5 @@ private:
     QLabel* nusersLabel;
     TabCompleter* tabber;
     bool inCall;
-    IGroupSettings& settings;
+    Settings& settings;
 };

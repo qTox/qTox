@@ -27,13 +27,14 @@
 #include <memory>
 
 class QTimer;
+class Settings;
 
 class SmileyPack : public QObject
 {
     Q_OBJECT
 
 public:
-    SmileyPack();
+    explicit SmileyPack(Settings&);
     SmileyPack(SmileyPack&) = delete;
     SmileyPack& operator=(const SmileyPack&) = delete;
     ~SmileyPack() override;
@@ -61,4 +62,5 @@ private:
     QTimer* cleanupTimer;
     QRegularExpression smilify;
     mutable QMutex loadingMutex;
+    Settings& settings;
 };

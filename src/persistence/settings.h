@@ -145,8 +145,10 @@ public:
     };
 
 public:
-    static Settings& getInstance();
-    static void destroyInstance();
+    Settings();
+    ~Settings();
+    Settings(Settings& settings) = delete;
+    Settings& operator=(const Settings&) = delete;
 
     Paths& getPaths();
     void createSettingsDir();
@@ -568,11 +570,6 @@ public:
 
 private:
     struct friendProp;
-
-    Settings();
-    ~Settings();
-    Settings(Settings& settings) = delete;
-    Settings& operator=(const Settings&) = delete;
     void savePersonal(QString profileName, const ToxEncrypt* passkey);
     friendProp& getOrInsertFriendPropRef(const ToxPk& id);
     static ICoreSettings::ProxyType fixInvalidProxyType(ICoreSettings::ProxyType proxyType);
@@ -712,7 +709,6 @@ private:
     int themeColor;
 
     static CompatibleRecursiveMutex bigLock;
-    static Settings* settings;
     static const QString globalSettingsFile;
     static QThread* settingsThread;
     Paths paths;

@@ -26,12 +26,13 @@ class GeneralSettings;
 }
 
 class SettingsWidget;
+class Settings;
 
 class GeneralForm : public GenericForm
 {
     Q_OBJECT
 public:
-    explicit GeneralForm(SettingsWidget* parent);
+    explicit GeneralForm(SettingsWidget* parent, Settings&);
     ~GeneralForm();
     QString getFormName() final
     {
@@ -63,4 +64,5 @@ private:
 private:
     Ui::GeneralSettings* bodyUI;
     SettingsWidget* parent;
+    Settings& settings;
 };

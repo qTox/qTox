@@ -324,8 +324,9 @@ namespace FileTransferList
         return true;
     }
 
-    Delegate::Delegate(QWidget* parent)
+    Delegate::Delegate(Settings& settings_, QWidget* parent)
         : QStyledItemDelegate(parent)
+        , settings{settings_}
     {}
 
     void Delegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
@@ -358,11 +359,11 @@ namespace FileTransferList
                 }
                 const auto localPaused = data.toBool();
                 QPixmap pausePixmap = localPaused
-                    ? QPixmap(Style::getImagePath("fileTransferInstance/arrow_black.svg"))
-                    : QPixmap(Style::getImagePath("fileTransferInstance/pause_dark.svg"));
+                    ? QPixmap(Style::getImagePath("fileTransferInstance/arrow_black.svg", settings))
+                    : QPixmap(Style::getImagePath("fileTransferInstance/pause_dark.svg", settings));
                 QApplication::style()->drawItemPixmap(painter, pauseRect(option), Qt::AlignCenter, pausePixmap);
 
-                QPixmap stopPixmap(Style::getImagePath("fileTransferInstance/no_dark.svg"));
+                QPixmap stopPixmap(Style::getImagePath("fileTransferInstance/no_dark.svg", settings));
                 QApplication::style()->drawItemPixmap(painter, stopRect(option), Qt::AlignCenter, stopPixmap);
                 return;
             }
@@ -401,7 +402,7 @@ namespace FileTransferList
     }
 
 
-    View::View(QAbstractItemModel* model, QWidget* parent)
+    View::View(QAbstractItemModel* model, Settings& settings, QWidget* parent)
         : QTableView(parent)
     {
         setModel(model);
@@ -416,14 +417,14 @@ namespace FileTransferList
         setShowGrid(false);
         setSelectionBehavior(QAbstractItemView::SelectRows);
         setSelectionMode(QAbstractItemView::SingleSelection);
-        setItemDelegate(new Delegate(this));
+        setItemDelegate(new Delegate(settings, this));
     }
 
     View::~View() = default;
 
 } // namespace FileTransferList
 
-FilesForm::FilesForm(CoreFile& coreFile)
+FilesForm::FilesForm(CoreFile& coreFile, Settings& settings)
     : QObject()
 {
     head = new QWidget();
@@ -453,8 +454,8 @@ FilesForm::FilesForm(CoreFile& coreFile)
     connect(sentModel, &FileTransferList::Model::togglePause, pauseFile);
     connect(sentModel, &FileTransferList::Model::cancel, cancelFileSend);
 
-    recvd = new FileTransferList::View(recvdModel);
-    sent = new FileTransferList::View(sentModel);
+    recvd = new FileTransferList::View(recvdModel, settings);
+    sent = new FileTransferList::View(sentModel, settings);
 
     main.addTab(recvd, QString());
     main.addTab(sent, QString());

@@ -108,14 +108,15 @@ QString secondsToDHMS(quint32 duration)
 
 ChatForm::ChatForm(Profile& profile, Friend* chatFriend, IChatLog& chatLog_,
     IMessageDispatcher& messageDispatcher_, DocumentCache& documentCache_,
-    SmileyPack& smileyPack_, CameraSource& cameraSource_)
+    SmileyPack& smileyPack_, CameraSource& cameraSource_, Settings& settings_)
     : GenericChatForm(profile.getCore(), chatFriend, chatLog_, messageDispatcher_,
-        documentCache_, smileyPack_)
+        documentCache_, smileyPack_, settings_)
     , core{profile.getCore()}
     , f(chatFriend)
     , isTyping{false}
     , lastCallIsVideo{false}
     , cameraSource{cameraSource_}
+    , settings{settings_}
 {
     setName(f->getDisplayedName());
 
@@ -146,7 +147,7 @@ ChatForm::ChatForm(Profile& profile, Friend* chatFriend, IChatLog& chatLog_,
     imagePreview->setStyleSheet("QPushButton { border: 0px }");
     imagePreview->hide();
 
-    auto cancelIcon = QIcon(Style::getImagePath("rejectCall/rejectCall.svg"));
+    auto cancelIcon = QIcon(Style::getImagePath("rejectCall/rejectCall.svg", settings));
     QPushButton* cancelButton = new QPushButton(imagePreview);
     cancelButton->setFixedSize(20, 20);
     cancelButton->move(QPoint(80, 0));
@@ -258,7 +259,7 @@ void ChatForm::onExtensionSupportChanged(ExtensionSet extensions)
 
 void ChatForm::onTextEditChanged()
 {
-    if (!Settings::getInstance().getTypingNotification()) {
+    if (!settings.getTypingNotification()) {
         if (isTyping) {
             isTyping = false;
             core.sendTyping(f->getId(), false);
@@ -323,7 +324,7 @@ void ChatForm::onAvInvite(uint32_t friendId, bool video)
 
     auto testedFlag = video ? Settings::AutoAcceptCall::Video : Settings::AutoAcceptCall::Audio;
     // AutoAcceptCall is set for this friend
-    if (Settings::getInstance().getAutoAcceptCall(f->getPublicKey()).testFlag(testedFlag)) {
+    if (settings.getAutoAcceptCall(f->getPublicKey()).testFlag(testedFlag)) {
         qDebug() << "automatic call answer";
         CoreAV* coreav = core.getAv();
         QMetaObject::invokeMethod(coreav, "answerCall", Qt::QueuedConnection,
@@ -470,7 +471,7 @@ void ChatForm::onFriendStatusChanged(const ToxPk& friendPk, Status::Status statu
 
     updateCallButtons();
 
-    if (Settings::getInstance().getStatusChangeNotificationEnabled()) {
+    if (settings.getStatusChangeNotificationEnabled()) {
         QString fStatus = Status::getTitle(status);
         addSystemInfoMessage(QDateTime::currentDateTime(), SystemMessageType::peerStateChange,
                              {f->getDisplayedName(), fStatus});
@@ -511,7 +512,8 @@ std::unique_ptr<NetCamView> ChatForm::createNetcam()
 {
     qDebug() << "creating netcam";
     uint32_t friendId = f->getId();
-    std::unique_ptr<NetCamView> view = std::unique_ptr<NetCamView>(new NetCamView(f->getPublicKey(), cameraSource, this));
+    std::unique_ptr<NetCamView> view = std::unique_ptr<NetCamView>(
+        new NetCamView(f->getPublicKey(), cameraSource, settings, this));
     CoreAV* av = core.getAv();
     VideoSource* source = av->getVideoSourceFromCall(friendId);
     view->show(source, f->getDisplayedName());
@@ -610,14 +612,14 @@ void ChatForm::sendImageFromPreview()
         return;
     }
 
-    QDir(Settings::getInstance().getPaths().getAppDataDirPath()).mkpath("images");
+    QDir(settings.getPaths().getAppDataDirPath()).mkpath("images");
 
     // use ~ISO 8601 for screenshot timestamp, considering FS limitations
     // https://en.wikipedia.org/wiki/ISO_8601
     // Windows has to be supported, thus filename can't have `:` in it :/
     // Format should be: `qTox_Screenshot_yyyy-MM-dd HH-mm-ss.zzz.png`
     QString filepath = QString("%1images%2qTox_Image_%3.png")
-                           .arg(Settings::getInstance().getPaths().getAppDataDirPath())
+                           .arg(settings.getPaths().getAppDataDirPath())
                            .arg(QDir::separator())
                            .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd HH-mm-ss.zzz"));
     QFile file(filepath);

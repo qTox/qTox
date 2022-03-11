@@ -38,13 +38,14 @@ class GenericChatroomWidget;
 class CategoryWidget;
 class Friend;
 class IFriendListItem;
+class Settings;
 
 class FriendListWidget : public QWidget
 {
     Q_OBJECT
 public:
     using SortingMode = Settings::FriendListSortingMode;
-    explicit FriendListWidget(const Core& _core, Widget* parent, bool groupsOnTop = true);
+    FriendListWidget(const Core&, Widget* parent, Settings&, bool groupsOnTop = true);
     ~FriendListWidget();
     void setMode(SortingMode mode);
     SortingMode getMode() const;
@@ -97,4 +98,5 @@ private:
     FriendListManager* manager;
 
     const Core& core;
+    Settings& settings;
 };

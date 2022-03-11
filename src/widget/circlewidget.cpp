@@ -40,12 +40,14 @@
 
 QHash<int, CircleWidget*> CircleWidget::circleList;
 
-CircleWidget::CircleWidget(const Core &core_, FriendListWidget* parent, int id_)
-    : CategoryWidget(isCompact(), parent)
+CircleWidget::CircleWidget(const Core &core_, FriendListWidget* parent, int id_,
+    Settings& settings_)
+    : CategoryWidget(isCompact(), settings_, parent)
     , id(id_)
     , core{core_}
+    , settings{settings_}
 {
-    setName(Settings::getInstance().getCircleName(id), false);
+    setName(settings.getCircleName(id), false);
     circleList[id] = this;
 
     connect(nameLabel, &CroppingLabel::editFinished, [this](const QString& newName) {
@@ -58,7 +60,7 @@ CircleWidget::CircleWidget(const Core &core_, FriendListWidget* parent, int id_)
             nameLabel->minimizeMaximumWidth();
     });
 
-    setExpanded(Settings::getInstance().getCircleExpanded(id), false);
+    setExpanded(settings.getCircleExpanded(id), false);
     updateStatus();
 }
 
@@ -104,7 +106,7 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
 
             friendList->removeCircleWidget(this);
 
-            int replacedCircle = Settings::getInstance().removeCircle(id);
+            int replacedCircle = settings.removeCircle(id);
 
             auto circleReplace = circleList.find(replacedCircle);
             if (circleReplace != circleList.end())
@@ -114,7 +116,7 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
 
             circleList.remove(replacedCircle);
         } else if (selectedItem == openAction) {
-            ContentDialog* dialog = new ContentDialog(core);
+            ContentDialog* dialog = new ContentDialog(core, settings);
             emit newContentDialog(*dialog);
             for (int i = 0; i < friendOnlineLayout()->count(); ++i) {
                 QWidget* const widget = friendOnlineLayout()->itemAt(i)->widget();
@@ -179,11 +181,11 @@ void CircleWidget::dropEvent(QDropEvent* event)
         return;
 
     // Save CircleWidget before changing the Id
-    int circleId = Settings::getInstance().getFriendCircleID(toxPk);
+    int circleId = settings.getFriendCircleID(toxPk);
     CircleWidget* circleWidget = getFromID(circleId);
 
     addFriendWidget(widget, f->getStatus());
-    Settings::getInstance().savePersonal();
+    settings.savePersonal();
 
     if (circleWidget != nullptr) {
         circleWidget->updateStatus();
@@ -194,20 +196,20 @@ void CircleWidget::dropEvent(QDropEvent* event)
 
 void CircleWidget::onSetName()
 {
-    Settings::getInstance().setCircleName(id, getName());
+    settings.setCircleName(id, getName());
 }
 
 void CircleWidget::onExpand()
 {
-    Settings::getInstance().setCircleExpanded(id, isExpanded());
-    Settings::getInstance().savePersonal();
+    settings.setCircleExpanded(id, isExpanded());
+    settings.savePersonal();
 }
 
 void CircleWidget::onAddFriendWidget(FriendWidget* w)
 {
     const Friend* f = w->getFriend();
     ToxPk toxId = f->getPublicKey();
-    Settings::getInstance().setFriendCircleID(toxId, id);
+    settings.setFriendCircleID(toxId, id);
 }
 
 void CircleWidget::updateID(int index)
@@ -228,7 +230,7 @@ void CircleWidget::updateID(int index)
 
         if (friendWidget) {
             const Friend* f = friendWidget->getFriend();
-            Settings::getInstance().setFriendCircleID(f->getPublicKey(), id);
+            settings.setFriendCircleID(f->getPublicKey(), id);
         }
     }
 
@@ -238,7 +240,7 @@ void CircleWidget::updateID(int index)
 
         if (friendWidget) {
             const Friend* f = friendWidget->getFriend();
-            Settings::getInstance().setFriendCircleID(f->getPublicKey(), id);
+            settings.setFriendCircleID(f->getPublicKey(), id);
         }
     }
 }

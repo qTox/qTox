@@ -41,8 +41,9 @@
 #define TIME_COL_WIDTH 90.0
 
 
-ChatMessage::ChatMessage(DocumentCache& documentCache_)
+ChatMessage::ChatMessage(DocumentCache& documentCache_, Settings& settings_)
     : documentCache{documentCache_}
+    , settings{settings_}
 {
 }
 
@@ -51,16 +52,17 @@ ChatMessage::~ChatMessage() = default;
 ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QString& rawMessage,
                                                 MessageType type, bool isMe, MessageState state,
                                                 const QDateTime& date, DocumentCache& documentCache,
-                                                SmileyPack& smileyPack, bool colorizeName)
+                                                SmileyPack& smileyPack, Settings& settings,
+                                                bool colorizeName)
 {
-    ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage(documentCache));
+    ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage(documentCache, settings));
 
     QString text = rawMessage.toHtmlEscaped();
     QString senderText = sender;
 
     auto textType = Text::NORMAL;
     // smileys
-    if (Settings::getInstance().getUseEmoticons())
+    if (settings.getUseEmoticons())
         text = smileyPack.smileyfied(text);
 
     // quotes (green text)
@@ -68,7 +70,7 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QSt
     text = TextFormatter::highlightURI(text);
 
     // text styling
-    Settings::StyleType styleType = Settings::getInstance().getStylePreference();
+    Settings::StyleType styleType = settings.getStylePreference();
     if (styleType != Settings::StyleType::NONE) {
         text = TextFormatter::applyMarkdown(text, styleType == Settings::StyleType::WITH_CHARS);
     }
@@ -90,7 +92,7 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QSt
     }
 
     // Note: Eliding cannot be enabled for RichText items. (QTBUG-17207)
-    QFont baseFont = Settings::getInstance().getChatMessageFont();
+    QFont baseFont = settings.getChatMessageFont();
     QFont authorFont = baseFont;
     if (isMe)
         authorFont.setBold(true);
@@ -110,25 +112,25 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QSt
         }
     }
 
-    msg->addColumn(new Text(documentCache, senderText, authorFont, true, sender, textType, color),
+    msg->addColumn(new Text(documentCache, settings, senderText, authorFont, true, sender, textType, color),
                    ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
-    msg->addColumn(new Text(documentCache, text, baseFont, false, ((type == ACTION) && isMe)
+    msg->addColumn(new Text(documentCache, settings, text, baseFont, false, ((type == ACTION) && isMe)
                                                        ? QString("%1 %2").arg(sender, rawMessage)
                                                        : rawMessage),
                    ColumnFormat(1.0, ColumnFormat::VariableSize));
 
     switch (state) {
         case MessageState::complete:
-            msg->addColumn(new Timestamp(date, Settings::getInstance().getTimestampFormat(),
-                        baseFont, documentCache),
+            msg->addColumn(new Timestamp(date, settings.getTimestampFormat(),
+                        baseFont, documentCache, settings),
                         ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
             break;
         case MessageState::pending:
-            msg->addColumn(new Spinner(Style::getImagePath("chatArea/spinner.svg"), QSize(16, 16), 360.0 / 1.6),
+            msg->addColumn(new Spinner(Style::getImagePath("chatArea/spinner.svg", settings), QSize(16, 16), 360.0 / 1.6),
                         ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
             break;
         case MessageState::broken:
-            msg->addColumn(new Broken(Style::getImagePath("chatArea/error.svg"), QSize(16, 16)),
+            msg->addColumn(new Broken(Style::getImagePath("chatArea/error.svg", settings), QSize(16, 16)),
                         ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
             break;
     }
@@ -137,32 +139,32 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QSt
 
 ChatMessage::Ptr ChatMessage::createChatInfoMessage(const QString& rawMessage,
                                                     SystemMessageType type, const QDateTime& date,
-                                                    DocumentCache& documentCache)
+                                                    DocumentCache& documentCache, Settings& settings)
 {
-    ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage(documentCache));
+    ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage(documentCache, settings));
     QString text = rawMessage.toHtmlEscaped();
 
     QString img;
     switch (type) {
     case INFO:
-        img = Style::getImagePath("chatArea/info.svg");
+        img = Style::getImagePath("chatArea/info.svg", settings);
         break;
     case ERROR:
-        img = Style::getImagePath("chatArea/error.svg");
+        img = Style::getImagePath("chatArea/error.svg", settings);
         break;
     case TYPING:
-        img = Style::getImagePath("chatArea/typing.svg");
+        img = Style::getImagePath("chatArea/typing.svg", settings);
         break;
     }
 
-    QFont baseFont = Settings::getInstance().getChatMessageFont();
+    QFont baseFont = settings.getChatMessageFont();
 
     msg->addColumn(new Image(QSize(18, 18), img),
                    ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
-    msg->addColumn(new Text(documentCache, "<b>" + text + "</b>", baseFont, false, text),
+    msg->addColumn(new Text(documentCache, settings, "<b>" + text + "</b>", baseFont, false, text),
                    ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Left));
-    msg->addColumn(new Timestamp(date, Settings::getInstance().getTimestampFormat(),
-                    baseFont, documentCache),
+    msg->addColumn(new Timestamp(date, settings.getTimestampFormat(),
+                    baseFont, documentCache, settings),
                    ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
 
     return msg;
@@ -170,31 +172,34 @@ ChatMessage::Ptr ChatMessage::createChatInfoMessage(const QString& rawMessage,
 
 ChatMessage::Ptr ChatMessage::createFileTransferMessage(const QString& sender, CoreFile& coreFile,
                                                         ToxFile file, bool isMe, const QDateTime& date,
-                                                        DocumentCache& documentCache)
+                                                        DocumentCache& documentCache,
+                                                        Settings& settings)
 {
-    ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage(documentCache));
+    ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage(documentCache, settings));
 
-    QFont baseFont = Settings::getInstance().getChatMessageFont();
+    QFont baseFont = settings.getChatMessageFont();
     QFont authorFont = baseFont;
     if (isMe) {
         authorFont.setBold(true);
     }
 
-    msg->addColumn(new Text(documentCache, sender, authorFont, true),
+    msg->addColumn(new Text(documentCache, settings, sender, authorFont, true),
                    ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
-    msg->addColumn(new ChatLineContentProxy(new FileTransferWidget(nullptr, coreFile, file), 320, 0.6f),
+    msg->addColumn(new ChatLineContentProxy(new FileTransferWidget(nullptr, coreFile, file, settings), 320, 0.6f),
                    ColumnFormat(1.0, ColumnFormat::VariableSize));
-    msg->addColumn(new Timestamp(date, Settings::getInstance().getTimestampFormat(), baseFont, documentCache),
+    msg->addColumn(new Timestamp(date, settings.getTimestampFormat(), baseFont,
+                    documentCache, settings),
                    ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
 
     return msg;
 }
 
-ChatMessage::Ptr ChatMessage::createTypingNotification(DocumentCache& documentCache)
+ChatMessage::Ptr ChatMessage::createTypingNotification(DocumentCache& documentCache,
+        Settings& settings)
 {
-    ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage(documentCache));
+    ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage(documentCache, settings));
 
-    QFont baseFont = Settings::getInstance().getChatMessageFont();
+    QFont baseFont = settings.getChatMessageFont();
 
     // Note: "[user]..." is just a placeholder. The actual text is set in
     // ChatForm::setFriendTyping()
@@ -203,9 +208,9 @@ ChatMessage::Ptr ChatMessage::createTypingNotification(DocumentCache& documentCa
     // user received typing notifications constantly since contact came online.
     // This causes "[user]..." to be displayed in place of user nick, as long
     // as user will keep typing. Issue #1280
-    msg->addColumn(new NotificationIcon(QSize(18, 18)),
+    msg->addColumn(new NotificationIcon(settings, QSize(18, 18)),
                    ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
-    msg->addColumn(new Text(documentCache, "[user]...", baseFont, false, ""),
+    msg->addColumn(new Text(documentCache, settings, "[user]...", baseFont, false, ""),
                    ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Left));
 
     return msg;
@@ -219,14 +224,15 @@ ChatMessage::Ptr ChatMessage::createTypingNotification(DocumentCache& documentCa
  *
  * @return created message
  */
-ChatMessage::Ptr ChatMessage::createBusyNotification(DocumentCache& documentCache)
+ChatMessage::Ptr ChatMessage::createBusyNotification(DocumentCache& documentCache,
+        Settings& settings)
 {
-    ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage(documentCache));
-    QFont baseFont = Settings::getInstance().getChatMessageFont();
+    ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage(documentCache, settings));
+    QFont baseFont = settings.getChatMessageFont();
     baseFont.setPixelSize(baseFont.pixelSize() + 2);
     baseFont.setBold(true);
 
-    msg->addColumn(new Text(documentCache, QObject::tr("Reformatting text...", "Waiting for text to be reformatted"), baseFont, false, ""),
+    msg->addColumn(new Text(documentCache, settings, QObject::tr("Reformatting text...", "Waiting for text to be reformatted"), baseFont, false, ""),
                    ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Center));
 
     return msg;
@@ -234,15 +240,16 @@ ChatMessage::Ptr ChatMessage::createBusyNotification(DocumentCache& documentCach
 
 void ChatMessage::markAsDelivered(const QDateTime& time)
 {
-    QFont baseFont = Settings::getInstance().getChatMessageFont();
+    QFont baseFont = settings.getChatMessageFont();
 
     // remove the spinner and replace it by $time
-    replaceContent(2, new Timestamp(time, Settings::getInstance().getTimestampFormat(), baseFont, documentCache));
+    replaceContent(2, new Timestamp(time, settings.getTimestampFormat(),
+        baseFont, documentCache, settings));
 }
 
 void ChatMessage::markAsBroken()
 {
-    replaceContent(2, new Broken(Style::getImagePath("chatArea/error.svg"), QSize(16, 16)));
+    replaceContent(2, new Broken(Style::getImagePath("chatArea/error.svg", settings), QSize(16, 16)));
 }
 
 QString ChatMessage::toString() const

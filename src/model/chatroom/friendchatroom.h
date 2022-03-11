@@ -29,6 +29,7 @@ class Core;
 class IDialogsManager;
 class Friend;
 class Group;
+class Settings;
 
 struct GroupToDisplay
 {
@@ -46,7 +47,8 @@ class FriendChatroom : public QObject, public Chatroom
 {
     Q_OBJECT
 public:
-    FriendChatroom(Friend* frnd_, IDialogsManager* dialogsManager_, Core& core_);
+    FriendChatroom(Friend* frnd_, IDialogsManager* dialogsManager_, Core& core_,
+        Settings& settings_);
 
     Contact* getContact() override;
 
@@ -87,4 +89,5 @@ private:
     Friend* frnd{nullptr};
     IDialogsManager* dialogsManager{nullptr};
     Core& core;
+    Settings& settings;
 };

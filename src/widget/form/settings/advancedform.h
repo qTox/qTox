@@ -22,6 +22,7 @@
 #include "genericsettings.h"
 
 class Core;
+class Settings;
 
 namespace Ui {
 class AdvancedSettings;
@@ -31,7 +32,7 @@ class AdvancedForm : public GenericForm
 {
     Q_OBJECT
 public:
-    AdvancedForm();
+    explicit AdvancedForm(Settings&);
     ~AdvancedForm();
     QString getFormName() final
     {
@@ -58,4 +59,5 @@ private:
 
 private:
     Ui::AdvancedSettings* bodyUI;
+    Settings& settings;
 };

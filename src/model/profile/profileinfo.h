@@ -28,12 +28,13 @@ class Core;
 class QFile;
 class QPoint;
 class Profile;
+class Settings;
 
 class ProfileInfo : public QObject, public IProfileInfo
 {
     Q_OBJECT
 public:
-    ProfileInfo(Core* core_, Profile* profile_);
+    ProfileInfo(Core* core_, Profile* profile_, Settings&);
 
     bool setPassword(const QString& password) override;
     bool deletePassword() override;
@@ -66,4 +67,5 @@ private:
     IProfileInfo::SetAvatarResult scalePngToAvatar(QByteArray& avatar);
     Profile* const profile;
     Core* const core;
+    Settings& settings;
 };

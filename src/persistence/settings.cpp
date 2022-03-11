@@ -61,7 +61,6 @@
  */
 
 const QString Settings::globalSettingsFile = "qtox.ini";
-Settings* Settings::settings{nullptr};
 CompatibleRecursiveMutex Settings::bigLock;
 QThread* Settings::settingsThread{nullptr};
 static constexpr int GLOBAL_SETTINGS_VERSION = 1;
@@ -85,23 +84,6 @@ Settings::~Settings()
     settingsThread->exit(0);
     settingsThread->wait();
     delete settingsThread;
-}
-
-/**
- * @brief Returns the singleton instance.
- */
-Settings& Settings::getInstance()
-{
-    if (!settings)
-        settings = new Settings();
-
-    return *settings;
-}
-
-void Settings::destroyInstance()
-{
-    delete settings;
-    settings = nullptr;
 }
 
 void Settings::loadGlobal()
@@ -624,7 +606,7 @@ void Settings::resetToDefault()
 void Settings::saveGlobal()
 {
     if (QThread::currentThread() != settingsThread)
-        return (void)QMetaObject::invokeMethod(&getInstance(), "saveGlobal");
+        return (void)QMetaObject::invokeMethod(this, "saveGlobal");
 
     QMutexLocker locker{&bigLock};
     if (!loaded)
@@ -778,7 +760,7 @@ void Settings::savePersonal(Profile* profile)
         return;
     }
     if (QThread::currentThread() != settingsThread)
-        return (void)QMetaObject::invokeMethod(&getInstance(), "savePersonal",
+        return (void)QMetaObject::invokeMethod(this, "savePersonal",
                                                Q_ARG(Profile*, profile));
     savePersonal(profile->getName(), profile->getPasskey());
 }
@@ -942,7 +924,7 @@ bool Settings::getAutorun() const
     QMutexLocker locker{&bigLock};
 
 #ifdef QTOX_PLATFORM_EXT
-    return Platform::getAutorun();
+    return Platform::getAutorun(*this);
 #else
     return false;
 #endif
@@ -951,10 +933,10 @@ bool Settings::getAutorun() const
 void Settings::setAutorun(bool newValue)
 {
 #ifdef QTOX_PLATFORM_EXT
-    bool autorun = Platform::getAutorun();
+    bool autorun = Platform::getAutorun(*this);
 
     if (newValue != autorun) {
-        Platform::setAutorun(newValue);
+        Platform::setAutorun(*this, newValue);
         emit autorunChanged(autorun);
     }
 #else
@@ -2261,7 +2243,7 @@ void Settings::createSettingsDir()
 void Settings::sync()
 {
     if (QThread::currentThread() != settingsThread) {
-        QMetaObject::invokeMethod(&getInstance(), "sync", Qt::BlockingQueuedConnection);
+        QMetaObject::invokeMethod(this, "sync", Qt::BlockingQueuedConnection);
         return;
     }
 

@@ -31,16 +31,17 @@
 #include <QTextBlock>
 #include <QTextFragment>
 
-Text::Text(DocumentCache& documentCache_, const QString& txt, const QFont& font,
-    bool enableElide, const QString& rwText, const TextType& type,
+Text::Text(DocumentCache& documentCache_, Settings& settings_, const QString& txt,
+    const QFont& font, bool enableElide, const QString& rwText, const TextType& type,
     const QColor& custom)
     : rawText(rwText)
     , elide(enableElide)
     , defFont(font)
-    , defStyleSheet(Style::getStylesheet(QStringLiteral("chatArea/innerStyle.css"), font))
+    , defStyleSheet(Style::getStylesheet(QStringLiteral("chatArea/innerStyle.css"), settings_, font))
     , textType(type)
     , customColor(custom)
     , documentCache(documentCache_)
+    , settings{settings_}
 {
     color = textColor();
     setText(txt);
@@ -251,7 +252,7 @@ void Text::visibilityChanged(bool visible)
 
 void Text::reloadTheme()
 {
-    defStyleSheet = Style::getStylesheet(QStringLiteral("chatArea/innerStyle.css"), defFont);
+    defStyleSheet = Style::getStylesheet(QStringLiteral("chatArea/innerStyle.css"), settings, defFont);
     color = textColor();
     dirty = true;
     regenerate();
