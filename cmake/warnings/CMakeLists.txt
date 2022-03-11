@@ -11,6 +11,10 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     endif()
 endif()
 
+include(CheckCXXCompilerFlag)
+CHECK_CXX_COMPILER_FLAG(-Wweak-vtables COMPILER_SUPPORTS_WARNING_WEAK_VTABLES)
+CHECK_CXX_COMPILER_FLAG(-Wdate-time COMPILER_SUPPORTS_WDATE_TIME)
+
 target_compile_options(${PROJECT_NAME} INTERFACE
     $<$<OR:$<BOOL:${CLANG}>,$<CXX_COMPILER_ID:GNU>>:
         -fno-common;
@@ -20,7 +24,6 @@ target_compile_options(${PROJECT_NAME} INTERFACE
         -Wall;
         -Wcast-align;
         -Wdouble-promotion;
-        -Werror;
         -Wextra;
         -Wformat=2;
         -Wmissing-declarations;
@@ -71,5 +74,17 @@ target_compile_options(${PROJECT_NAME} INTERFACE
         /wd4244; # 'argument': conversion from 'int' to 'unsigned char', possible
                  # loss of data # This one is sort of required for gtest.
         /WX;
+    >
+    $<$<BOOL:${STRICT_OPTIONS}>:
+        -Werror;
+    >
+    $<$<BOOL:${COMPILER_SUPPORTS_WARNING_WEAK_VTABLES}>:
+        -Wweak-vtables; # https://llvm.org/docs/CodingStandards.html#provide-a-virtual-method-anchor-for-classes-in-headers
+    >
+    $<$<BOOL:${COMPILER_SUPPORTS_WDATE_TIME}>:
+        -Wdate-time; # avoid timestamps in binary for reproducible builds, not added until GCC 4.9
+    >
+    $<$<AND:$<NOT:$<BOOL:${WIN32}>>,$<NOT:$<BOOL:${HAIKU}>>>:
+        -Wstack-protector;
     >
 )
