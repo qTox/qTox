@@ -221,9 +221,9 @@ void createExampleBootstrapNodesFile(const Paths& paths)
  * @param proxy Proxy to use for the lookup, must outlive this object
  */
 BootstrapNodeUpdater::BootstrapNodeUpdater(const QNetworkProxy& proxy_, Paths& paths_, QObject* parent)
-    : proxy{proxy_}
+    : QObject{parent}
+    , proxy{proxy_}
     , paths{paths_}
-    , QObject{parent}
 {
     createExampleBootstrapNodesFile(paths_);
 }
