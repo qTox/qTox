@@ -48,7 +48,8 @@ const auto BTN_STYLE_SHEET_PATH = QStringLiteral("chatForm/fullScreenButtons.css
 }
 
 NetCamView::NetCamView(ToxPk friendPk_, QWidget* parent)
-    : selfFrame{nullptr}
+    : QWidget(parent)
+    , selfFrame{nullptr}
     , friendPk{friendPk_}
     , e(false)
 {
