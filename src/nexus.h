@@ -20,9 +20,11 @@
 
 #pragma once
 
+#include "audio/iaudiocontrol.h"
+
 #include <QObject>
 
-#include "audio/iaudiocontrol.h"
+#include <memory>
 
 class Widget;
 class Profile;
@@ -30,6 +32,7 @@ class Settings;
 class LoginScreen;
 class Core;
 class QCommandLineParser;
+class CameraSource;
 
 #ifdef Q_OS_MAC
 class QMenuBar;
@@ -53,6 +56,7 @@ public:
     static Core* getCore();
     static Profile* getProfile();
     static Widget* getDesktopGUI();
+    static CameraSource& getCameraSource();
 
 
 #ifdef Q_OS_MAC
@@ -104,4 +108,5 @@ private:
     Widget* widget;
     std::unique_ptr<IAudioControl> audioControl;
     QCommandLineParser* parser = nullptr;
+    std::unique_ptr<CameraSource> cameraSource;
 };

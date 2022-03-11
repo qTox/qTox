@@ -51,7 +51,8 @@ class CoreAV : public QObject
 public:
     using CoreAVPtr = std::unique_ptr<CoreAV>;
     static CoreAVPtr makeCoreAV(Tox* core, CompatibleRecursiveMutex& toxCoreLock,
-                                IAudioSettings& audioSettings, IGroupSettings& groupSettings);
+                                IAudioSettings& audioSettings, IGroupSettings& groupSettings,
+                                CameraSource&);
 
     void setAudio(IAudioControl& newAudio);
     IAudioControl* getAudio();
@@ -118,7 +119,7 @@ private:
     };
 
     CoreAV(std::unique_ptr<ToxAV, ToxAVDeleter> tox_, CompatibleRecursiveMutex &toxCoreLock,
-           IAudioSettings& audioSettings_, IGroupSettings& groupSettings_);
+           IAudioSettings& audioSettings_, IGroupSettings& groupSettings_, CameraSource&);
     void connectCallbacks();
 
     void process();
@@ -165,4 +166,5 @@ private:
 
     IAudioSettings& audioSettings;
     IGroupSettings& groupSettings;
+    CameraSource& cameraSource;
 };

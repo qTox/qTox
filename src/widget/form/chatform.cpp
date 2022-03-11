@@ -107,13 +107,15 @@ QString secondsToDHMS(quint32 duration)
 } // namespace
 
 ChatForm::ChatForm(Profile& profile, Friend* chatFriend, IChatLog& chatLog_,
-    IMessageDispatcher& messageDispatcher_, DocumentCache& documentCache_, SmileyPack& smileyPack_)
+    IMessageDispatcher& messageDispatcher_, DocumentCache& documentCache_,
+    SmileyPack& smileyPack_, CameraSource& cameraSource_)
     : GenericChatForm(profile.getCore(), chatFriend, chatLog_, messageDispatcher_,
         documentCache_, smileyPack_)
     , core{profile.getCore()}
     , f(chatFriend)
     , isTyping{false}
     , lastCallIsVideo{false}
+    , cameraSource{cameraSource_}
 {
     setName(f->getDisplayedName());
 
@@ -509,7 +511,7 @@ std::unique_ptr<NetCamView> ChatForm::createNetcam()
 {
     qDebug() << "creating netcam";
     uint32_t friendId = f->getId();
-    std::unique_ptr<NetCamView> view = std::unique_ptr<NetCamView>(new NetCamView(f->getPublicKey(), this));
+    std::unique_ptr<NetCamView> view = std::unique_ptr<NetCamView>(new NetCamView(f->getPublicKey(), cameraSource, this));
     CoreAV* av = core.getAv();
     VideoSource* source = av->getVideoSourceFromCall(friendId);
     view->show(source, f->getDisplayedName());

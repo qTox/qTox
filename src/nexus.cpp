@@ -63,7 +63,10 @@ Nexus::Nexus(QObject* parent)
     : QObject(parent)
     , profile{nullptr}
     , widget{nullptr}
-{}
+    , cameraSource(new CameraSource())
+{
+    assert(cameraSource);
+}
 
 Nexus::~Nexus()
 {
@@ -228,7 +231,7 @@ void Nexus::showMainGUI()
     assert(profile);
 
     // Create GUI
-    widget = new Widget(*profile, *audioControl);
+    widget = new Widget(*profile, *audioControl, *cameraSource);
 
     // Start GUI
     widget->init();
@@ -301,7 +304,7 @@ Profile* Nexus::getProfile()
  */
 void Nexus::onCreateNewProfile(const QString& name, const QString& pass)
 {
-    setProfile(Profile::createProfile(name, pass, *settings, parser));
+    setProfile(Profile::createProfile(name, pass, *settings, parser, *cameraSource));
     parser = nullptr; // only apply cmdline proxy settings once
 }
 
@@ -310,7 +313,7 @@ void Nexus::onCreateNewProfile(const QString& name, const QString& pass)
  */
 void Nexus::onLoadProfile(const QString& name, const QString& pass)
 {
-    setProfile(Profile::loadProfile(name, pass, *settings, parser));
+    setProfile(Profile::loadProfile(name, pass, *settings, parser, *cameraSource));
     parser = nullptr; // only apply cmdline proxy settings once
 }
 /**
@@ -342,6 +345,11 @@ void Nexus::setParser(QCommandLineParser* parser_)
 Widget* Nexus::getDesktopGUI()
 {
     return getInstance().widget;
+}
+
+CameraSource& Nexus::getCameraSource()
+{
+    return *getInstance().cameraSource;
 }
 
 #ifdef Q_OS_MAC

@@ -37,6 +37,7 @@ class AudioFilterer;
 class CoreVideoSource;
 class CoreAV;
 class Group;
+class CameraSource;
 
 class ToxCall : public QObject
 {
@@ -91,7 +92,7 @@ class ToxFriendCall : public ToxCall
     Q_OBJECT
 public:
     ToxFriendCall() = delete;
-    ToxFriendCall(uint32_t friendId, bool VideoEnabled, CoreAV& av_, IAudioControl& audio_);
+    ToxFriendCall(uint32_t friendId, bool VideoEnabled, CoreAV& av_, IAudioControl& audio_, CameraSource&);
     ToxFriendCall(ToxFriendCall&& other) = delete;
     ToxFriendCall& operator=(ToxFriendCall&& other) = delete;
     ~ToxFriendCall();
@@ -110,6 +111,7 @@ private:
     TOXAV_FRIEND_CALL_STATE state{TOXAV_FRIEND_CALL_STATE_NONE};
     std::unique_ptr<IAudioSink> sink;
     uint32_t friendId;
+    CameraSource& cameraSource;
 };
 
 class ToxGroupCall : public ToxCall

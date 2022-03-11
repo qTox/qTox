@@ -38,6 +38,7 @@
 class Settings;
 class QCommandLineParser;
 class ToxPk;
+class CameraSource;
 
 class Profile : public QObject
 {
@@ -45,9 +46,9 @@ class Profile : public QObject
 
 public:
     static Profile* loadProfile(const QString& name, const QString& password, Settings& settings,
-                                const QCommandLineParser* parser);
+                                const QCommandLineParser* parser, CameraSource&);
     static Profile* createProfile(const QString& name, const QString& password, Settings& settings,
-                                  const QCommandLineParser* parser);
+                                  const QCommandLineParser* parser, CameraSource&);
     ~Profile();
 
     Core& getCore() const;
@@ -108,7 +109,7 @@ private:
     static QStringList getFilesByExt(QString extension);
     QString avatarPath(const ToxPk& owner, bool forceUnencrypted = false);
     bool saveToxSave(QByteArray data);
-    void initCore(const QByteArray& toxsave, Settings &s, bool isNewProfile);
+    void initCore(const QByteArray& toxsave, Settings &s, bool isNewProfile, CameraSource&);
 
 private:
     std::unique_ptr<AvatarBroadcaster> avatarBroadcaster;

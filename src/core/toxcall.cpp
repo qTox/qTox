@@ -59,7 +59,6 @@ ToxCall::~ToxCall()
 {
     if (videoEnabled) {
         QObject::disconnect(videoInConn);
-        CameraSource::getInstance().unsubscribe();
     }
 }
 
@@ -118,10 +117,12 @@ CoreVideoSource* ToxCall::getVideoSource() const
     return videoSource;
 }
 
-ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av_, IAudioControl& audio_)
+ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av_,
+    IAudioControl& audio_, CameraSource& cameraSource_)
     : ToxCall(VideoEnabled, av_, audio_)
     , sink(audio_.makeSink())
     , friendId{FriendNum}
+    , cameraSource{cameraSource_}
 {
     connect(audioSource.get(), &IAudioSource::frameAvailable, this,
                          [this](const int16_t* pcm, size_t samples, uint8_t chans, uint32_t rate) {
@@ -137,13 +138,12 @@ ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av_,
     // register video
     if (videoEnabled) {
         videoSource = new CoreVideoSource();
-        CameraSource& source = CameraSource::getInstance();
 
-        if (source.isNone()) {
-            source.setupDefault();
+        if (cameraSource.isNone()) {
+            cameraSource.setupDefault();
         }
-        source.subscribe();
-        videoInConn = QObject::connect(&source, &VideoSource::frameAvailable,
+        cameraSource.subscribe();
+        videoInConn = QObject::connect(&cameraSource, &VideoSource::frameAvailable,
                                        [&av_, FriendNum](std::shared_ptr<VideoFrame> frame) {
                                            av_.sendCallVideo(FriendNum, frame);
                                        });
@@ -155,6 +155,9 @@ ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av_,
 
 ToxFriendCall::~ToxFriendCall()
 {
+    if (videoEnabled) {
+        cameraSource.unsubscribe();
+    }
     QObject::disconnect(audioSinkInvalid);
 }
 
