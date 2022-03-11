@@ -23,11 +23,12 @@
 
 class QTextDocument;
 class SmileyPack;
+class Settings;
 
 class DocumentCache
 {
 public:
-    DocumentCache(SmileyPack& smileyPack);
+    DocumentCache(SmileyPack&, Settings&);
     ~DocumentCache();
     DocumentCache(DocumentCache&) = delete;
     DocumentCache& operator=(const DocumentCache&) = delete;
@@ -37,4 +38,5 @@ public:
 private:
     QStack<QTextDocument*> documents;
     SmileyPack& smileyPack;
+    Settings& settings;
 };

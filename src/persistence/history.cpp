@@ -707,8 +707,9 @@ FileDbInsertionData::FileDbInsertionData()
  * @brief Prepares the database to work with the history.
  * @param db This database will be prepared for use with the history.
  */
-History::History(std::shared_ptr<RawDatabase> db_)
+History::History(std::shared_ptr<RawDatabase> db_, Settings& settings_)
     : db(db_)
+    , settings(settings_)
 {
     if (!isValid()) {
         qWarning() << "Database not open, init failed";
@@ -1385,7 +1386,7 @@ void History::markAsDelivered(RowId messageId)
 */
 bool History::historyAccessBlocked()
 {
-    if (!Settings::getInstance().getEnableLogging()) {
+    if (!settings.getEnableLogging()) {
         assert(false);
         qCritical() << "Blocked history access while history is disabled";
         return true;

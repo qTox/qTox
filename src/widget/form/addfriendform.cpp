@@ -61,8 +61,9 @@ namespace
  * @brief Cached username so we can retranslate the invite message
  */
 
-AddFriendForm::AddFriendForm(ToxId _ownId)
-    : ownId{_ownId}
+AddFriendForm::AddFriendForm(ToxId ownId_, Settings& settings_)
+    : ownId{ownId_}
+    , settings{settings_}
 {
     tabWidget = new QTabWidget();
     main = new QWidget(tabWidget);
@@ -122,9 +123,9 @@ AddFriendForm::AddFriendForm(ToxId _ownId)
     retranslateUi();
     Translator::registerHandler(std::bind(&AddFriendForm::retranslateUi, this), this);
 
-    const int size = Settings::getInstance().getFriendRequestSize();
+    const int size = settings.getFriendRequestSize();
     for (int i = 0; i < size; ++i) {
-        Settings::Request request = Settings::getInstance().getFriendRequest(i);
+        Settings::Request request = settings.getFriendRequest(i);
         addFriendRequestWidget(request.address, request.message);
     }
 }
@@ -180,7 +181,7 @@ void AddFriendForm::setMode(Mode mode)
 
 bool AddFriendForm::addFriendRequest(const QString& friendAddress, const QString& message_)
 {
-    if (Settings::getInstance().addFriendRequest(friendAddress, message_)) {
+    if (settings.addFriendRequest(friendAddress, message_)) {
         addFriendRequestWidget(friendAddress, message_);
         if (isShown()) {
             onCurrentChanged(tabWidget->currentIndex());
@@ -292,7 +293,7 @@ void AddFriendForm::onIdChanged(const QString& id)
         isValidId ? QStringLiteral("%1 (%2)") : QStringLiteral("%1 <font color='red'>(%2)</font>");
     toxIdLabel.setText(labelText.arg(toxIdText, toxIdComment));
     toxId.setStyleSheet(isValidOrEmpty ? QStringLiteral("")
-                                  : Style::getStylesheet("addFriendForm/toxId.css"));
+                                  : Style::getStylesheet("addFriendForm/toxId.css", settings));
     toxId.setToolTip(isValidOrEmpty ? QStringLiteral("") : tr("Invalid Tox ID format"));
 
     sendButton.setEnabled(isValidId);
@@ -311,11 +312,11 @@ void AddFriendForm::setIdFromClipboard()
 
 void AddFriendForm::deleteFriendRequest(const ToxId& toxId_)
 {
-    const int size = Settings::getInstance().getFriendRequestSize();
+    const int size = settings.getFriendRequestSize();
     for (int i = 0; i < size; ++i) {
-        Settings::Request request = Settings::getInstance().getFriendRequest(i);
+        Settings::Request request = settings.getFriendRequest(i);
         if (toxId_.getPublicKey() == ToxPk(request.address)) {
-            Settings::getInstance().removeFriendRequest(i);
+            settings.removeFriendRequest(i);
             return;
         }
     }
@@ -328,10 +329,10 @@ void AddFriendForm::onFriendRequestAccepted()
     const int index = requestsLayout->indexOf(friendWidget);
     removeFriendRequestWidget(friendWidget);
     const int indexFromEnd = requestsLayout->count() - index - 1;
-    const Settings::Request request = Settings::getInstance().getFriendRequest(indexFromEnd);
+    const Settings::Request request = settings.getFriendRequest(indexFromEnd);
     emit friendRequestAccepted(ToxPk{request.address});
-    Settings::getInstance().removeFriendRequest(indexFromEnd);
-    Settings::getInstance().savePersonal();
+    settings.removeFriendRequest(indexFromEnd);
+    settings.savePersonal();
 }
 
 void AddFriendForm::onFriendRequestRejected()
@@ -341,15 +342,15 @@ void AddFriendForm::onFriendRequestRejected()
     const int index = requestsLayout->indexOf(friendWidget);
     removeFriendRequestWidget(friendWidget);
     const int indexFromEnd = requestsLayout->count() - index - 1;
-    Settings::getInstance().removeFriendRequest(indexFromEnd);
-    Settings::getInstance().savePersonal();
+    settings.removeFriendRequest(indexFromEnd);
+    settings.savePersonal();
 }
 
 void AddFriendForm::onCurrentChanged(int index)
 {
-    if (index == FriendRequest && Settings::getInstance().getUnreadFriendRequests() != 0) {
-        Settings::getInstance().clearUnreadFriendRequests();
-        Settings::getInstance().savePersonal();
+    if (index == FriendRequest && settings.getUnreadFriendRequests() != 0) {
+        settings.clearUnreadFriendRequests();
+        settings.savePersonal();
         emit friendRequestsSeen();
     }
 }

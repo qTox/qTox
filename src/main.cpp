@@ -55,19 +55,23 @@ QList<QByteArray>* logBuffer =
 QMutex* logBufferMutex = new QMutex();
 #endif
 
+std::unique_ptr<Settings> settings;
+std::unique_ptr<ToxSave> toxSave;
+
 void cleanup()
 {
     // force save early even though destruction saves, because Windows OS will
     // close qTox before cleanup() is finished if logging out or shutting down,
     // once the top level window has exited, which occurs in ~Widget within
     // ~Nexus. Re-ordering Nexus destruction is not trivial.
-    auto& s = Settings::getInstance();
-    s.saveGlobal();
-    s.savePersonal();
-    s.sync();
+    if (settings) {
+        settings->saveGlobal();
+        settings->savePersonal();
+        settings->sync();
+    }
 
     Nexus::destroyInstance();
-    Settings::destroyInstance();
+    settings.reset();
     qDebug() << "Cleanup success";
 
 #ifdef LOG_TO_FILE
@@ -178,8 +182,9 @@ void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QSt
 
 std::unique_ptr<ToxURIDialog> uriDialog;
 
-bool toxURIEventHandler(const QByteArray& eventData)
+bool toxURIEventHandler(const QByteArray& eventData, void* userData)
 {
+    std::ignore = userData;
     if (!eventData.startsWith("tox:")) {
         return false;
     }
@@ -191,7 +196,8 @@ bool toxURIEventHandler(const QByteArray& eventData)
     uriDialog->handleToxURI(eventData);
     return true;
 }
-}
+
+} // namespace
 
 int main(int argc, char* argv[])
 {
@@ -225,8 +231,12 @@ int main(int argc, char* argv[])
         qWarning() << "Couldn't load font";
     }
 
-    Settings& settings = Settings::getInstance();
-    QString locale = settings.getTranslation();
+    settings = std::unique_ptr<Settings>(new Settings());
+    assert(settings);
+    if (!settings) {
+        std::terminate();
+    }
+    QString locale = settings->getTranslation();
     // We need to init the resources in the translations_library explicitely.
     // See https://doc.qt.io/qt-5/resources.html#using-resources-in-a-library
     Q_INIT_RESOURCE(translations);
@@ -267,10 +277,10 @@ int main(int argc, char* argv[])
                                         QObject::tr("(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)")));
     parser.process(*a);
 
-    uint32_t profileId = settings.getCurrentProfileId();
+    uint32_t profileId = settings->getCurrentProfileId();
     IPC ipc(profileId);
     if (ipc.isAttached()) {
-        QObject::connect(&settings, &Settings::currentProfileIdChanged, &ipc, &IPC::setProfileId);
+        QObject::connect(settings.get(), &Settings::currentProfileIdChanged, &ipc, &IPC::setProfileId);
     } else {
         qWarning() << "Can't init IPC, maybe we're in a jail? Continuing with reduced multi-client functionality.";
     }
@@ -282,7 +292,7 @@ int main(int argc, char* argv[])
     }
 
 #ifdef LOG_TO_FILE
-    QString logFileDir = settings.getPaths().getAppCacheDirPath();
+    QString logFileDir = settings->getPaths().getAppCacheDirPath();
     QDir(logFileDir).mkpath(".");
 
     QString logfile = logFileDir + "qtox.log";
@@ -328,14 +338,14 @@ int main(int argc, char* argv[])
     qDebug() << "commit: " << GIT_VERSION;
 
     QString profileName;
-    bool autoLogin = settings.getAutoLogin();
+    bool autoLogin = settings->getAutoLogin();
 
     uint32_t ipcDest = 0;
     bool doIpc = ipc.isAttached();
     QString eventType, firstParam;
     if (parser.isSet("p")) {
         profileName = parser.value("p");
-        if (!Profile::exists(profileName)) {
+        if (!Profile::exists(profileName, settings->getPaths())) {
             qWarning() << "-p profile" << profileName + ".tox"
                        << "doesn't exist, opening login screen";
             doIpc = false;
@@ -348,7 +358,7 @@ int main(int argc, char* argv[])
         doIpc = false;
         autoLogin = false;
     } else {
-        profileName = settings.getCurrentProfile();
+        profileName = settings->getCurrentProfile();
     }
 
     if (parser.positionalArguments().empty()) {
@@ -393,14 +403,14 @@ int main(int argc, char* argv[])
     // TODO(kriby): Consider moving application initializing variables into a globalSettings object
     //  note: Because Settings is shouldering global settings as well as model specific ones it
     //  cannot be integrated into a central model object yet
-    nexus.setSettings(&settings);
+    nexus.setSettings(settings.get());
     auto& cameraSource = Nexus::getCameraSource();
     // Autologin
     // TODO (kriby): Shift responsibility of linking views to model objects from nexus
     // Further: generate view instances separately (loginScreen, mainGUI, audio)
     Profile* profile = nullptr;
-    if (autoLogin && Profile::exists(profileName) && !Profile::isEncrypted(profileName)) {
-        profile = Profile::loadProfile(profileName, QString(), settings, &parser, cameraSource);
+    if (autoLogin && Profile::exists(profileName, settings->getPaths()) && !Profile::isEncrypted(profileName, settings->getPaths())) {
+        profile = Profile::loadProfile(profileName, QString(), *settings, &parser, cameraSource);
         if (!profile) {
             QMessageBox::information(nullptr, QObject::tr("Error"),
                                      QObject::tr("Failed to load profile automatically."));
@@ -421,16 +431,16 @@ int main(int argc, char* argv[])
 
     if (ipc.isAttached()) {
         // Start to accept Inter-process communication
-        ipc.registerEventHandler("uri", &toxURIEventHandler);
-        ipc.registerEventHandler("save", &toxSaveEventHandler);
-        ipc.registerEventHandler("activate", &toxActivateEventHandler);
+        ipc.registerEventHandler("uri", &toxURIEventHandler, uriDialog.get());
+        ipc.registerEventHandler("save", &ToxSave::toxSaveEventHandler, toxSave.get());
+        ipc.registerEventHandler("activate", &toxActivateEventHandler, nullptr);
     }
 
     // Event was not handled by already running instance therefore we handle it ourselves
     if (eventType == "uri") {
         uriDialog->handleToxURI(firstParam.toUtf8());
     } else if (eventType == "save") {
-        handleToxSave(firstParam.toUtf8());
+        toxSave->handleToxSave(firstParam.toUtf8());
     }
 
     QObject::connect(a.get(), &QApplication::aboutToQuit, cleanup);

@@ -18,6 +18,7 @@
 */
 
 #include "src/persistence/smileypack.h"
+#include "src/persistence/settings.h"
 
 #include <QtTest/QtTest>
 #include <QSignalSpy>
@@ -40,6 +41,7 @@ private slots:
     void testSmilifyAsciiEmoticon();
 private:
     std::unique_ptr<QGuiApplication> app;
+    std::unique_ptr<Settings> settings;
 };
 
 TestSmileyPack::TestSmileyPack()
@@ -51,6 +53,7 @@ TestSmileyPack::TestSmileyPack()
     static int qtTestAppArgc = 3;
 
     app = std::unique_ptr<QGuiApplication>(new QGuiApplication(qtTestAppArgc, qtTestAppArgv));
+    settings = std::unique_ptr<Settings>(new Settings());
 }
 
 /**
@@ -58,7 +61,7 @@ TestSmileyPack::TestSmileyPack()
  */
 void TestSmileyPack::testSmilifySingleCharEmoji()
 {
-    SmileyPack smileyPack{};
+    SmileyPack smileyPack{*settings};
 
     auto result = smileyPack.smileyfied("😊");
     QVERIFY(result == SmileyPack::getAsRichText("😊"));
@@ -73,7 +76,7 @@ void TestSmileyPack::testSmilifySingleCharEmoji()
  */
 void TestSmileyPack::testSmilifyMultiCharEmoji()
 {
-    SmileyPack smileyPack{};
+    SmileyPack smileyPack{*settings};
 
     auto result = smileyPack.smileyfied("🇬🇧");
     QVERIFY(result == SmileyPack::getAsRichText("🇬🇧"));
@@ -94,7 +97,7 @@ void TestSmileyPack::testSmilifyMultiCharEmoji()
  */
 void TestSmileyPack::testSmilifyAsciiEmoticon()
 {
-    SmileyPack smileyPack{};
+    SmileyPack smileyPack{*settings};
 
     auto result = smileyPack.smileyfied(":-)");
     QVERIFY(result == SmileyPack::getAsRichText(":-)"));

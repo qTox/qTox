@@ -22,6 +22,7 @@
 #include <QWidget>
 
 class QLabel;
+class Settings;
 
 class NotificationEdgeWidget final : public QWidget
 {
@@ -33,7 +34,7 @@ public:
         Bottom
     };
 
-    explicit NotificationEdgeWidget(Position position, QWidget* parent = nullptr);
+    NotificationEdgeWidget(Position position, Settings&, QWidget* parent = nullptr);
     void updateNotificationCount(int count);
 
 signals:

@@ -105,12 +105,13 @@ bool isAscii(const QString& string)
 
 } // namespace
 
-SmileyPack::SmileyPack()
+SmileyPack::SmileyPack(Settings& settings_)
     : cleanupTimer{new QTimer(this)}
+    , settings{settings_}
 {
     loadingMutex.lock();
-    QtConcurrent::run(this, &SmileyPack::load, Settings::getInstance().getSmileyPack());
-    connect(&Settings::getInstance(), &Settings::smileyPackChanged, this,
+    QtConcurrent::run(this, &SmileyPack::load, settings.getSmileyPack());
+    connect(&settings, &Settings::smileyPackChanged, this,
             &SmileyPack::onSmileyPackChanged);
     connect(cleanupTimer, &QTimer::timeout, this, &SmileyPack::cleanupIconsCache);
     cleanupTimer->start(CLEANUP_TIMEOUT);
@@ -348,5 +349,5 @@ std::shared_ptr<QIcon> SmileyPack::getAsIcon(const QString& emoticon) const
 void SmileyPack::onSmileyPackChanged()
 {
     loadingMutex.lock();
-    QtConcurrent::run(this, &SmileyPack::load, Settings::getInstance().getSmileyPack());
+    QtConcurrent::run(this, &SmileyPack::load, settings.getSmileyPack());
 }

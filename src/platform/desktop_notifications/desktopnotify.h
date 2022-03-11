@@ -28,11 +28,13 @@
 #include <memory>
 #include <unordered_set>
 
+class Settings;
+
 class DesktopNotify : public QObject
 {
     Q_OBJECT
 public:
-    DesktopNotify();
+    explicit DesktopNotify(Settings&);
 
 public slots:
     void notifyMessage(const NotificationData& notificationData);
@@ -49,4 +51,5 @@ private:
     Snore::Icon snoreIcon;
     Snore::Notification lastNotification;
     uint latestId;
+    Settings& settings;
 };

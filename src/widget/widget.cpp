@@ -82,8 +82,9 @@
 #include "tool/removefrienddialog.h"
 #include "src/persistence/smileypack.h"
 
-bool toxActivateEventHandler(const QByteArray&)
+bool toxActivateEventHandler(const QByteArray&, void* userData)
 {
+    std::ignore = userData;
     Widget* widget = Nexus::getDesktopGUI();
     if (!widget) {
         return true;
@@ -140,7 +141,7 @@ void Widget::acceptFileTransfer(const ToxFile& file, const QString& path)
 Widget* Widget::instance{nullptr};
 
 Widget::Widget(Profile &profile_, IAudioControl& audio_, CameraSource& cameraSource_,
-    QWidget* parent)
+    Settings& settings_, QWidget* parent)
     : QMainWindow(parent)
     , profile{profile_}
     , trayMenu{nullptr}
@@ -149,9 +150,12 @@ Widget::Widget(Profile &profile_, IAudioControl& audio_, CameraSource& cameraSou
     , eventFlag(false)
     , eventIcon(false)
     , audio(audio_)
-    , settings(Settings::getInstance())
-    , smileyPack(new SmileyPack())
-    , documentCache(new DocumentCache(*smileyPack))
+    , settings(settings_)
+#if DESKTOP_NOTIFICATIONS
+    , notifier{settings}
+#endif
+    , smileyPack(new SmileyPack(settings))
+    , documentCache(new DocumentCache(*smileyPack, settings))
     , cameraSource{cameraSource_}
 {
     installEventFilter(this);
@@ -199,7 +203,7 @@ void Widget::init()
 #endif
 
     actionQuit->setIcon(
-        prepareIcon(Style::getImagePath("rejectCall/rejectCall.svg"), icon_size, icon_size));
+        prepareIcon(Style::getImagePath("rejectCall/rejectCall.svg", settings), icon_size, icon_size));
     connect(actionQuit, &QAction::triggered, qApp, &QApplication::quit);
 
     layout()->setContentsMargins(0, 0, 0, 0);
@@ -258,7 +262,7 @@ void Widget::init()
 
     sharedMessageProcessorParams.reset(new MessageProcessor::SharedParams(core->getMaxMessageSize(), coreExt->getMaxExtendedMessageSize()));
 
-    contactListWidget = new FriendListWidget(*core, this, settings.getGroupchatPosition());
+    contactListWidget = new FriendListWidget(*core, this, settings, settings.getGroupchatPosition());
     connect(contactListWidget, &FriendListWidget::searchCircle, this, &Widget::searchCircle);
     connect(contactListWidget, &FriendListWidget::connectCircleWidget, this,
             &Widget::connectCircleWidget);
@@ -283,25 +287,25 @@ void Widget::init()
     // Disable some widgets until we're connected to the DHT
     ui->statusButton->setEnabled(false);
 
-    Style::setThemeColor(settings.getThemeColor());
+    Style::setThemeColor(settings, settings.getThemeColor());
 
     CoreFile* coreFile = core->getCoreFile();
-    filesForm = new FilesForm(*coreFile);
-    addFriendForm = new AddFriendForm(core->getSelfId());
-    groupInviteForm = new GroupInviteForm;
+    filesForm = new FilesForm(*coreFile, settings);
+    addFriendForm = new AddFriendForm(core->getSelfId(), settings);
+    groupInviteForm = new GroupInviteForm(settings);
 
 #if UPDATE_CHECK_ENABLED
     updateCheck = std::unique_ptr<UpdateCheck>(new UpdateCheck(settings));
     connect(updateCheck.get(), &UpdateCheck::updateAvailable, this, &Widget::onUpdateAvailable);
 #endif
     settingsWidget = new SettingsWidget(updateCheck.get(), audio, core, *smileyPack,
-        cameraSource, this);
+        cameraSource, settings, this);
 #if UPDATE_CHECK_ENABLED
     updateCheck->checkForUpdate();
 #endif
 
-    profileInfo = new ProfileInfo(core, &profile);
-    profileForm = new ProfileForm(profileInfo);
+    profileInfo = new ProfileInfo(core, &profile, settings);
+    profileForm = new ProfileForm(profileInfo, settings);
 
 #if DESKTOP_NOTIFICATIONS
     notificationGenerator.reset(new NotificationGenerator(settings, &profile));
@@ -800,7 +804,7 @@ void Widget::onSeparateWindowChanged(bool separate, bool clicked)
         QWidget* contentWidget = new QWidget(this);
         contentWidget->setObjectName("contentWidget");
 
-        contentLayout = new ContentLayout(contentWidget);
+        contentLayout = new ContentLayout(settings, contentWidget);
         ui->mainSplitter->addWidget(contentWidget);
 
         setMinimumWidth(775);
@@ -1174,12 +1178,12 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     assert(core != nullptr);
     settings.updateFriendAddress(friendPk.toString());
 
-    Friend* newfriend = FriendList::addFriend(friendId, friendPk);
+    Friend* newfriend = FriendList::addFriend(friendId, friendPk, settings);
     auto dialogManager = ContentDialogManager::getInstance();
-    auto rawChatroom = new FriendChatroom(newfriend, dialogManager, *core);
+    auto rawChatroom = new FriendChatroom(newfriend, dialogManager, *core, settings);
     std::shared_ptr<FriendChatroom> chatroom(rawChatroom);
     const auto compact = settings.getCompactLayout();
-    auto widget = new FriendWidget(chatroom, compact);
+    auto widget = new FriendWidget(chatroom, compact, settings);
     connectFriendWidget(*widget);
     auto history = profile.getHistory();
 
@@ -1193,7 +1197,8 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
         std::make_shared<ChatHistory>(*newfriend, history, *core, settings,
                                       *friendMessageDispatcher);
     auto friendForm = new ChatForm(profile, newfriend, *chatHistory,
-        *friendMessageDispatcher, *documentCache, *smileyPack, cameraSource);
+        *friendMessageDispatcher, *documentCache, *smileyPack, cameraSource,
+        settings);
     connect(friendForm, &ChatForm::updateFriendActivity, this, &Widget::updateFriendActivity);
 
     friendMessageDispatchers[friendPk] = friendMessageDispatcher;
@@ -1606,7 +1611,7 @@ bool Widget::newFriendMessageAlert(const ToxPk& friendId, const QString& text, b
         FriendWidget* widget = friendWidgets[friendId];
         f->setEventFlag(true);
         widget->updateStatusLight();
-        ui->friendList->trackWidget(widget);
+        ui->friendList->trackWidget(settings, widget);
 #if DESKTOP_NOTIFICATIONS
         auto notificationData = filename.isEmpty() ? notificationGenerator->friendMessageNotification(f, text)
                                                    : notificationGenerator->fileTransferNotification(f, filename, filesize);
@@ -1790,7 +1795,7 @@ void Widget::removeFriend(Friend* f, bool fake)
         lastDialog->removeFriend(friendPk);
     }
 
-    FriendList::removeFriend(friendPk, fake);
+    FriendList::removeFriend(friendPk, settings, fake);
     if (!fake) {
         core->removeFriend(f->getId());
         // aliases aren't supported for non-friend peers in groups, revert to basic username
@@ -1856,7 +1861,7 @@ void Widget::onUpdateAvailable()
 
 ContentDialog* Widget::createContentDialog() const
 {
-    ContentDialog* contentDialog = new ContentDialog(*core);
+    ContentDialog* contentDialog = new ContentDialog(*core, settings);
 
     registerContentDialog(*contentDialog);
     return contentDialog;
@@ -1917,7 +1922,7 @@ ContentLayout* Widget::createContentDialog(DialogType type) const
 
         void reloadTheme() final
         {
-            setStyleSheet(Style::getStylesheet("window/general.css"));
+            setStyleSheet(Style::getStylesheet("window/general.css", settings));
         }
 
     protected:
@@ -1941,7 +1946,7 @@ ContentLayout* Widget::createContentDialog(DialogType type) const
 
     Dialog* dialog = new Dialog(type, settings, core);
     dialog->setAttribute(Qt::WA_DeleteOnClose);
-    ContentLayout* contentLayoutDialog = new ContentLayout(dialog);
+    ContentLayout* contentLayoutDialog = new ContentLayout(settings, dialog);
 
     dialog->setObjectName("detached");
     dialog->setLayout(contentLayoutDialog);
@@ -2147,7 +2152,7 @@ Group* Widget::createGroup(uint32_t groupnumber, const GroupId& groupId)
     std::shared_ptr<GroupChatroom> chatroom(rawChatroom);
 
     const auto compact = settings.getCompactLayout();
-    auto widget = new GroupWidget(chatroom, compact);
+    auto widget = new GroupWidget(chatroom, compact, settings);
     auto messageProcessor = MessageProcessor(*sharedMessageProcessorParams);
     auto messageDispatcher =
         std::make_shared<GroupMessageDispatcher>(*newgroup, std::move(messageProcessor), *core,
@@ -2475,15 +2480,15 @@ void Widget::reloadTheme()
         x->setStyleSheet("");
     }
 
-    setStyleSheet(Style::getStylesheet("window/general.css"));
-    QString statusPanelStyle = Style::getStylesheet("window/statusPanel.css");
-    ui->tooliconsZone->setStyleSheet(Style::getStylesheet("tooliconsZone/tooliconsZone.css"));
+    setStyleSheet(Style::getStylesheet("window/general.css", settings));
+    QString statusPanelStyle = Style::getStylesheet("window/statusPanel.css", settings);
+    ui->tooliconsZone->setStyleSheet(Style::getStylesheet("tooliconsZone/tooliconsZone.css", settings));
     ui->statusPanel->setStyleSheet(statusPanelStyle);
     ui->statusHead->setStyleSheet(statusPanelStyle);
-    ui->friendList->setStyleSheet(Style::getStylesheet("friendList/friendList.css"));
-    ui->statusButton->setStyleSheet(Style::getStylesheet("statusButton/statusButton.css"));
+    ui->friendList->setStyleSheet(Style::getStylesheet("friendList/friendList.css", settings));
+    ui->statusButton->setStyleSheet(Style::getStylesheet("statusButton/statusButton.css", settings));
 
-    profilePicture->setStyleSheet(Style::getStylesheet("window/profile.css"));
+    profilePicture->setStyleSheet(Style::getStylesheet("window/profile.css", settings));
 }
 
 void Widget::nextContact()

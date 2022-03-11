@@ -31,7 +31,7 @@ NotificationScrollArea::NotificationScrollArea(QWidget* parent)
             &NotificationScrollArea::updateVisualTracking);
 }
 
-void NotificationScrollArea::trackWidget(GenericChatroomWidget* widget)
+void NotificationScrollArea::trackWidget(Settings& settings, GenericChatroomWidget* widget)
 {
     if (trackedWidgets.find(widget) != trackedWidgets.end())
         return;
@@ -41,7 +41,7 @@ void NotificationScrollArea::trackWidget(GenericChatroomWidget* widget)
         if (visibility == Above) {
             if (referencesAbove++ == 0) {
                 assert(topEdge == nullptr);
-                topEdge = new NotificationEdgeWidget(NotificationEdgeWidget::Top, this);
+                topEdge = new NotificationEdgeWidget(NotificationEdgeWidget::Top, settings, this);
                 connect(topEdge, &NotificationEdgeWidget::clicked, this,
                         &NotificationScrollArea::findPreviousWidget);
                 recalculateTopEdge();
@@ -51,7 +51,7 @@ void NotificationScrollArea::trackWidget(GenericChatroomWidget* widget)
         } else {
             if (referencesBelow++ == 0) {
                 assert(bottomEdge == nullptr);
-                bottomEdge = new NotificationEdgeWidget(NotificationEdgeWidget::Bottom, this);
+                bottomEdge = new NotificationEdgeWidget(NotificationEdgeWidget::Bottom, settings, this);
                 connect(bottomEdge, &NotificationEdgeWidget::clicked, this,
                         &NotificationScrollArea::findNextWidget);
                 recalculateBottomEdge();

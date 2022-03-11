@@ -25,6 +25,7 @@
 #include <QToolButton>
 
 class Profile;
+class Settings;
 
 namespace Ui {
 class LoginScreen;
@@ -35,7 +36,7 @@ class LoginScreen : public QDialog
     Q_OBJECT
 
 public:
-    LoginScreen(const QString& initialProfileName = QString(), QWidget* parent = nullptr);
+    LoginScreen(Settings&, const QString& initialProfileName = QString(), QWidget* parent = nullptr);
     ~LoginScreen();
     bool event(QEvent* event) final;
 
@@ -73,4 +74,5 @@ private:
 private:
     Ui::LoginScreen* ui;
     QShortcut quitShortcut;
+    Settings& settings;
 };

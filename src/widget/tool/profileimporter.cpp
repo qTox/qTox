@@ -35,8 +35,9 @@
  * to create dialog forms.
  */
 
-ProfileImporter::ProfileImporter(QWidget* parent)
+ProfileImporter::ProfileImporter(Settings& settings_, QWidget* parent)
     : QWidget(parent)
+    , settings{settings_}
 {
 }
 
@@ -105,7 +106,7 @@ bool ProfileImporter::importProfile(const QString& path)
         return false; // ingore importing non-tox file
     }
 
-    QString settingsPath = Settings::getInstance().getPaths().getSettingsDirPath();
+    QString settingsPath = settings.getPaths().getSettingsDirPath();
     QString profilePath = QDir(settingsPath).filePath(profile + Core::TOX_EXT);
 
     if (QFileInfo(profilePath).exists()) {

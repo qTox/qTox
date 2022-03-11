@@ -21,8 +21,15 @@
 
 class QString;
 class QByteArray;
+class Settings;
 
-bool handleToxSave(const QString& path);
+class ToxSave
+{
+public:
+    explicit ToxSave(Settings&);
+    bool handleToxSave(const QString& path);
+    static bool toxSaveEventHandler(const QByteArray& eventData, void* userData);
 
-// Internals
-bool toxSaveEventHandler(const QByteArray& eventData);
+private:
+    Settings& settings;
+};

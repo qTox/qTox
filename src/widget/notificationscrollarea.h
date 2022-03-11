@@ -24,6 +24,7 @@
 
 class GenericChatroomWidget;
 class NotificationEdgeWidget;
+class Settings;
 
 class NotificationScrollArea final : public AdjustingScrollArea
 {
@@ -31,7 +32,7 @@ public:
     explicit NotificationScrollArea(QWidget* parent = nullptr);
 
 public slots:
-    void trackWidget(GenericChatroomWidget* widget);
+    void trackWidget(Settings& settings, GenericChatroomWidget* widget);
     void updateVisualTracking();
     void updateTracking(GenericChatroomWidget* widget);
 

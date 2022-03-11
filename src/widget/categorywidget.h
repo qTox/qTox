@@ -28,12 +28,13 @@ class FriendListWidget;
 class FriendWidget;
 class QVBoxLayout;
 class QHBoxLayout;
+class Settings;
 
 class CategoryWidget : public GenericChatItemWidget
 {
     Q_OBJECT
 public:
-    explicit CategoryWidget(bool compact_, QWidget* parent = nullptr);
+    explicit CategoryWidget(bool compact_, Settings&, QWidget* parent = nullptr);
 
     bool isExpanded() const;
     void setExpanded(bool isExpanded, bool save = true);
@@ -83,4 +84,5 @@ private:
     QWidget* container;
     QFrame* lineFrame;
     bool expanded = false;
+    Settings& settings;
 };

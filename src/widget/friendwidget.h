@@ -29,12 +29,13 @@ class FriendChatroom;
 class QPixmap;
 class MaskablePixmapWidget;
 class CircleWidget;
+class Settings;
 
 class FriendWidget : public GenericChatroomWidget, public IFriendListItem
 {
     Q_OBJECT
 public:
-    FriendWidget(std::shared_ptr<FriendChatroom> chatform_, bool compact_);
+    FriendWidget(std::shared_ptr<FriendChatroom> chatform_, bool compact_, Settings&);
 
     void contextMenuEvent(QContextMenuEvent* event) final;
     void setAsActiveChatroom() final;
@@ -85,4 +86,5 @@ private slots:
 public:
     std::shared_ptr<FriendChatroom> chatroom;
     bool isDefaultAvatar;
+    Settings& settings;
 };

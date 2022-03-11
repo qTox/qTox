@@ -81,12 +81,12 @@ const QString MIC_TOOL_TIP[] = {
 };
 
 template <class T, class Fun>
-QPushButton* createButton(const QString& name, T* self, Fun onClickSlot)
+QPushButton* createButton(const QString& name, T* self, Fun onClickSlot, Settings& settings)
 {
     QPushButton* btn = new QPushButton();
     btn->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     btn->setObjectName(name);
-    btn->setStyleSheet(Style::getStylesheet(STYLE_PATH));
+    btn->setStyleSheet(Style::getStylesheet(STYLE_PATH, settings));
     QObject::connect(btn, &QPushButton::clicked, self, onClickSlot);
     return btn;
 }
@@ -108,13 +108,14 @@ void setStateName(QAbstractButton* btn, State state)
 
 }
 
-ChatFormHeader::ChatFormHeader(QWidget* parent)
+ChatFormHeader::ChatFormHeader(Settings& settings_, QWidget* parent)
     : QWidget(parent)
     , mode{Mode::AV}
     , callState{CallButtonState::Disabled}
     , videoState{CallButtonState::Disabled}
     , volState{ToolButtonState::Disabled}
     , micState{ToolButtonState::Disabled}
+    , settings{settings_}
 {
     QHBoxLayout* headLayout = new QHBoxLayout();
     avatar = new MaskablePixmapWidget(this, AVATAR_SIZE, ":/img/avatar_mask.svg");
@@ -140,10 +141,10 @@ ChatFormHeader::ChatFormHeader(QWidget* parent)
     headTextLayout->addLayout(nameLine);
     headTextLayout->addStretch();
 
-    micButton = createButton("micButton", this, &ChatFormHeader::micMuteToggle);
-    volButton = createButton("volButton", this, &ChatFormHeader::volMuteToggle);
-    callButton = createButton("callButton", this, &ChatFormHeader::callTriggered);
-    videoButton = createButton("videoButton", this, &ChatFormHeader::videoCallTriggered);
+    micButton = createButton("micButton", this, &ChatFormHeader::micMuteToggle, settings);
+    volButton = createButton("volButton", this, &ChatFormHeader::volMuteToggle, settings);
+    callButton = createButton("callButton", this, &ChatFormHeader::callTriggered, settings);
+    videoButton = createButton("videoButton", this, &ChatFormHeader::videoCallTriggered, settings);
 
     QVBoxLayout* micButtonsLayout = new QVBoxLayout();
     micButtonsLayout->setSpacing(MIC_BUTTONS_LAYOUT_SPACING);
@@ -218,7 +219,7 @@ void ChatFormHeader::showOutgoingCall(bool video)
 void ChatFormHeader::createCallConfirm(bool video)
 {
     QWidget* btn = video ? videoButton : callButton;
-    callConfirm = std::unique_ptr<CallConfirmWidget>(new CallConfirmWidget(btn));
+    callConfirm = std::unique_ptr<CallConfirmWidget>(new CallConfirmWidget(settings, btn));
     connect(callConfirm.get(), &CallConfirmWidget::accepted, this, &ChatFormHeader::callAccepted);
     connect(callConfirm.get(), &CallConfirmWidget::rejected, this, &ChatFormHeader::callRejected);
 }
@@ -302,11 +303,11 @@ QSize ChatFormHeader::getAvatarSize() const
 
 void ChatFormHeader::reloadTheme()
 {
-    setStyleSheet(Style::getStylesheet("chatArea/chatHead.css"));
-    callButton->setStyleSheet(Style::getStylesheet(STYLE_PATH));
-    videoButton->setStyleSheet(Style::getStylesheet(STYLE_PATH));
-    volButton->setStyleSheet(Style::getStylesheet(STYLE_PATH));
-    micButton->setStyleSheet(Style::getStylesheet(STYLE_PATH));
+    setStyleSheet(Style::getStylesheet("chatArea/chatHead.css", settings));
+    callButton->setStyleSheet(Style::getStylesheet(STYLE_PATH, settings));
+    videoButton->setStyleSheet(Style::getStylesheet(STYLE_PATH, settings));
+    volButton->setStyleSheet(Style::getStylesheet(STYLE_PATH, settings));
+    micButton->setStyleSheet(Style::getStylesheet(STYLE_PATH, settings));
 }
 
 void ChatFormHeader::addWidget(QWidget* widget, int stretch, Qt::Alignment alignment)

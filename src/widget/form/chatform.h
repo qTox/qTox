@@ -44,6 +44,7 @@ class QMoveEvent;
 class ImagePreviewButton;
 class DocumentCache;
 class SmileyPack;
+class Settings;
 
 class ChatForm : public GenericChatForm
 {
@@ -51,7 +52,7 @@ class ChatForm : public GenericChatForm
 public:
     ChatForm(Profile& profile, Friend* chatFriend, IChatLog& chatLog_,
         IMessageDispatcher& messageDispatcher_, DocumentCache&, SmileyPack&,
-        CameraSource&);
+        CameraSource&, Settings&);
     ~ChatForm() override;
     void setStatusMessage(const QString& newMessage);
 
@@ -143,4 +144,5 @@ private:
     bool lastCallIsVideo;
     std::unique_ptr<NetCamView> netcam;
     CameraSource& cameraSource;
+    Settings& settings;
 };

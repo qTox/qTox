@@ -39,10 +39,11 @@
 #include <chrono>
 #include <random>
 
-PrivacyForm::PrivacyForm(Core* _core)
+PrivacyForm::PrivacyForm(Core* core_, Settings& settings_)
     : GenericForm(QPixmap(":/img/settings/privacy.png"))
     , bodyUI(new Ui::PrivacySettings)
-    , core{_core}
+    , core{core_}
+    , settings{settings_}
 {
     bodyUI->setupUi(this);
 
@@ -61,7 +62,7 @@ PrivacyForm::~PrivacyForm()
 
 void PrivacyForm::on_cbKeepHistory_stateChanged()
 {
-    Settings::getInstance().setEnableLogging(bodyUI->cbKeepHistory->isChecked());
+    settings.setEnableLogging(bodyUI->cbKeepHistory->isChecked());
     if (!bodyUI->cbKeepHistory->isChecked()) {
         emit clearAllReceipts();
         QMessageBox::StandardButton dialogDelHistory;
@@ -77,7 +78,7 @@ void PrivacyForm::on_cbKeepHistory_stateChanged()
 
 void PrivacyForm::on_cbTypingNotification_stateChanged()
 {
-    Settings::getInstance().setTypingNotification(bodyUI->cbTypingNotification->isChecked());
+    settings.setTypingNotification(bodyUI->cbTypingNotification->isChecked());
 }
 
 void PrivacyForm::on_nospamLineEdit_editingFinished()
@@ -93,10 +94,10 @@ void PrivacyForm::on_nospamLineEdit_editingFinished()
 
 void PrivacyForm::showEvent(QShowEvent*)
 {
-    const Settings& s = Settings::getInstance();
+    const Settings& s = settings;
     bodyUI->nospamLineEdit->setText(core->getSelfId().getNoSpamString());
     bodyUI->cbTypingNotification->setChecked(s.getTypingNotification());
-    bodyUI->cbKeepHistory->setChecked(Settings::getInstance().getEnableLogging());
+    bodyUI->cbKeepHistory->setChecked(settings.getEnableLogging());
     bodyUI->blackListTextEdit->setText(s.getBlackList().join('\n'));
 }
 
@@ -125,7 +126,7 @@ void PrivacyForm::on_nospamLineEdit_textChanged()
 void PrivacyForm::on_blackListTextEdit_textChanged()
 {
     const QStringList strlist = bodyUI->blackListTextEdit->toPlainText().split('\n');
-    Settings::getInstance().setBlackList(strlist);
+    settings.setBlackList(strlist);
 }
 
 void PrivacyForm::retranslateUi()

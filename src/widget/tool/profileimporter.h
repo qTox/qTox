@@ -20,16 +20,18 @@
 #pragma once
 
 #include <QWidget>
+class Settings;
 
 class ProfileImporter : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit ProfileImporter(QWidget* parent = nullptr);
+    explicit ProfileImporter(Settings&, QWidget* parent = nullptr);
     bool importProfile(const QString& path);
     bool importProfile();
 
 private:
     bool askQuestion(QString title, QString message);
+    Settings& settings;
 };

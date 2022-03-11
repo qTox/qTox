@@ -20,6 +20,7 @@
 
 #include "profilelocker.h"
 #include "src/persistence/settings.h"
+#include "src/persistence/paths.h"
 #include <QDebug>
 #include <QDir>
 
@@ -36,9 +37,9 @@ using namespace std;
 unique_ptr<QLockFile> ProfileLocker::lockfile;
 QString ProfileLocker::curLockName;
 
-QString ProfileLocker::lockPathFromName(const QString& name)
+QString ProfileLocker::lockPathFromName(const QString& name, const Paths& paths)
 {
-    return Settings::getInstance().getPaths().getSettingsDirPath() + '/' + name + ".lock";
+    return paths.getSettingsDirPath() + '/' + name + ".lock";
 }
 
 /**
@@ -49,13 +50,13 @@ QString ProfileLocker::lockPathFromName(const QString& name)
  * @param profile Profile name to check.
  * @return True, if profile locked, false otherwise.
  */
-bool ProfileLocker::isLockable(QString profile)
+bool ProfileLocker::isLockable(QString profile, Paths& paths)
 {
     // If we already have the lock, it's definitely lockable
     if (lockfile && curLockName == profile)
         return true;
 
-    QLockFile newLock(lockPathFromName(profile));
+    QLockFile newLock(lockPathFromName(profile, paths));
     return newLock.tryLock();
 }
 
@@ -64,12 +65,12 @@ bool ProfileLocker::isLockable(QString profile)
  * @param profile Profile to lock.
  * @return Returns true if we already own the lock.
  */
-bool ProfileLocker::lock(QString profile)
+bool ProfileLocker::lock(QString profile, Paths& paths)
 {
     if (lockfile && curLockName == profile)
         return true;
 
-    QLockFile* newLock = new QLockFile(lockPathFromName(profile));
+    QLockFile* newLock = new QLockFile(lockPathFromName(profile, paths));
     newLock->setStaleLockTime(0);
     if (!newLock->tryLock()) {
         delete newLock;
@@ -101,17 +102,17 @@ void ProfileLocker::unlock()
  * If we can't get a lock, exit qTox immediately.
  * If we never had a lock in the first place, exit immediately.
  */
-void ProfileLocker::assertLock()
+void ProfileLocker::assertLock(Paths& paths)
 {
     if (!lockfile) {
         qCritical() << "assertLock: We don't seem to own any lock!";
         deathByBrokenLock();
     }
 
-    if (!QFile(lockPathFromName(curLockName)).exists()) {
+    if (!QFile(lockPathFromName(curLockName, paths)).exists()) {
         QString tmp = curLockName;
         unlock();
-        if (lock(tmp)) {
+        if (lock(tmp, paths)) {
             qCritical() << "assertLock: Lock file was lost, but could be restored";
         } else {
             qCritical() << "assertLock: Lock file was lost, and could *NOT* be restored";

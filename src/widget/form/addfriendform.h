@@ -33,6 +33,7 @@
 class QTabWidget;
 
 class ContentLayout;
+class Settings;
 
 class AddFriendForm : public QObject
 {
@@ -45,7 +46,7 @@ public:
         FriendRequest = 2
     };
 
-    AddFriendForm(ToxId _ownId);
+    AddFriendForm(ToxId ownId_, Settings&);
     AddFriendForm(const AddFriendForm&) = delete;
     AddFriendForm& operator=(const AddFriendForm&) = delete;
     ~AddFriendForm();
@@ -113,4 +114,5 @@ private:
     QList<QString> contactsToImport;
 
     ToxId ownId;
+    Settings& settings;
 };

@@ -90,7 +90,7 @@ extern "C" {
  * @brief Remember how many times we subscribed for RAII
  */
 
-CameraSource::CameraSource()
+CameraSource::CameraSource(Settings& settings_)
     : deviceThread{new QThread}
     , deviceName{"none"}
     , device{nullptr}
@@ -103,6 +103,7 @@ CameraSource::CameraSource()
     , videoStreamIndex{-1}
     , isNone_{true}
     , subscriptions{0}
+    , settings{settings_}
 {
     qRegisterMetaType<VideoMode>("VideoMode");
     deviceThread->setObjectName("Device thread");
@@ -126,12 +127,12 @@ CameraSource::CameraSource()
  */
 void CameraSource::setupDefault()
 {
-    QString deviceName_ = CameraDevice::getDefaultDeviceName();
+    QString deviceName_ = CameraDevice::getDefaultDeviceName(settings);
     bool isScreen = CameraDevice::isScreen(deviceName_);
-    VideoMode mode_ = VideoMode(Settings::getInstance().getScreenRegion());
+    VideoMode mode_ = VideoMode(settings.getScreenRegion());
     if (!isScreen) {
-        mode_ = VideoMode(Settings::getInstance().getCamVideoRes());
-        mode_.FPS = Settings::getInstance().getCamVideoFPS();
+        mode_ = VideoMode(settings.getCamVideoRes());
+        mode_.FPS = settings.getCamVideoFPS();
     }
 
     setupDevice(deviceName_, mode_);
@@ -260,7 +261,7 @@ void CameraSource::openDevice()
     }
 
     // We need to create a new CameraDevice
-    device = CameraDevice::open(deviceName, mode);
+    device = CameraDevice::open(settings, deviceName, mode);
 
     if (!device) {
         qWarning() << "Failed to open device!";

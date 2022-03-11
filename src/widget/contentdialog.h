@@ -45,12 +45,13 @@ class GroupWidget;
 class QCloseEvent;
 class QSplitter;
 class QScrollArea;
+class Settings;
 
 class ContentDialog : public ActivateDialog, public IDialogs
 {
     Q_OBJECT
 public:
-    explicit ContentDialog(const Core& core, QWidget* parent = nullptr);
+    ContentDialog(const Core& core, Settings&, QWidget* parent = nullptr);
     ~ContentDialog() override;
 
     FriendWidget* addFriend(std::shared_ptr<FriendChatroom> chatroom, GenericChatForm* form);
@@ -135,4 +136,5 @@ private:
     QHash<const ContactId&, GenericChatForm*> contactChatForms;
 
     QString username;
+    Settings& settings;
 };

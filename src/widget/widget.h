@@ -118,7 +118,7 @@ private:
     };
 
 public:
-    Widget(Profile& profile_, IAudioControl& audio_, CameraSource&,
+    Widget(Profile& profile_, IAudioControl& audio_, CameraSource&, Settings&,
         QWidget* parent = nullptr);
     ~Widget() override;
     void init();
@@ -388,4 +388,4 @@ private:
     CameraSource& cameraSource;
 };
 
-bool toxActivateEventHandler(const QByteArray& data);
+bool toxActivateEventHandler(const QByteArray& data, void* userData);

@@ -99,10 +99,12 @@ const QPair<QString, QString> CAN_NOT_CHANGE_PASSWORD = {
 };
 } // namespace
 
-ProfileForm::ProfileForm(IProfileInfo* profileInfo_, QWidget* parent)
+ProfileForm::ProfileForm(IProfileInfo* profileInfo_, Settings& settings_,
+    QWidget* parent)
     : QWidget{parent}
     , qr{nullptr}
     , profileInfo{profileInfo_}
+    , settings{settings_}
 {
     bodyUI = new Ui::IdentitySettings;
     bodyUI->setupUi(this);
@@ -131,7 +133,7 @@ ProfileForm::ProfileForm(IProfileInfo* profileInfo_, QWidget* parent)
     profilePicture->installEventFilter(this);
     profilePicture->setAccessibleName("Profile avatar");
     profilePicture->setAccessibleDescription("Set a profile avatar shown to all contacts");
-    profilePicture->setStyleSheet(Style::getStylesheet("window/profile.css"));
+    profilePicture->setStyleSheet(Style::getStylesheet("window/profile.css", settings));
     connect(profilePicture, &MaskablePixmapWidget::clicked, this, &ProfileForm::onAvatarClicked);
     connect(profilePicture, &MaskablePixmapWidget::customContextMenuRequested,
             this, &ProfileForm::showProfilePictureContextMenu);
@@ -212,8 +214,8 @@ void ProfileForm::show(ContentLayout* contentLayout)
     contentLayout->mainContent->layout()->addWidget(this);
     QWidget::show();
     prFileLabelUpdate();
-    bool portable = Settings::getInstance().getMakeToxPortable();
-    QString defaultPath = QDir(Settings::getInstance().getPaths().getSettingsDirPath()).path().trimmed();
+    bool portable = settings.getMakeToxPortable();
+    QString defaultPath = QDir(settings.getPaths().getSettingsDirPath()).path().trimmed();
     QString appPath = QApplication::applicationDirPath();
     QString dirPath = portable ? appPath : defaultPath;
 

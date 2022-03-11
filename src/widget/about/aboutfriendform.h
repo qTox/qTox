@@ -30,17 +30,20 @@ namespace Ui {
 class AboutFriendForm;
 }
 
+class Settings;
+
 class AboutFriendForm : public QDialog
 {
     Q_OBJECT
 
 public:
-    AboutFriendForm(std::unique_ptr<IAboutFriend> about, QWidget* parent = nullptr);
+    AboutFriendForm(std::unique_ptr<IAboutFriend> about, Settings&, QWidget* parent = nullptr);
     ~AboutFriendForm();
 
 private:
     Ui::AboutFriendForm* ui;
     const std::unique_ptr<IAboutFriend> about;
+    Settings& settings;
 
 signals:
     void histroyRemoved();
