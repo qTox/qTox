@@ -20,6 +20,10 @@
 #include "documentcache.h"
 #include "customtextdocument.h"
 
+DocumentCache::DocumentCache(SmileyPack& smileyPack_)
+    : smileyPack{smileyPack_}
+{
+}
 DocumentCache::~DocumentCache()
 {
     while (!documents.isEmpty())
@@ -29,7 +33,7 @@ DocumentCache::~DocumentCache()
 QTextDocument* DocumentCache::pop()
 {
     if (documents.empty())
-        documents.push(new CustomTextDocument);
+        documents.push(new CustomTextDocument(smileyPack));
 
     return documents.pop();
 }

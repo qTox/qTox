@@ -54,8 +54,9 @@
  *
  * Restores all controls from the settings.
  */
-UserInterfaceForm::UserInterfaceForm(SettingsWidget* myParent)
+UserInterfaceForm::UserInterfaceForm(SmileyPack& smileyPack_, SettingsWidget* myParent)
     : GenericForm(QPixmap(":/img/settings/general.png"))
+    , smileyPack{smileyPack_}
 {
     parent = myParent;
 
@@ -237,7 +238,7 @@ void UserInterfaceForm::on_smileyPackBrowser_currentIndexChanged(int index)
  */
 void UserInterfaceForm::reloadSmileys()
 {
-    QList<QStringList> emoticons = SmileyPack::getInstance().getEmoticons();
+    QList<QStringList> emoticons = smileyPack.getEmoticons();
 
     // sometimes there are no emoticons available, don't crash in this case
     if (emoticons.isEmpty()) {
@@ -252,7 +253,7 @@ void UserInterfaceForm::reloadSmileys()
     emoticonsIcons.clear();
     const QSize size(18, 18);
     for (int i = 0; i < smileLabels.size(); ++i) {
-        std::shared_ptr<QIcon> icon = SmileyPack::getInstance().getAsIcon(smileys[i]);
+        std::shared_ptr<QIcon> icon = smileyPack.getAsIcon(smileys[i]);
         emoticonsIcons.append(icon);
         smileLabels[i]->setPixmap(icon->pixmap(size));
         smileLabels[i]->setToolTip(smileys[i]);

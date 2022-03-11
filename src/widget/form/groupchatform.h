@@ -36,14 +36,15 @@ struct Message;
 class Settings;
 class IGroupSettings;
 class DocumentCache;
+class SmileyPack;
 
 class GroupChatForm : public GenericChatForm
 {
     Q_OBJECT
 public:
-    explicit GroupChatForm(Core& core_, Group* chatGroup, IChatLog& chatLog_,
+    GroupChatForm(Core& core_, Group* chatGroup, IChatLog& chatLog_,
         IMessageDispatcher& messageDispatcher_, IGroupSettings& settings_,
-        DocumentCache&);
+        DocumentCache&, SmileyPack&);
     ~GroupChatForm();
 
     void peerAudioPlaying(ToxPk peerPk);

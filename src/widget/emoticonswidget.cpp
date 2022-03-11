@@ -31,7 +31,7 @@
 
 #include <math.h>
 
-EmoticonsWidget::EmoticonsWidget(QWidget* parent)
+EmoticonsWidget::EmoticonsWidget(SmileyPack& smileyPack, QWidget* parent)
     : QMenu(parent)
 {
     setStyleSheet(Style::getStylesheet("emoticonWidget/emoticonWidget.css"));
@@ -48,7 +48,7 @@ EmoticonsWidget::EmoticonsWidget(QWidget* parent)
     const int maxRows = 8;
     const int itemsPerPage = maxRows * maxCols;
 
-    const QList<QStringList>& emoticons = SmileyPack::getInstance().getEmoticons();
+    const QList<QStringList>& emoticons = smileyPack.getEmoticons();
     int itemCount = emoticons.size();
     int pageCount = ceil(float(itemCount) / float(itemsPerPage));
     int currPage = 0;
@@ -86,7 +86,6 @@ EmoticonsWidget::EmoticonsWidget(QWidget* parent)
     }
     buttonLayout->addStretch();
 
-    SmileyPack& smileyPack = SmileyPack::getInstance();
     for (const QStringList& set : emoticons) {
         QPushButton* button = new QPushButton;
         std::shared_ptr<QIcon> icon = smileyPack.getAsIcon(set[0]);

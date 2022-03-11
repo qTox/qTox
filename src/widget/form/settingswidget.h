@@ -38,12 +38,13 @@ class QTabWidget;
 class ContentLayout;
 class UpdateCheck;
 class Widget;
+class SmileyPack;
 
 class SettingsWidget : public QWidget
 {
     Q_OBJECT
 public:
-    SettingsWidget(UpdateCheck* updateCheck, IAudioControl& audio, Core *core, Widget* parent = nullptr);
+    SettingsWidget(UpdateCheck* updateCheck, IAudioControl& audio, Core *core, SmileyPack&, Widget* parent = nullptr);
     ~SettingsWidget();
 
     bool isShown() const;

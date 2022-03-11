@@ -41,7 +41,8 @@
 
 #include <memory>
 
-SettingsWidget::SettingsWidget(UpdateCheck* updateCheck, IAudioControl& audio, Core* core, Widget* parent)
+SettingsWidget::SettingsWidget(UpdateCheck* updateCheck, IAudioControl& audio,
+    Core* core, SmileyPack& smileyPack, Widget* parent)
     : QWidget(parent, Qt::Window)
 {
     CoreAV* coreAV = core->getAv();
@@ -60,7 +61,7 @@ SettingsWidget::SettingsWidget(UpdateCheck* updateCheck, IAudioControl& audio, C
     std::unique_ptr<GeneralForm> gfrm(new GeneralForm(this));
     connect(gfrm.get(), &GeneralForm::updateIcons, parent, &Widget::updateIcons);
 
-    std::unique_ptr<UserInterfaceForm> uifrm(new UserInterfaceForm(this));
+    std::unique_ptr<UserInterfaceForm> uifrm(new UserInterfaceForm(smileyPack, this));
     std::unique_ptr<PrivacyForm> pfrm(new PrivacyForm(core));
     connect(pfrm.get(), &PrivacyForm::clearAllReceipts, parent, &Widget::clearAllReceipts);
 

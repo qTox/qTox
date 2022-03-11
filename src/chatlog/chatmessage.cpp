@@ -51,7 +51,7 @@ ChatMessage::~ChatMessage() = default;
 ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QString& rawMessage,
                                                 MessageType type, bool isMe, MessageState state,
                                                 const QDateTime& date, DocumentCache& documentCache,
-                                                bool colorizeName)
+                                                SmileyPack& smileyPack, bool colorizeName)
 {
     ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage(documentCache));
 
@@ -61,7 +61,7 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QSt
     auto textType = Text::NORMAL;
     // smileys
     if (Settings::getInstance().getUseEmoticons())
-        text = SmileyPack::getInstance().smileyfied(text);
+        text = smileyPack.smileyfied(text);
 
     // quotes (green text)
     text = detectQuotes(text, type);

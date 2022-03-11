@@ -58,7 +58,7 @@ TestSmileyPack::TestSmileyPack()
  */
 void TestSmileyPack::testSmilifySingleCharEmoji()
 {
-    auto& smileyPack = SmileyPack::getInstance();
+    SmileyPack smileyPack{};
 
     auto result = smileyPack.smileyfied("😊");
     QVERIFY(result == SmileyPack::getAsRichText("😊"));
@@ -73,7 +73,7 @@ void TestSmileyPack::testSmilifySingleCharEmoji()
  */
 void TestSmileyPack::testSmilifyMultiCharEmoji()
 {
-    auto& smileyPack = SmileyPack::getInstance();
+    SmileyPack smileyPack{};
 
     auto result = smileyPack.smileyfied("🇬🇧");
     QVERIFY(result == SmileyPack::getAsRichText("🇬🇧"));
@@ -94,7 +94,7 @@ void TestSmileyPack::testSmilifyMultiCharEmoji()
  */
 void TestSmileyPack::testSmilifyAsciiEmoticon()
 {
-    auto& smileyPack = SmileyPack::getInstance();
+    SmileyPack smileyPack{};
 
     auto result = smileyPack.smileyfied(":-)");
     QVERIFY(result == SmileyPack::getAsRichText(":-)"));

@@ -107,9 +107,9 @@ QString secondsToDHMS(quint32 duration)
 } // namespace
 
 ChatForm::ChatForm(Profile& profile, Friend* chatFriend, IChatLog& chatLog_,
-    IMessageDispatcher& messageDispatcher_, DocumentCache& documentCache_)
+    IMessageDispatcher& messageDispatcher_, DocumentCache& documentCache_, SmileyPack& smileyPack_)
     : GenericChatForm(profile.getCore(), chatFriend, chatLog_, messageDispatcher_,
-        documentCache_)
+        documentCache_, smileyPack_)
     , core{profile.getCore()}
     , f(chatFriend)
     , isTyping{false}

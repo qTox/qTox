@@ -43,13 +43,14 @@ class QHideEvent;
 class QMoveEvent;
 class ImagePreviewButton;
 class DocumentCache;
+class SmileyPack;
 
 class ChatForm : public GenericChatForm
 {
     Q_OBJECT
 public:
     ChatForm(Profile& profile, Friend* chatFriend, IChatLog& chatLog_,
-        IMessageDispatcher& messageDispatcher_, DocumentCache&);
+        IMessageDispatcher& messageDispatcher_, DocumentCache&, SmileyPack&);
     ~ChatForm() override;
     void setStatusMessage(const QString& newMessage);
 
