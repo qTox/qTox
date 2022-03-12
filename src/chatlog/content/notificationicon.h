@@ -26,12 +26,13 @@
 #include <QTimer>
 
 class Settings;
+class Style;
 
 class NotificationIcon : public ChatLineContent
 {
     Q_OBJECT
 public:
-    explicit NotificationIcon(Settings& settings, QSize size);
+    NotificationIcon(Settings& settings, Style& style, QSize size);
 
     QRectF boundingRect() const override;
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,

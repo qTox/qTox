@@ -39,13 +39,14 @@ class CategoryWidget;
 class Friend;
 class IFriendListItem;
 class Settings;
+class Style;
 
 class FriendListWidget : public QWidget
 {
     Q_OBJECT
 public:
     using SortingMode = Settings::FriendListSortingMode;
-    FriendListWidget(const Core& core, Widget* parent, Settings& settings, bool groupsOnTop = true);
+    FriendListWidget(const Core& core, Widget* parent, Settings& settings, Style& style, bool groupsOnTop = true);
     ~FriendListWidget();
     void setMode(SortingMode mode);
     SortingMode getMode() const;
@@ -99,4 +100,5 @@ private:
 
     const Core& core;
     Settings& settings;
+    Style& style;
 };

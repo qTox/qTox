@@ -61,9 +61,10 @@ namespace
  * @brief Cached username so we can retranslate the invite message
  */
 
-AddFriendForm::AddFriendForm(ToxId ownId_, Settings& settings_)
+AddFriendForm::AddFriendForm(ToxId ownId_, Settings& settings_, Style& style_)
     : ownId{ownId_}
     , settings{settings_}
+    , style{style_}
 {
     tabWidget = new QTabWidget();
     main = new QWidget(tabWidget);
@@ -293,7 +294,7 @@ void AddFriendForm::onIdChanged(const QString& id)
         isValidId ? QStringLiteral("%1 (%2)") : QStringLiteral("%1 <font color='red'>(%2)</font>");
     toxIdLabel.setText(labelText.arg(toxIdText, toxIdComment));
     toxId.setStyleSheet(isValidOrEmpty ? QStringLiteral("")
-                                  : Style::getStylesheet("addFriendForm/toxId.css", settings));
+                                  : style.getStylesheet("addFriendForm/toxId.css", settings));
     toxId.setToolTip(isValidOrEmpty ? QStringLiteral("") : tr("Invalid Tox ID format"));
 
     sendButton.setEnabled(isValidId);

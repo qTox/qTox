@@ -50,7 +50,8 @@
  * @brief Used to correct the rounding factors on non-square rects
  */
 
-CallConfirmWidget::CallConfirmWidget(Settings& settings, const QWidget* anchor_)
+CallConfirmWidget::CallConfirmWidget(Settings& settings, Style& style,
+    const QWidget* anchor_)
     : QWidget()
     , anchor(anchor_)
     , rectW{120}
@@ -90,8 +91,8 @@ CallConfirmWidget::CallConfirmWidget(Settings& settings, const QWidget* anchor_)
     reject->setFlat(true);
     accept->setStyleSheet("QPushButton{border:none;}");
     reject->setStyleSheet("QPushButton{border:none;}");
-    accept->setIcon(QIcon(Style::getImagePath("acceptCall/acceptCall.svg", settings)));
-    reject->setIcon(QIcon(Style::getImagePath("rejectCall/rejectCall.svg", settings)));
+    accept->setIcon(QIcon(style.getImagePath("acceptCall/acceptCall.svg", settings)));
+    reject->setIcon(QIcon(style.getImagePath("rejectCall/rejectCall.svg", settings)));
     accept->setIconSize(accept->size());
     reject->setIconSize(reject->size());
 

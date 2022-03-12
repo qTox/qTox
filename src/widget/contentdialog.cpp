@@ -53,7 +53,8 @@ const QSize minSize(minHeight, minWidget);
 const QSize defaultSize(720, 400);
 } // namespace
 
-ContentDialog::ContentDialog(const Core &core, Settings& settings_, QWidget* parent)
+ContentDialog::ContentDialog(const Core &core, Settings& settings_,
+    Style& style_, QWidget* parent)
     : ActivateDialog(parent, Qt::Window)
     , splitter{new QSplitter(this)}
     , friendLayout{new FriendListLayout(this)}
@@ -61,6 +62,7 @@ ContentDialog::ContentDialog(const Core &core, Settings& settings_, QWidget* par
     , videoSurfaceSize(QSize())
     , videoCount(0)
     , settings{settings_}
+    , style{style_}
 {
     friendLayout->setMargin(0);
     friendLayout->setSpacing(0);
@@ -94,7 +96,7 @@ ContentDialog::ContentDialog(const Core &core, Settings& settings_, QWidget* par
     QWidget* contentWidget = new QWidget(this);
     contentWidget->setAutoFillBackground(true);
 
-    contentLayout = new ContentLayout(settings, contentWidget);
+    contentLayout = new ContentLayout(settings, style, contentWidget);
     contentLayout->setMargin(0);
     contentLayout->setSpacing(0);
 
@@ -157,7 +159,7 @@ FriendWidget* ContentDialog::addFriend(std::shared_ptr<FriendChatroom> chatroom,
     const auto compact = settings.getCompactLayout();
     auto frnd = chatroom->getFriend();
     const auto& friendPk = frnd->getPublicKey();
-    auto friendWidget = new FriendWidget(chatroom, compact, settings);
+    auto friendWidget = new FriendWidget(chatroom, compact, settings, style);
     emit connectFriendWidget(*friendWidget);
     chatWidgets[friendPk] = friendWidget;
     friendLayout->addFriendWidget(friendWidget, frnd->getStatus());
@@ -179,7 +181,7 @@ GroupWidget* ContentDialog::addGroup(std::shared_ptr<GroupChatroom> chatroom, Ge
     const auto g = chatroom->getGroup();
     const auto& groupId = g->getPersistentId();
     const auto compact = settings.getCompactLayout();
-    auto groupWidget = new GroupWidget(chatroom, compact, settings);
+    auto groupWidget = new GroupWidget(chatroom, compact, settings, style);
     chatWidgets[groupId] = groupWidget;
     groupLayout.addSortedWidget(groupWidget);
     chatForms[groupId] = form;
@@ -438,8 +440,8 @@ void ContentDialog::setUsername(const QString& newName)
 
 void ContentDialog::reloadTheme()
 {
-    setStyleSheet(Style::getStylesheet("contentDialog/contentDialog.css", settings));
-    friendScroll->setStyleSheet(Style::getStylesheet("friendList/friendList.css", settings));
+    setStyleSheet(style.getStylesheet("contentDialog/contentDialog.css", settings));
+    friendScroll->setStyleSheet(style.getStylesheet("friendList/friendList.css", settings));
 }
 
 bool ContentDialog::event(QEvent* event)

@@ -36,11 +36,13 @@ QString getAutoAcceptDir(const QString& dir)
 
 } // namespace
 
-AboutFriendForm::AboutFriendForm(std::unique_ptr<IAboutFriend> about_, Settings& settings_, QWidget* parent)
+AboutFriendForm::AboutFriendForm(std::unique_ptr<IAboutFriend> about_,
+    Settings& settings_, Style& style_, QWidget* parent)
     : QDialog(parent)
     , ui(new Ui::AboutFriendForm)
     , about{std::move(about_)}
     , settings{settings_}
+    , style{style_}
 {
     ui->setupUi(this);
     ui->label_4->hide();
@@ -98,7 +100,7 @@ void AboutFriendForm::onAutoAcceptDirClicked()
 
 void AboutFriendForm::reloadTheme()
 {
-    setStyleSheet(Style::getStylesheet("window/general.css", settings));
+    setStyleSheet(style.getStylesheet("window/general.css", settings));
 }
 
 void AboutFriendForm::onAutoAcceptDirChanged(const QString& path)

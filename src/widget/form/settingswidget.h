@@ -41,13 +41,15 @@ class Widget;
 class SmileyPack;
 class CameraSource;
 class Settings;
+class Style;
 
 class SettingsWidget : public QWidget
 {
     Q_OBJECT
 public:
     SettingsWidget(UpdateCheck* updateCheck, IAudioControl& audio, Core *core,
-        SmileyPack& smileyPack, CameraSource& cameraSource, Settings& settings, Widget* parent = nullptr);
+        SmileyPack& smileyPack, CameraSource& cameraSource, Settings& settings,
+            Style& style, Widget* parent = nullptr);
     ~SettingsWidget();
 
     bool isShown() const;

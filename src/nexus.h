@@ -33,6 +33,7 @@ class LoginScreen;
 class Core;
 class QCommandLineParser;
 class CameraSource;
+class Style;
 
 #ifdef Q_OS_MAC
 class QMenuBar;
@@ -109,4 +110,5 @@ private:
     std::unique_ptr<IAudioControl> audioControl;
     QCommandLineParser* parser = nullptr;
     std::unique_ptr<CameraSource> cameraSource;
+    std::unique_ptr<Style> style;
 };

@@ -28,6 +28,7 @@ class QLabel;
 class LineEdit;
 class SearchSettingsForm;
 class Settings;
+class Style;
 
 class SearchForm final : public QWidget
 {
@@ -39,7 +40,7 @@ public:
         Active = 2,      // Red
     };
 
-    explicit SearchForm(Settings& settings, QWidget* parent = nullptr);
+    SearchForm(Settings& settings, Style& style, QWidget* parent = nullptr);
     void removeSearchPhrase();
     QString getSearchPhrase() const;
     ParameterSearch getParameterSearch();
@@ -73,6 +74,7 @@ private:
     bool isSearchInBegin{true};
     bool isPrevSearch{false};
     Settings& settings;
+    Style& style;
 
 private slots:
     void changedSearchPhrase(const QString& text);

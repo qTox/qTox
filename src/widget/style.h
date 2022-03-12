@@ -21,6 +21,7 @@
 
 #include <QColor>
 #include <QFont>
+#include <QMap>
 
 class QString;
 class QWidget;
@@ -69,32 +70,35 @@ public:
         Dark
     };
 
-    struct ThemeNameColor {
-        MainTheme type;
-        QString name;
-        QColor color;
-    };
-
     static QStringList getThemeColorNames();
-    static const QString getStylesheet(const QString& filename, Settings& settings, const QFont& baseFont = QFont());
-    static const QString getImagePath(const QString& filename, Settings& settings);
     static QString getThemeFolder(Settings& settings);
     static QString getThemeName();
-    static QColor getColor(ColorPalette entry);
     static QFont getFont(Font font);
-    static const QString resolve(const QString& filename, Settings& settings, const QFont& baseFont = QFont());
     static void repolish(QWidget* w);
-    static void setThemeColor(Settings& settings, int color);
-    static void setThemeColor(const QColor& color);
     static void applyTheme();
     static QPixmap scaleSvgImage(const QString& path, uint32_t width, uint32_t height);
-    static void initPalette(Settings& settings);
-    static void initDictColor();
+
+    Style() = default;
+    const QString getStylesheet(const QString& filename, Settings& settings, const QFont& baseFont = QFont());
+    const QString getImagePath(const QString& filename, Settings& settings);
+    QColor getColor(ColorPalette entry);
+    const QString resolve(const QString& filename, Settings& settings, const QFont& baseFont = QFont());
+    void setThemeColor(Settings& settings, int color);
+    void setThemeColor(const QColor& color);
+    void initPalette(Settings& settings);
+    void initDictColor();
     static QString getThemePath(Settings& settings);
 
 signals:
     void themeChanged();
 
 private:
-    Style();
+    QMap<ColorPalette, QColor> palette;
+    QMap<QString, QString> dictColor;
+    QMap<QString, QString> dictFont;
+    QMap<QString, QString> dictTheme;
+    // stylesheet filename, font -> stylesheet
+    // QString implicit sharing deduplicates stylesheets rather than constructing a new one each time
+    std::map<std::pair<const QString, const QFont>, const QString> stylesheetsCache;
+    QStringList existingImagesCache;
 };

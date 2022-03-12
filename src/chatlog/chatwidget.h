@@ -25,7 +25,6 @@
 
 #include "chatline.h"
 #include "chatmessage.h"
-#include "src/widget/style.h"
 #include "src/model/ichatlog.h"
 
 class QGraphicsScene;
@@ -36,7 +35,7 @@ class ChatLineContent;
 struct ToxFile;
 class SmileyPack;
 class Settings;
-
+class Style;
 class ChatLineStorage;
 
 static const size_t DEF_NUM_MSG_TO_LOAD = 100;
@@ -45,7 +44,7 @@ class ChatWidget : public QGraphicsView
     Q_OBJECT
 public:
     ChatWidget(IChatLog& chatLog_, const Core& core_, DocumentCache& documentCache,
-        SmileyPack& smileyPack, Settings& settings, QWidget* parent = nullptr);
+        SmileyPack& smileyPack, Settings& settings, Style& style, QWidget* parent = nullptr);
     virtual ~ChatWidget();
 
     void insertChatlines(std::map<ChatLogIdx, ChatLine::Ptr> chatLines);
@@ -187,7 +186,7 @@ private:
     int selClickedCol = -1;
     ChatLine::Ptr selFirstRow;
     ChatLine::Ptr selLastRow;
-    QColor selectionRectColor = Style::getColor(Style::ColorPalette::SelectText);
+    QColor selectionRectColor;
     SelectionMode selectionMode = SelectionMode::None;
     QPointF clickPos;
     QGraphicsRectItem* selGraphItem = nullptr;
@@ -220,4 +219,5 @@ private:
     DocumentCache& documentCache;
     SmileyPack& smileyPack;
     Settings& settings;
+    Style& style;
 };

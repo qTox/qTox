@@ -54,11 +54,12 @@ enum class updateIndex
 /**
  * @brief Constructor of AboutForm.
  */
-AboutForm::AboutForm(UpdateCheck* updateCheck_)
+AboutForm::AboutForm(UpdateCheck* updateCheck_, Style& style_)
     : GenericForm(QPixmap(":/img/settings/general.png"))
     , bodyUI(new Ui::AboutSettings)
     , progressTimer(new QTimer(this))
     , updateCheck(updateCheck_)
+    , style{style_}
 {
     bodyUI->setupUi(this);
 
@@ -212,7 +213,7 @@ QString AboutForm::createLink(QString path, QString text) const
 {
     return QString::fromUtf8(
                "<a href=\"%1\" style=\"text-decoration: underline; color:%2;\">%3</a>")
-        .arg(path, Style::getColor(Style::ColorPalette::Link).name(), text);
+        .arg(path, style.getColor(Style::ColorPalette::Link).name(), text);
 }
 
 AboutForm::~AboutForm()
