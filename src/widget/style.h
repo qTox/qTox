@@ -29,7 +29,7 @@ class Settings;
 class Style
 {
 public:
-    enum ColorPalette
+    enum class ColorPalette
     {
         TransferGood,
         TransferWait,
@@ -52,7 +52,7 @@ public:
         SelectText
     };
 
-    enum Font
+    enum class Font
     {
         ExtraBig,
         Big,
@@ -63,7 +63,7 @@ public:
         SmallLight
     };
 
-    enum MainTheme
+    enum class MainTheme
     {
         Light,
         Dark

@@ -235,7 +235,7 @@ ChatWidget::ChatWidget(IChatLog& chatLog_, const Core& core_, DocumentCache& doc
     setDragMode(QGraphicsView::NoDrag);
     setViewportUpdateMode(MinimalViewportUpdate);
     setContextMenuPolicy(Qt::CustomContextMenu);
-    setBackgroundBrush(QBrush(Style::getColor(Style::GroundBase), Qt::SolidPattern));
+    setBackgroundBrush(QBrush(Style::getColor(Style::ColorPalette::GroundBase), Qt::SolidPattern));
 
     // The selection rect for multi-line selection
     selGraphItem = scene->addRect(0, 0, 0, 0, selectionRectColor.darker(120), selectionRectColor);
@@ -796,8 +796,8 @@ void ChatWidget::fontChanged(const QFont& font)
 void ChatWidget::reloadTheme()
 {
     setStyleSheet(Style::getStylesheet("chatArea/chatArea.css", settings));
-    setBackgroundBrush(QBrush(Style::getColor(Style::GroundBase), Qt::SolidPattern));
-    selectionRectColor = Style::getColor(Style::SelectText);
+    setBackgroundBrush(QBrush(Style::getColor(Style::ColorPalette::GroundBase), Qt::SolidPattern));
+    selectionRectColor = Style::getColor(Style::ColorPalette::SelectText);
     selGraphItem->setBrush(QBrush(selectionRectColor));
     selGraphItem->setPen(QPen(selectionRectColor.darker(120)));
     setTypingNotification();

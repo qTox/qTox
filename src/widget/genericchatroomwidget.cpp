@@ -94,8 +94,8 @@ void GenericChatroomWidget::compactChange(bool _compact)
         mainLayout->addWidget(&statusPic);
         mainLayout->addSpacing(5);
         mainLayout->activate();
-        statusMessageLabel->setFont(Style::getFont(Style::Small));
-        nameLabel->setFont(Style::getFont(Style::Medium));
+        statusMessageLabel->setFont(Style::getFont(Style::Font::Small));
+        nameLabel->setFont(Style::getFont(Style::Font::Medium));
     } else {
         setFixedHeight(55);
         avatar->setSize(QSize(40, 40));
@@ -111,8 +111,8 @@ void GenericChatroomWidget::compactChange(bool _compact)
         mainLayout->addWidget(&statusPic);
         mainLayout->addSpacing(10);
         mainLayout->activate();
-        statusMessageLabel->setFont(Style::getFont(Style::Medium));
-        nameLabel->setFont(Style::getFont(Style::Big));
+        statusMessageLabel->setFont(Style::getFont(Style::Font::Medium));
+        nameLabel->setFont(Style::getFont(Style::Font::Big));
     }
 }
 

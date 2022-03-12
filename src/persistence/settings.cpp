@@ -222,7 +222,7 @@ void Settings::loadGlobal()
 
     s.beginGroup("Chat");
     {
-        chatMessageFont = s.value("chatMessageFont", Style::getFont(Style::Big)).value<QFont>();
+        chatMessageFont = s.value("chatMessageFont", Style::getFont(Style::Font::Big)).value<QFont>();
     }
     s.endGroup();
 

@@ -128,7 +128,7 @@ ChatFormHeader::ChatFormHeader(Settings& settings_, QWidget* parent)
 
     nameLabel = new CroppingLabel();
     nameLabel->setObjectName("nameLabel");
-    nameLabel->setMinimumHeight(Style::getFont(Style::Medium).pixelSize());
+    nameLabel->setMinimumHeight(Style::getFont(Style::Font::Medium).pixelSize());
     nameLabel->setEditable(true);
     nameLabel->setTextFormat(Qt::PlainText);
     connect(nameLabel, &CroppingLabel::editFinished, this, &ChatFormHeader::nameChanged);

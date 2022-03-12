@@ -124,8 +124,8 @@ ChatForm::ChatForm(Profile& profile, Friend* chatFriend, IChatLog& chatLog_,
 
     statusMessageLabel = new CroppingLabel();
     statusMessageLabel->setObjectName("statusLabel");
-    statusMessageLabel->setFont(Style::getFont(Style::Medium));
-    statusMessageLabel->setMinimumHeight(Style::getFont(Style::Medium).pixelSize());
+    statusMessageLabel->setFont(Style::getFont(Style::Font::Medium));
+    statusMessageLabel->setMinimumHeight(Style::getFont(Style::Font::Medium).pixelSize());
     statusMessageLabel->setTextFormat(Qt::PlainText);
     statusMessageLabel->setContextMenuPolicy(Qt::CustomContextMenu);
 

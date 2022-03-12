@@ -97,7 +97,7 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QSt
     if (isMe)
         authorFont.setBold(true);
 
-    QColor color = Style::getColor(Style::MainText);
+    QColor color = Style::getColor(Style::ColorPalette::MainText);
     if (colorizeName) {
         QByteArray hash = QCryptographicHash::hash((sender.toUtf8()), QCryptographicHash::Sha256);
         auto lightness = color.lightnessF();
