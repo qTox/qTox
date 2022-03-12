@@ -43,7 +43,7 @@ public:
     Text(DocumentCache&, Settings&, const QString& txt = "", const QFont& font = QFont(),
         bool enableElide = false, const QString& rawText = QString(),
         const TextType& type = NORMAL,
-        const QColor& custom = Style::getColor(Style::MainText));
+        const QColor& custom = Style::getColor(Style::ColorPalette::MainText));
     virtual ~Text();
 
     void setText(const QString& txt);

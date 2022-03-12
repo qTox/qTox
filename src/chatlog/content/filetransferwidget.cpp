@@ -54,9 +54,9 @@ FileTransferWidget::FileTransferWidget(QWidget* parent, CoreFile& _coreFile,
     , coreFile{_coreFile}
     , ui(new Ui::FileTransferWidget)
     , fileInfo(file)
-    , backgroundColor(Style::getColor(Style::TransferMiddle))
-    , buttonColor(Style::getColor(Style::TransferWait))
-    , buttonBackgroundColor(Style::getColor(Style::GroundBase))
+    , backgroundColor(Style::getColor(Style::ColorPalette::TransferMiddle))
+    , buttonColor(Style::getColor(Style::ColorPalette::TransferWait))
+    , buttonBackgroundColor(Style::getColor(Style::ColorPalette::GroundBase))
     , active(true)
     , settings(settings_)
 {
@@ -387,7 +387,7 @@ void FileTransferWidget::setupButtons(ToxFile const& file)
         ui->rightButton->setObjectName("cancel");
         ui->rightButton->setToolTip(tr("Cancel transfer"));
 
-        setButtonColor(Style::getColor(Style::TransferGood));
+        setButtonColor(Style::getColor(Style::ColorPalette::TransferGood));
         break;
 
     case ToxFile::PAUSED:
@@ -405,7 +405,7 @@ void FileTransferWidget::setupButtons(ToxFile const& file)
         ui->rightButton->setObjectName("cancel");
         ui->rightButton->setToolTip(tr("Cancel transfer"));
 
-        setButtonColor(Style::getColor(Style::TransferMiddle));
+        setButtonColor(Style::getColor(Style::ColorPalette::TransferMiddle));
         break;
 
     case ToxFile::INITIALIZING:
@@ -534,14 +534,14 @@ void FileTransferWidget::updateBackgroundColor(const ToxFile::FileStatus status)
     case ToxFile::INITIALIZING:
     case ToxFile::PAUSED:
     case ToxFile::TRANSMITTING:
-        setBackgroundColor(Style::getColor(Style::TransferMiddle), false);
+        setBackgroundColor(Style::getColor(Style::ColorPalette::TransferMiddle), false);
         break;
     case ToxFile::BROKEN:
     case ToxFile::CANCELED:
-        setBackgroundColor(Style::getColor(Style::TransferBad), true);
+        setBackgroundColor(Style::getColor(Style::ColorPalette::TransferBad), true);
         break;
     case ToxFile::FINISHED:
-        setBackgroundColor(Style::getColor(Style::TransferGood), true);
+        setBackgroundColor(Style::getColor(Style::ColorPalette::TransferGood), true);
         break;
     default:
         qCritical() << "Invalid file status";

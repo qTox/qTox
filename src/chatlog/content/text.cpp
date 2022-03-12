@@ -231,7 +231,7 @@ void Text::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
         sel.cursor.setPosition(getSelectionEnd(), QTextCursor::KeepAnchor);
     }
 
-    const QColor selectionColor = Style::getColor(Style::SelectText);
+    const QColor selectionColor = Style::getColor(Style::ColorPalette::SelectText);
     sel.format.setBackground(selectionColor.lighter(selectionHasFocus ? 100 : 160));
     sel.format.setForeground(selectionHasFocus ? Qt::white : Qt::black);
 
@@ -463,7 +463,7 @@ void Text::selectText(QTextCursor& cursor, const std::pair<int, int>& point)
         cursor.endEditBlock();
 
         QTextCharFormat format;
-        format.setBackground(QBrush(Style::getColor(Style::SearchHighlighted)));
+        format.setBackground(QBrush(Style::getColor(Style::ColorPalette::SearchHighlighted)));
         cursor.mergeCharFormat(format);
 
         regenerate();
@@ -473,9 +473,9 @@ void Text::selectText(QTextCursor& cursor, const std::pair<int, int>& point)
 
 QColor Text::textColor() const
 {
-    QColor c = Style::getColor(Style::MainText);
+    QColor c = Style::getColor(Style::ColorPalette::MainText);
     if (textType == ACTION) {
-        c = Style::getColor(Style::Action);
+        c = Style::getColor(Style::ColorPalette::Action);
     } else if (textType == CUSTOM) {
         c = customColor;
     }

@@ -106,7 +106,7 @@ GroupChatForm::GroupChatForm(Core& core_, Group* chatGroup, IChatLog& chatLog_,
     headWidget->setMode(mode);
     setName(group->getName());
 
-    nusersLabel->setFont(Style::getFont(Style::Medium));
+    nusersLabel->setFont(Style::getFont(Style::Font::Medium));
     nusersLabel->setObjectName("statusLabel");
     retranslateUi();
 

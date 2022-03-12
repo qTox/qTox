@@ -212,7 +212,7 @@ QString AboutForm::createLink(QString path, QString text) const
 {
     return QString::fromUtf8(
                "<a href=\"%1\" style=\"text-decoration: underline; color:%2;\">%3</a>")
-        .arg(path, Style::getColor(Style::Link).name(), text);
+        .arg(path, Style::getColor(Style::ColorPalette::Link).name(), text);
 }
 
 AboutForm::~AboutForm()

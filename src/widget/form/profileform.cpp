@@ -116,7 +116,7 @@ ProfileForm::ProfileForm(IProfileInfo* profileInfo_, Settings& settings_,
 
     // tox
     toxId = new ClickableTE();
-    toxId->setFont(Style::getFont(Style::Small));
+    toxId->setFont(Style::getFont(Style::Font::Small));
     toxId->setToolTip(bodyUI->toxId->toolTip());
 
     QVBoxLayout* toxIdGroup = qobject_cast<QVBoxLayout*>(bodyUI->toxGroup->layout());

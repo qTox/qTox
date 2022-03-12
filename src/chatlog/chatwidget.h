@@ -187,7 +187,7 @@ private:
     int selClickedCol = -1;
     ChatLine::Ptr selFirstRow;
     ChatLine::Ptr selLastRow;
-    QColor selectionRectColor = Style::getColor(Style::SelectText);
+    QColor selectionRectColor = Style::getColor(Style::ColorPalette::SelectText);
     SelectionMode selectionMode = SelectionMode::None;
     QPointF clickPos;
     QGraphicsRectItem* selGraphItem = nullptr;
