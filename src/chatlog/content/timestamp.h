@@ -26,13 +26,14 @@
 class QTextDocument;
 class DocumentCache;
 class Settings;
+class Style;
 
 class Timestamp : public Text
 {
     Q_OBJECT
 public:
     Timestamp(const QDateTime& time_, const QString& format, const QFont& font,
-        DocumentCache&, Settings&);
+        DocumentCache&, Settings&, Style&);
     QDateTime getTime();
 
 protected:

@@ -41,8 +41,9 @@
 #include "src/widget/widget.h"
 #include "tool/croppinglabel.h"
 
-GroupWidget::GroupWidget(std::shared_ptr<GroupChatroom> chatroom_, bool compact_, Settings& settings_)
-    : GenericChatroomWidget(compact_, settings_)
+GroupWidget::GroupWidget(std::shared_ptr<GroupChatroom> chatroom_, bool compact_,
+    Settings& settings_, Style& style_)
+    : GenericChatroomWidget(compact_, settings_, style_)
     , groupId{chatroom_->getGroup()->getPersistentId()}
     , chatroom{chatroom_}
 {

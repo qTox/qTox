@@ -30,6 +30,7 @@ class QGraphicsScene;
 class DocumentCache;
 class SmileyPack;
 class Settings;
+class Style;
 
 class ChatMessage : public ChatLine
 {
@@ -50,7 +51,7 @@ public:
         ALERT,
     };
 
-    ChatMessage(DocumentCache&, Settings&);
+    ChatMessage(DocumentCache&, Settings&, Style&);
     ~ChatMessage();
     ChatMessage(const ChatMessage&) = default;
     ChatMessage(ChatMessage&&) = default;
@@ -58,14 +59,15 @@ public:
     static ChatMessage::Ptr createChatMessage(const QString& sender, const QString& rawMessage,
                                               MessageType type, bool isMe, MessageState state,
                                               const QDateTime& date, DocumentCache&,
-                                              SmileyPack&, Settings&, bool colorizeName = false);
+                                              SmileyPack&, Settings&, Style&, bool colorizeName = false);
     static ChatMessage::Ptr createChatInfoMessage(const QString& rawMessage, SystemMessageType type,
-                                                  const QDateTime& date, DocumentCache&, Settings&);
+                                                  const QDateTime& date, DocumentCache&, Settings&,
+                                                  Style& style);
     static ChatMessage::Ptr createFileTransferMessage(const QString& sender, CoreFile& coreFile,
                                                       ToxFile file, bool isMe, const QDateTime& date,
-                                                      DocumentCache&, Settings&);
-    static ChatMessage::Ptr createTypingNotification(DocumentCache&, Settings&);
-    static ChatMessage::Ptr createBusyNotification(DocumentCache&, Settings&);
+                                                      DocumentCache&, Settings&, Style&);
+    static ChatMessage::Ptr createTypingNotification(DocumentCache&, Settings&, Style&);
+    static ChatMessage::Ptr createBusyNotification(DocumentCache&, Settings&, Style&);
 
     void markAsDelivered(const QDateTime& time);
     void markAsBroken();
@@ -83,4 +85,5 @@ private:
     bool action = false;
     DocumentCache& documentCache;
     Settings& settings;
+    Style& style;
 };

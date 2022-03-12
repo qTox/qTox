@@ -26,17 +26,21 @@
 #include "src/model/status.h"
 #include "src/persistence/profile.h"
 #include "src/widget/widget.h"
+#include "src/widget/style.h"
 #include "video/camerasource.h"
 #include "widget/gui.h"
 #include "widget/loginscreen.h"
+#include "audio/audio.h"
+
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QDebug>
 #include <QDesktopWidget>
 #include <QThread>
-#include <cassert>
-#include "audio/audio.h"
+
 #include <vpx/vpx_image.h>
+
+#include <cassert>
 
 #ifdef Q_OS_MAC
 #include <QActionGroup>
@@ -63,6 +67,7 @@ Nexus::Nexus(QObject* parent)
     : QObject(parent)
     , profile{nullptr}
     , widget{nullptr}
+    , style{new Style()}
 {
 }
 
@@ -161,7 +166,7 @@ int Nexus::showLogin(const QString& profileName)
     delete profile;
     profile = nullptr;
 
-    LoginScreen loginScreen{*settings, profileName};
+    LoginScreen loginScreen{*settings, *style, profileName};
     connectLoginScreen(loginScreen);
 
     QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
@@ -230,7 +235,7 @@ void Nexus::showMainGUI()
     assert(profile);
 
     // Create GUI
-    widget = new Widget(*profile, *audioControl, *cameraSource, *settings);
+    widget = new Widget(*profile, *audioControl, *cameraSource, *settings, *style);
 
     // Start GUI
     widget->init();

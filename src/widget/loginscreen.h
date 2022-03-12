@@ -26,6 +26,7 @@
 
 class Profile;
 class Settings;
+class Style;
 
 namespace Ui {
 class LoginScreen;
@@ -36,7 +37,8 @@ class LoginScreen : public QDialog
     Q_OBJECT
 
 public:
-    LoginScreen(Settings&, const QString& initialProfileName = QString(), QWidget* parent = nullptr);
+    LoginScreen(Settings&, Style&, const QString& initialProfileName = QString(),
+        QWidget* parent = nullptr);
     ~LoginScreen();
     bool event(QEvent* event) final;
 

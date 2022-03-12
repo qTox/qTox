@@ -43,7 +43,7 @@
 
 SettingsWidget::SettingsWidget(UpdateCheck* updateCheck, IAudioControl& audio,
     Core* core, SmileyPack& smileyPack, CameraSource& cameraSource,
-        Settings& settings, Widget* parent)
+        Settings& settings, Style& style, Widget* parent)
     : QWidget(parent, Qt::Window)
 {
     CoreAV* coreAV = core->getAv();
@@ -61,14 +61,14 @@ SettingsWidget::SettingsWidget(UpdateCheck* updateCheck, IAudioControl& audio,
     std::unique_ptr<GeneralForm> gfrm(new GeneralForm(this, settings));
     connect(gfrm.get(), &GeneralForm::updateIcons, parent, &Widget::updateIcons);
 
-    std::unique_ptr<UserInterfaceForm> uifrm(new UserInterfaceForm(smileyPack, settings, this));
+    std::unique_ptr<UserInterfaceForm> uifrm(new UserInterfaceForm(smileyPack, settings, style, this));
     std::unique_ptr<PrivacyForm> pfrm(new PrivacyForm(core, settings));
     connect(pfrm.get(), &PrivacyForm::clearAllReceipts, parent, &Widget::clearAllReceipts);
 
     AVForm* rawAvfrm = new AVForm(audio, coreAV, cameraSource, audioSettings, videoSettings);
     std::unique_ptr<AVForm> avfrm(rawAvfrm);
     std::unique_ptr<AdvancedForm> expfrm(new AdvancedForm(settings));
-    std::unique_ptr<AboutForm> abtfrm(new AboutForm(updateCheck));
+    std::unique_ptr<AboutForm> abtfrm(new AboutForm(updateCheck, style));
 
 #if UPDATE_CHECK_ENABLED
     if (updateCheck != nullptr) {

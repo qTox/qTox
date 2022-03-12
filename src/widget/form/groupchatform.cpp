@@ -85,12 +85,14 @@ QString editName(const QString& name)
 
 GroupChatForm::GroupChatForm(Core& core_, Group* chatGroup, IChatLog& chatLog_,
     IMessageDispatcher& messageDispatcher_, Settings& settings_, DocumentCache& documentCache_,
-        SmileyPack& smileyPack_)
-    : GenericChatForm(core_, chatGroup, chatLog_, messageDispatcher_, documentCache_, smileyPack_, settings_)
+        SmileyPack& smileyPack_, Style& style_)
+    : GenericChatForm(core_, chatGroup, chatLog_, messageDispatcher_,
+        documentCache_, smileyPack_, settings_, style_)
     , core{core_}
     , group(chatGroup)
     , inCall(false)
     , settings(settings_)
+    , style{style_}
 {
     nusersLabel = new QLabel();
 
@@ -217,7 +219,7 @@ void GroupChatForm::updateUserNames()
             label->setProperty("peerType", LABEL_PEER_TYPE_MUTED);
         }
 
-        label->setStyleSheet(Style::getStylesheet(PEER_LABEL_STYLE_SHEET_PATH, settings));
+        label->setStyleSheet(style.getStylesheet(PEER_LABEL_STYLE_SHEET_PATH, settings));
         peerLabels.insert(peerPk, label);
     }
 
@@ -286,7 +288,7 @@ void GroupChatForm::peerAudioPlaying(ToxPk peerPk)
         });
     }
 
-    peerLabels[peerPk]->setStyleSheet(Style::getStylesheet(PEER_LABEL_STYLE_SHEET_PATH, settings));
+    peerLabels[peerPk]->setStyleSheet(style.getStylesheet(PEER_LABEL_STYLE_SHEET_PATH, settings));
     peerAudioTimers[peerPk]->start(500);
 }
 
@@ -434,7 +436,7 @@ void GroupChatForm::onLabelContextMenuRequested(const QPoint& localPos)
     } else {
         toggleMuteAction = contextMenu->addAction(muteString);
     }
-    contextMenu->setStyleSheet(Style::getStylesheet(PEER_LABEL_STYLE_SHEET_PATH, settings));
+    contextMenu->setStyleSheet(style.getStylesheet(PEER_LABEL_STYLE_SHEET_PATH, settings));
 
     const QAction* selectedItem = contextMenu->exec(pos);
     if (selectedItem == toggleMuteAction) {

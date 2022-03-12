@@ -28,14 +28,14 @@ namespace Ui {
 class UserInterfaceSettings;
 }
 class Settings;
-
 class SmileyPack;
+class Style;
 
 class UserInterfaceForm : public GenericForm
 {
     Q_OBJECT
 public:
-    UserInterfaceForm(SmileyPack&, Settings&, SettingsWidget* myParent);
+    UserInterfaceForm(SmileyPack&, Settings&, Style&, SettingsWidget* myParent);
     ~UserInterfaceForm();
     QString getFormName() final
     {
@@ -45,7 +45,7 @@ public:
 private slots:
     void on_smileyPackBrowser_currentIndexChanged(int index);
     void on_emoticonSize_editingFinished();
-    void on_styleBrowser_currentIndexChanged(QString style);
+    void on_styleBrowser_currentIndexChanged(QString textStyle);
     void on_timestamp_editTextChanged(const QString& format);
     void on_dateFormats_editTextChanged(const QString& format);
     void on_textStyleComboBox_currentTextChanged();
@@ -79,4 +79,5 @@ private:
     const int MAX_FORMAT_LENGTH = 128;
     SmileyPack& smileyPack;
     Settings& settings;
+    Style& style;
 };

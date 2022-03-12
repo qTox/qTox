@@ -37,6 +37,7 @@ struct Message;
 class Settings;
 class DocumentCache;
 class SmileyPack;
+class Style;
 
 class GroupChatForm : public GenericChatForm
 {
@@ -44,7 +45,7 @@ class GroupChatForm : public GenericChatForm
 public:
     GroupChatForm(Core& core_, Group* chatGroup, IChatLog& chatLog_,
         IMessageDispatcher& messageDispatcher_, Settings& settings_,
-        DocumentCache&, SmileyPack&);
+        DocumentCache&, SmileyPack&, Style&);
     ~GroupChatForm();
 
     void peerAudioPlaying(ToxPk peerPk);
@@ -85,4 +86,5 @@ private:
     TabCompleter* tabber;
     bool inCall;
     Settings& settings;
+    Style& style;
 };

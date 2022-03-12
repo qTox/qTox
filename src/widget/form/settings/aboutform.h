@@ -27,6 +27,7 @@ class QTimer;
 class QString;
 class UpdateCheck;
 class QLayoutItem;
+class Style;
 
 namespace Ui {
 class AboutSettings;
@@ -36,7 +37,7 @@ class AboutForm : public GenericForm
 {
     Q_OBJECT
 public:
-    AboutForm(UpdateCheck* updateCheck_);
+    AboutForm(UpdateCheck* updateCheck_, Style& style_);
     ~AboutForm();
     QString getFormName() final
     {
@@ -60,4 +61,5 @@ private:
     QTimer* progressTimer;
     UpdateCheck* updateCheck;
     QMetaObject::Connection linkConnection;
+    Style& style;
 };

@@ -56,6 +56,7 @@ struct Message;
 class DocumentCache;
 class SmileyPack;
 class Settings;
+class Style;
 
 namespace Ui {
 class MainWindow;
@@ -73,7 +74,7 @@ class GenericChatForm : public QWidget
 public:
     GenericChatForm(const Core& core_, const Contact* contact, IChatLog& chatLog_,
                     IMessageDispatcher& messageDispatcher_, DocumentCache&,
-                    SmileyPack&, Settings&, QWidget* parent_ = nullptr);
+                    SmileyPack&, Settings&, Style&, QWidget* parent_ = nullptr);
     ~GenericChatForm() override;
 
     void setName(const QString& newName);
@@ -171,4 +172,5 @@ protected:
     IMessageDispatcher& messageDispatcher;
     SmileyPack& smileyPack;
     Settings& settings;
+    Style& style;
 };
