@@ -25,10 +25,12 @@
 #include <QBoxLayout>
 #include <QMouseEvent>
 
-GenericChatroomWidget::GenericChatroomWidget(bool compact_, Settings& settings_, QWidget* parent)
+GenericChatroomWidget::GenericChatroomWidget(bool compact_, Settings& settings_,
+    Style& style_, QWidget* parent)
     : GenericChatItemWidget(compact_, parent)
     , active{false}
     , settings{settings_}
+    , style{style_}
 {
     // avatar
     QSize size;
@@ -158,7 +160,7 @@ QString GenericChatroomWidget::getTitle() const
 
 void GenericChatroomWidget::reloadTheme()
 {
-    setStyleSheet(Style::getStylesheet("genericChatRoomWidget/genericChatRoomWidget.css", settings));
+    setStyleSheet(style.getStylesheet("genericChatRoomWidget/genericChatRoomWidget.css", settings));
 }
 
 void GenericChatroomWidget::activate()

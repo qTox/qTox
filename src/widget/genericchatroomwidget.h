@@ -30,12 +30,14 @@ class Friend;
 class Group;
 class Contact;
 class Settings;
+class Style;
 
 class GenericChatroomWidget : public GenericChatItemWidget
 {
     Q_OBJECT
 public:
-    explicit GenericChatroomWidget(bool compact, Settings&, QWidget* parent = nullptr);
+    GenericChatroomWidget(bool compact, Settings&, Style&,
+        QWidget* parent = nullptr);
 
 public slots:
     virtual void setAsActiveChatroom() = 0;
@@ -86,4 +88,5 @@ protected:
     CroppingLabel* statusMessageLabel;
     bool active;
     Settings& settings;
+    Style& style;
 };

@@ -100,7 +100,7 @@ const QPair<QString, QString> CAN_NOT_CHANGE_PASSWORD = {
 } // namespace
 
 ProfileForm::ProfileForm(IProfileInfo* profileInfo_, Settings& settings_,
-    QWidget* parent)
+    Style& style, QWidget* parent)
     : QWidget{parent}
     , qr{nullptr}
     , profileInfo{profileInfo_}
@@ -133,7 +133,7 @@ ProfileForm::ProfileForm(IProfileInfo* profileInfo_, Settings& settings_,
     profilePicture->installEventFilter(this);
     profilePicture->setAccessibleName("Profile avatar");
     profilePicture->setAccessibleDescription("Set a profile avatar shown to all contacts");
-    profilePicture->setStyleSheet(Style::getStylesheet("window/profile.css", settings));
+    profilePicture->setStyleSheet(style.getStylesheet("window/profile.css", settings));
     connect(profilePicture, &MaskablePixmapWidget::clicked, this, &ProfileForm::onAvatarClicked);
     connect(profilePicture, &MaskablePixmapWidget::customContextMenuRequested,
             this, &ProfileForm::showProfilePictureContextMenu);

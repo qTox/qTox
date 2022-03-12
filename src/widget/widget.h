@@ -85,6 +85,7 @@ class IChatLog;
 class ChatHistory;
 class SmileyPack;
 class CameraSource;
+class Style;
 class Widget final : public QMainWindow
 {
     Q_OBJECT
@@ -119,7 +120,7 @@ private:
 
 public:
     Widget(Profile& profile_, IAudioControl& audio_, CameraSource&, Settings&,
-        QWidget* parent = nullptr);
+        Style&, QWidget* parent = nullptr);
     ~Widget() override;
     void init();
     void setCentralWidget(QWidget* widget, const QString& widgetName);
@@ -386,6 +387,7 @@ private:
     std::unique_ptr<SmileyPack> smileyPack;
     std::unique_ptr<DocumentCache> documentCache;
     CameraSource& cameraSource;
+    Style& style;
 };
 
 bool toxActivateEventHandler(const QByteArray& data, void* userData);

@@ -33,8 +33,8 @@
 #include <QMessageBox>
 #include <QToolButton>
 
-LoginScreen::LoginScreen(Settings& settings_, const QString& initialProfileName,
-    QWidget* parent)
+LoginScreen::LoginScreen(Settings& settings_, Style& style,
+    const QString& initialProfileName, QWidget* parent)
     : QDialog(parent)
     , ui(new Ui::LoginScreen)
     , quitShortcut{QKeySequence(Qt::CTRL + Qt::Key_Q), this}
@@ -63,7 +63,7 @@ LoginScreen::LoginScreen(Settings& settings_, const QString& initialProfileName,
     connect(ui->importButton, &QPushButton::clicked, this, &LoginScreen::onImportProfile);
 
     reset(initialProfileName);
-    setStyleSheet(Style::getStylesheet("loginScreen/loginScreen.css", settings));
+    setStyleSheet(style.getStylesheet("loginScreen/loginScreen.css", settings));
 
     retranslateUi();
     Translator::registerHandler(std::bind(&LoginScreen::retranslateUi, this), this);

@@ -40,10 +40,13 @@ public:
         CUSTOM
     };
 
-    Text(DocumentCache&, Settings&, const QString& txt = "", const QFont& font = QFont(),
+    Text(DocumentCache&, Settings&, Style&, const QColor& custom,
+        const QString& txt = "", const QFont& font = QFont(),
         bool enableElide = false, const QString& rawText = QString(),
-        const TextType& type = NORMAL,
-        const QColor& custom = Style::getColor(Style::ColorPalette::MainText));
+        const TextType& type = NORMAL);
+    Text(DocumentCache&, Settings&, Style&, const QString& txt = "", const QFont& font = QFont(),
+        bool enableElide = false, const QString& rawText = QString(),
+        const TextType& type = NORMAL);
     virtual ~Text();
 
     void setText(const QString& txt);
@@ -109,10 +112,11 @@ private:
     int selectionAnchor = -1;
     qreal ascent = 0.0;
     QFont defFont;
-    QString defStyleSheet;
     TextType textType;
     QColor color;
     QColor customColor;
     DocumentCache& documentCache;
     Settings& settings;
+    QString defStyleSheet;
+    Style& style;
 };

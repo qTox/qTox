@@ -31,22 +31,31 @@
 #include <QTextBlock>
 #include <QTextFragment>
 
-Text::Text(DocumentCache& documentCache_, Settings& settings_, const QString& txt,
-    const QFont& font, bool enableElide, const QString& rwText, const TextType& type,
-    const QColor& custom)
+Text::Text(DocumentCache& documentCache_, Settings& settings_, Style& style_,
+    const QColor& custom, const QString& txt, const QFont& font, bool enableElide,
+    const QString& rwText, const TextType& type)
     : rawText(rwText)
     , elide(enableElide)
     , defFont(font)
-    , defStyleSheet(Style::getStylesheet(QStringLiteral("chatArea/innerStyle.css"), settings_, font))
     , textType(type)
     , customColor(custom)
     , documentCache(documentCache_)
     , settings{settings_}
+    , defStyleSheet(style_.getStylesheet(QStringLiteral("chatArea/innerStyle.css"), settings_, font))
+    , style{style_}
 {
     color = textColor();
     setText(txt);
     setAcceptedMouseButtons(Qt::LeftButton);
     setAcceptHoverEvents(true);
+}
+
+Text::Text(DocumentCache& documentCache_, Settings& settings_, Style& style_,
+    const QString& txt, const QFont& font, bool enableElide, const QString& rwText,
+    const TextType& type)
+    : Text(documentCache_, settings_, style_, style_.getColor(Style::ColorPalette::MainText),
+        txt, font, enableElide, rwText, type)
+{
 }
 
 Text::~Text()
@@ -231,7 +240,7 @@ void Text::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
         sel.cursor.setPosition(getSelectionEnd(), QTextCursor::KeepAnchor);
     }
 
-    const QColor selectionColor = Style::getColor(Style::ColorPalette::SelectText);
+    const QColor selectionColor = style.getColor(Style::ColorPalette::SelectText);
     sel.format.setBackground(selectionColor.lighter(selectionHasFocus ? 100 : 160));
     sel.format.setForeground(selectionHasFocus ? Qt::white : Qt::black);
 
@@ -252,7 +261,7 @@ void Text::visibilityChanged(bool visible)
 
 void Text::reloadTheme()
 {
-    defStyleSheet = Style::getStylesheet(QStringLiteral("chatArea/innerStyle.css"), settings, defFont);
+    defStyleSheet = style.getStylesheet(QStringLiteral("chatArea/innerStyle.css"), settings, defFont);
     color = textColor();
     dirty = true;
     regenerate();
@@ -463,7 +472,7 @@ void Text::selectText(QTextCursor& cursor, const std::pair<int, int>& point)
         cursor.endEditBlock();
 
         QTextCharFormat format;
-        format.setBackground(QBrush(Style::getColor(Style::ColorPalette::SearchHighlighted)));
+        format.setBackground(QBrush(style.getColor(Style::ColorPalette::SearchHighlighted)));
         cursor.mergeCharFormat(format);
 
         regenerate();
@@ -473,9 +482,9 @@ void Text::selectText(QTextCursor& cursor, const std::pair<int, int>& point)
 
 QColor Text::textColor() const
 {
-    QColor c = Style::getColor(Style::ColorPalette::MainText);
+    QColor c = style.getColor(Style::ColorPalette::MainText);
     if (textType == ACTION) {
-        c = Style::getColor(Style::ColorPalette::Action);
+        c = style.getColor(Style::ColorPalette::Action);
     } else if (textType == CUSTOM) {
         c = customColor;
     }

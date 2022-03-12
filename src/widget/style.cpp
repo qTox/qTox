@@ -82,14 +82,13 @@ QString qssifyFont(QFont font)
     return QString("%1 %2px \"%3\"").arg(font.weight() * 8).arg(font.pixelSize()).arg(font.family());
 }
 
-using ColorPalette = Style::ColorPalette;
-QMap<ColorPalette, QColor> palette;
-QMap<QString, QString> dictColor;
-QMap<QString, QString> dictFont;
-QMap<QString, QString> dictTheme;
-
 using MainTheme = Style::MainTheme;
-const QList<Style::ThemeNameColor> themeNameColors = {
+struct ThemeNameColor {
+    MainTheme type;
+    QString name;
+    QColor color;
+};
+const QList<ThemeNameColor> themeNameColors = {
     {MainTheme::Light, QObject::tr("Default"), QColor()},
     {MainTheme::Light, QObject::tr("Blue"), QColor("#004aa4")},
     {MainTheme::Light, QObject::tr("Olive"), QColor("#97ba00")},
@@ -102,6 +101,7 @@ const QList<Style::ThemeNameColor> themeNameColors = {
     {MainTheme::Dark, QObject::tr("Dark violet"), QColor("#280d6c")}
 };
 
+using ColorPalette = Style::ColorPalette;
 const QMap<ColorPalette, QString> aliasColors = {
     {ColorPalette::TransferGood, "transferGood"},
     {ColorPalette::TransferWait, "transferWait"},

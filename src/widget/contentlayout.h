@@ -23,12 +23,13 @@
 #include <QFrame>
 
 class Settings;
+class Style;
 
 class ContentLayout : public QVBoxLayout
 {
 public:
-    ContentLayout(Settings&);
-    explicit ContentLayout(Settings&, QWidget* parent);
+    ContentLayout(Settings&, Style&);
+    explicit ContentLayout(Settings&, Style&, QWidget* parent);
     ~ContentLayout();
 
     void clear();
@@ -38,6 +39,7 @@ public:
     QWidget* mainContent;
     QWidget* mainHead;
     Settings& settings;
+    Style& style;
 
 public slots:
     void reloadTheme();
