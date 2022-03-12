@@ -28,12 +28,13 @@
 class QPaintEvent;
 class QShowEvent;
 class Settings;
+class Style;
 
 class CallConfirmWidget final : public QWidget
 {
     Q_OBJECT
 public:
-    explicit CallConfirmWidget(Settings& settings, const QWidget* anchor_);
+    CallConfirmWidget(Settings& settings, Style& style, const QWidget* anchor_);
 
 signals:
     void accepted();

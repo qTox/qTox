@@ -29,12 +29,14 @@
 class QIcon;
 class SmileyPack;
 class Settings;
+class Style;
 
 class EmoticonsWidget : public QMenu
 {
     Q_OBJECT
 public:
-    EmoticonsWidget(SmileyPack& smileyPack, Settings& settings, QWidget* parent = nullptr);
+    EmoticonsWidget(SmileyPack& smileyPack, Settings& settings, Style& style,
+        QWidget* parent = nullptr);
 
 signals:
     void insertEmoticon(QString str);

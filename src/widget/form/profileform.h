@@ -30,6 +30,7 @@ class CroppingLabel;
 class IProfileInfo;
 class MaskablePixmapWidget;
 class Settings;
+class Style;
 
 namespace Ui {
 class IdentitySettings;
@@ -54,7 +55,8 @@ class ProfileForm : public QWidget
 {
     Q_OBJECT
 public:
-    ProfileForm(IProfileInfo* profileInfo_, Settings& settings, QWidget* parent = nullptr);
+    ProfileForm(IProfileInfo* profileInfo_, Settings& settings, Style& style,
+        QWidget* parent = nullptr);
     ~ProfileForm();
     void show(ContentLayout* contentLayout);
     bool isShown() const;

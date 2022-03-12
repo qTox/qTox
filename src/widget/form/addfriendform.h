@@ -34,6 +34,7 @@ class QTabWidget;
 
 class ContentLayout;
 class Settings;
+class Style;
 
 class AddFriendForm : public QObject
 {
@@ -46,7 +47,7 @@ public:
         FriendRequest = 2
     };
 
-    AddFriendForm(ToxId ownId_, Settings& settings);
+    AddFriendForm(ToxId ownId_, Settings& settings, Style& style);
     AddFriendForm(const AddFriendForm&) = delete;
     AddFriendForm& operator=(const AddFriendForm&) = delete;
     ~AddFriendForm();
@@ -115,4 +116,5 @@ private:
 
     ToxId ownId;
     Settings& settings;
+    Style& style;
 };

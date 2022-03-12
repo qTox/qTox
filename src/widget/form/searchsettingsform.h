@@ -26,13 +26,14 @@ namespace Ui {
 class SearchSettingsForm;
 }
 class Settings;
+class Style;
 
 class SearchSettingsForm : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit SearchSettingsForm(Settings& settings, QWidget *parent = nullptr);
+    SearchSettingsForm(Settings& settings, Style& style, QWidget *parent = nullptr);
     ~SearchSettingsForm();
 
     ParameterSearch getParameterSearch();
@@ -43,6 +44,7 @@ private:
     QDate startDate;
     bool isUpdate{false};
     Settings& settings;
+    Style& style;
 
     void updateStartDateLabel();
     void setUpdate(const bool isUpdate_);

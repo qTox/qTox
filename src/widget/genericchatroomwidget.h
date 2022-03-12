@@ -28,15 +28,16 @@ class QHBoxLayout;
 class ContentLayout;
 class Friend;
 class Group;
-class Contact;
 class Settings;
 class Chat;
+class Style;
 
 class GenericChatroomWidget : public GenericChatItemWidget
 {
     Q_OBJECT
 public:
-    explicit GenericChatroomWidget(bool compact, Settings& settings, QWidget* parent = nullptr);
+    GenericChatroomWidget(bool compact, Settings&  settings, Style& style,
+        QWidget* parent = nullptr);
 
 public slots:
     virtual void setAsActiveChatroom() = 0;
@@ -87,4 +88,5 @@ protected:
     CroppingLabel* statusMessageLabel;
     bool active;
     Settings& settings;
+    Style& style;
 };

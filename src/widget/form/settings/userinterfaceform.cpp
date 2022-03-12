@@ -55,10 +55,11 @@
  * Restores all controls from the settings.
  */
 UserInterfaceForm::UserInterfaceForm(SmileyPack& smileyPack_, Settings& settings_,
-    SettingsWidget* myParent)
+    Style& style_, SettingsWidget* myParent)
     : GenericForm(QPixmap(":/img/settings/general.png"))
     , smileyPack{smileyPack_}
     , settings{settings_}
+    , style{style_}
 {
     parent = myParent;
 
@@ -114,13 +115,13 @@ UserInterfaceForm::UserInterfaceForm(SmileyPack& smileyPack_, Settings& settings
     bodyUI->styleBrowser->addItem(tr("None"));
     bodyUI->styleBrowser->addItems(QStyleFactory::keys());
 
-    QString style;
+    QString textStyle;
     if (QStyleFactory::keys().contains(settings.getStyle()))
-        style = settings.getStyle();
+        textStyle = settings.getStyle();
     else
-        style = tr("None");
+        textStyle = tr("None");
 
-    bodyUI->styleBrowser->setCurrentText(style);
+    bodyUI->styleBrowser->setCurrentText(textStyle);
 
     for (QString color : Style::getThemeColorNames())
         bodyUI->themeColorCBox->addItem(color);
@@ -178,15 +179,15 @@ UserInterfaceForm::~UserInterfaceForm()
     delete bodyUI;
 }
 
-void UserInterfaceForm::on_styleBrowser_currentIndexChanged(QString style)
+void UserInterfaceForm::on_styleBrowser_currentIndexChanged(QString textStyle)
 {
     if (bodyUI->styleBrowser->currentIndex() == 0)
         settings.setStyle("None");
     else
-        settings.setStyle(style);
+        settings.setStyle(textStyle);
 
-    setStyle(QStyleFactory::create(style));
-    parent->setBodyHeadStyle(style);
+    setStyle(QStyleFactory::create(textStyle));
+    parent->setBodyHeadStyle(textStyle);
 }
 
 void UserInterfaceForm::on_emoticonSize_editingFinished()
@@ -340,7 +341,7 @@ void UserInterfaceForm::on_cbShowIdenticons_stateChanged()
 void UserInterfaceForm::on_themeColorCBox_currentIndexChanged(int index)
 {
     settings.setThemeColor(index);
-    Style::setThemeColor(settings, index);
+    style.setThemeColor(settings, index);
     Style::applyTheme();
 }
 

@@ -49,16 +49,17 @@
 // downloaded to.
 
 FileTransferWidget::FileTransferWidget(QWidget* parent, CoreFile& _coreFile,
-    ToxFile file, Settings& settings_)
+    ToxFile file, Settings& settings_, Style& style_)
     : QWidget(parent)
     , coreFile{_coreFile}
     , ui(new Ui::FileTransferWidget)
     , fileInfo(file)
-    , backgroundColor(Style::getColor(Style::ColorPalette::TransferMiddle))
-    , buttonColor(Style::getColor(Style::ColorPalette::TransferWait))
-    , buttonBackgroundColor(Style::getColor(Style::ColorPalette::GroundBase))
+    , backgroundColor(style_.getColor(Style::ColorPalette::TransferMiddle))
+    , buttonColor(style_.getColor(Style::ColorPalette::TransferWait))
+    , buttonBackgroundColor(style_.getColor(Style::ColorPalette::GroundBase))
     , active(true)
     , settings(settings_)
+    , style{style_}
 {
     ui->setupUi(this);
 
@@ -160,7 +161,7 @@ void FileTransferWidget::setBackgroundColor(const QColor& c, bool whiteFont)
 
     setProperty("fontColor", whiteFont ? "white" : "black");
 
-    setStyleSheet(Style::getStylesheet("fileTransferInstance/filetransferWidget.css", settings));
+    setStyleSheet(style.getStylesheet("fileTransferInstance/filetransferWidget.css", settings));
     Style::repolish(this);
 
     update();
@@ -380,46 +381,46 @@ void FileTransferWidget::setupButtons(ToxFile const& file)
 
     switch (file.status) {
     case ToxFile::TRANSMITTING:
-        ui->leftButton->setIcon(QIcon(Style::getImagePath("fileTransferInstance/pause.svg", settings)));
+        ui->leftButton->setIcon(QIcon(style.getImagePath("fileTransferInstance/pause.svg", settings)));
         ui->leftButton->setObjectName("pause");
         ui->leftButton->setToolTip(tr("Pause transfer"));
 
-        ui->rightButton->setIcon(QIcon(Style::getImagePath("fileTransferInstance/no.svg", settings)));
+        ui->rightButton->setIcon(QIcon(style.getImagePath("fileTransferInstance/no.svg", settings)));
         ui->rightButton->setObjectName("cancel");
         ui->rightButton->setToolTip(tr("Cancel transfer"));
 
-        setButtonColor(Style::getColor(Style::ColorPalette::TransferGood));
+        setButtonColor(style.getColor(Style::ColorPalette::TransferGood));
         break;
 
     case ToxFile::PAUSED:
         if (file.pauseStatus.localPaused()) {
-            ui->leftButton->setIcon(QIcon(Style::getImagePath("fileTransferInstance/arrow_white.svg", settings)));
+            ui->leftButton->setIcon(QIcon(style.getImagePath("fileTransferInstance/arrow_white.svg", settings)));
             ui->leftButton->setObjectName("resume");
             ui->leftButton->setToolTip(tr("Resume transfer"));
         } else {
-            ui->leftButton->setIcon(QIcon(Style::getImagePath("fileTransferInstance/pause.svg", settings)));
+            ui->leftButton->setIcon(QIcon(style.getImagePath("fileTransferInstance/pause.svg", settings)));
             ui->leftButton->setObjectName("pause");
             ui->leftButton->setToolTip(tr("Pause transfer"));
         }
 
-        ui->rightButton->setIcon(QIcon(Style::getImagePath("fileTransferInstance/no.svg", settings)));
+        ui->rightButton->setIcon(QIcon(style.getImagePath("fileTransferInstance/no.svg", settings)));
         ui->rightButton->setObjectName("cancel");
         ui->rightButton->setToolTip(tr("Cancel transfer"));
 
-        setButtonColor(Style::getColor(Style::ColorPalette::TransferMiddle));
+        setButtonColor(style.getColor(Style::ColorPalette::TransferMiddle));
         break;
 
     case ToxFile::INITIALIZING:
-        ui->rightButton->setIcon(QIcon(Style::getImagePath("fileTransferInstance/no.svg", settings)));
+        ui->rightButton->setIcon(QIcon(style.getImagePath("fileTransferInstance/no.svg", settings)));
         ui->rightButton->setObjectName("cancel");
         ui->rightButton->setToolTip(tr("Cancel transfer"));
 
         if (file.direction == ToxFile::SENDING) {
-            ui->leftButton->setIcon(QIcon(Style::getImagePath("fileTransferInstance/pause.svg", settings)));
+            ui->leftButton->setIcon(QIcon(style.getImagePath("fileTransferInstance/pause.svg", settings)));
             ui->leftButton->setObjectName("pause");
             ui->leftButton->setToolTip(tr("Pause transfer"));
         } else {
-            ui->leftButton->setIcon(QIcon(Style::getImagePath("fileTransferInstance/yes.svg", settings)));
+            ui->leftButton->setIcon(QIcon(style.getImagePath("fileTransferInstance/yes.svg", settings)));
             ui->leftButton->setObjectName("accept");
             ui->leftButton->setToolTip(tr("Accept transfer"));
         }
@@ -430,12 +431,12 @@ void FileTransferWidget::setupButtons(ToxFile const& file)
         ui->rightButton->hide();
         break;
     case ToxFile::FINISHED:
-        ui->leftButton->setIcon(QIcon(Style::getImagePath("fileTransferInstance/yes.svg", settings)));
+        ui->leftButton->setIcon(QIcon(style.getImagePath("fileTransferInstance/yes.svg", settings)));
         ui->leftButton->setObjectName("ok");
         ui->leftButton->setToolTip(tr("Open file"));
         ui->leftButton->show();
 
-        ui->rightButton->setIcon(QIcon(Style::getImagePath("fileTransferInstance/dir.svg", settings)));
+        ui->rightButton->setIcon(QIcon(style.getImagePath("fileTransferInstance/dir.svg", settings)));
         ui->rightButton->setObjectName("dir");
         ui->rightButton->setToolTip(tr("Open file directory"));
         ui->rightButton->show();
@@ -535,14 +536,14 @@ void FileTransferWidget::updateBackgroundColor(const ToxFile::FileStatus status)
     case ToxFile::INITIALIZING:
     case ToxFile::PAUSED:
     case ToxFile::TRANSMITTING:
-        setBackgroundColor(Style::getColor(Style::ColorPalette::TransferMiddle), false);
+        setBackgroundColor(style.getColor(Style::ColorPalette::TransferMiddle), false);
         break;
     case ToxFile::BROKEN:
     case ToxFile::CANCELED:
-        setBackgroundColor(Style::getColor(Style::ColorPalette::TransferBad), true);
+        setBackgroundColor(style.getColor(Style::ColorPalette::TransferBad), true);
         break;
     case ToxFile::FINISHED:
-        setBackgroundColor(Style::getColor(Style::ColorPalette::TransferGood), true);
+        setBackgroundColor(style.getColor(Style::ColorPalette::TransferGood), true);
         break;
     default:
         qCritical() << "Invalid file status";

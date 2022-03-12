@@ -25,10 +25,10 @@
 #include <QPainter>
 #include <QTimer>
 
-NotificationIcon::NotificationIcon(Settings& settings, QSize Size)
+NotificationIcon::NotificationIcon(Settings& settings, Style& style, QSize Size)
     : size(Size)
 {
-    pmap = PixmapCache::getInstance().get(Style::getImagePath("chatArea/typing.svg", settings), size);
+    pmap = PixmapCache::getInstance().get(style.getImagePath("chatArea/typing.svg", settings), size);
 
     // Timer for the animation, if the Widget is not redrawn, no paint events will
     // arrive and the timer will not be restarted, so this stops automatically

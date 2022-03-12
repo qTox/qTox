@@ -38,9 +38,11 @@ void CategoryWidget::emitChatroomWidget(QLayout* layout, int index)
     }
 }
 
-CategoryWidget::CategoryWidget(bool compact_, Settings& settings_, QWidget* parent)
+CategoryWidget::CategoryWidget(bool compact_, Settings& settings_, Style& style_,
+    QWidget* parent)
     : GenericChatItemWidget(compact_, parent)
     , settings{settings_}
+    , style{style_}
 {
     container = new QWidget(this);
     container->setObjectName("circleWidgetContainer");
@@ -50,7 +52,7 @@ CategoryWidget::CategoryWidget(bool compact_, Settings& settings_, QWidget* pare
     statusLabel->setObjectName("status");
     statusLabel->setTextFormat(Qt::PlainText);
 
-    statusPic.setPixmap(QPixmap(Style::getImagePath("chatArea/scrollBarRightArrow.svg", settings)));
+    statusPic.setPixmap(QPixmap(style.getImagePath("chatArea/scrollBarRightArrow.svg", settings)));
 
     fullLayout = new QVBoxLayout(this);
     fullLayout->setSpacing(0);
@@ -97,9 +99,9 @@ void CategoryWidget::setExpanded(bool isExpanded, bool save)
 
     QString pixmapPath;
     if (isExpanded)
-        pixmapPath = Style::getImagePath("chatArea/scrollBarDownArrow.svg", settings);
+        pixmapPath = style.getImagePath("chatArea/scrollBarDownArrow.svg", settings);
     else
-        pixmapPath = Style::getImagePath("chatArea/scrollBarRightArrow.svg", settings);
+        pixmapPath = style.getImagePath("chatArea/scrollBarRightArrow.svg", settings);
     statusPic.setPixmap(QPixmap(pixmapPath));
 
     if (save)

@@ -34,13 +34,15 @@ class FileTransferWidget;
 class QVariantAnimation;
 class QPushButton;
 class Settings;
+class Style;
 
 class FileTransferWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    FileTransferWidget(QWidget* parent, CoreFile& _coreFile, ToxFile file, Settings& settings);
+    FileTransferWidget(QWidget* parent, CoreFile& _coreFile, ToxFile file,
+        Settings& settings, Style& style);
     virtual ~FileTransferWidget();
     bool isActive() const;
     void onFileTransferUpdate(ToxFile file);
@@ -90,5 +92,5 @@ private:
     QTime lastTransmissionUpdate;
     ToxFile::FileStatus lastStatus = ToxFile::INITIALIZING;
     Settings& settings;
-
+    Style& style;
 };

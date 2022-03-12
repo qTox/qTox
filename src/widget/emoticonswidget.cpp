@@ -32,10 +32,10 @@
 #include <math.h>
 
 EmoticonsWidget::EmoticonsWidget(SmileyPack& smileyPack, Settings& settings,
-    QWidget* parent)
+    Style& style, QWidget* parent)
     : QMenu(parent)
 {
-    setStyleSheet(Style::getStylesheet("emoticonWidget/emoticonWidget.css", settings));
+    setStyleSheet(style.getStylesheet("emoticonWidget/emoticonWidget.css", settings));
     setLayout(&layout);
     layout.addWidget(&stack);
 

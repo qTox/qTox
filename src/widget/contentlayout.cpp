@@ -24,16 +24,18 @@
 #include <QFrame>
 #include <QStyleFactory>
 
-ContentLayout::ContentLayout(Settings& settings_)
+ContentLayout::ContentLayout(Settings& settings_, Style& style_)
     : QVBoxLayout()
     , settings{settings_}
+    , style{style_}
 {
     init();
 }
 
-ContentLayout::ContentLayout(Settings& settings_, QWidget* parent)
+ContentLayout::ContentLayout(Settings& settings_, Style& style_, QWidget* parent)
     : QVBoxLayout(parent)
     , settings{settings_}
+    , style{style_}
 {
     init();
 
@@ -72,8 +74,8 @@ ContentLayout::~ContentLayout()
 void ContentLayout::reloadTheme()
 {
 #ifndef Q_OS_MAC
-    mainHead->setStyleSheet(Style::getStylesheet("settings/mainHead.css", settings));
-    mainContent->setStyleSheet(Style::getStylesheet("window/general.css", settings));
+    mainHead->setStyleSheet(style.getStylesheet("settings/mainHead.css", settings));
+    mainContent->setStyleSheet(style.getStylesheet("window/general.css", settings));
 #endif
 }
 
