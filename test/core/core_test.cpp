@@ -17,6 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "mock/mockbootstraplistgenerator.h"
 #include "src/core/core.h"
 #include "src/core/toxoptions.h"
 #include "src/core/icoresettings.h"
@@ -35,93 +36,81 @@
 
 Q_DECLARE_METATYPE(QList<DhtServer>)
 
-class MockNodeListGenerator : public IBootstrapListGenerator
-{
-    QList<DhtServer> getBootstrapNodes() const override;
-};
-
-QList<DhtServer> MockNodeListGenerator::getBootstrapNodes() const {
-    return BootstrapNodeUpdater::loadDefaultBootstrapNodes();
-}
-
 class TestCoreProxy : public QObject
 {
 Q_OBJECT
 private slots:
     void startup_without_proxy();
-    void startup_with_invalid_proxy();
+    void startup_with_invalid_socks5_proxy();
+    void startup_with_invalid_http_proxy();
 
 private:
     /* Test Variables */
     Core::ToxCoreErrors* err = nullptr;
-    std::unique_ptr<MockSettings> settings;
-    QByteArray savedata{};
-    ToxCorePtr test_core;
+    MockSettings settings;
+    ToxCorePtr alice;
+    ToxCorePtr bob;
+    MockBootstrapListGenerator alicesNodes{};
+    MockBootstrapListGenerator bobsNodes{};
 };
 
 
 namespace {
-    const int timeout = 90000; //90 seconds timeout allowed for test
+const int timeout = 15000;
+
+void bootstrapToxes(Core& alice, MockBootstrapListGenerator& alicesNodes,
+    Core& bob, MockBootstrapListGenerator& bobsNodes)
+{
+    alicesNodes.setBootstrapNodes(MockBootstrapListGenerator::makeListFromSelf(bob));
+    bobsNodes.setBootstrapNodes(MockBootstrapListGenerator::makeListFromSelf(alice));
+
+    QSignalSpy spyAlice(&alice, &Core::connected);
+    QSignalSpy spyBob(&bob, &Core::connected);
+
+    alice.start();
+    bob.start();
+
+    QTRY_VERIFY_WITH_TIMEOUT(spyAlice.count() == 1 &&
+        spyBob.count() == 1, timeout);
 }
+} // namespace
 
 void TestCoreProxy::startup_without_proxy()
 {
-    settings = std::unique_ptr<MockSettings>(new MockSettings());
-
     // No proxy
-    settings->setProxyAddr("");
-    settings->setProxyPort(0);
-    settings->setProxyType(MockSettings::ProxyType::ptNone);
+    settings.setProxyAddr("");
+    settings.setProxyPort(0);
+    settings.setProxyType(MockSettings::ProxyType::ptNone);
 
-    MockNodeListGenerator nodesGenerator{};
+    alice = Core::makeToxCore({}, settings, alicesNodes, err);
+    bob = Core::makeToxCore({}, settings, bobsNodes, err);
+    QVERIFY(!!alice);
+    QVERIFY(!!bob);
 
-    test_core = Core::makeToxCore(savedata, *settings, nodesGenerator, err);
-
-    if (test_core == nullptr) {
-        QFAIL("ToxCore initialisation failed");
-    }
-
-
-    QSignalSpy spyCore(test_core.get(), &Core::connected);
-
-    test_core->start();
-
-    QVERIFY(spyCore.wait(timeout)); //wait 90seconds
-
-    QCOMPARE(spyCore.count(), 1); // make sure the signal was emitted exactly one time
+    bootstrapToxes(*alice, alicesNodes, *bob, bobsNodes);
 }
 
-void TestCoreProxy::startup_with_invalid_proxy()
+void TestCoreProxy::startup_with_invalid_socks5_proxy()
 {
-    settings = std::unique_ptr<MockSettings>(new MockSettings());
+    settings.setProxyAddr("Test");
+    settings.setProxyPort(9985);
+    settings.setProxyType(MockSettings::ProxyType::ptSOCKS5);
 
-    // Test invalid proxy SOCKS5
-    settings->setProxyAddr("Test");
-    settings->setProxyPort(9985);
-    settings->setProxyType(MockSettings::ProxyType::ptSOCKS5);
+    alice = Core::makeToxCore({}, settings, alicesNodes, err);
 
-    MockNodeListGenerator nodesGenerator{};
-
-    test_core = Core::makeToxCore(savedata, *settings, nodesGenerator, err);
-
-    if (test_core != nullptr) {
-        QFAIL("ToxCore initialisation passed with invalid SOCKS5 proxy address");
-    }
-
-
-    // Test invalid proxy HTTP
-    settings->setProxyAddr("Test");
-    settings->setProxyPort(9985);
-    settings->setProxyType(MockSettings::ProxyType::ptHTTP);
-
-    test_core = Core::makeToxCore(savedata, *settings, nodesGenerator, err);
-
-    if (test_core != nullptr) {
-        QFAIL("ToxCore initialisation passed with invalid HTTP proxy address");
-    }
+    QVERIFY(!alice);
 }
 
+void TestCoreProxy::startup_with_invalid_http_proxy()
+{
+    settings.setProxyAddr("Test");
+    settings.setProxyPort(9985);
+    settings.setProxyType(MockSettings::ProxyType::ptHTTP);
 
+    alice = Core::makeToxCore({}, settings, alicesNodes, err);
+
+    QVERIFY(!alice);
+}
 
 QTEST_GUILESS_MAIN(TestCoreProxy)
 #include "core_test.moc"
