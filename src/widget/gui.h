@@ -30,7 +30,6 @@ class GUI : public QObject
 public:
     static GUI& getInstance();
     static QWidget* getMainWidget();
-    static void setWindowTitle(const QString& title);
     static void showInfo(const QString& title, const QString& msg);
     static void showWarning(const QString& title, const QString& msg);
     static void showError(const QString& title, const QString& msg);
@@ -46,7 +45,6 @@ private:
 
 private slots:
     // Private implementation, those must be called from the GUI thread
-    void _setWindowTitle(const QString& title);
     void _showInfo(const QString& title, const QString& msg);
     void _showWarning(const QString& title, const QString& msg);
     void _showError(const QString& title, const QString& msg);

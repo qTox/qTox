@@ -1342,7 +1342,7 @@ void Widget::onFriendDisplayedNameChanged(const QString& displayed)
 
     FriendWidget* friendWidget = friendWidgets[f->getPublicKey()];
     if (friendWidget->isActive()) {
-        GUI::setWindowTitle(displayed);
+        formatWindowTitle(displayed);
     }
 
     chatListWidget->itemsChanged();
@@ -2059,7 +2059,7 @@ void Widget::onGroupTitleChanged(uint32_t groupnumber, const QString& author, co
 
     GroupWidget* widget = groupWidgets[groupId];
     if (widget->isActive()) {
-        GUI::setWindowTitle(title);
+        formatWindowTitle(title);
     }
 
     g->setTitle(author, title);
@@ -2750,4 +2750,19 @@ void Widget::connectCircleWidget(CircleWidget& circleWidget)
 void Widget::connectFriendWidget(FriendWidget& friendWidget)
 {
     connect(&friendWidget, &FriendWidget::updateFriendActivity, this, &Widget::updateFriendActivity);
+}
+
+/**
+ * @brief Change the title of the main window.
+ * @param title Title to set.
+ *
+ * This is usually always visible to the user.
+ */
+void Widget::formatWindowTitle(const QString& content)
+{
+    if (content.isEmpty()) {
+        setWindowTitle("qTox");
+    } else {
+        setWindowTitle(content + " - qTox");
+    }
 }

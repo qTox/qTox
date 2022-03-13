@@ -283,6 +283,7 @@ private:
     void playNotificationSound(IAudioSink::Sound sound, bool loop = false);
     void cleanupNotificationSound();
     void acceptFileTransfer(const ToxFile &file, const QString &path);
+    void formatWindowTitle(const QString& content);
 
 private:
     Profile& profile;
