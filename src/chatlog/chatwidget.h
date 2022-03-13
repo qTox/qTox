@@ -37,6 +37,7 @@ class SmileyPack;
 class Settings;
 class Style;
 class ChatLineStorage;
+class IMessageBoxManager;
 
 static const size_t DEF_NUM_MSG_TO_LOAD = 100;
 class ChatWidget : public QGraphicsView
@@ -44,7 +45,8 @@ class ChatWidget : public QGraphicsView
     Q_OBJECT
 public:
     ChatWidget(IChatLog& chatLog_, const Core& core_, DocumentCache& documentCache,
-        SmileyPack& smileyPack, Settings& settings, Style& style, QWidget* parent = nullptr);
+        SmileyPack& smileyPack, Settings& settings, Style& style,
+        IMessageBoxManager& messageBoxManager, QWidget* parent = nullptr);
     virtual ~ChatWidget();
 
     void insertChatlines(std::map<ChatLogIdx, ChatLine::Ptr> chatLines);
@@ -220,4 +222,5 @@ private:
     SmileyPack& smileyPack;
     Settings& settings;
     Style& style;
+    IMessageBoxManager& messageBoxManager;
 };

@@ -30,8 +30,8 @@
 #include "src/model/status.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
-#include "src/widget/gui.h"
 #include "src/widget/tool/recursivesignalblocker.h"
+#include "src/widget/tool/imessageboxmanager.h"
 #include "src/widget/translator.h"
 
 /**
@@ -41,10 +41,11 @@
  * Is also contains "Reset settings" button and "Make portable" checkbox.
  */
 
-AdvancedForm::AdvancedForm(Settings& settings_, Style& style)
+AdvancedForm::AdvancedForm(Settings& settings_, Style& style, IMessageBoxManager& messageBoxManager_)
     : GenericForm(QPixmap(":/img/settings/general.png"), style)
     , bodyUI(new Ui::AdvancedSettings)
     , settings{settings_}
+    , messageBoxManager{messageBoxManager_}
 {
     bodyUI->setupUi(this);
 
@@ -157,14 +158,14 @@ void AdvancedForm::on_btnCopyDebug_clicked()
 void AdvancedForm::on_resetButton_clicked()
 {
     const QString titile = tr("Reset settings");
-    bool result = GUI::askQuestion(titile, tr("All settings will be reset to default. Are you sure?"),
+    bool result = messageBoxManager.askQuestion(titile, tr("All settings will be reset to default. Are you sure?"),
                                    tr("Yes"), tr("No"));
 
     if (!result)
         return;
 
     settings.resetToDefault();
-    GUI::showInfo(titile, "Changes will take effect after restart");
+    messageBoxManager.showInfo(titile, "Changes will take effect after restart");
 }
 
 void AdvancedForm::on_cbEnableIPv6_stateChanged()

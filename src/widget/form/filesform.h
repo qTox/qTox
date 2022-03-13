@@ -36,6 +36,8 @@ class ContentLayout;
 class QTableView;
 class Settings;
 class Style;
+class QFileInfo;
+class IMessageBoxManager;
 
 namespace FileTransferList
 {
@@ -114,7 +116,8 @@ class FilesForm : public QObject
     Q_OBJECT
 
 public:
-    FilesForm(CoreFile& coreFile, Settings& settings, Style& style);
+    FilesForm(CoreFile& coreFile, Settings& settings, Style& style,
+        IMessageBoxManager& messageBoxManager);
     ~FilesForm();
 
     bool isShown() const;
@@ -142,4 +145,5 @@ private:
     QTabWidget main;
     QTableView *sent, *recvd;
     FileTransferList::Model *sentModel, *recvdModel;
+    IMessageBoxManager& messageBoxManager;
 };

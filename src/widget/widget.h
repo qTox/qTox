@@ -86,6 +86,7 @@ class ChatHistory;
 class SmileyPack;
 class CameraSource;
 class Style;
+class IMessageBoxManager;
 class Widget final : public QMainWindow
 {
     Q_OBJECT
@@ -119,8 +120,9 @@ private:
     };
 
 public:
-    Widget(Profile& profile_, IAudioControl& audio_, CameraSource& cameraSource, Settings& settings,
-        Style& style, QWidget* parent = nullptr);
+    Widget(Profile& profile_, IAudioControl& audio_, CameraSource& cameraSource,
+        Settings& settings, Style& style, IMessageBoxManager& messageBoxManager,
+        QWidget* parent = nullptr);
     ~Widget() override;
     void init();
     void setCentralWidget(QWidget* widget, const QString& widgetName);
@@ -140,8 +142,6 @@ public:
     static QString fromDialogType(DialogType type);
     ContentDialog* createContentDialog() const;
     ContentLayout* createContentDialog(DialogType type) const;
-
-    static void confirmExecutableOpen(const QFileInfo& file);
 
     void clearAllReceipts();
 
@@ -389,6 +389,7 @@ private:
     std::unique_ptr<DocumentCache> documentCache;
     CameraSource& cameraSource;
     Style& style;
+    IMessageBoxManager& messageBoxManager;
 };
 
 bool toxActivateEventHandler(const QByteArray& data, void* userData);

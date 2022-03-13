@@ -37,9 +37,9 @@
 #include "src/net/avatarbroadcaster.h"
 #include "src/net/bootstrapnodeupdater.h"
 #include "src/nexus.h"
-#include "src/widget/gui.h"
 #include "src/widget/tool/identicon.h"
 #include "src/widget/widget.h"
+#include "src/widget/tool/imessageboxmanager.h"
 
 namespace {
 enum class LoadToxDataError
@@ -294,13 +294,15 @@ void Profile::initCore(const QByteArray& toxsave, Settings& s, bool isNewProfile
     avatarBroadcaster = std::unique_ptr<AvatarBroadcaster>(new AvatarBroadcaster(*core));
 }
 
-Profile::Profile(const QString& name_, std::unique_ptr<ToxEncrypt> passkey_, Paths& paths_, Settings& settings_)
+Profile::Profile(const QString& name_, std::unique_ptr<ToxEncrypt> passkey_, Paths& paths_,
+    Settings& settings_, IMessageBoxManager& messageBoxManager_)
     : name{name_}
     , passkey{std::move(passkey_)}
     , isRemoved{false}
     , encrypted{passkey != nullptr}
     , paths{paths_}
     , settings{settings_}
+    , messageBoxManager{messageBoxManager_}
 {}
 
 /**
@@ -312,7 +314,8 @@ Profile::Profile(const QString& name_, std::unique_ptr<ToxEncrypt> passkey_, Pat
  * @note If the profile is already in use return nullptr.
  */
 Profile* Profile::loadProfile(const QString& name, const QString& password, Settings& settings,
-                              const QCommandLineParser* parser, CameraSource& cameraSource)
+                              const QCommandLineParser* parser, CameraSource& cameraSource,
+                              IMessageBoxManager& messageBoxManager)
 {
     if (ProfileLocker::hasLock()) {
         qCritical() << "Tried to load profile " << name << ", but another profile is already locked!";
@@ -334,7 +337,7 @@ Profile* Profile::loadProfile(const QString& name, const QString& password, Sett
         return nullptr;
     }
 
-    Profile* p = new Profile(name, std::move(tmpKey), paths, settings);
+    Profile* p = new Profile(name, std::move(tmpKey), paths, settings, messageBoxManager);
 
     // Core settings are saved per profile, need to load them before starting Core
     constexpr bool isNewProfile = false;
@@ -355,7 +358,8 @@ Profile* Profile::loadProfile(const QString& name, const QString& password, Sett
  * @note If the profile is already in use return nullptr.
  */
 Profile* Profile::createProfile(const QString& name, const QString& password, Settings& settings,
-                                const QCommandLineParser* parser, CameraSource& cameraSource)
+                                const QCommandLineParser* parser, CameraSource& cameraSource,
+                                IMessageBoxManager& messageBoxManager)
 {
     CreateToxDataError error;
     Paths& paths = settings.getPaths();
@@ -367,7 +371,7 @@ Profile* Profile::createProfile(const QString& name, const QString& password, Se
     }
 
     settings.createPersonal(name);
-    Profile* p = new Profile(name, std::move(tmpKey), paths, settings);
+    Profile* p = new Profile(name, std::move(tmpKey), paths, settings, messageBoxManager);
 
     constexpr bool isNewProfile = true;
     settings.updateProfileData(p, parser, isNewProfile);
@@ -629,7 +633,7 @@ void Profile::loadDatabase(QString password)
     QByteArray salt = core->getSelfPublicKey().getByteArray();
     if (salt.size() != TOX_PASS_SALT_LENGTH) {
         qWarning() << "Couldn't compute salt from public key" << name;
-        GUI::showError(QObject::tr("Error"),
+        messageBoxManager.showError(QObject::tr("Error"),
                        QObject::tr("qTox couldn't open your chat logs, they will be disabled."));
     }
     // At this point it's too early to load the personal settings (Nexus will do it), so we always
@@ -641,7 +645,7 @@ void Profile::loadDatabase(QString password)
         history.reset(new History(database, settings));
     } else {
         qWarning() << "Failed to open database for profile" << name;
-        GUI::showError(QObject::tr("Error"),
+        messageBoxManager.showError(QObject::tr("Error"),
                        QObject::tr("qTox couldn't open your chat logs, they will be disabled."));
     }
 }

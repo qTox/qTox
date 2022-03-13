@@ -76,9 +76,9 @@
 #include "src/widget/form/groupinviteform.h"
 #include "src/widget/form/profileform.h"
 #include "src/widget/form/settingswidget.h"
-#include "src/widget/gui.h"
 #include "src/widget/style.h"
 #include "src/widget/translator.h"
+#include "src/widget/tool/imessageboxmanager.h"
 #include "tool/removefrienddialog.h"
 #include "src/persistence/smileypack.h"
 
@@ -142,7 +142,7 @@ void Widget::acceptFileTransfer(const ToxFile& file, const QString& path)
 Widget* Widget::instance{nullptr};
 
 Widget::Widget(Profile &profile_, IAudioControl& audio_, CameraSource& cameraSource_,
-    Settings& settings_, Style& style_, QWidget* parent)
+    Settings& settings_, Style& style_, IMessageBoxManager& messageBoxManager_, QWidget* parent)
     : QMainWindow(parent)
     , profile{profile_}
     , trayMenu{nullptr}
@@ -159,6 +159,7 @@ Widget::Widget(Profile &profile_, IAudioControl& audio_, CameraSource& cameraSou
     , documentCache(new DocumentCache(*smileyPack, settings))
     , cameraSource{cameraSource_}
     , style{style_}
+    , messageBoxManager(messageBoxManager_)
 {
     installEventFilter(this);
     QString locale = settings.getTranslation();
@@ -264,7 +265,8 @@ void Widget::init()
 
     sharedMessageProcessorParams.reset(new MessageProcessor::SharedParams(core->getMaxMessageSize(), coreExt->getMaxExtendedMessageSize()));
 
-    chatListWidget = new FriendListWidget(*core, this, settings, style, settings.getGroupchatPosition());
+    chatListWidget = new FriendListWidget(*core, this, settings, style,
+        messageBoxManager, settings.getGroupchatPosition());
     connect(chatListWidget, &FriendListWidget::searchCircle, this, &Widget::searchCircle);
     connect(chatListWidget, &FriendListWidget::connectCircleWidget, this,
             &Widget::connectCircleWidget);
@@ -292,8 +294,8 @@ void Widget::init()
     style.setThemeColor(settings, settings.getThemeColor());
 
     CoreFile* coreFile = core->getCoreFile();
-    filesForm = new FilesForm(*coreFile, settings, style);
-    addFriendForm = new AddFriendForm(core->getSelfId(), settings, style);
+    filesForm = new FilesForm(*coreFile, settings, style, messageBoxManager);
+    addFriendForm = new AddFriendForm(core->getSelfId(), settings, style, messageBoxManager);
     groupInviteForm = new GroupInviteForm(settings);
 
 #if UPDATE_CHECK_ENABLED
@@ -301,13 +303,13 @@ void Widget::init()
     connect(updateCheck.get(), &UpdateCheck::updateAvailable, this, &Widget::onUpdateAvailable);
 #endif
     settingsWidget = new SettingsWidget(updateCheck.get(), audio, core, *smileyPack,
-        cameraSource, settings, style, this);
+        cameraSource, settings, style, messageBoxManager, this);
 #if UPDATE_CHECK_ENABLED
     updateCheck->checkForUpdate();
 #endif
 
     profileInfo = new ProfileInfo(core, &profile, settings);
-    profileForm = new ProfileForm(profileInfo, settings, style);
+    profileForm = new ProfileForm(profileInfo, settings, style, messageBoxManager);
 
 #if DESKTOP_NOTIFICATIONS
     notificationGenerator.reset(new NotificationGenerator(settings, &profile));
@@ -921,37 +923,6 @@ void Widget::onTransferClicked()
     }
 }
 
-void Widget::confirmExecutableOpen(const QFileInfo& file)
-{
-    static const QStringList dangerousExtensions = {"app",  "bat",     "com",    "cpl",  "dmg",
-                                                    "exe",  "hta",     "jar",    "js",   "jse",
-                                                    "lnk",  "msc",     "msh",    "msh1", "msh1xml",
-                                                    "msh2", "msh2xml", "mshxml", "msi",  "msp",
-                                                    "pif",  "ps1",     "ps1xml", "ps2",  "ps2xml",
-                                                    "psc1", "psc2",    "py",     "reg",  "scf",
-                                                    "sh",   "src",     "vb",     "vbe",  "vbs",
-                                                    "ws",   "wsc",     "wsf",    "wsh"};
-
-    if (dangerousExtensions.contains(file.suffix())) {
-        bool answer = GUI::askQuestion(tr("Executable file", "popup title"),
-                                       tr("You have asked qTox to open an executable file. "
-                                          "Executable files can potentially damage your computer. "
-                                          "Are you sure want to open this file?",
-                                          "popup text"),
-                                       false, true);
-        if (!answer) {
-            return;
-        }
-
-        // The user wants to run this file, so make it executable and run it
-        QFile(file.filePath())
-            .setPermissions(file.permissions() | QFile::ExeOwner | QFile::ExeUser | QFile::ExeGroup
-                            | QFile::ExeOther);
-    }
-
-    QDesktopServices::openUrl(QUrl::fromLocalFile(file.filePath()));
-}
-
 void Widget::onIconClick(QSystemTrayIcon::ActivationReason reason)
 {
     if (reason == QSystemTrayIcon::Trigger) {
@@ -1182,11 +1153,11 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     settings.updateFriendAddress(friendPk.toString());
 
     Friend* newfriend = FriendList::addFriend(friendId, friendPk, settings);
-    auto dialogManager = ContentDialogManager::getInstance();
-    auto rawChatroom = new FriendChatroom(newfriend, dialogManager, *core, settings);
+    auto contentDialogManager = ContentDialogManager::getInstance();
+    auto rawChatroom = new FriendChatroom(newfriend, contentDialogManager, *core, settings);
     std::shared_ptr<FriendChatroom> chatroom(rawChatroom);
     const auto compact = settings.getCompactLayout();
-    auto widget = new FriendWidget(chatroom, compact, settings, style);
+    auto widget = new FriendWidget(chatroom, compact, settings, style, messageBoxManager);
     connectFriendWidget(*widget);
     auto history = profile.getHistory();
 
@@ -1201,7 +1172,7 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
                                       *friendMessageDispatcher);
     auto friendForm = new ChatForm(profile, newfriend, *chatHistory,
         *friendMessageDispatcher, *documentCache, *smileyPack, cameraSource,
-        settings, style);
+        settings, style, messageBoxManager);
     connect(friendForm, &ChatForm::updateFriendActivity, this, &Widget::updateFriendActivity);
 
     friendMessageDispatchers[friendPk] = friendMessageDispatcher;
@@ -1865,7 +1836,7 @@ void Widget::onUpdateAvailable()
 
 ContentDialog* Widget::createContentDialog() const
 {
-    ContentDialog* contentDialog = new ContentDialog(*core, settings, style);
+    ContentDialog* contentDialog = new ContentDialog(*core, settings, style, messageBoxManager);
 
     registerContentDialog(*contentDialog);
     return contentDialog;
@@ -2153,8 +2124,8 @@ Group* Widget::createGroup(uint32_t groupnumber, const GroupId& groupId)
             av->invalidateGroupCallPeerSource(*newgroup, user);
         });
     }
-    auto dialogManager = ContentDialogManager::getInstance();
-    auto rawChatroom = new GroupChatroom(newgroup, dialogManager, *core);
+    auto contentDialogManager = ContentDialogManager::getInstance();
+    auto rawChatroom = new GroupChatroom(newgroup, contentDialogManager, *core);
     std::shared_ptr<GroupChatroom> chatroom(rawChatroom);
 
     const auto compact = settings.getCompactLayout();
@@ -2188,7 +2159,7 @@ Group* Widget::createGroup(uint32_t groupnumber, const GroupId& groupId)
     groupAlertConnections.insert(groupId, notifyReceivedConnection);
 
     auto form = new GroupChatForm(*core, newgroup, *groupChatLog, *messageDispatcher,
-        settings, *documentCache, *smileyPack, style);
+        settings, *documentCache, *smileyPack, style, messageBoxManager);
     connect(&settings, &Settings::nameColorsChanged, form, &GenericChatForm::setColorizedNames);
     form->setColorizedNames(settings.getEnableGroupChatsColor());
     groupMessageDispatchers[groupId] = messageDispatcher;

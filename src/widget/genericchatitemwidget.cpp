@@ -20,7 +20,6 @@
 #include "genericchatitemwidget.h"
 #include "src/persistence/settings.h"
 #include "src/widget/tool/croppinglabel.h"
-#include "src/widget/gui.h"
 #include "src/widget/style.h"
 #include <QVariant>
 

@@ -1698,6 +1698,19 @@ Please make sure to enter the same password twice.</source>
     </message>
 </context>
 <context>
+    <name>MessageBoxManager</name>
+    <message>
+        <source>Executable file</source>
+        <comment>popup title</comment>
+        <translation type="unfinished">実行可能なファイル</translation>
+    </message>
+    <message>
+        <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
+        <comment>popup text</comment>
+        <translation type="unfinished">qTox で実行可能なファイルを開こうとしています。実行可能なファイルはお使いのコンピューターに危害を加える可能性があります。このファイルを開いてもよろしいですか？</translation>
+    </message>
+</context>
+<context>
     <name>NetCamView</name>
     <message>
         <source>Tox video</source>
@@ -2855,16 +2868,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Status</source>
         <translation>ステータス</translation>
-    </message>
-    <message>
-        <source>Executable file</source>
-        <comment>popup title</comment>
-        <translation>実行可能なファイル</translation>
-    </message>
-    <message>
-        <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
-        <comment>popup text</comment>
-        <translation>qTox で実行可能なファイルを開こうとしています。実行可能なファイルはお使いのコンピューターに危害を加える可能性があります。このファイルを開いてもよろしいですか？</translation>
     </message>
     <message>
         <source>Your name</source>

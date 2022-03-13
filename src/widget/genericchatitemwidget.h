@@ -36,7 +36,7 @@ public:
         FriendOnlineItem
     };
 
-    GenericChatItemWidget(bool compact_, Style&, QWidget* parent = nullptr);
+    GenericChatItemWidget(bool compact_, Style& style, QWidget* parent = nullptr);
 
     bool isCompact() const;
     void setCompact(bool compact_);

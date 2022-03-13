@@ -23,8 +23,11 @@
 #include "src/widget/translator.h"
 #include "src/widget/style.h"
 #include "src/widget/widget.h"
+#include "src/widget/tool/imessageboxmanager.h"
 #include "src/friendlist.h"
 #include "util/display.h"
+
+#include <QDesktopServices>
 #include <QFileInfo>
 #include <QWindow>
 #include <QTableView>
@@ -426,8 +429,9 @@ namespace FileTransferList
 
 } // namespace FileTransferList
 
-FilesForm::FilesForm(CoreFile& coreFile, Settings& settings, Style& style)
+FilesForm::FilesForm(CoreFile& coreFile, Settings& settings, Style& style, IMessageBoxManager& messageBoxManager_)
     : QObject()
+    , messageBoxManager{messageBoxManager_}
 {
     head = new QWidget();
     QFont bold;
@@ -515,13 +519,13 @@ void FilesForm::onFileUpdated(const ToxFile& inFile)
 void FilesForm::onSentFileActivated(const QModelIndex& index)
 {
     const auto& filePath = sentModel->data(index, Qt::UserRole).toString();
-    Widget::confirmExecutableOpen(filePath);
+    messageBoxManager.confirmExecutableOpen(filePath);
 }
 
 void FilesForm::onReceivedFileActivated(const QModelIndex& index)
 {
     const auto& filePath = recvdModel->data(index, Qt::UserRole).toString();
-    Widget::confirmExecutableOpen(filePath);
+    messageBoxManager.confirmExecutableOpen(filePath);
 }
 
 void FilesForm::retranslateUi()

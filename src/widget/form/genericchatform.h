@@ -57,6 +57,7 @@ class DocumentCache;
 class SmileyPack;
 class Settings;
 class Style;
+class IMessageBoxManager;
 
 namespace Ui {
 class MainWindow;
@@ -75,7 +76,7 @@ public:
     GenericChatForm(const Core& core_, const Chat* chat, IChatLog& chatLog_,
                     IMessageDispatcher& messageDispatcher_, DocumentCache& documentCache,
                     SmileyPack& smileyPack, Settings& settings, Style& style,
-                    QWidget* parent_ = nullptr);
+                    IMessageBoxManager& messageBoxmanager, QWidget* parent_ = nullptr);
     ~GenericChatForm() override;
 
     void setName(const QString& newName);

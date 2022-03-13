@@ -31,6 +31,7 @@ class DocumentCache;
 class SmileyPack;
 class Settings;
 class Style;
+class IMessageBoxManager;
 
 class ChatMessage : public ChatLine
 {
@@ -65,7 +66,7 @@ public:
                                                   Style& style);
     static ChatMessage::Ptr createFileTransferMessage(const QString& sender, CoreFile& coreFile,
                                                       ToxFile file, bool isMe, const QDateTime& date,
-                                                      DocumentCache& documentCache, Settings& settings, Style& style);
+                                                      DocumentCache& documentCache, Settings& settings, Style& style, IMessageBoxManager& messageBoxManager);
     static ChatMessage::Ptr createTypingNotification(DocumentCache& documentCache, Settings& settings, Style& style);
     static ChatMessage::Ptr createBusyNotification(DocumentCache& documentCache, Settings& settings, Style& style);
 

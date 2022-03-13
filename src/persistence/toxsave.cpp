@@ -19,7 +19,6 @@
 
 #include "toxsave.h"
 #include "src/persistence/settings.h"
-#include "src/widget/gui.h"
 #include "src/widget/widget.h"
 #include "src/nexus.h"
 #include "src/widget/tool/profileimporter.h"

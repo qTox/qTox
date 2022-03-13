@@ -35,6 +35,7 @@ class QVariantAnimation;
 class QPushButton;
 class Settings;
 class Style;
+class IMessageBoxManager;
 
 class FileTransferWidget : public QWidget
 {
@@ -42,7 +43,7 @@ class FileTransferWidget : public QWidget
 
 public:
     FileTransferWidget(QWidget* parent, CoreFile& _coreFile, ToxFile file,
-        Settings& settings, Style& style);
+        Settings& settings, Style& style, IMessageBoxManager& messageBoxManager);
     virtual ~FileTransferWidget();
     bool isActive() const;
     void onFileTransferUpdate(ToxFile file);
@@ -93,4 +94,5 @@ private:
     ToxFile::FileStatus lastStatus = ToxFile::INITIALIZING;
     Settings& settings;
     Style& style;
+    IMessageBoxManager& messageBoxManager;
 };

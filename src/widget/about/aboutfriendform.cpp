@@ -18,7 +18,7 @@
 */
 
 #include "aboutfriendform.h"
-#include "src/widget/gui.h"
+#include "src/widget/tool/imessageboxmanager.h"
 #include "ui_aboutfriendform.h"
 #include "src/core/core.h"
 #include "src/widget/style.h"
@@ -37,12 +37,13 @@ QString getAutoAcceptDir(const QString& dir)
 } // namespace
 
 AboutFriendForm::AboutFriendForm(std::unique_ptr<IAboutFriend> about_,
-    Settings& settings_, Style& style_, QWidget* parent)
+    Settings& settings_, Style& style_, IMessageBoxManager& messageBoxManager_, QWidget* parent)
     : QDialog(parent)
     , ui(new Ui::AboutFriendForm)
     , about{std::move(about_)}
     , settings{settings_}
     , style{style_}
+    , messageBoxManager{messageBoxManager_}
 {
     ui->setupUi(this);
     ui->label_4->hide();
@@ -143,7 +144,7 @@ void AboutFriendForm::onAcceptedClicked()
 
 void AboutFriendForm::onRemoveHistoryClicked()
 {
-   const bool retYes = GUI::askQuestion(tr("Confirmation"),
+   const bool retYes = messageBoxManager.askQuestion(tr("Confirmation"),
                                    tr("Are you sure to remove %1 chat history?").arg(about->getName()),
                                    /* defaultAns = */ false, /* warning = */ true, /* yesno = */ true);
     if (!retYes) {
@@ -153,7 +154,7 @@ void AboutFriendForm::onRemoveHistoryClicked()
    const bool result = about->clearHistory();
 
     if (!result) {
-        GUI::showWarning(tr("History removed"),
+        messageBoxManager.showWarning(tr("History removed"),
                          tr("Failed to remove chat history with %1!").arg(about->getName()).toHtmlEscaped());
         return;
     }

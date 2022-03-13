@@ -1,5 +1,5 @@
 /*
-    Copyright © 2015-2019 by The qTox Project Contributors
+    Copyright © 2022 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -17,31 +17,28 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #pragma once
 
 #include <QObject>
+#include <QWidget>
 
-class QWidget;
+#include "src/widget/tool/imessageboxmanager.h"
 
-class GUI : public QObject
+class QFileInfo;
+
+class MessageBoxManager : public QWidget, public IMessageBoxManager
 {
-    Q_OBJECT
+Q_OBJECT
 public:
-    static GUI& getInstance();
-    static QWidget* getMainWidget();
-    static void showInfo(const QString& title, const QString& msg);
-    static void showWarning(const QString& title, const QString& msg);
-    static void showError(const QString& title, const QString& msg);
-    static bool askQuestion(const QString& title, const QString& msg, bool defaultAns = false,
-                            bool warning = true, bool yesno = true);
-
-    static bool askQuestion(const QString& title, const QString& msg, const QString& button1,
-                            const QString& button2, bool defaultAns = false, bool warning = true);
-
-
-private:
-    explicit GUI(QObject* parent = nullptr);
+    ~MessageBoxManager() override = default;
+    void showInfo(const QString& title, const QString& msg) override;
+    void showWarning(const QString& title, const QString& msg) override;
+    void showError(const QString& title, const QString& msg) override;
+    bool askQuestion(const QString& title, const QString& msg, bool defaultAns = false,
+                            bool warning = true, bool yesno = true) override;
+    bool askQuestion(const QString& title, const QString& msg, const QString& button1,
+                            const QString& button2, bool defaultAns = false, bool warning = true) override;
+    void confirmExecutableOpen(const QFileInfo& file) override;
 
 private slots:
     // Private implementation, those must be called from the GUI thread

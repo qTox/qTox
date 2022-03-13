@@ -27,6 +27,7 @@
 #include "src/video/camerasource.h"
 #include "src/widget/loginscreen.h"
 #include "src/widget/translator.h"
+#include "src/widget/tool/messageboxmanager.h"
 #include "widget/widget.h"
 #include <QApplication>
 #include <QCommandLineParser>
@@ -57,6 +58,7 @@ QMutex* logBufferMutex = new QMutex();
 
 std::unique_ptr<Settings> settings;
 std::unique_ptr<ToxSave> toxSave;
+std::unique_ptr<MessageBoxManager> messageBoxManager;
 
 void cleanup()
 {
@@ -236,7 +238,8 @@ int main(int argc, char* argv[])
         qWarning() << "Couldn't load font";
     }
 
-    settings = std::unique_ptr<Settings>(new Settings());
+    messageBoxManager = std::unique_ptr<MessageBoxManager>(new MessageBoxManager());
+    settings = std::unique_ptr<Settings>(new Settings(*messageBoxManager));
 
     QString locale = settings->getTranslation();
     // We need to init the resources in the translations_library explicitely.
@@ -406,13 +409,14 @@ int main(int argc, char* argv[])
     //  note: Because Settings is shouldering global settings as well as model specific ones it
     //  cannot be integrated into a central model object yet
     nexus.setSettings(settings.get());
+    nexus.setMessageBoxManager(messageBoxManager.get());
     auto& cameraSource = Nexus::getCameraSource();
     // Autologin
     // TODO (kriby): Shift responsibility of linking views to model objects from nexus
     // Further: generate view instances separately (loginScreen, mainGUI, audio)
     Profile* profile = nullptr;
     if (autoLogin && Profile::exists(profileName, settings->getPaths()) && !Profile::isEncrypted(profileName, settings->getPaths())) {
-        profile = Profile::loadProfile(profileName, QString(), *settings, &parser, cameraSource);
+        profile = Profile::loadProfile(profileName, QString(), *settings, &parser, cameraSource, *messageBoxManager);
         if (!profile) {
             QMessageBox::information(nullptr, QObject::tr("Error"),
                                      QObject::tr("Failed to load profile automatically."));
@@ -429,7 +433,7 @@ int main(int argc, char* argv[])
         profile = nexus.getProfile();
     }
 
-    uriDialog = std::unique_ptr<ToxURIDialog>(new ToxURIDialog(nullptr, profile->getCore()));
+    uriDialog = std::unique_ptr<ToxURIDialog>(new ToxURIDialog(nullptr, profile->getCore(), *messageBoxManager));
 
     if (ipc.isAttached()) {
         // Start to accept Inter-process communication

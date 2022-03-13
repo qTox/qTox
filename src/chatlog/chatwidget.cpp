@@ -23,7 +23,6 @@
 #include "chatmessage.h"
 #include "content/filetransferwidget.h"
 #include "content/text.h"
-#include "src/widget/gui.h"
 #include "src/widget/translator.h"
 #include "src/widget/style.h"
 #include "src/persistence/settings.h"
@@ -211,7 +210,8 @@ ChatLogIdx clampedAdd(ChatLogIdx idx, int val, IChatLog& chatLog)
 
 
 ChatWidget::ChatWidget(IChatLog& chatLog_, const Core& core_, DocumentCache& documentCache_,
-    SmileyPack& smileyPack_, Settings& settings_, Style& style_, QWidget* parent)
+    SmileyPack& smileyPack_, Settings& settings_, Style& style_,
+    IMessageBoxManager& messageBoxManager_, QWidget* parent)
     : QGraphicsView(parent)
     , selectionRectColor{style_.getColor(Style::ColorPalette::SelectText)}
     , chatLog(chatLog_)
@@ -221,6 +221,7 @@ ChatWidget::ChatWidget(IChatLog& chatLog_, const Core& core_, DocumentCache& doc
     , smileyPack{smileyPack_}
     , settings(settings_)
     , style{style_}
+    , messageBoxManager{messageBoxManager_}
 {
     // Create the scene
     busyScene = new QGraphicsScene(this);
@@ -1460,7 +1461,7 @@ void ChatWidget::renderFile(QString displayName, ToxFile file, bool isSelf, QDat
         CoreFile* coreFile = core.getCoreFile();
         assert(coreFile);
         chatMessage = ChatMessage::createFileTransferMessage(displayName, *coreFile,
-            file, isSelf, timestamp, documentCache, settings, style);
+            file, isSelf, timestamp, documentCache, settings, style, messageBoxManager);
     } else {
         auto proxy = static_cast<ChatLineContentProxy*>(chatMessage->getContent(1));
         assert(proxy->getWidgetType() == ChatLineContentProxy::FileTransferWidgetType);
