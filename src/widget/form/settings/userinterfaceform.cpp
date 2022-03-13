@@ -21,6 +21,7 @@
 #include "ui_userinterfacesettings.h"
 
 #include <QDebug>
+#include <QColorDialog>
 #include <QDesktopWidget>
 #include <QFileDialog>
 #include <QFont>
@@ -125,6 +126,9 @@ UserInterfaceForm::UserInterfaceForm(SmileyPack& smileyPack_, SettingsWidget* my
         bodyUI->themeColorCBox->addItem(color);
 
     bodyUI->themeColorCBox->setCurrentIndex(s.getThemeColor());
+    bodyUI->useExtraColors->setCheckState(static_cast<Qt::CheckState>(s.getStateExtraColors()));
+    bodyUI->choiceExtraColor->setEnabled(s.getStateExtraColors() == Qt::Checked);
+
     bodyUI->emoticonSize->setValue(s.getEmojiFontPointSize());
 
     QLocale ql;
@@ -340,8 +344,6 @@ void UserInterfaceForm::on_themeColorCBox_currentIndexChanged(int)
 {
     int index = bodyUI->themeColorCBox->currentIndex();
     Settings::getInstance().setThemeColor(index);
-    Style::setThemeColor(index);
-    Style::applyTheme();
 }
 
 /**
@@ -392,6 +394,24 @@ void UserInterfaceForm::on_txtChatFontSize_valueChanged(int px)
 void UserInterfaceForm::on_useNameColors_stateChanged(int value)
 {
     Settings::getInstance().setEnableGroupChatsColor(value);
+}
+
+void UserInterfaceForm::on_choiceExtraColor_clicked()
+{
+    QColor color(Settings::getInstance().getExtraColor());
+    color = QColorDialog::getColor(color, this);
+    Settings::getInstance().setExtraColor(color.name());
+}
+
+void UserInterfaceForm::on_useExtraColors_stateChanged(int value)
+{
+    if (value == Qt::Checked) {
+        bodyUI->choiceExtraColor->setEnabled(true);
+    } else {
+        bodyUI->choiceExtraColor->setEnabled(false);
+    }
+
+    Settings::getInstance().setStateExtraColors(value);
 }
 
 void UserInterfaceForm::on_notifyHide_stateChanged(int value)
