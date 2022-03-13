@@ -245,7 +245,7 @@ void Nexus::showMainGUI()
     // There are small instants on startup during which no
     // profile is loaded but the GUI could still receive events,
     // e.g. between two modal windows. Disable the GUI to prevent that.
-    GUI::setEnabled(false);
+    widget->setEnabled(false);
 
     // Connections
     connect(profile, &Profile::selfAvatarChanged, widget, &Widget::onSelfAvatarLoaded);
@@ -259,7 +259,7 @@ void Nexus::showMainGUI()
 
     profile->startCore();
 
-    GUI::setEnabled(true);
+    widget->setEnabled(true);
 }
 
 /**
