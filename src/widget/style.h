@@ -22,13 +22,15 @@
 #include <QColor>
 #include <QFont>
 #include <QMap>
+#include <QObject>
 
 class QString;
 class QWidget;
 class Settings;
 
-class Style
+class Style : public QObject
 {
+Q_OBJECT
 public:
     enum class ColorPalette
     {
@@ -75,7 +77,7 @@ public:
     static QString getThemeName();
     static QFont getFont(Font font);
     static void repolish(QWidget* w);
-    static void applyTheme();
+    void applyTheme();
     static QPixmap scaleSvgImage(const QString& path, uint32_t width, uint32_t height);
 
     Style() = default;
@@ -90,7 +92,7 @@ public:
     static QString getThemePath(Settings& settings);
 
 signals:
-    void themeChanged();
+    void themeReload();
 
 private:
     QMap<ColorPalette, QColor> palette;

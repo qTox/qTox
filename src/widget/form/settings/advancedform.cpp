@@ -41,8 +41,8 @@
  * Is also contains "Reset settings" button and "Make portable" checkbox.
  */
 
-AdvancedForm::AdvancedForm(Settings& settings_)
-    : GenericForm(QPixmap(":/img/settings/general.png"))
+AdvancedForm::AdvancedForm(Settings& settings_, Style& style)
+    : GenericForm(QPixmap(":/img/settings/general.png"), style)
     , bodyUI(new Ui::AdvancedSettings)
     , settings{settings_}
 {

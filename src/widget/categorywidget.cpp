@@ -40,7 +40,7 @@ void CategoryWidget::emitChatroomWidget(QLayout* layout, int index)
 
 CategoryWidget::CategoryWidget(bool compact_, Settings& settings_, Style& style_,
     QWidget* parent)
-    : GenericChatItemWidget(compact_, parent)
+    : GenericChatItemWidget(compact_, style_, parent)
     , settings{settings_}
     , style{style_}
 {

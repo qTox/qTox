@@ -27,12 +27,13 @@ class GeneralSettings;
 
 class SettingsWidget;
 class Settings;
+class Style;
 
 class GeneralForm : public GenericForm
 {
     Q_OBJECT
 public:
-    explicit GeneralForm(SettingsWidget* parent, Settings& settings);
+    GeneralForm(SettingsWidget* parent, Settings& settings, Style& style);
     ~GeneralForm();
     QString getFormName() final
     {

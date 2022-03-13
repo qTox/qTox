@@ -23,6 +23,7 @@
 #include <QLabel>
 
 class CroppingLabel;
+class Style;
 
 class GenericChatItemWidget : public QFrame
 {
@@ -35,7 +36,7 @@ public:
         FriendOnlineItem
     };
 
-    explicit GenericChatItemWidget(bool compact_, QWidget* parent = nullptr);
+    GenericChatItemWidget(bool compact_, Style&, QWidget* parent = nullptr);
 
     bool isCompact() const;
     void setCompact(bool compact_);

@@ -96,8 +96,8 @@ QStringList locales = {
  *
  * This form contains all settings that are not suited to other forms
  */
-GeneralForm::GeneralForm(SettingsWidget* myParent, Settings& settings_)
-    : GenericForm(QPixmap(":/img/settings/general.png"))
+GeneralForm::GeneralForm(SettingsWidget* myParent, Settings& settings_, Style& style)
+    : GenericForm(QPixmap(":/img/settings/general.png"), style)
     , bodyUI(new Ui::GeneralSettings)
     , settings{settings_}
 {

@@ -292,7 +292,7 @@ ChatWidget::ChatWidget(IChatLog& chatLog_, const Core& core_, DocumentCache& doc
         copySelectedText(true);
     });
 
-    connect(&GUI::getInstance(), &GUI::themeReload, this, &ChatWidget::reloadTheme);
+    connect(&style, &Style::themeReload, this, &ChatWidget::reloadTheme);
 
     reloadTheme();
     retranslateUi();

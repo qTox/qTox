@@ -55,7 +55,7 @@ const QSize defaultSize(720, 400);
 
 ContentDialog::ContentDialog(const Core &core, Settings& settings_,
     Style& style_, QWidget* parent)
-    : ActivateDialog(parent, Qt::Window)
+    : ActivateDialog(style_, parent, Qt::Window)
     , splitter{new QSplitter(this)}
     , friendLayout{new FriendListLayout(this)}
     , activeChatroomWidget(nullptr)

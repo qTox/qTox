@@ -498,7 +498,7 @@ void Widget::init()
     connect(&settings, &Settings::groupchatPositionChanged, chatListWidget,
             &FriendListWidget::onGroupchatPositionChanged);
 
-    connect(&GUI::getInstance(), &GUI::themeReload, this, &Widget::reloadTheme);
+    connect(&style, &Style::themeReload, this, &Widget::reloadTheme);
 
     reloadTheme();
     updateIcons();
@@ -1898,7 +1898,7 @@ ContentLayout* Widget::createContentDialog(DialogType type) const
     {
     public:
         explicit Dialog(DialogType type_, Settings& settings_, Core* core_, Style& style_)
-            : ActivateDialog(nullptr, Qt::Window)
+            : ActivateDialog(style_, nullptr, Qt::Window)
             , type(type_)
             , settings(settings_)
             , core{core_}

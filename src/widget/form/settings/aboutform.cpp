@@ -55,7 +55,7 @@ enum class updateIndex
  * @brief Constructor of AboutForm.
  */
 AboutForm::AboutForm(UpdateCheck* updateCheck_, Style& style_)
-    : GenericForm(QPixmap(":/img/settings/general.png"))
+    : GenericForm(QPixmap(":/img/settings/general.png"), style_)
     , bodyUI(new Ui::AboutSettings)
     , progressTimer(new QTimer(this))
     , updateCheck(updateCheck_)

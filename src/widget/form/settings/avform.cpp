@@ -45,8 +45,9 @@
 #endif
 
 AVForm::AVForm(IAudioControl& audio_, CoreAV* coreAV_, CameraSource& camera_,
-               IAudioSettings* audioSettings_, IVideoSettings* videoSettings_)
-    : GenericForm(QPixmap(":/img/settings/av.png"))
+               IAudioSettings* audioSettings_, IVideoSettings* videoSettings_,
+               Style& style)
+    : GenericForm(QPixmap(":/img/settings/av.png"), style)
     , audio(audio_)
     , coreAV{coreAV_}
     , audioSettings{audioSettings_}
