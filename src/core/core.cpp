@@ -42,6 +42,8 @@
 #include <QStringBuilder>
 #include <QTimer>
 
+#include <tox/tox.h>
+
 #include <algorithm>
 #include <cassert>
 #include <chrono>
@@ -1317,7 +1319,7 @@ QByteArray Core::getSelfDhtId() const
 {
     QMutexLocker ml{&coreLoopLock};
     QByteArray dhtKey(TOX_PUBLIC_KEY_SIZE, 0x00);
-    tox_self_get_public_key(tox.get(), reinterpret_cast<uint8_t*>(dhtKey.data()));
+    tox_self_get_dht_id(tox.get(), reinterpret_cast<uint8_t*>(dhtKey.data()));
     return dhtKey;
 }
 
