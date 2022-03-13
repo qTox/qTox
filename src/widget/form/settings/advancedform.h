@@ -23,6 +23,7 @@
 
 class Core;
 class Settings;
+class Style;
 
 namespace Ui {
 class AdvancedSettings;
@@ -32,7 +33,7 @@ class AdvancedForm : public GenericForm
 {
     Q_OBJECT
 public:
-    explicit AdvancedForm(Settings& settings);
+    AdvancedForm(Settings& settings, Style& style);
     ~AdvancedForm();
     QString getFormName() final
     {

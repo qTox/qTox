@@ -80,7 +80,7 @@ AboutFriendForm::AboutFriendForm(std::unique_ptr<IAboutFriend> about_,
     ui->statusMessage->setText(about->getStatusMessage());
     ui->avatar->setPixmap(about->getAvatar());
 
-    connect(&GUI::getInstance(), &GUI::themeReload, this, &AboutFriendForm::reloadTheme);
+    connect(&style, &Style::themeReload, this, &AboutFriendForm::reloadTheme);
 
     reloadTheme();
 }

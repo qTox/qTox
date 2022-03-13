@@ -23,6 +23,7 @@
 
 class Core;
 class Settings;
+class Style;
 
 namespace Ui {
 class PrivacySettings;
@@ -32,7 +33,7 @@ class PrivacyForm : public GenericForm
 {
     Q_OBJECT
 public:
-    PrivacyForm(Core* core_, Settings& settings);
+    PrivacyForm(Core* core_, Settings& settings, Style& style);
     ~PrivacyForm();
     QString getFormName() final
     {

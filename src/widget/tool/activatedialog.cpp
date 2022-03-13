@@ -20,12 +20,13 @@
 
 #include "activatedialog.h"
 #include "src/widget/gui.h"
+#include "src/widget/style.h"
 #include <QEvent>
 
-ActivateDialog::ActivateDialog(QWidget* parent, Qt::WindowFlags f)
+ActivateDialog::ActivateDialog(Style& style, QWidget* parent, Qt::WindowFlags f)
     : QDialog(parent, f)
 {
-    connect(&GUI::getInstance(), &GUI::themeReload, this, &ActivateDialog::reloadTheme);
+    connect(&style, &Style::themeReload, this, &ActivateDialog::reloadTheme);
 }
 
 bool ActivateDialog::event(QEvent* event)

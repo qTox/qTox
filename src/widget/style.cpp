@@ -366,11 +366,14 @@ void Style::setThemeColor(const QColor& color)
 }
 
 /**
- * @brief Reloads some CCS
+ * @brief Reloads the application theme and redraw the window.
+ *
+ * For reload theme need connect signal themeReload() to function for reload
+ * For example: connect(&style, &Style::themeReload, this, &SomeClass::reloadTheme);
  */
 void Style::applyTheme()
 {
-    GUI::reloadTheme();
+    emit themeReload();
 }
 
 QPixmap Style::scaleSvgImage(const QString& path, uint32_t width, uint32_t height)

@@ -77,22 +77,7 @@ void GUI::setWindowTitle(const QString& title)
     }
 }
 
-/**
- * @brief Reloads the application theme and redraw the window.
- *
- * For reload theme need connect signal themeReload() to function for reload
- * For example: connect(&GUI::getInstance(), &GUI::themeReload, this, &SomeClass::reloadTheme);
- */
-void GUI::reloadTheme()
-{
-    if (QThread::currentThread() == qApp->thread()) {
-        getInstance().themeReload();
-    } else {
-        QMetaObject::invokeMethod(&getInstance(), "themeReload", Qt::BlockingQueuedConnection);
-    }
-}
-
-/**
+/*
  * @brief Show some text to the user.
  * @param title Title of information window.
  * @param msg Text in information window.

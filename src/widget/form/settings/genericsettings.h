@@ -21,11 +21,13 @@
 
 #include <QWidget>
 
+class Style;
+
 class GenericForm : public QWidget
 {
     Q_OBJECT
 public:
-    explicit GenericForm(const QPixmap& icon);
+    GenericForm(const QPixmap& icon, Style&);
     virtual ~GenericForm()
     {
     }

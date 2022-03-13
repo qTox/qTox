@@ -39,8 +39,8 @@
 #include <chrono>
 #include <random>
 
-PrivacyForm::PrivacyForm(Core* core_, Settings& settings_)
-    : GenericForm(QPixmap(":/img/settings/privacy.png"))
+PrivacyForm::PrivacyForm(Core* core_, Settings& settings_, Style& style)
+    : GenericForm(QPixmap(":/img/settings/privacy.png"), style)
     , bodyUI(new Ui::PrivacySettings)
     , core{core_}
     , settings{settings_}

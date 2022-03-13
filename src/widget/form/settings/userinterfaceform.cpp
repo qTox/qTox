@@ -56,7 +56,7 @@
  */
 UserInterfaceForm::UserInterfaceForm(SmileyPack& smileyPack_, Settings& settings_,
     Style& style_, SettingsWidget* myParent)
-    : GenericForm(QPixmap(":/img/settings/general.png"))
+    : GenericForm(QPixmap(":/img/settings/general.png"), style_)
     , smileyPack{smileyPack_}
     , settings{settings_}
     , style{style_}
@@ -342,7 +342,7 @@ void UserInterfaceForm::on_themeColorCBox_currentIndexChanged(int index)
 {
     settings.setThemeColor(index);
     style.setThemeColor(settings, index);
-    Style::applyTheme();
+    style.applyTheme();
 }
 
 /**

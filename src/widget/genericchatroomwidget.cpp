@@ -27,7 +27,7 @@
 
 GenericChatroomWidget::GenericChatroomWidget(bool compact_, Settings& settings_,
     Style& style_, QWidget* parent)
-    : GenericChatItemWidget(compact_, parent)
+    : GenericChatItemWidget(compact_, style_, parent)
     , active{false}
     , settings{settings_}
     , style{style_}

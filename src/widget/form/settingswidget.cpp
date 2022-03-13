@@ -58,16 +58,16 @@ SettingsWidget::SettingsWidget(UpdateCheck* updateCheck, IAudioControl& audio,
     settingsWidgets->setTabPosition(QTabWidget::North);
     bodyLayout->addWidget(settingsWidgets.get());
 
-    std::unique_ptr<GeneralForm> gfrm(new GeneralForm(this, settings));
+    std::unique_ptr<GeneralForm> gfrm(new GeneralForm(this, settings, style));
     connect(gfrm.get(), &GeneralForm::updateIcons, parent, &Widget::updateIcons);
 
     std::unique_ptr<UserInterfaceForm> uifrm(new UserInterfaceForm(smileyPack, settings, style, this));
-    std::unique_ptr<PrivacyForm> pfrm(new PrivacyForm(core, settings));
+    std::unique_ptr<PrivacyForm> pfrm(new PrivacyForm(core, settings, style));
     connect(pfrm.get(), &PrivacyForm::clearAllReceipts, parent, &Widget::clearAllReceipts);
 
-    AVForm* rawAvfrm = new AVForm(audio, coreAV, cameraSource, audioSettings, videoSettings);
+    AVForm* rawAvfrm = new AVForm(audio, coreAV, cameraSource, audioSettings, videoSettings, style);
     std::unique_ptr<AVForm> avfrm(rawAvfrm);
-    std::unique_ptr<AdvancedForm> expfrm(new AdvancedForm(settings));
+    std::unique_ptr<AdvancedForm> expfrm(new AdvancedForm(settings, style));
     std::unique_ptr<AboutForm> abtfrm(new AboutForm(updateCheck, style));
 
 #if UPDATE_CHECK_ENABLED

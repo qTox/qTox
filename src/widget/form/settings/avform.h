@@ -37,12 +37,13 @@ class CameraSource;
 class CoreAV;
 class IVideoSettings;
 class VideoSurface;
+class Style;
 class AVForm : public GenericForm, private Ui::AVForm
 {
     Q_OBJECT
 public:
     AVForm(IAudioControl& audio_, CoreAV* coreAV_, CameraSource& camera_,
-           IAudioSettings* audioSettings_, IVideoSettings* videoSettings_);
+           IAudioSettings* audioSettings_, IVideoSettings* videoSettings_, Style&);
     ~AVForm() override;
     QString getFormName() final
     {
