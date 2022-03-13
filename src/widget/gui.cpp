@@ -62,21 +62,6 @@ GUI& GUI::getInstance()
 // Implementation of the public clean interface
 
 /**
- * @brief Will enable or disable the GUI.
- * @note A disabled GUI can't be interacted with by the user.
- * @param state Enable/disable GUI.
- */
-void GUI::setEnabled(bool state)
-{
-    if (QThread::currentThread() == qApp->thread()) {
-        getInstance()._setEnabled(state);
-    } else {
-        QMetaObject::invokeMethod(&getInstance(), "_setEnabled", Qt::BlockingQueuedConnection,
-                                  Q_ARG(bool, state));
-    }
-}
-
-/**
  * @brief Change the title of the main window.
  * @param title Titile to set.
  *
@@ -208,13 +193,6 @@ bool GUI::askQuestion(const QString& title, const QString& msg, const QString& b
 }
 
 // Private implementations
-
-void GUI::_setEnabled(bool state)
-{
-    Widget* w = Nexus::getDesktopGUI();
-    if (w)
-        w->setEnabled(state);
-}
 
 void GUI::_setWindowTitle(const QString& title)
 {
