@@ -37,10 +37,10 @@ Q_DECLARE_METATYPE(QList<DhtServer>)
 
 class MockNodeListGenerator : public IBootstrapListGenerator
 {
-    QList<DhtServer> getBootstrapnodes() const override;
+    QList<DhtServer> getBootstrapNodes() const override;
 };
 
-QList<DhtServer> MockNodeListGenerator::getBootstrapnodes() const {
+QList<DhtServer> MockNodeListGenerator::getBootstrapNodes() const {
     return BootstrapNodeUpdater::loadDefaultBootstrapNodes();
 }
 

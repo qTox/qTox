@@ -35,7 +35,7 @@ class BootstrapNodeUpdater : public QObject, public IBootstrapListGenerator
     Q_OBJECT
 public:
     explicit BootstrapNodeUpdater(const QNetworkProxy& proxy_, Paths& paths_, QObject* parent = nullptr);
-    QList<DhtServer> getBootstrapnodes() const override;
+    QList<DhtServer> getBootstrapNodes() const override;
     void requestBootstrapNodes();
     static QList<DhtServer> loadDefaultBootstrapNodes();
 

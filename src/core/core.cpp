@@ -830,7 +830,7 @@ void Core::bootstrapDht()
     ASSERT_CORE_THREAD;
 
 
-    auto const shuffledBootstrapNodes = shuffleBootstrapNodes(bootstrapListGenerator.getBootstrapnodes());
+    auto const shuffledBootstrapNodes = shuffleBootstrapNodes(bootstrapListGenerator.getBootstrapNodes());
     if (shuffledBootstrapNodes.empty()) {
         qWarning() << "No bootstrap node list";
         return;

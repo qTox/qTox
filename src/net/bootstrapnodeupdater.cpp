@@ -228,7 +228,7 @@ BootstrapNodeUpdater::BootstrapNodeUpdater(const QNetworkProxy& proxy_, Paths& p
     createExampleBootstrapNodesFile(paths_);
 }
 
-QList<DhtServer> BootstrapNodeUpdater::getBootstrapnodes() const
+QList<DhtServer> BootstrapNodeUpdater::getBootstrapNodes() const
 {
     auto userFilePath = paths.getUserNodesFilePath();
     if (QFile::exists(userFilePath)) {
