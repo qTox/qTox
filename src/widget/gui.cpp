@@ -62,22 +62,6 @@ GUI& GUI::getInstance()
 // Implementation of the public clean interface
 
 /**
- * @brief Change the title of the main window.
- * @param title Titile to set.
- *
- * This is usually always visible to the user.
- */
-void GUI::setWindowTitle(const QString& title)
-{
-    if (QThread::currentThread() == qApp->thread()) {
-        getInstance()._setWindowTitle(title);
-    } else {
-        QMetaObject::invokeMethod(&getInstance(), "_setWindowTitle", Qt::BlockingQueuedConnection,
-                                  Q_ARG(const QString&, title));
-    }
-}
-
-/*
  * @brief Show some text to the user.
  * @param title Title of information window.
  * @param msg Text in information window.
@@ -178,17 +162,6 @@ bool GUI::askQuestion(const QString& title, const QString& msg, const QString& b
 }
 
 // Private implementations
-
-void GUI::_setWindowTitle(const QString& title)
-{
-    QWidget* w = getMainWidget();
-    if (!w)
-        return;
-    if (title.isEmpty())
-        w->setWindowTitle("qTox");
-    else
-        w->setWindowTitle(title + " - qTox");
-}
 
 void GUI::_showInfo(const QString& title, const QString& msg)
 {
