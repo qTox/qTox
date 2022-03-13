@@ -1,5 +1,5 @@
 /*
-    Copyright © 2015-2019 by The qTox Project Contributors
+    Copyright © 2022 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -17,61 +17,27 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "messageboxmanager.h"
 
-#include "gui.h"
-#include "widget.h"
-#include "src/nexus.h"
 #include <QApplication>
-#include <QCoreApplication>
-#include <QDebug>
-#include <QDialogButtonBox>
-#include <QInputDialog>
-#include <QLabel>
+#include <QThread>
 #include <QMessageBox>
 #include <QPushButton>
-#include <QThread>
-#include <assert.h>
-
-/**
- * @class GUI
- * @brief Abstracts the GUI from the target backend (DesktopGUI, ...)
- *
- * All the functions exposed here are thread-safe.
- * Prefer calling this class to calling a GUI backend directly.
- *
- * @fn void GUI::resized()
- * @brief Emitted when the GUI is resized on supported platforms.
- */
-
-GUI::GUI(QObject* parent)
-    : QObject(parent)
-{
-    assert(QThread::currentThread() == qApp->thread());
-    assert(Nexus::getDesktopGUI());
-}
-
-/**
- * @brief Returns the singleton instance.
- */
-GUI& GUI::getInstance()
-{
-    static GUI gui;
-    return gui;
-}
-
-// Implementation of the public clean interface
+#include <QFileInfo>
+#include <QDesktopServices>
+#include <QUrl>
 
 /**
  * @brief Show some text to the user.
  * @param title Title of information window.
  * @param msg Text in information window.
  */
-void GUI::showInfo(const QString& title, const QString& msg)
+void MessageBoxManager::showInfo(const QString& title, const QString& msg)
 {
     if (QThread::currentThread() == qApp->thread()) {
-        getInstance()._showInfo(title, msg);
+        _showInfo(title, msg);
     } else {
-        QMetaObject::invokeMethod(&getInstance(), "_showInfo", Qt::BlockingQueuedConnection,
+        QMetaObject::invokeMethod(this, "_showInfo", Qt::BlockingQueuedConnection,
                                   Q_ARG(const QString&, title), Q_ARG(const QString&, msg));
     }
 }
@@ -81,12 +47,12 @@ void GUI::showInfo(const QString& title, const QString& msg)
  * @param title Title of warning window.
  * @param msg Text in warning window.
  */
-void GUI::showWarning(const QString& title, const QString& msg)
+void MessageBoxManager::showWarning(const QString& title, const QString& msg)
 {
     if (QThread::currentThread() == qApp->thread()) {
-        getInstance()._showWarning(title, msg);
+        _showWarning(title, msg);
     } else {
-        QMetaObject::invokeMethod(&getInstance(), "_showWarning", Qt::BlockingQueuedConnection,
+        QMetaObject::invokeMethod(this, "_showWarning", Qt::BlockingQueuedConnection,
                                   Q_ARG(const QString&, title), Q_ARG(const QString&, msg));
     }
 }
@@ -96,17 +62,12 @@ void GUI::showWarning(const QString& title, const QString& msg)
  * @param title Title of error window.
  * @param msg Text in error window.
  */
-void GUI::showError(const QString& title, const QString& msg)
+void MessageBoxManager::showError(const QString& title, const QString& msg)
 {
     if (QThread::currentThread() == qApp->thread()) {
-        // If the GUI hasn't started yet and we're on the main thread,
-        // we still want to be able to show error messages
-        if (!Nexus::getDesktopGUI())
-            QMessageBox::critical(nullptr, title, msg);
-        else
-            getInstance()._showError(title, msg);
+        _showError(title, msg);
     } else {
-        QMetaObject::invokeMethod(&getInstance(), "_showError", Qt::BlockingQueuedConnection,
+        QMetaObject::invokeMethod(this, "_showError", Qt::BlockingQueuedConnection,
                                   Q_ARG(const QString&, title), Q_ARG(const QString&, msg));
     }
 }
@@ -120,13 +81,13 @@ void GUI::showError(const QString& title, const QString& msg)
  * @param yesno Show "Yes" and "No" buttons.
  * @return True if the answer is positive, false otherwise.
  */
-bool GUI::askQuestion(const QString& title, const QString& msg, bool defaultAns, bool warning, bool yesno)
+bool MessageBoxManager::askQuestion(const QString& title, const QString& msg, bool defaultAns, bool warning, bool yesno)
 {
     if (QThread::currentThread() == qApp->thread()) {
-        return getInstance()._askQuestion(title, msg, defaultAns, warning, yesno);
+        return _askQuestion(title, msg, defaultAns, warning, yesno);
     } else {
         bool ret;
-        QMetaObject::invokeMethod(&getInstance(), "_askQuestion", Qt::BlockingQueuedConnection,
+        QMetaObject::invokeMethod(this, "_askQuestion", Qt::BlockingQueuedConnection,
                                   Q_RETURN_ARG(bool, ret), Q_ARG(const QString&, title),
                                   Q_ARG(const QString&, msg), Q_ARG(bool, defaultAns),
                                   Q_ARG(bool, warning), Q_ARG(bool, yesno));
@@ -146,14 +107,14 @@ bool GUI::askQuestion(const QString& title, const QString& msg, bool defaultAns,
  * @param warning If is true, we will use a special warning style.
  * @return True if the answer is positive, false otherwise.
  */
-bool GUI::askQuestion(const QString& title, const QString& msg, const QString& button1,
+bool MessageBoxManager::askQuestion(const QString& title, const QString& msg, const QString& button1,
                       const QString& button2, bool defaultAns, bool warning)
 {
     if (QThread::currentThread() == qApp->thread()) {
-        return getInstance()._askQuestion(title, msg, button1, button2, defaultAns, warning);
+        return _askQuestion(title, msg, button1, button2, defaultAns, warning);
     } else {
         bool ret;
-        QMetaObject::invokeMethod(&getInstance(), "_askQuestion", Qt::BlockingQueuedConnection,
+        QMetaObject::invokeMethod(this, "_askQuestion", Qt::BlockingQueuedConnection,
                                   Q_RETURN_ARG(bool, ret), Q_ARG(const QString&, title),
                                   Q_ARG(const QString&, msg), Q_ARG(bool, defaultAns),
                                   Q_ARG(bool, warning));
@@ -161,30 +122,61 @@ bool GUI::askQuestion(const QString& title, const QString& msg, const QString& b
     }
 }
 
+void MessageBoxManager::confirmExecutableOpen(const QFileInfo& file)
+{
+    static const QStringList dangerousExtensions = {"app",  "bat",     "com",    "cpl",  "dmg",
+                                                    "exe",  "hta",     "jar",    "js",   "jse",
+                                                    "lnk",  "msc",     "msh",    "msh1", "msh1xml",
+                                                    "msh2", "msh2xml", "mshxml", "msi",  "msp",
+                                                    "pif",  "ps1",     "ps1xml", "ps2",  "ps2xml",
+                                                    "psc1", "psc2",    "py",     "reg",  "scf",
+                                                    "sh",   "src",     "vb",     "vbe",  "vbs",
+                                                    "ws",   "wsc",     "wsf",    "wsh"};
+
+    if (dangerousExtensions.contains(file.suffix())) {
+        bool answer = askQuestion(tr("Executable file", "popup title"),
+                                       tr("You have asked qTox to open an executable file. "
+                                          "Executable files can potentially damage your computer. "
+                                          "Are you sure want to open this file?",
+                                          "popup text"),
+                                       false, true);
+        if (!answer) {
+            return;
+        }
+
+        // The user wants to run this file, so make it executable and run it
+        QFile(file.filePath())
+            .setPermissions(file.permissions() | QFile::ExeOwner | QFile::ExeUser | QFile::ExeGroup
+                            | QFile::ExeOther);
+    }
+
+    QDesktopServices::openUrl(QUrl::fromLocalFile(file.filePath()));
+}
+
 // Private implementations
-
-void GUI::_showInfo(const QString& title, const QString& msg)
+void MessageBoxManager::_showInfo(const QString& title, const QString& msg)
 {
-    QMessageBox messageBox(QMessageBox::Information, title, msg, QMessageBox::Ok, getMainWidget());
+    QMessageBox messageBox(QMessageBox::Information, title, msg, QMessageBox::Ok, this);
     messageBox.setButtonText(QMessageBox::Ok, QApplication::tr("Ok"));
     messageBox.exec();
 }
 
-void GUI::_showWarning(const QString& title, const QString& msg)
+void MessageBoxManager::_showWarning(const QString& title, const QString& msg)
 {
-    QMessageBox messageBox(QMessageBox::Warning, title, msg, QMessageBox::Ok, getMainWidget());
+    QMessageBox messageBox(QMessageBox::Warning, title, msg, QMessageBox::Ok, this);
     messageBox.setButtonText(QMessageBox::Ok, QApplication::tr("Ok"));
     messageBox.exec();
 }
 
-void GUI::_showError(const QString& title, const QString& msg)
+void MessageBoxManager::_showError(const QString& title, const QString& msg)
 {
-    QMessageBox messageBox(QMessageBox::Critical, title, msg, QMessageBox::Ok, getMainWidget());
+    QMessageBox messageBox(QMessageBox::Critical, title, msg, QMessageBox::Ok, this);
     messageBox.setButtonText(QMessageBox::Ok, QApplication::tr("Ok"));
     messageBox.exec();
 }
 
-bool GUI::_askQuestion(const QString& title, const QString& msg, bool defaultAns, bool warning,
+
+bool MessageBoxManager::_askQuestion(const QString& title, const QString& msg, bool defaultAns, bool warning,
                        bool yesno)
 {
     QString positiveButton = yesno ? QApplication::tr("Yes") : QApplication::tr("Ok");
@@ -193,11 +185,11 @@ bool GUI::_askQuestion(const QString& title, const QString& msg, bool defaultAns
     return _askQuestion(title, msg, positiveButton, negativeButton, defaultAns, warning);
 }
 
-bool GUI::_askQuestion(const QString& title, const QString& msg, const QString& button1,
+bool MessageBoxManager::_askQuestion(const QString& title, const QString& msg, const QString& button1,
                        const QString& button2, bool defaultAns, bool warning)
 {
     QMessageBox::Icon icon = warning ? QMessageBox::Warning : QMessageBox::Question;
-    QMessageBox box(icon, title, msg, QMessageBox::NoButton, getMainWidget());
+    QMessageBox box(icon, title, msg, QMessageBox::NoButton, this);
     QPushButton* pushButton1 = box.addButton(button1, QMessageBox::AcceptRole);
     QPushButton* pushButton2 = box.addButton(button2, QMessageBox::RejectRole);
     box.setDefaultButton(defaultAns ? pushButton1 : pushButton2);
@@ -205,17 +197,4 @@ bool GUI::_askQuestion(const QString& title, const QString& msg, const QString& 
 
     box.exec();
     return box.clickedButton() == pushButton1;
-}
-
-// Other
-
-/**
- * @brief Get the main widget.
- * @return The main QWidget* of the application
- */
-QWidget* GUI::getMainWidget()
-{
-    QWidget* maingui{nullptr};
-    maingui = Nexus::getDesktopGUI();
-    return maingui;
 }

@@ -28,8 +28,8 @@
 #include "src/widget/widget.h"
 #include "src/widget/style.h"
 #include "video/camerasource.h"
-#include "widget/gui.h"
 #include "widget/loginscreen.h"
+#include "src/widget/tool/messageboxmanager.h"
 #include "audio/audio.h"
 
 #include <QApplication>
@@ -235,11 +235,10 @@ void Nexus::showMainGUI()
     assert(profile);
 
     // Create GUI
-    widget = new Widget(*profile, *audioControl, *cameraSource, *settings, *style);
+    widget = new Widget(*profile, *audioControl, *cameraSource, *settings, *style, *messageBoxManager);
 
     // Start GUI
     widget->init();
-    GUI::getInstance();
 
     // Zetok protection
     // There are small instants on startup during which no
@@ -308,7 +307,8 @@ Profile* Nexus::getProfile()
  */
 void Nexus::onCreateNewProfile(const QString& name, const QString& pass)
 {
-    setProfile(Profile::createProfile(name, pass, *settings, parser, *cameraSource));
+    setProfile(Profile::createProfile(name, pass, *settings, parser, *cameraSource,
+        *messageBoxManager));
     parser = nullptr; // only apply cmdline proxy settings once
 }
 
@@ -317,7 +317,8 @@ void Nexus::onCreateNewProfile(const QString& name, const QString& pass)
  */
 void Nexus::onLoadProfile(const QString& name, const QString& pass)
 {
-    setProfile(Profile::loadProfile(name, pass, *settings, parser, *cameraSource));
+    setProfile(Profile::loadProfile(name, pass, *settings, parser, *cameraSource,
+        *messageBoxManager));
     parser = nullptr; // only apply cmdline proxy settings once
 }
 /**
@@ -354,6 +355,11 @@ Widget* Nexus::getDesktopGUI()
 CameraSource& Nexus::getCameraSource()
 {
     return *getInstance().cameraSource;
+}
+
+void Nexus::setMessageBoxManager(IMessageBoxManager* messageBoxManager_)
+{
+    messageBoxManager = messageBoxManager_;
 }
 
 #ifdef Q_OS_MAC

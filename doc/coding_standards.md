@@ -395,7 +395,6 @@ The following example demonstrates the above include rules:
 #include "persistence/profile.h"
 #include "persistence/profilelocker.h"
 #include "persistence/settings.h"
-#include "widget/gui.h"
 
 #include <QCoreApplication>
 #include <QThread>

@@ -1708,6 +1708,19 @@ Please make sure to enter the same password twice.</source>
     </message>
 </context>
 <context>
+    <name>MessageBoxManager</name>
+    <message>
+        <source>Executable file</source>
+        <comment>popup title</comment>
+        <translation type="unfinished">可执行文件</translation>
+    </message>
+    <message>
+        <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
+        <comment>popup text</comment>
+        <translation type="unfinished">您正在使用 qTox 打开一个可执行文件。可执行文件可能会破坏您的计算机。确定要打开此文件吗？</translation>
+    </message>
+</context>
+<context>
     <name>NetCamView</name>
     <message>
         <source>Tox video</source>
@@ -2885,11 +2898,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation>忙碌</translation>
     </message>
     <message>
-        <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
-        <comment>popup text</comment>
-        <translation>您正在使用 qTox 打开一个可执行文件。可执行文件可能会破坏您的计算机。确定要打开此文件吗？</translation>
-    </message>
-    <message>
         <source>Your name</source>
         <translation>您的名字</translation>
     </message>
@@ -2909,11 +2917,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Status</source>
         <translation>状态</translation>
-    </message>
-    <message>
-        <source>Executable file</source>
-        <comment>popup title</comment>
-        <translation>可执行文件</translation>
     </message>
     <message>
         <source>Groupchat #%1</source>

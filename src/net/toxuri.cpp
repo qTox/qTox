@@ -19,7 +19,7 @@
 
 #include "src/net/toxuri.h"
 #include "src/core/core.h"
-#include "src/widget/gui.h"
+#include "src/widget/tool/imessageboxmanager.h"
 #include <QByteArray>
 #include <QCoreApplication>
 #include <QDialogButtonBox>
@@ -52,7 +52,7 @@ bool ToxURIDialog::handleToxURI(const QString& toxURI)
     }
 
     if (!error.isEmpty()) {
-        GUI::showWarning(QMessageBox::tr("Couldn't add friend"), error);
+        messageBoxManager.showWarning(QMessageBox::tr("Couldn't add friend"), error);
         return false;
     }
 
@@ -72,9 +72,10 @@ void ToxURIDialog::setUserId(const QString& userId)
     userIdEdit->setText(userId);
 }
 
-ToxURIDialog::ToxURIDialog(QWidget* parent, Core& _core)
+ToxURIDialog::ToxURIDialog(QWidget* parent, Core& core_, IMessageBoxManager& messageBoxManager_)
     : QDialog(parent)
-    , core{_core}
+    , core{core_}
+    , messageBoxManager{messageBoxManager_}
 {
     const QString defaultMessage =
         QObject::tr("%1 here! Tox me maybe?",

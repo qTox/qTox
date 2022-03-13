@@ -19,7 +19,6 @@
 
 
 #include "activatedialog.h"
-#include "src/widget/gui.h"
 #include "src/widget/style.h"
 #include <QEvent>
 

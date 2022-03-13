@@ -22,9 +22,9 @@
 
 #include "src/core/corefile.h"
 #include "src/persistence/settings.h"
-#include "src/widget/gui.h"
 #include "src/widget/style.h"
 #include "src/widget/widget.h"
+#include "src/widget/tool/imessageboxmanager.h"
 #include "src/model/exiftransform.h"
 #include "util/display.h"
 
@@ -49,7 +49,7 @@
 // downloaded to.
 
 FileTransferWidget::FileTransferWidget(QWidget* parent, CoreFile& _coreFile,
-    ToxFile file, Settings& settings_, Style& style_)
+    ToxFile file, Settings& settings_, Style& style_, IMessageBoxManager& messageBoxManager_)
     : QWidget(parent)
     , coreFile{_coreFile}
     , ui(new Ui::FileTransferWidget)
@@ -60,6 +60,7 @@ FileTransferWidget::FileTransferWidget(QWidget* parent, CoreFile& _coreFile,
     , active(true)
     , settings(settings_)
     , style{style_}
+    , messageBoxManager{messageBoxManager_}
 {
     ui->setupUi(this);
 
@@ -140,7 +141,7 @@ void FileTransferWidget::acceptTransfer(const QString& filepath)
 
     // test if writable
     if (!tryRemoveFile(filepath)) {
-        GUI::showWarning(tr("Location not writable", "Title of permissions popup"),
+        messageBoxManager.showWarning(tr("Location not writable", "Title of permissions popup"),
                          tr("You do not have permission to write that location. Choose another, or "
                             "cancel the save dialog.",
                             "text of permissions popup"));
@@ -477,7 +478,7 @@ void FileTransferWidget::handleButton(QPushButton* btn)
     }
 
     if (btn->objectName() == "ok" || btn->objectName() == "previewButton") {
-        Widget::confirmExecutableOpen(QFileInfo(fileInfo.filePath));
+        messageBoxManager.confirmExecutableOpen(QFileInfo(fileInfo.filePath));
     } else if (btn->objectName() == "dir") {
         QString dirPath = QFileInfo(fileInfo.filePath).dir().path();
         QDesktopServices::openUrl(QUrl::fromLocalFile(dirPath));

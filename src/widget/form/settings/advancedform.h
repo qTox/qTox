@@ -24,6 +24,7 @@
 class Core;
 class Settings;
 class Style;
+class IMessageBoxManager;
 
 namespace Ui {
 class AdvancedSettings;
@@ -33,7 +34,7 @@ class AdvancedForm : public GenericForm
 {
     Q_OBJECT
 public:
-    AdvancedForm(Settings& settings, Style& style);
+    AdvancedForm(Settings& settings, Style& style, IMessageBoxManager& messageBoxManager);
     ~AdvancedForm();
     QString getFormName() final
     {
@@ -61,4 +62,5 @@ private:
 private:
     Ui::AdvancedSettings* bodyUI;
     Settings& settings;
+    IMessageBoxManager& messageBoxManager;
 };

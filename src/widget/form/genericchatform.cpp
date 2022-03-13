@@ -44,7 +44,6 @@
 #include "src/widget/tool/flyoutoverlaywidget.h"
 #include "src/widget/translator.h"
 #include "src/widget/widget.h"
-#include "src/widget/gui.h"
 
 #include <QClipboard>
 #include <QFileDialog>
@@ -140,7 +139,7 @@ QPushButton* createButton(const QString& name, T* self, Fun onClickSlot,
 GenericChatForm::GenericChatForm(const Core& core_, const Chat* chat, IChatLog& chatLog_,
                                  IMessageDispatcher& messageDispatcher_, DocumentCache& documentCache,
                                  SmileyPack& smileyPack_, Settings& settings_, Style& style_,
-                                 QWidget* parent_)
+                                 IMessageBoxManager& messageBoxManager, QWidget* parent_)
     : QWidget(parent_, Qt::Window)
     , core{core_}
     , audioInputFlag(false)
@@ -156,7 +155,7 @@ GenericChatForm::GenericChatForm(const Core& core_, const Chat* chat, IChatLog& 
     searchForm = new SearchForm(settings, style);
     dateInfo = new QLabel(this);
     chatWidget = new ChatWidget(chatLog_, core, documentCache, smileyPack,
-        settings, style, this);
+        settings, style, messageBoxManager, this);
     searchForm->hide();
     dateInfo->setAlignment(Qt::AlignHCenter);
     dateInfo->setVisible(false);

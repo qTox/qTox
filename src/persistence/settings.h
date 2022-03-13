@@ -44,6 +44,7 @@
 
 class Profile;
 class QCommandLineParser;
+class IMessageBoxManager;
 
 namespace Db {
 enum class syncType;
@@ -147,7 +148,7 @@ public:
     };
 
 public:
-    Settings();
+    explicit Settings(IMessageBoxManager& messageBoxManager);
     ~Settings();
     Settings(Settings& settings) = delete;
     Settings& operator=(const Settings&) = delete;
@@ -716,4 +717,5 @@ private:
     Paths paths;
     int globalSettingsVersion = 0;
     int personalSettingsVersion = 0;
+    IMessageBoxManager& messageBoxManager;
 };

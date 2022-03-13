@@ -1711,6 +1711,19 @@ Veuillez vous assurer d&apos;entrer deux fois le même mot de passe.</translatio
     </message>
 </context>
 <context>
+    <name>MessageBoxManager</name>
+    <message>
+        <source>Executable file</source>
+        <comment>popup title</comment>
+        <translation type="unfinished">Fichier exécutable</translation>
+    </message>
+    <message>
+        <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
+        <comment>popup text</comment>
+        <translation type="unfinished">Vous avez demandé à qTox d&apos;ouvrir un fichier exécutable. Les fichiers exécutables peuvent potentiellement endommager votre ordinateur. Êtes-vous sûr(e) de vouloir ouvrir ce fichier&#xa0;?</translation>
+    </message>
+</context>
+<context>
     <name>NetCamView</name>
     <message>
         <source>Tox video</source>
@@ -2903,16 +2916,6 @@ Cet identifiant comprend le code NoSpam (en bleu) et la somme de contrôle (en g
     <message>
         <source>Contacts</source>
         <translation>Contacts</translation>
-    </message>
-    <message>
-        <source>Executable file</source>
-        <comment>popup title</comment>
-        <translation>Fichier exécutable</translation>
-    </message>
-    <message>
-        <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
-        <comment>popup text</comment>
-        <translation>Vous avez demandé à qTox d&apos;ouvrir un fichier exécutable. Les fichiers exécutables peuvent potentiellement endommager votre ordinateur. Êtes-vous sûr(e) de vouloir ouvrir ce fichier&#xa0;?</translation>
     </message>
     <message>
         <source>Your name</source>

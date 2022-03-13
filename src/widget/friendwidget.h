@@ -31,13 +31,14 @@ class MaskablePixmapWidget;
 class CircleWidget;
 class Settings;
 class Style;
+class IMessageBoxManager;
 
 class FriendWidget : public GenericChatroomWidget, public IFriendListItem
 {
     Q_OBJECT
 public:
-    FriendWidget(std::shared_ptr<FriendChatroom> chatroom_, bool compact_,
-        Settings& settings, Style& style);
+    FriendWidget(std::shared_ptr<FriendChatroom> chatroom, bool compact_,
+        Settings& settings, Style& style, IMessageBoxManager& messageBoxManager);
 
     void contextMenuEvent(QContextMenuEvent* event) final;
     void setAsActiveChatroom() final;
@@ -90,4 +91,5 @@ public:
     bool isDefaultAvatar;
     Settings& settings;
     Style& style;
+    IMessageBoxManager& messageBoxManager;
 };

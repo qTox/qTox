@@ -19,7 +19,6 @@
 
 #include "searchform.h"
 #include "form/searchsettingsform.h"
-#include "src/widget/gui.h"
 #include "src/widget/style.h"
 
 #include <QVBoxLayout>

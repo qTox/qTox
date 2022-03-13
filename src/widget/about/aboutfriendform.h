@@ -32,6 +32,7 @@ class AboutFriendForm;
 
 class Settings;
 class Style;
+class IMessageBoxManager;
 
 class AboutFriendForm : public QDialog
 {
@@ -39,7 +40,7 @@ class AboutFriendForm : public QDialog
 
 public:
     AboutFriendForm(std::unique_ptr<IAboutFriend> about, Settings& settings,
-        Style& style, QWidget* parent = nullptr);
+        Style& style, IMessageBoxManager& messageBoxManager, QWidget* parent = nullptr);
     ~AboutFriendForm();
 
 private:
@@ -47,6 +48,7 @@ private:
     const std::unique_ptr<IAboutFriend> about;
     Settings& settings;
     Style& style;
+    IMessageBoxManager& messageBoxManager;
 
 signals:
     void histroyRemoved();
