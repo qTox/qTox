@@ -19,8 +19,6 @@
 
 #pragma once
 
-#include "src/widget/gui.h"
-
 #include <QWidget>
 
 class ContentLayout;

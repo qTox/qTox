@@ -31,6 +31,7 @@ class IProfileInfo;
 class MaskablePixmapWidget;
 class Settings;
 class Style;
+class IMessageBoxManager;
 
 namespace Ui {
 class IdentitySettings;
@@ -56,7 +57,7 @@ class ProfileForm : public QWidget
     Q_OBJECT
 public:
     ProfileForm(IProfileInfo* profileInfo_, Settings& settings, Style& style,
-        QWidget* parent = nullptr);
+        IMessageBoxManager& messageBoxManager, QWidget* parent = nullptr);
     ~ProfileForm();
     void show(ContentLayout* contentLayout);
     bool isShown() const;
@@ -97,4 +98,5 @@ private:
     ClickableTE* toxId;
     IProfileInfo* profileInfo;
     Settings& settings;
+    IMessageBoxManager& messageBoxManager;
 };

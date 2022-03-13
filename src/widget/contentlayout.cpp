@@ -20,7 +20,6 @@
 #include "contentlayout.h"
 #include "style.h"
 #include "src/persistence/settings.h"
-#include "src/widget/gui.h"
 #include <QFrame>
 #include <QStyleFactory>
 

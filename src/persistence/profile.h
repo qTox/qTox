@@ -39,6 +39,7 @@ class Settings;
 class QCommandLineParser;
 class ToxPk;
 class CameraSource;
+class IMessageBoxManager;
 
 class Profile : public QObject
 {
@@ -46,9 +47,10 @@ class Profile : public QObject
 
 public:
     static Profile* loadProfile(const QString& name, const QString& password, Settings& settings,
-                                const QCommandLineParser* parser, CameraSource& cameraSource);
+                                const QCommandLineParser* parser, CameraSource& cameraSource,
+                                    IMessageBoxManager& messageBoxManager);
     static Profile* createProfile(const QString& name, const QString& password, Settings& settings,
-                                  const QCommandLineParser* parser, CameraSource& cameraSource);
+                                  const QCommandLineParser* parser, CameraSource& cameraSource, IMessageBoxManager& messageBoxManager);
     ~Profile();
 
     Core& getCore() const;
@@ -105,7 +107,8 @@ private slots:
     void onAvatarOfferReceived(uint32_t friendId, uint32_t fileId, const QByteArray& avatarHash, uint64_t filesize);
 
 private:
-    Profile(const QString& name_, std::unique_ptr<ToxEncrypt> passkey_, Paths& paths_, Settings &settings_);
+    Profile(const QString& name_, std::unique_ptr<ToxEncrypt> passkey_, Paths& paths_,
+        Settings &settings_, IMessageBoxManager& messageBoxManager);
     static QStringList getFilesByExt(QString extension, Settings& settings);
     QString avatarPath(const ToxPk& owner, bool forceUnencrypted = false);
     bool saveToxSave(QByteArray data);
@@ -125,4 +128,5 @@ private:
     std::unique_ptr<BootstrapNodeUpdater> bootstrapNodes;
     Paths& paths;
     Settings& settings;
+    IMessageBoxManager& messageBoxManager;
 };

@@ -22,10 +22,10 @@
 #include "src/nexus.h"
 #include "src/persistence/settings.h"
 #include "src/widget/contentlayout.h"
-#include "src/widget/gui.h"
 #include "src/widget/tool/croppinglabel.h"
 #include "src/widget/style.h"
 #include "src/widget/translator.h"
+#include "src/widget/tool/imessageboxmanager.h"
 #include <QApplication>
 #include <QClipboard>
 #include <QErrorMessage>
@@ -61,10 +61,12 @@ namespace
  * @brief Cached username so we can retranslate the invite message
  */
 
-AddFriendForm::AddFriendForm(ToxId ownId_, Settings& settings_, Style& style_)
+AddFriendForm::AddFriendForm(ToxId ownId_, Settings& settings_, Style& style_,
+    IMessageBoxManager& messageBoxManager_)
     : ownId{ownId_}
     , settings{settings_}
     , style{style_}
+    , messageBoxManager{messageBoxManager_}
 {
     tabWidget = new QTabWidget();
     main = new QWidget(tabWidget);
@@ -204,14 +206,14 @@ void AddFriendForm::addFriend(const QString& idText)
     ToxId friendId(idText);
 
     if (!friendId.isValid()) {
-        GUI::showWarning(tr("Couldn't add friend"),
+        messageBoxManager.showWarning(tr("Couldn't add friend"),
                          tr("%1 Tox ID is invalid", "Tox address error").arg(idText));
         return;
     }
 
     deleteFriendRequest(friendId);
     if (friendId == ownId) {
-        GUI::showWarning(tr("Couldn't add friend"),
+        messageBoxManager.showWarning(tr("Couldn't add friend"),
                          //: When trying to add your own Tox ID as friend
                          tr("You can't add yourself as a friend!"));
     } else {
@@ -248,7 +250,7 @@ void AddFriendForm::onImportOpenClicked()
 
     QFile contactFile(path);
     if (!contactFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        GUI::showWarning(tr("Couldn't open file"),
+        messageBoxManager.showWarning(tr("Couldn't open file"),
                          //: Error message when trying to open a contact list file to import
                          tr("Couldn't open the contact file"));
         return;
@@ -271,7 +273,7 @@ void AddFriendForm::onImportOpenClicked()
     }
 
     if (contactsToImport.isEmpty()) {
-        GUI::showWarning(tr("Invalid file"),
+        messageBoxManager.showWarning(tr("Invalid file"),
                          tr("We couldn't find any contacts to import in this file!"));
     }
 

@@ -448,8 +448,6 @@ set(${PROJECT_NAME}_SOURCES
   src/widget/genericchatroomwidget.h
   src/widget/groupwidget.cpp
   src/widget/groupwidget.h
-  src/widget/gui.cpp
-  src/widget/gui.h
   src/widget/loginscreen.cpp
   src/widget/loginscreen.h
   src/widget/maskablepixmapwidget.cpp
@@ -470,6 +468,10 @@ set(${PROJECT_NAME}_SOURCES
   src/widget/tool/activatedialog.h
   src/widget/tool/adjustingscrollarea.cpp
   src/widget/tool/adjustingscrollarea.h
+  src/widget/tool/imessageboxmanager.h
+  src/widget/tool/imessageboxmanager.cpp
+  src/widget/tool/messageboxmanager.cpp
+  src/widget/tool/messageboxmanager.h
   src/widget/tool/callconfirmwidget.cpp
   src/widget/tool/callconfirmwidget.h
   src/widget/tool/chattextedit.cpp

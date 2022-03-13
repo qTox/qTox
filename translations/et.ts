@@ -1712,6 +1712,19 @@ Palun vaata, et sa mõlemal korral sisestad sama salasõna.</translation>
     </message>
 </context>
 <context>
+    <name>MessageBoxManager</name>
+    <message>
+        <source>Executable file</source>
+        <comment>popup title</comment>
+        <translation type="unfinished">Käivitatav fail</translation>
+    </message>
+    <message>
+        <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
+        <comment>popup text</comment>
+        <translation type="unfinished">Oled palunud qToxil avada käivitatava faili. Sellised failid võivad teoreetiliselt sinu arvutit kahjustada. Kas oled kindel, et soovid faili avada?</translation>
+    </message>
+</context>
+<context>
     <name>NetCamView</name>
     <message>
         <source>Tox video</source>
@@ -2875,16 +2888,6 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
     <message>
         <source>Status</source>
         <translation>Olek</translation>
-    </message>
-    <message>
-        <source>Executable file</source>
-        <comment>popup title</comment>
-        <translation>Käivitatav fail</translation>
-    </message>
-    <message>
-        <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
-        <comment>popup text</comment>
-        <translation>Oled palunud qToxil avada käivitatava faili. Sellised failid võivad teoreetiliselt sinu arvutit kahjustada. Kas oled kindel, et soovid faili avada?</translation>
     </message>
     <message>
         <source>Your name</source>
