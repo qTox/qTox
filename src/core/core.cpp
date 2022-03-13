@@ -509,6 +509,10 @@ Core::Core(QThread* coreThread_, IBootstrapListGenerator& bootstrapListGenerator
     , settings(settings_)
 {
     assert(toxTimer);
+    // need to migrate Settings and History if this changes
+    assert(ToxPk::size == tox_public_key_size());
+    assert(GroupId::size == tox_conference_id_size());
+    assert(ToxId::size == tox_address_size());
     toxTimer->setSingleShot(true);
     connect(toxTimer, &QTimer::timeout, this, &Core::process);
     connect(coreThread_, &QThread::finished, toxTimer, &QTimer::stop);

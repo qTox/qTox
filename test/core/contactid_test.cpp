@@ -22,8 +22,6 @@
 #include "src/core/toxid.h"
 #include "src/core/groupid.h"
 
-#include <tox/tox.h>
-
 #include <QtTest/QtTest>
 #include <QByteArray>
 #include <QString>
@@ -97,8 +95,8 @@ void TestContactId::sizeTest()
 {
     ToxPk pk;
     GroupId id;
-    QVERIFY(pk.getSize() == TOX_PUBLIC_KEY_SIZE);
-    QVERIFY(id.getSize() == TOX_CONFERENCE_UID_SIZE);
+    QVERIFY(pk.getSize() == ToxPk::size);
+    QVERIFY(id.getSize() == GroupId::size);
 }
 
 void TestContactId::hashableTest()

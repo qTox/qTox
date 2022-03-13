@@ -29,6 +29,13 @@
 class ToxId
 {
 public:
+    static constexpr int nospamSize = 4;
+    static constexpr int nospamNumHexChars = nospamSize*2;
+    static constexpr int checksumSize = 2;
+    static constexpr int checksumNumHexChars = checksumSize*2;
+    static constexpr int size = 38;
+    static constexpr int numHexChars = size*2;
+
     ToxId();
     ToxId(const ToxId& other);
     explicit ToxId(const QString& id);

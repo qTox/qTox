@@ -26,6 +26,7 @@
 class GroupId : public ContactId
 {
 public:
+    static constexpr int size = 32;
     GroupId();
     explicit GroupId(const QByteArray& rawId);
     explicit GroupId(const uint8_t* rawId);

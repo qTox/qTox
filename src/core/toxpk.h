@@ -26,6 +26,8 @@
 class ToxPk : public ContactId
 {
 public:
+    static constexpr int size = 32;
+    static constexpr int numHexChars = 64;
     ToxPk();
     explicit ToxPk(const QByteArray& rawId);
     explicit ToxPk(const uint8_t* rawId);

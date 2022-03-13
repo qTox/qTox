@@ -229,11 +229,11 @@ void TestGroupMessageDispatcher::testEmptyGroup()
  */
 void TestGroupMessageDispatcher::testSelfReceive()
 {
-    uint8_t selfId[TOX_PUBLIC_KEY_SIZE] = {0};
+    uint8_t selfId[ToxPk::size] = {0};
     groupMessageDispatcher->onMessageReceived(ToxPk(selfId), false, "Test");
     QVERIFY(receivedMessages.size() == 0);
 
-    uint8_t id[TOX_PUBLIC_KEY_SIZE] = {1};
+    uint8_t id[ToxPk::size] = {1};
     groupMessageDispatcher->onMessageReceived(ToxPk(id), false, "Test");
     QVERIFY(receivedMessages.size() == 1);
 }
@@ -243,7 +243,7 @@ void TestGroupMessageDispatcher::testSelfReceive()
  */
 void TestGroupMessageDispatcher::testBlacklist()
 {
-    uint8_t id[TOX_PUBLIC_KEY_SIZE] = {1};
+    uint8_t id[ToxPk::size] = {1};
     auto otherPk = ToxPk(id);
     groupMessageDispatcher->onMessageReceived(otherPk, false, "Test");
     QVERIFY(receivedMessages.size() == 1);
