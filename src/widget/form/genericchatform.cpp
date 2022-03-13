@@ -263,7 +263,7 @@ GenericChatForm::GenericChatForm(const Core& core_, const Chat* chat, IChatLog& 
 
     connect(msgEdit, &ChatTextEdit::enterPressed, this, &GenericChatForm::onSendTriggered);
 
-    connect(&GUI::getInstance(), &GUI::themeReload, this, &GenericChatForm::reloadTheme);
+    connect(&style, &Style::themeReload, this, &GenericChatForm::reloadTheme);
 
     reloadTheme();
 

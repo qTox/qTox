@@ -31,7 +31,6 @@ public:
     static GUI& getInstance();
     static QWidget* getMainWidget();
     static void setWindowTitle(const QString& title);
-    static void reloadTheme();
     static void showInfo(const QString& title, const QString& msg);
     static void showWarning(const QString& title, const QString& msg);
     static void showError(const QString& title, const QString& msg);
@@ -55,7 +54,4 @@ private slots:
                       bool warning = true, bool yesno = true);
     bool _askQuestion(const QString& title, const QString& msg, const QString& button1,
                       const QString& button2, bool defaultAns = false, bool warning = true);
-
-signals:
-    void themeReload();
 };

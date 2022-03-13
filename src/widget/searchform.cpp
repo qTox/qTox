@@ -96,7 +96,7 @@ SearchForm::SearchForm(Settings& settings_, Style& style_, QWidget* parent)
 
     connect(searchSettingsForm, &SearchSettingsForm::updateSettings, this, &SearchForm::changedState);
 
-    connect(&GUI::getInstance(), &GUI::themeReload, this, &SearchForm::reloadTheme);
+    connect(&style, &Style::themeReload, this, &SearchForm::reloadTheme);
 }
 
 void SearchForm::removeSearchPhrase()
