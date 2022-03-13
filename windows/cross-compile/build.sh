@@ -37,7 +37,6 @@ while (( $# > 0 )); do
         --src-dir) QTOX_SRC_DIR=$2; shift 2 ;;
         --arch) ARCH=$2; shift 2 ;;
         --run-tests) RUN_TESTS=1; shift ;;
-        --online-tests) ONLINE_TESTS=1; shift ;;
         --build-type) BUILD_TYPE=$2; shift 2;;
         *) "Unexpected argument $1"; exit 1 ;;
     esac
@@ -117,11 +116,7 @@ then
   export WINEPATH='/export;/windows/bin'
   export CTEST_OUTPUT_ON_FAILURE=1
   export PATH="$PATH:/opt/wine-stable/bin"
-  EXCLUDE_TESTS=""
-  if [ -z ${ONLINE_TESTS+x} ]; then
-      EXCLUDE_TESTS="-E core"
-  fi
-  ctest ${EXCLUDE_TESTS} -j$(nproc)
+  ctest -j$(nproc)
 fi
 set -u
 

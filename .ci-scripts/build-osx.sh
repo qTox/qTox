@@ -20,14 +20,6 @@ set -eu -o pipefail
 
 readonly BIN_NAME="qTox.dmg"
 
-while (( $# > 0 )); do
-    case $1 in
-    --run-tests) RUN_TESTS=1; shift ;;
-    --online-tests) ONLINE_TESTS=1; shift ;;
-    *) echo "Unexpected argument $1"; exit 1 ;;
-    esac
-done
-
 build_qtox() {
     cmake -DUPDATE_CHECK=ON \
         -DSPELL_CHECK=OFF \
@@ -35,14 +27,8 @@ build_qtox() {
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_PREFIX_PATH="$(brew --prefix qt@5)" .
     make -j$(sysctl -n hw.ncpu)
-    if [ ! -z ${RUN_TESTS+x} ]; then
-        EXCLUDE_TESTS=""
-        if [ -z ${ONLINE_TESTS+x} ]; then
-            EXCLUDE_TESTS="-E core"
-        fi
-        export CTEST_OUTPUT_ON_FAILURE=1
-        ctest ${EXCLUDE_TESTS} -j$(sysctl -n hw.ncpu)
-    fi
+    export CTEST_OUTPUT_ON_FAILURE=1
+    ctest -j$(sysctl -n hw.ncpu)
     make install
 }
 

@@ -28,7 +28,6 @@ while (( $# > 0 )); do
     --minimal) MINIMAL=1 ; shift ;;
     --full) MINIMAL=0; shift ;;
     --sanitize) SANITIZE=1; shift ;;
-    --online-tests) ONLINE_TESTS=1; shift ;;
     --build-type) BUILD_TYPE=$2; shift 2 ;;
     --help|-h) usage; exit 1 ;;
     *) echo "Unexpected argument $1"; usage; exit 1 ;;
@@ -72,10 +71,5 @@ else
         $SANITIZE_ARGS
 fi
 
-EXCLUDE_TESTS=""
-if [ -z ${ONLINE_TESTS+x} ]; then
-    EXCLUDE_TESTS="-E core"
-fi
-
 cmake --build . -- -j $(nproc)
-ctest ${EXCLUDE_TESTS} -j$(nproc)
+ctest -j$(nproc)
