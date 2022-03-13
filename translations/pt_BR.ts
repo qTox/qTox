@@ -1719,6 +1719,19 @@ Certifique-se de que você entrou a mesma senha duas vezes.</translation>
     </message>
 </context>
 <context>
+    <name>MessageBoxManager</name>
+    <message>
+        <source>Executable file</source>
+        <comment>popup title</comment>
+        <translation type="unfinished">Arquivo executável</translation>
+    </message>
+    <message>
+        <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
+        <comment>popup text</comment>
+        <translation type="unfinished">Você pediu ao qTox para abrir um arquivo executável. Executáveis podem potencialmente danificar seu computador. Tem certeza de que deseja abrir este arquivo?</translation>
+    </message>
+</context>
+<context>
     <name>NetCamView</name>
     <message>
         <source>Tox video</source>
@@ -2912,16 +2925,6 @@ Este ID inclui o código NoSpam (em azul) e o checkum (em cinza).</translation>
     <message>
         <source>Contacts</source>
         <translation>Contatos</translation>
-    </message>
-    <message>
-        <source>Executable file</source>
-        <comment>popup title</comment>
-        <translation>Arquivo executável</translation>
-    </message>
-    <message>
-        <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
-        <comment>popup text</comment>
-        <translation>Você pediu ao qTox para abrir um arquivo executável. Executáveis podem potencialmente danificar seu computador. Tem certeza de que deseja abrir este arquivo?</translation>
     </message>
     <message>
         <source>Status</source>

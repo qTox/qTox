@@ -38,6 +38,7 @@ class Settings;
 class DocumentCache;
 class SmileyPack;
 class Style;
+class IMessageBoxManager;
 
 class GroupChatForm : public GenericChatForm
 {
@@ -45,7 +46,8 @@ class GroupChatForm : public GenericChatForm
 public:
     GroupChatForm(Core& core_, Group* chatGroup, IChatLog& chatLog_,
         IMessageDispatcher& messageDispatcher_, Settings& settings_,
-        DocumentCache& documentCache, SmileyPack& smileyPack, Style& style);
+        DocumentCache& documentCache, SmileyPack& smileyPack, Style& style,
+            IMessageBoxManager& messageBoxManager);
     ~GroupChatForm();
 
     void peerAudioPlaying(ToxPk peerPk);

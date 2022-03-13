@@ -43,7 +43,7 @@
 
 SettingsWidget::SettingsWidget(UpdateCheck* updateCheck, IAudioControl& audio,
     Core* core, SmileyPack& smileyPack, CameraSource& cameraSource,
-        Settings& settings, Style& style, Widget* parent)
+        Settings& settings, Style& style, IMessageBoxManager& messageBoxManager, Widget* parent)
     : QWidget(parent, Qt::Window)
 {
     CoreAV* coreAV = core->getAv();
@@ -67,7 +67,7 @@ SettingsWidget::SettingsWidget(UpdateCheck* updateCheck, IAudioControl& audio,
 
     AVForm* rawAvfrm = new AVForm(audio, coreAV, cameraSource, audioSettings, videoSettings, style);
     std::unique_ptr<AVForm> avfrm(rawAvfrm);
-    std::unique_ptr<AdvancedForm> expfrm(new AdvancedForm(settings, style));
+    std::unique_ptr<AdvancedForm> expfrm(new AdvancedForm(settings, style, messageBoxManager));
     std::unique_ptr<AboutForm> abtfrm(new AboutForm(updateCheck, style));
 
 #if UPDATE_CHECK_ENABLED

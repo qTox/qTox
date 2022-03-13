@@ -47,12 +47,14 @@ class QSplitter;
 class QScrollArea;
 class Settings;
 class Style;
+class IMessageBoxManager;
 
 class ContentDialog : public ActivateDialog, public IDialogs
 {
     Q_OBJECT
 public:
-    ContentDialog(const Core& core, Settings& settings, Style& style, QWidget* parent = nullptr);
+    ContentDialog(const Core& core, Settings& settings, Style& style,
+        IMessageBoxManager& messageBoxManager, QWidget* parent = nullptr);
     ~ContentDialog() override;
 
     FriendWidget* addFriend(std::shared_ptr<FriendChatroom> chatroom, GenericChatForm* form);
@@ -139,4 +141,5 @@ private:
     QString username;
     Settings& settings;
     Style& style;
+    IMessageBoxManager& messageBoxManager;
 };

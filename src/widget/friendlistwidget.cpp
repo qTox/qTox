@@ -100,11 +100,13 @@ qint64 timeUntilTomorrow()
 } // namespace
 
 FriendListWidget::FriendListWidget(const Core &core_, Widget* parent,
-    Settings& settings_, Style& style_, bool groupsOnTop)
+    Settings& settings_, Style& style_, IMessageBoxManager& messageBoxManager_,
+    bool groupsOnTop)
     : QWidget(parent)
     , core{core_}
     , settings{settings_}
     , style{style_}
+    , messageBoxManager{messageBoxManager_}
 {
     int countContacts = core.getFriendList().size();
     manager = new FriendListManager(countContacts, this);
@@ -616,7 +618,8 @@ CircleWidget* FriendListWidget::createCircleWidget(int id)
         return CircleWidget::getFromID(id);
     }
 
-    CircleWidget* circleWidget = new CircleWidget(core, this, id, settings, style);
+    CircleWidget* circleWidget = new CircleWidget(core, this, id, settings, style,
+        messageBoxManager);
     emit connectCircleWidget(*circleWidget);
     connect(this, &FriendListWidget::onCompactChanged, circleWidget, &CircleWidget::onCompactChanged);
     connect(circleWidget, &CircleWidget::renameRequested, this, &FriendListWidget::renameCircleWidget);

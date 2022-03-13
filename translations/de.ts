@@ -1719,6 +1719,19 @@ Bitte gib in beide Felder das gleiche Passwort ein.</translation>
     </message>
 </context>
 <context>
+    <name>MessageBoxManager</name>
+    <message>
+        <source>Executable file</source>
+        <comment>popup title</comment>
+        <translation type="unfinished">Ausführbare Datei</translation>
+    </message>
+    <message>
+        <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
+        <comment>popup text</comment>
+        <translation type="unfinished">Du hast qTox aufgefordert, eine Datei auszuführen. Bitte beachte, dass ausführbare Dateien ein Sicherheitsrisiko darstellen können. Bist du dir sicher, dass du die Datei ausführen möchtest?</translation>
+    </message>
+</context>
+<context>
     <name>NetCamView</name>
     <message>
         <source>Tox video</source>
@@ -2913,16 +2926,6 @@ Diese ID enthält den NoSpam-Code (in blau) und die Prüfsumme (in grau).</trans
     <message>
         <source>Contacts</source>
         <translation>Kontakte</translation>
-    </message>
-    <message>
-        <source>Executable file</source>
-        <comment>popup title</comment>
-        <translation>Ausführbare Datei</translation>
-    </message>
-    <message>
-        <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
-        <comment>popup text</comment>
-        <translation>Du hast qTox aufgefordert, eine Datei auszuführen. Bitte beachte, dass ausführbare Dateien ein Sicherheitsrisiko darstellen können. Bist du dir sicher, dass du die Datei ausführen möchtest?</translation>
     </message>
     <message>
         <source>Status</source>

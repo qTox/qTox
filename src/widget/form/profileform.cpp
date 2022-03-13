@@ -27,12 +27,12 @@
 #include "src/widget/contentlayout.h"
 #include "src/widget/form/setpassworddialog.h"
 #include "src/widget/form/settingswidget.h"
-#include "src/widget/gui.h"
 #include "src/widget/maskablepixmapwidget.h"
 #include "src/widget/style.h"
 #include "src/widget/tool/croppinglabel.h"
 #include "src/widget/translator.h"
 #include "src/widget/widget.h"
+#include "src/widget/tool/imessageboxmanager.h"
 #include <QApplication>
 #include <QBuffer>
 #include <QClipboard>
@@ -100,11 +100,12 @@ const QPair<QString, QString> CAN_NOT_CHANGE_PASSWORD = {
 } // namespace
 
 ProfileForm::ProfileForm(IProfileInfo* profileInfo_, Settings& settings_,
-    Style& style, QWidget* parent)
+    Style& style, IMessageBoxManager& messageBoxManager_, QWidget* parent)
     : QWidget{parent}
     , qr{nullptr}
     , profileInfo{profileInfo_}
     , settings{settings_}
+    , messageBoxManager{messageBoxManager_}
 {
     bodyUI = new Ui::IdentitySettings;
     bodyUI->setupUi(this);
@@ -321,7 +322,7 @@ void ProfileForm::onAvatarClicked()
         return;
     }
 
-    GUI::showError(tr("Error"), SET_AVATAR_ERROR[result]);
+    messageBoxManager.showError(tr("Error"), SET_AVATAR_ERROR[result]);
 }
 
 void ProfileForm::onRenameClicked()
@@ -339,7 +340,7 @@ void ProfileForm::onRenameClicked()
     }
 
     const QPair<QString, QString> error = RENAME_ERROR[result];
-    GUI::showError(error.first, error.second.arg(name));
+    messageBoxManager.showError(error.first, error.second.arg(name));
     prFileLabelUpdate();
 }
 
@@ -360,7 +361,7 @@ void ProfileForm::onExportClicked()
     }
 
     const QPair<QString, QString> error = SAVE_ERROR[result];
-    GUI::showWarning(error.first, error.second);
+    messageBoxManager.showWarning(error.first, error.second);
 }
 
 void ProfileForm::onDeleteClicked()
@@ -368,7 +369,7 @@ void ProfileForm::onDeleteClicked()
     const QString title = tr("Delete profile", "deletion confirmation title");
     const QString question = tr("Are you sure you want to delete this profile?",
                             "deletion confirmation text");
-    if (!GUI::askQuestion(title, question)) {
+    if (!messageBoxManager.askQuestion(title, question)) {
         return;
     }
 
@@ -386,7 +387,7 @@ void ProfileForm::onDeleteClicked()
     //: deletion failed text part 2
     message += "\n" + tr("Please manually remove them.");
 
-    GUI::showError(tr("Files could not be deleted!", "deletion failed title"), message);
+    messageBoxManager.showError(tr("Files could not be deleted!", "deletion failed title"), message);
 }
 
 void ProfileForm::onLogoutClicked()
@@ -426,25 +427,25 @@ void ProfileForm::onSaveQrClicked()
     }
 
     const QPair<QString, QString> error = SAVE_ERROR[result];
-    GUI::showWarning(error.first, error.second);
+    messageBoxManager.showWarning(error.first, error.second);
 }
 
 void ProfileForm::onDeletePassClicked()
 {
     if (!profileInfo->isEncrypted()) {
-        GUI::showInfo(tr("Nothing to remove"), tr("Your profile does not have a password!"));
+        messageBoxManager.showInfo(tr("Nothing to remove"), tr("Your profile does not have a password!"));
         return;
     }
 
     const QString title = tr("Remove password", "deletion confirmation title");
     //: deletion confirmation text
     const QString body = tr("Are you sure you want to remove your password?");
-    if (!GUI::askQuestion(title, body)) {
+    if (!messageBoxManager.askQuestion(title, body)) {
         return;
     }
 
     if (!profileInfo->deletePassword()) {
-        GUI::showInfo(CAN_NOT_CHANGE_PASSWORD.first, CAN_NOT_CHANGE_PASSWORD.second);
+        messageBoxManager.showInfo(CAN_NOT_CHANGE_PASSWORD.first, CAN_NOT_CHANGE_PASSWORD.second);
     }
 }
 
@@ -458,7 +459,7 @@ void ProfileForm::onChangePassClicked()
 
     QString newPass = dialog->getPassword();
     if (!profileInfo->setPassword(newPass)) {
-        GUI::showInfo(CAN_NOT_CHANGE_PASSWORD.first, CAN_NOT_CHANGE_PASSWORD.second);
+        messageBoxManager.showInfo(CAN_NOT_CHANGE_PASSWORD.first, CAN_NOT_CHANGE_PASSWORD.second);
     }
 }
 

@@ -1711,6 +1711,19 @@ Vänligen se till att du skriver samma lösenord två gånger.</translation>
     </message>
 </context>
 <context>
+    <name>MessageBoxManager</name>
+    <message>
+        <source>Executable file</source>
+        <comment>popup title</comment>
+        <translation type="unfinished">Körbar fil</translation>
+    </message>
+    <message>
+        <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
+        <comment>popup text</comment>
+        <translation type="unfinished">Du har bett qTox att öppna en körbar fil. Körbara filer kan potentiellt skada din dator. Är du säker vill öppna den här filen?</translation>
+    </message>
+</context>
+<context>
     <name>NetCamView</name>
     <message>
         <source>Tox video</source>
@@ -2887,16 +2900,6 @@ ID:t innehåller NoSpam-koden (i blått) och kontrollsumman (i grått).</transla
     <message>
         <source>Status</source>
         <translation>Status</translation>
-    </message>
-    <message>
-        <source>Executable file</source>
-        <comment>popup title</comment>
-        <translation>Körbar fil</translation>
-    </message>
-    <message>
-        <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
-        <comment>popup text</comment>
-        <translation>Du har bett qTox att öppna en körbar fil. Körbara filer kan potentiellt skada din dator. Är du säker vill öppna den här filen?</translation>
     </message>
     <message>
         <source>Your name</source>
