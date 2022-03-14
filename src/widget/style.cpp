@@ -219,17 +219,17 @@ QFont Style::getFont(Font font)
 
     static int defSize = QFontInfo(QFont()).pixelSize();
 
-    static QFont fonts[] = {
-        appFont(defSize + 3, QFont::Bold),   // extra big
-        appFont(defSize + 1, QFont::Normal), // big
-        appFont(defSize + 1, QFont::Bold),   // big bold
-        appFont(defSize, QFont::Normal),     // medium
-        appFont(defSize, QFont::Bold),       // medium bold
-        appFont(defSize - 1, QFont::Normal), // small
-        appFont(defSize - 1, QFont::Light),  // small light
+    static std::map<Font, QFont> fonts = {
+        {Font::ExtraBig, appFont(defSize + 3, QFont::Bold)},
+        {Font::Big, appFont(defSize + 1, QFont::Normal)},
+        {Font::BigBold, appFont(defSize + 1, QFont::Bold)},
+        {Font::Medium, appFont(defSize, QFont::Normal)},
+        {Font::MediumBold, appFont(defSize, QFont::Bold)},
+        {Font::Small, appFont(defSize - 1, QFont::Normal)},
+        {Font::SmallLight, appFont(defSize - 1, QFont::Light)},
     };
 
-    return fonts[static_cast<int>(font)];
+    return fonts[font];
 }
 
 const QString Style::resolve(const QString& filename, Settings& settings, const QFont& baseFont)
