@@ -121,8 +121,10 @@ void Settings::loadGlobal()
 
     auto upgradeSuccess = GlobalSettingsUpgrader::doUpgrade(*this, globalSettingsVersion, GLOBAL_SETTINGS_VERSION);
     if (!upgradeSuccess) {
-        // Would be nice to show a GUI warning, but GUI isn't initialized yet.
-        // Trying to run without even default settings isn't sane.
+        messageBoxManager.showError(tr("Failed to load global settings"),
+            tr("Unable to upgrade settings from version %1 to version %2. Cannot start qTox.")
+            .arg(globalSettingsVersion)
+            .arg(GLOBAL_SETTINGS_VERSION));
         std::terminate();
         return;
     }
