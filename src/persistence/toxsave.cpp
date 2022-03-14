@@ -20,6 +20,8 @@
 #include "toxsave.h"
 #include "src/persistence/settings.h"
 #include "src/widget/gui.h"
+#include "src/widget/widget.h"
+#include "src/nexus.h"
 #include "src/widget/tool/profileimporter.h"
 #include <QCoreApplication>
 
@@ -47,6 +49,6 @@ bool ToxSave::toxSaveEventHandler(const QByteArray& eventData, void* userData)
  */
 bool ToxSave::handleToxSave(const QString& path)
 {
-    ProfileImporter importer(settings, GUI::getMainWidget());
+    ProfileImporter importer(settings, Nexus::getDesktopGUI());
     return importer.importProfile(path);
 }
