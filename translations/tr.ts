@@ -2664,6 +2664,10 @@ Bu kimlik NoSpam kodunu (mavi) ve sağlama toplamını (gri) içerir.</translati
         <source>Unable to upgrade settings from version %1 to version %2. Cannot start qTox.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Failed to load global settings</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ToxURIDialog</name>
