@@ -2676,6 +2676,10 @@ Toto ID obsahuje kód NoSpam (modrou) a kontrolný súčet (šedou).</translatio
         <source>Unable to upgrade settings from version %1 to version %2. Cannot start qTox.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Failed to load global settings</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ToxURIDialog</name>
