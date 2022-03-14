@@ -62,11 +62,12 @@ namespace
  */
 
 AddFriendForm::AddFriendForm(ToxId ownId_, Settings& settings_, Style& style_,
-    IMessageBoxManager& messageBoxManager_)
+    IMessageBoxManager& messageBoxManager_, Core& core_)
     : ownId{ownId_}
     , settings{settings_}
     , style{style_}
     , messageBoxManager{messageBoxManager_}
+    , core{core_}
 {
     tabWidget = new QTabWidget();
     main = new QWidget(tabWidget);
@@ -112,7 +113,7 @@ AddFriendForm::AddFriendForm(ToxId ownId_, Settings& settings_, Style& style_,
     connect(&sendButton, &QPushButton::clicked, this, &AddFriendForm::onSendTriggered);
     connect(&importSendButton, &QPushButton::clicked, this, &AddFriendForm::onImportSendClicked);
     connect(&importFileButton, &QPushButton::clicked, this, &AddFriendForm::onImportOpenClicked);
-    connect(Nexus::getCore(), &Core::usernameSet, this, &AddFriendForm::onUsernameSet);
+    connect(&core, &Core::usernameSet, this, &AddFriendForm::onUsernameSet);
 
     // accessibility stuff
     toxIdLabel.setAccessibleDescription(

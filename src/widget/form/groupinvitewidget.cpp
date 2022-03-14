@@ -35,7 +35,8 @@
  * and provides buttons to accept/reject it
  */
 
-GroupInviteWidget::GroupInviteWidget(QWidget* parent, const GroupInvite& invite, Settings& settings_)
+GroupInviteWidget::GroupInviteWidget(QWidget* parent, const GroupInvite& invite,
+    Settings& settings_, Core& core_)
     : QWidget(parent)
     , acceptButton(new QPushButton(this))
     , rejectButton(new QPushButton(this))
@@ -43,6 +44,7 @@ GroupInviteWidget::GroupInviteWidget(QWidget* parent, const GroupInvite& invite,
     , widgetLayout(new QHBoxLayout(this))
     , inviteInfo(invite)
     , settings{settings_}
+    , core{core_}
 {
     connect(acceptButton, &QPushButton::clicked, [=]() { emit accepted(inviteInfo); });
     connect(rejectButton, &QPushButton::clicked, [=]() { emit rejected(inviteInfo); });
@@ -58,7 +60,7 @@ GroupInviteWidget::GroupInviteWidget(QWidget* parent, const GroupInvite& invite,
  */
 void GroupInviteWidget::retranslateUi()
 {
-    QString name = Nexus::getCore()->getFriendUsername(inviteInfo.getFriendId());
+    QString name = core.getFriendUsername(inviteInfo.getFriendId());
     QDateTime inviteDate = inviteInfo.getInviteDate();
     QString date = inviteDate.toString(settings.getDateFormat());
     QString time = inviteDate.toString(settings.getTimestampFormat());

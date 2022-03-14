@@ -295,8 +295,9 @@ void Widget::init()
 
     CoreFile* coreFile = core->getCoreFile();
     filesForm = new FilesForm(*coreFile, settings, style, messageBoxManager);
-    addFriendForm = new AddFriendForm(core->getSelfId(), settings, style, messageBoxManager);
-    groupInviteForm = new GroupInviteForm(settings);
+    addFriendForm = new AddFriendForm(core->getSelfId(), settings, style,
+        messageBoxManager, *core);
+    groupInviteForm = new GroupInviteForm(settings, *core);
 
 #if UPDATE_CHECK_ENABLED
     updateCheck = std::unique_ptr<UpdateCheck>(new UpdateCheck(settings));

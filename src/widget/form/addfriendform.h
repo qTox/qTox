@@ -36,6 +36,7 @@ class ContentLayout;
 class Settings;
 class Style;
 class IMessageBoxManager;
+class Core;
 
 class AddFriendForm : public QObject
 {
@@ -49,7 +50,7 @@ public:
     };
 
     AddFriendForm(ToxId ownId_, Settings& settings, Style& style,
-        IMessageBoxManager& messageBoxManager);
+        IMessageBoxManager& messageBoxManager, Core& core);
     AddFriendForm(const AddFriendForm&) = delete;
     AddFriendForm& operator=(const AddFriendForm&) = delete;
     ~AddFriendForm();
@@ -120,4 +121,5 @@ private:
     Settings& settings;
     Style& style;
     IMessageBoxManager& messageBoxManager;
+    Core& core;
 };

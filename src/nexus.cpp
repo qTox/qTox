@@ -279,19 +279,6 @@ void Nexus::destroyInstance()
 }
 
 /**
- * @brief Get core instance.
- * @return nullptr if not started, core instance otherwise.
- */
-Core* Nexus::getCore()
-{
-    Nexus& nexus_ = getInstance();
-    if (!nexus_.profile)
-        return nullptr;
-
-    return &nexus_.profile->getCore();
-}
-
-/**
  * @brief Get current user profile.
  * @return nullptr if not started, profile otherwise.
  */
