@@ -20,6 +20,8 @@ RUN dnf --nodocs -y install dnf-plugins-core && \
     dnf --nodocs -y install \
         cmake \
         make \
+        clang \
+        clang-tools-extra \
         gcc \
         gcc-c++ \
         git \

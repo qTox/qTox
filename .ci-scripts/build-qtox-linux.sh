@@ -28,6 +28,7 @@ while (( $# > 0 )); do
     --minimal) MINIMAL=1 ; shift ;;
     --full) MINIMAL=0; shift ;;
     --sanitize) SANITIZE=1; shift ;;
+    --tidy) TIDY=1; shift;;
     --build-type) BUILD_TYPE=$2; shift 2 ;;
     --help|-h) usage; exit 1 ;;
     *) echo "Unexpected argument $1"; usage; exit 1 ;;
@@ -51,6 +52,15 @@ if [ ! -z ${SANITIZE+x} ]; then
     SANITIZE_ARGS="-DASAN=ON"
 fi
 
+if [ ! -z ${TIDY+x} ]; then
+    export CXX=clang++
+    export CC=clang
+    COMPILE_COMMANDS="-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
+else
+    COMPILE_COMMANDS=""
+fi
+
+
 SRCDIR=/qtox
 export CTEST_OUTPUT_ON_FAILURE=1
 
@@ -60,6 +70,7 @@ if [ $MINIMAL -eq 1 ]; then
         -DSMILEYS=DISABLED \
         -DSTRICT_OPTIONS=ON \
         -DSPELL_CHECK=OFF \
+        ${COMPILE_COMMANDS} \
         $SANITIZE_ARGS
 else
     cmake "$SRCDIR" \
@@ -68,8 +79,15 @@ else
         -DSTRICT_OPTIONS=ON \
         -DCODE_COVERAGE=ON \
         -DDESKTOP_NOTIFICATIONS=ON \
+        ${COMPILE_COMMANDS} \
         $SANITIZE_ARGS
 fi
 
 cmake --build . -- -j $(nproc)
-ctest -j$(nproc)
+
+if [ ! -z ${TIDY+x} ]; then
+    run-clang-tidy -header-filter=.* src/ audio/src/ audio/include test/src/ \
+        test/include util/src/ util/include/
+else
+    ctest -j$(nproc)
+fi

@@ -124,6 +124,22 @@ jobs:
           docker_image_name: fedora
       - name: Run build
         run: docker-compose run --rm fedora ./.ci-scripts/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }} --sanitize
+  clang-tidy:
+    name: Clang-Tidy
+    runs-on: ubuntu-latest
+    needs: build-fedora-docker
+    strategy:
+      matrix:
+        features: [full, minimal]
+        build_type: [Debug, Release]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/load-docker-image
+        name: Load docker image
+        with:
+          docker_image_name: fedora
+      - name: Run build
+        run: docker-compose run --rm fedora ./.ci-scripts/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }} --tidy
   build-opensuse:
     name: Opensuse
     runs-on: ubuntu-latest
