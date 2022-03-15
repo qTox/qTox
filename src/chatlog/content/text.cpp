@@ -96,7 +96,7 @@ void Text::deselectText()
 
 void Text::setWidth(float w)
 {
-    width = w;
+    width = static_cast<qreal>(w);
     dirty = true;
 
     regenerate();

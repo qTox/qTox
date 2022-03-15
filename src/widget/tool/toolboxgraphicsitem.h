@@ -42,7 +42,7 @@ private:
     void startAnimation(QAbstractAnimation::Direction direction);
 
     QPropertyAnimation* opacityAnimation;
-    qreal idleOpacity = 0.0f;
-    qreal activeOpacity = 1.0f;
+    qreal idleOpacity = 0.0;
+    qreal activeOpacity = 1.0;
     int fadeTimeMs = 300;
 };

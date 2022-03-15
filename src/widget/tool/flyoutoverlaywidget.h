@@ -55,6 +55,6 @@ private:
 
     QWidget* container;
     QPropertyAnimation* animation;
-    qreal percent = 1.0f;
+    qreal percent = 1.0;
     QPoint startPos;
 };

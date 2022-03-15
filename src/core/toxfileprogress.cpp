@@ -100,7 +100,7 @@ double ToxFileProgress::getSpeed() const
 {
     if (samples.size() > 0
         && samples[activeSample].bytesSent == filesize) {
-        return 0.0f;
+        return 0.0;
     }
 
     const auto sampleTimeInvalid = [](const Sample& sample) {
@@ -108,11 +108,11 @@ double ToxFileProgress::getSpeed() const
     };
 
     if (std::any_of(samples.cbegin(), samples.cend(), sampleTimeInvalid)) {
-        return 0.0f;
+        return 0.0;
     }
 
     if (samples[0].timestamp == samples[1].timestamp) {
-        return 0.0f;
+        return 0.0;
     }
 
     const auto& active = samples[activeSample];

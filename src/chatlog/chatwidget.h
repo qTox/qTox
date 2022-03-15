@@ -206,7 +206,7 @@ private:
 
     // layout
     QMargins margins = QMargins(10, 10, 10, 10);
-    qreal lineSpacing = 5.0f;
+    qreal lineSpacing = 5.0;
 
     IChatLog& chatLog;
     bool colorizeNames = false;
