@@ -40,7 +40,7 @@ class FileTransferWidget : public QWidget
     Q_OBJECT
 
 public:
-    FileTransferWidget(QWidget* parent, CoreFile& _coreFile, ToxFile file, Settings&);
+    FileTransferWidget(QWidget* parent, CoreFile& _coreFile, ToxFile file, Settings& settings);
     virtual ~FileTransferWidget();
     bool isActive() const;
     void onFileTransferUpdate(ToxFile file);
@@ -60,7 +60,7 @@ protected:
 
     bool drawButtonAreaNeeded() const;
 
-    void paintEvent(QPaintEvent*) final;
+    void paintEvent(QPaintEvent* event) final;
 
 public slots:
     void reloadTheme();

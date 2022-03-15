@@ -123,7 +123,7 @@ protected:
 
 private:
     virtual bool initInput(const QString& deviceName);
-    virtual bool initOutput(const QString& outDevDescr);
+    virtual bool initOutput(const QString& deviceName);
 
     void cleanupBuffers(uint sourceId);
     void cleanupSound();

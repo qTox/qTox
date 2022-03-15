@@ -89,7 +89,7 @@ namespace FileTransferList
     class Delegate : public QStyledItemDelegate
     {
     public:
-        Delegate(Settings&, QWidget* parent = nullptr);
+        Delegate(Settings& settings, QWidget* parent = nullptr);
         void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 
         bool editorEvent(QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option, const QModelIndex& index) override;
@@ -100,7 +100,7 @@ namespace FileTransferList
     class View : public QTableView
     {
     public:
-        View(QAbstractItemModel* model, Settings&, QWidget* parent = nullptr);
+        View(QAbstractItemModel* model, Settings& settings, QWidget* parent = nullptr);
         ~View();
 
     };
@@ -111,7 +111,7 @@ class FilesForm : public QObject
     Q_OBJECT
 
 public:
-    FilesForm(CoreFile& coreFile, Settings&);
+    FilesForm(CoreFile& coreFile, Settings& settings);
     ~FilesForm();
 
     bool isShown() const;
@@ -121,8 +121,8 @@ public slots:
     void onFileUpdated(const ToxFile& file);
 
 private slots:
-    void onSentFileActivated(const QModelIndex& item);
-    void onReceivedFileActivated(const QModelIndex& item);
+    void onSentFileActivated(const QModelIndex& index);
+    void onReceivedFileActivated(const QModelIndex& index);
 
 private:
     struct FileInfo

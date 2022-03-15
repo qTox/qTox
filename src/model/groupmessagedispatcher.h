@@ -36,7 +36,7 @@ class GroupMessageDispatcher : public IMessageDispatcher
 {
     Q_OBJECT
 public:
-    GroupMessageDispatcher(Group& group, MessageProcessor processor, ICoreIdHandler& idHandler,
+    GroupMessageDispatcher(Group& g_, MessageProcessor processor, ICoreIdHandler& idHandler,
                            ICoreGroupMessageSender& messageSender,
                            const IGroupSettings& groupSettings);
 

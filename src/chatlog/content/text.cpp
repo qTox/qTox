@@ -32,9 +32,9 @@
 #include <QTextFragment>
 
 Text::Text(DocumentCache& documentCache_, Settings& settings_, const QString& txt,
-    const QFont& font, bool enableElide, const QString& rwText, const TextType& type,
+    const QFont& font, bool enableElide, const QString& rawText_, const TextType& type,
     const QColor& custom)
-    : rawText(rwText)
+    : rawText(rawText_)
     , elide(enableElide)
     , defFont(font)
     , defStyleSheet(Style::getStylesheet(QStringLiteral("chatArea/innerStyle.css"), settings_, font))

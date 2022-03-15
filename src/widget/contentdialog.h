@@ -51,7 +51,7 @@ class ContentDialog : public ActivateDialog, public IDialogs
 {
     Q_OBJECT
 public:
-    ContentDialog(const Core& core, Settings&, QWidget* parent = nullptr);
+    ContentDialog(const Core& core, Settings& settings, QWidget* parent = nullptr);
     ~ContentDialog() override;
 
     FriendWidget* addFriend(std::shared_ptr<FriendChatroom> chatroom, GenericChatForm* form);
@@ -62,7 +62,7 @@ public:
     void ensureSplitterVisible();
     void updateTitleAndStatusIcon();
 
-    void cycleChats(bool forward, bool loop = true);
+    void cycleChats(bool forward, bool inverse = true);
     void onVideoShow(QSize size);
     void onVideoHide();
 
@@ -72,7 +72,7 @@ public:
     bool hasChat(const ChatId& chatId) const override;
     bool isChatActive(const ChatId& chatId) const override;
 
-    void focusChat(const ChatId& friendPk);
+    void focusChat(const ChatId& chatId);
     void updateFriendStatus(const ToxPk& friendPk, Status::Status status);
     void updateChatStatusLight(const ChatId& chatId);
 

@@ -44,8 +44,8 @@ class ChatWidget : public QGraphicsView
 {
     Q_OBJECT
 public:
-    ChatWidget(IChatLog& chatLog_, const Core& core_, DocumentCache&, SmileyPack&,
-        Settings&, QWidget* parent = nullptr);
+    ChatWidget(IChatLog& chatLog_, const Core& core_, DocumentCache& documentCache,
+        SmileyPack& smileyPack, Settings& settings, QWidget* parent = nullptr);
     virtual ~ChatWidget();
 
     void insertChatlines(std::map<ChatLogIdx, ChatLine::Ptr> chatLines);
@@ -94,7 +94,7 @@ private slots:
     void renderMessage(ChatLogIdx idx);
     void renderMessages(ChatLogIdx begin, ChatLogIdx end);
 
-    void setRenderedWindowStart(ChatLogIdx start);
+    void setRenderedWindowStart(ChatLogIdx begin);
     void setRenderedWindowEnd(ChatLogIdx end);
 
     void onRenderFinished();
@@ -121,7 +121,7 @@ protected:
     void mouseMoveEvent(QMouseEvent* ev) final;
     void scrollContentsBy(int dx, int dy) final;
     void resizeEvent(QResizeEvent* ev) final;
-    void showEvent(QShowEvent*) final;
+    void showEvent(QShowEvent* event) final;
     void hideEvent(QHideEvent* event) final;
     void focusInEvent(QFocusEvent* ev) final;
     void focusOutEvent(QFocusEvent* ev) final;
@@ -133,7 +133,7 @@ protected:
 
     ChatLine::Ptr findLineByPosY(qreal yPos) const;
 
-    void removeLines(ChatLogIdx being, ChatLogIdx end);
+    void removeLines(ChatLogIdx begin, ChatLogIdx end);
 
 private:
     void retranslateUi();

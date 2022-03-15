@@ -186,7 +186,7 @@ public:
     };
 
 public:
-    History(std::shared_ptr<RawDatabase> db, Settings&);
+    History(std::shared_ptr<RawDatabase> db, Settings& settings);
     ~History();
 
     bool isValid();

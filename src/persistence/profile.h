@@ -46,9 +46,9 @@ class Profile : public QObject
 
 public:
     static Profile* loadProfile(const QString& name, const QString& password, Settings& settings,
-                                const QCommandLineParser* parser, CameraSource&);
+                                const QCommandLineParser* parser, CameraSource& cameraSource);
     static Profile* createProfile(const QString& name, const QString& password, Settings& settings,
-                                  const QCommandLineParser* parser, CameraSource&);
+                                  const QCommandLineParser* parser, CameraSource& cameraSource);
     ~Profile();
 
     Core& getCore() const;
@@ -74,11 +74,11 @@ public:
 
     bool rename(QString newName);
 
-    static const QStringList getAllProfileNames(Settings&);
+    static const QStringList getAllProfileNames(Settings& settings);
 
-    static bool exists(QString name, Paths&);
-    static bool isEncrypted(QString name, Paths&);
-    static QString getDbPath(const QString& profileName, Paths&);
+    static bool exists(QString name, Paths& paths);
+    static bool isEncrypted(QString name, Paths& paths);
+    static QString getDbPath(const QString& profileName, Paths& paths);
 
 signals:
     void selfAvatarChanged(const QPixmap& pixmap);
@@ -109,7 +109,7 @@ private:
     static QStringList getFilesByExt(QString extension, Settings& settings);
     QString avatarPath(const ToxPk& owner, bool forceUnencrypted = false);
     bool saveToxSave(QByteArray data);
-    void initCore(const QByteArray& toxsave, Settings &s, bool isNewProfile, CameraSource&);
+    void initCore(const QByteArray& toxsave, Settings &s, bool isNewProfile, CameraSource& cameraSource);
 
 private:
     std::unique_ptr<AvatarBroadcaster> avatarBroadcaster;

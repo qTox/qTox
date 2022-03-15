@@ -154,8 +154,9 @@ private slots:
         receivedMessages.push_back(std::move(message));
     }
 
-    void onMessageBroken(DispatchedMessageId id, BrokenMessageReason)
+    void onMessageBroken(DispatchedMessageId id, BrokenMessageReason reason)
     {
+        std::ignore = reason;
         brokenMessages.insert(id);
     }
 

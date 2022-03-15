@@ -37,7 +37,7 @@ public:
     Friend& operator=(const Friend& other) = delete;
 
     void setName(const QString& name) override;
-    void setAlias(const QString& name);
+    void setAlias(const QString& alias);
     QString getDisplayedName() const override;
     bool hasAlias() const;
     QString getUserName() const;

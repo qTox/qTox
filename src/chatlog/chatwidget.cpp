@@ -1304,8 +1304,9 @@ void ChatWidget::handleMultiClickEvent()
     }
 }
 
-void ChatWidget::showEvent(QShowEvent*)
+void ChatWidget::showEvent(QShowEvent* event)
 {
+    std::ignore = event;
     // Empty.
     // The default implementation calls centerOn - for some reason - causing
     // the scrollbar to move.

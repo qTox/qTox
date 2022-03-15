@@ -90,8 +90,9 @@ void MaskablePixmapWidget::setSize(QSize size)
     }
 }
 
-void MaskablePixmapWidget::mousePressEvent(QMouseEvent*)
+void MaskablePixmapWidget::mousePressEvent(QMouseEvent* event)
 {
+    std::ignore = event;
     if (clickable) {
         emit clicked();
     }

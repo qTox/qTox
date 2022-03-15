@@ -32,7 +32,7 @@ class QString;
 class GroupList
 {
 public:
-    static Group* addGroup(Core& core, int groupId, const GroupId& persistentGroupId, const QString& name, bool isAvGroupchat, const QString& selfName);
+    static Group* addGroup(Core& core, int groupNum, const GroupId& persistentGroupId, const QString& name, bool isAvGroupchat, const QString& selfName);
     static Group* findGroup(const GroupId& groupId);
     static const GroupId& id2Key(uint32_t groupNum);
     static void removeGroup(const GroupId& groupId, bool fake = false);

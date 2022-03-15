@@ -76,21 +76,21 @@ public:
     };
 
     static QStringList getThemeColorNames();
-    static const QString getStylesheet(const QString& filename, Settings&, const QFont& baseFont = QFont());
-    static const QString getImagePath(const QString& filename, Settings&);
-    static QString getThemeFolder(Settings&);
+    static const QString getStylesheet(const QString& filename, Settings& settings, const QFont& baseFont = QFont());
+    static const QString getImagePath(const QString& filename, Settings& settings);
+    static QString getThemeFolder(Settings& settings);
     static QString getThemeName();
     static QColor getColor(ColorPalette entry);
     static QFont getFont(Font font);
-    static const QString resolve(const QString& filename, Settings&, const QFont& baseFont = QFont());
+    static const QString resolve(const QString& filename, Settings& settings, const QFont& baseFont = QFont());
     static void repolish(QWidget* w);
-    static void setThemeColor(Settings&, int color);
+    static void setThemeColor(Settings& settings, int color);
     static void setThemeColor(const QColor& color);
     static void applyTheme();
     static QPixmap scaleSvgImage(const QString& path, uint32_t width, uint32_t height);
-    static void initPalette(Settings&);
+    static void initPalette(Settings& settings);
     static void initDictColor();
-    static QString getThemePath(Settings&);
+    static QString getThemePath(Settings& settings);
 
 signals:
     void themeChanged();

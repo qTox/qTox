@@ -337,9 +337,8 @@ void UserInterfaceForm::on_cbShowIdenticons_stateChanged()
     settings.setShowIdenticons(bodyUI->cbShowIdenticons->isChecked());
 }
 
-void UserInterfaceForm::on_themeColorCBox_currentIndexChanged(int)
+void UserInterfaceForm::on_themeColorCBox_currentIndexChanged(int index)
 {
-    int index = bodyUI->themeColorCBox->currentIndex();
     settings.setThemeColor(index);
     Style::setThemeColor(settings, index);
     Style::applyTheme();

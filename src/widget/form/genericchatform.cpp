@@ -384,8 +384,9 @@ void GenericChatForm::show(ContentLayout* contentLayout_)
 #endif
 }
 
-void GenericChatForm::showEvent(QShowEvent*)
+void GenericChatForm::showEvent(QShowEvent* event)
 {
+    std::ignore = event;
     msgEdit->setFocus();
     headWidget->showCallConfirm();
 }

@@ -258,7 +258,7 @@ public:
     void setLightTrayIcon(bool newValue);
 
     QString getStyle() const;
-    void setStyle(const QString& newValue);
+    void setStyle(const QString& newStyle);
 
     bool getShowSystemTray() const;
     void setShowSystemTray(bool newValue);
@@ -290,7 +290,7 @@ public:
     void setProxyAddr(const QString& address) override;
 
     ICoreSettings::ProxyType getProxyType() const override;
-    void setProxyType(ICoreSettings::ProxyType type) override;
+    void setProxyType(ICoreSettings::ProxyType newValue) override;
 
     quint16 getProxyPort() const override;
     void setProxyPort(quint16 port) override;
@@ -434,7 +434,7 @@ public:
     void setAutoAcceptCall(const ToxPk& id, AutoAcceptCallFlags accept) override;
 
     QString getGlobalAutoAcceptDir() const;
-    void setGlobalAutoAcceptDir(const QString& dir);
+    void setGlobalAutoAcceptDir(const QString& newValue);
 
     size_t getMaxAutoAcceptSize() const;
     void setMaxAutoAcceptSize(size_t size);
@@ -501,7 +501,7 @@ public:
     void setFriendCircleID(const ToxPk& id, int circleID) override;
 
     QDateTime getFriendActivity(const ToxPk& id) const override;
-    void setFriendActivity(const ToxPk& id, const QDateTime& date) override;
+    void setFriendActivity(const ToxPk& id, const QDateTime& activity) override;
 
     void saveFriendSettings(const ToxPk& id) override;
     void removeFriendSettings(const ToxPk& id) override;
@@ -513,7 +513,7 @@ public:
     SIGNAL_IMPL(Settings, contactNoteChanged, const ToxPk& id, const QString& note)
 
     bool getCompactLayout() const;
-    void setCompactLayout(bool compact);
+    void setCompactLayout(bool value);
 
     FriendListSortingMode getFriendSortingMode() const;
     void setFriendSortingMode(FriendListSortingMode mode);

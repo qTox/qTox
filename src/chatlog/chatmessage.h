@@ -50,22 +50,22 @@ public:
         ALERT,
     };
 
-    ChatMessage(DocumentCache&, Settings&);
+    ChatMessage(DocumentCache& documentCache, Settings& settings);
     ~ChatMessage();
     ChatMessage(const ChatMessage&) = default;
     ChatMessage(ChatMessage&&) = default;
 
     static ChatMessage::Ptr createChatMessage(const QString& sender, const QString& rawMessage,
                                               MessageType type, bool isMe, MessageState state,
-                                              const QDateTime& date, DocumentCache&,
-                                              SmileyPack&, Settings&, bool colorizeName = false);
+                                              const QDateTime& date, DocumentCache& documentCache,
+                                              SmileyPack& smileyPack, Settings& settings, bool colorizeName = false);
     static ChatMessage::Ptr createChatInfoMessage(const QString& rawMessage, SystemMessageType type,
-                                                  const QDateTime& date, DocumentCache&, Settings&);
+                                                  const QDateTime& date, DocumentCache& documentCache, Settings& settings);
     static ChatMessage::Ptr createFileTransferMessage(const QString& sender, CoreFile& coreFile,
                                                       ToxFile file, bool isMe, const QDateTime& date,
-                                                      DocumentCache&, Settings&);
-    static ChatMessage::Ptr createTypingNotification(DocumentCache&, Settings&);
-    static ChatMessage::Ptr createBusyNotification(DocumentCache&, Settings&);
+                                                      DocumentCache& documentCache, Settings& settings);
+    static ChatMessage::Ptr createTypingNotification(DocumentCache& documentCache, Settings& settings);
+    static ChatMessage::Ptr createBusyNotification(DocumentCache& documentCache, Settings& settings);
 
     void markAsDelivered(const QDateTime& time);
     void markAsBroken();

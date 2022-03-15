@@ -92,8 +92,9 @@ void PrivacyForm::on_nospamLineEdit_editingFinished()
     }
 }
 
-void PrivacyForm::showEvent(QShowEvent*)
+void PrivacyForm::showEvent(QShowEvent* event)
 {
+    std::ignore = event;
     const Settings& s = settings;
     bodyUI->nospamLineEdit->setText(core->getSelfId().getNoSpamString());
     bodyUI->cbTypingNotification->setChecked(s.getTypingNotification());

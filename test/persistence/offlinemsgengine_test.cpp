@@ -38,7 +38,7 @@ private slots:
 };
 
 namespace {
-void completionFn(bool) {}
+void completionFn(bool success) { std::ignore = success; }
 } // namespace
 
 void TestOfflineMsgEngine::testReceiptBeforeMessage()

@@ -63,9 +63,9 @@ private:
         bool hideGroups = false;
     } filterParams;
 
-    void removeAll(IFriendListItem*);
-    bool cmpByName(const IFriendListItemPtr&, const IFriendListItemPtr&);
-    bool cmpByActivity(const IFriendListItemPtr&, const IFriendListItemPtr&);
+    void removeAll(IFriendListItem* item);
+    bool cmpByName(const IFriendListItemPtr& itemA, const IFriendListItemPtr& itemB);
+    bool cmpByActivity(const IFriendListItemPtr& itemA, const IFriendListItemPtr& itemB);
 
     bool byName = true;
     bool hideCircles = false;

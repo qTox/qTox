@@ -32,7 +32,7 @@ class Timestamp : public Text
     Q_OBJECT
 public:
     Timestamp(const QDateTime& time_, const QString& format, const QFont& font,
-        DocumentCache&, Settings&);
+        DocumentCache& documentCache, Settings& settings);
     QDateTime getTime();
 
 protected:

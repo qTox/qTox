@@ -118,7 +118,7 @@ private:
     };
 
 public:
-    Widget(Profile& profile_, IAudioControl& audio_, CameraSource&, Settings&,
+    Widget(Profile& profile_, IAudioControl& audio_, CameraSource& cameraSource, Settings& settings,
         QWidget* parent = nullptr);
     ~Widget() override;
     void init();
@@ -226,7 +226,7 @@ private slots:
     void setStatusOnline();
     void setStatusAway();
     void setStatusBusy();
-    void onIconClick(QSystemTrayIcon::ActivationReason);
+    void onIconClick(QSystemTrayIcon::ActivationReason reason);
     void onUserAwayCheck();
     void onEventIconTick();
     void onTryCreateTrayIcon();
@@ -239,11 +239,11 @@ private slots:
     void onDialogShown(GenericChatroomWidget* widget);
     void outgoingNotification();
     void onCallEnd();
-    void incomingNotification(uint32_t friendId);
+    void incomingNotification(uint32_t friendNum);
     void onRejectCall(uint32_t friendId);
     void onStopNotification();
     void dispatchFile(ToxFile file);
-    void dispatchFileWithBool(ToxFile file, bool);
+    void dispatchFileWithBool(ToxFile file, bool pausedOrBroken);
     void dispatchFileSendFailed(uint32_t friendId, const QString& fileName);
     void connectCircleWidget(CircleWidget& circleWidget);
     void connectFriendWidget(FriendWidget& friendWidget);

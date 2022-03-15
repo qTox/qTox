@@ -31,15 +31,15 @@ private:
     ProfileLocker() = delete;
 
 public:
-    static bool isLockable(QString profile, Paths&);
-    static bool lock(QString profile, Paths&);
+    static bool isLockable(QString profile, Paths& paths);
+    static bool lock(QString profile, Paths& paths);
     static void unlock();
     static bool hasLock();
     static QString getCurLockName();
-    static void assertLock(Paths&);
+    static void assertLock(Paths& paths);
 
 private:
-    static QString lockPathFromName(const QString& name, const Paths&);
+    static QString lockPathFromName(const QString& name, const Paths& paths);
     static void deathByBrokenLock();
 
 private:

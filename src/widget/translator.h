@@ -31,7 +31,7 @@ class Translator
 {
 public:
     static void translate(const QString& localeName);
-    static void registerHandler(const std::function<void()>&, void* owner);
+    static void registerHandler(const std::function<void()>& f, void* owner);
     static void unregister(void* owner);
 
 private:

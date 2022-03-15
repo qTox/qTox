@@ -156,8 +156,9 @@ void CircleWidget::dragEnterEvent(QDragEnterEvent* event)
     setContainerAttribute(Qt::WA_UnderMouse, true); // Simulate hover.
 }
 
-void CircleWidget::dragLeaveEvent(QDragLeaveEvent*)
+void CircleWidget::dragLeaveEvent(QDragLeaveEvent* event)
 {
+    std::ignore = event;
     setContainerAttribute(Qt::WA_UnderMouse, false);
 }
 

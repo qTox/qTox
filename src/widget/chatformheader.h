@@ -59,7 +59,7 @@ public:
         AV = Audio | Video
     };
 
-    ChatFormHeader(Settings&, QWidget* parent = nullptr);
+    ChatFormHeader(Settings& settings, QWidget* parent = nullptr);
     ~ChatFormHeader();
 
     void setName(const QString& newName);

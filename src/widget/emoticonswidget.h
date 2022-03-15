@@ -34,7 +34,7 @@ class EmoticonsWidget : public QMenu
 {
     Q_OBJECT
 public:
-    EmoticonsWidget(SmileyPack&, Settings&, QWidget* parent = nullptr);
+    EmoticonsWidget(SmileyPack& smileyPack, Settings& settings, QWidget* parent = nullptr);
 
 signals:
     void insertEmoticon(QString str);

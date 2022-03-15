@@ -28,7 +28,7 @@ class Settings;
 class DocumentCache
 {
 public:
-    DocumentCache(SmileyPack&, Settings&);
+    DocumentCache(SmileyPack& smileyPack, Settings& settings);
     ~DocumentCache();
     DocumentCache(DocumentCache&) = delete;
     DocumentCache& operator=(const DocumentCache&) = delete;

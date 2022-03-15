@@ -155,8 +155,9 @@ void EmoticonsWidget::mouseReleaseEvent(QMouseEvent* ev)
         hide();
 }
 
-void EmoticonsWidget::mousePressEvent(QMouseEvent*)
+void EmoticonsWidget::mousePressEvent(QMouseEvent* event)
 {
+    std::ignore = event;
 }
 
 void EmoticonsWidget::wheelEvent(QWheelEvent* e)

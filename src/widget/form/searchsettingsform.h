@@ -32,7 +32,7 @@ class SearchSettingsForm : public QWidget
     Q_OBJECT
 
 public:
-    explicit SearchSettingsForm(Settings&, QWidget *parent = nullptr);
+    explicit SearchSettingsForm(Settings& settings, QWidget *parent = nullptr);
     ~SearchSettingsForm();
 
     ParameterSearch getParameterSearch();

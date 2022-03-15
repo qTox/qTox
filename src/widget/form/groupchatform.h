@@ -44,7 +44,7 @@ class GroupChatForm : public GenericChatForm
 public:
     GroupChatForm(Core& core_, Group* chatGroup, IChatLog& chatLog_,
         IMessageDispatcher& messageDispatcher_, Settings& settings_,
-        DocumentCache&, SmileyPack&);
+        DocumentCache& documentCache, SmileyPack& smileyPack);
     ~GroupChatForm();
 
     void peerAudioPlaying(ToxPk peerPk);

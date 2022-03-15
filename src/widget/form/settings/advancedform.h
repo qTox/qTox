@@ -32,7 +32,7 @@ class AdvancedForm : public GenericForm
 {
     Q_OBJECT
 public:
-    explicit AdvancedForm(Settings&);
+    explicit AdvancedForm(Settings& settings);
     ~AdvancedForm();
     QString getFormName() final
     {

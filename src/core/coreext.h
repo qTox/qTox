@@ -88,7 +88,7 @@ public:
             ToxExtensionMessages* toxExtMessages,
             uint32_t friendId,
             std::mutex* toxext_mutex,
-            PacketPassKey);
+            PacketPassKey passKey);
 
         // Delete copy constructor, we shouldn't be able to copy
         Packet(Packet const& other) = delete;

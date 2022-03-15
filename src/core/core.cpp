@@ -872,44 +872,50 @@ void Core::bootstrapDht()
     }
 }
 
-void Core::onFriendRequest(Tox*, const uint8_t* cFriendPk, const uint8_t* cMessage,
+void Core::onFriendRequest(Tox* tox, const uint8_t* cFriendPk, const uint8_t* cMessage,
                            size_t cMessageSize, void* core)
 {
+    std::ignore = tox;
     ToxPk friendPk(cFriendPk);
     QString requestMessage = ToxString(cMessage, cMessageSize).getQString();
     emit static_cast<Core*>(core)->friendRequestReceived(friendPk, requestMessage);
 }
 
-void Core::onFriendMessage(Tox*, uint32_t friendId, Tox_Message_Type type, const uint8_t* cMessage,
+void Core::onFriendMessage(Tox* tox, uint32_t friendId, Tox_Message_Type type, const uint8_t* cMessage,
                            size_t cMessageSize, void* core)
 {
+    std::ignore = tox;
     bool isAction = (type == TOX_MESSAGE_TYPE_ACTION);
     QString msg = ToxString(cMessage, cMessageSize).getQString();
     emit static_cast<Core*>(core)->friendMessageReceived(friendId, msg, isAction);
 }
 
-void Core::onFriendNameChange(Tox*, uint32_t friendId, const uint8_t* cName, size_t cNameSize, void* core)
+void Core::onFriendNameChange(Tox* tox, uint32_t friendId, const uint8_t* cName, size_t cNameSize, void* core)
 {
+    std::ignore = tox;
     QString newName = ToxString(cName, cNameSize).getQString();
     // no saveRequest, this callback is called on every connection, not just on name change
     emit static_cast<Core*>(core)->friendUsernameChanged(friendId, newName);
 }
 
-void Core::onFriendTypingChange(Tox*, uint32_t friendId, bool isTyping, void* core)
+void Core::onFriendTypingChange(Tox* tox, uint32_t friendId, bool isTyping, void* core)
 {
+    std::ignore = tox;
     emit static_cast<Core*>(core)->friendTypingChanged(friendId, isTyping);
 }
 
-void Core::onStatusMessageChanged(Tox*, uint32_t friendId, const uint8_t* cMessage,
+void Core::onStatusMessageChanged(Tox* tox, uint32_t friendId, const uint8_t* cMessage,
                                   size_t cMessageSize, void* core)
 {
+    std::ignore = tox;
     QString message = ToxString(cMessage, cMessageSize).getQString();
     // no saveRequest, this callback is called on every connection, not just on name change
     emit static_cast<Core*>(core)->friendStatusMessageChanged(friendId, message);
 }
 
-void Core::onUserStatusChanged(Tox*, uint32_t friendId, Tox_User_Status userstatus, void* core)
+void Core::onUserStatusChanged(Tox* tox, uint32_t friendId, Tox_User_Status userstatus, void* core)
 {
+    std::ignore = tox;
     Status::Status status;
     switch (userstatus) {
     case TOX_USER_STATUS_AWAY:
@@ -929,8 +935,9 @@ void Core::onUserStatusChanged(Tox*, uint32_t friendId, Tox_User_Status userstat
     emit static_cast<Core*>(core)->friendStatusChanged(friendId, status);
 }
 
-void Core::onConnectionStatusChanged(Tox*, uint32_t friendId, Tox_Connection status, void* vCore)
+void Core::onConnectionStatusChanged(Tox* tox, uint32_t friendId, Tox_Connection status, void* vCore)
 {
+    std::ignore = tox;
     Core* core = static_cast<Core*>(vCore);
     Status::Status friendStatus = Status::Status::Offline;
     switch (status)
@@ -981,26 +988,29 @@ void Core::onGroupInvite(Tox* tox, uint32_t friendId, Tox_Conference_Type type,
     }
 }
 
-void Core::onGroupMessage(Tox*, uint32_t groupId, uint32_t peerId, Tox_Message_Type type,
+void Core::onGroupMessage(Tox* tox, uint32_t groupId, uint32_t peerId, Tox_Message_Type type,
                           const uint8_t* cMessage, size_t length, void* vCore)
 {
+    std::ignore = tox;
     Core* core = static_cast<Core*>(vCore);
     bool isAction = type == TOX_MESSAGE_TYPE_ACTION;
     QString message = ToxString(cMessage, length).getQString();
     emit core->groupMessageReceived(groupId, peerId, message, isAction);
 }
 
-void Core::onGroupPeerListChange(Tox*, uint32_t groupId, void* vCore)
+void Core::onGroupPeerListChange(Tox* tox, uint32_t groupId, void* vCore)
 {
+    std::ignore = tox;
     const auto core = static_cast<Core*>(vCore);
     qDebug() << QString("Group %1 peerlist changed").arg(groupId);
     // no saveRequest, this callback is called on every connection to group peer, not just on brand new peers
     emit core->groupPeerlistChanged(groupId);
 }
 
-void Core::onGroupPeerNameChange(Tox*, uint32_t groupId, uint32_t peerId, const uint8_t* name,
+void Core::onGroupPeerNameChange(Tox* tox, uint32_t groupId, uint32_t peerId, const uint8_t* name,
                                  size_t length, void* vCore)
 {
+    std::ignore = tox;
     const auto newName = ToxString(name, length).getQString();
     qDebug() << QString("Group %1, peer %2, name changed to %3").arg(groupId).arg(peerId).arg(newName);
     auto* core = static_cast<Core*>(vCore);
@@ -1008,9 +1018,10 @@ void Core::onGroupPeerNameChange(Tox*, uint32_t groupId, uint32_t peerId, const 
     emit core->groupPeerNameChanged(groupId, peerPk, newName);
 }
 
-void Core::onGroupTitleChange(Tox*, uint32_t groupId, uint32_t peerId, const uint8_t* cTitle,
+void Core::onGroupTitleChange(Tox* tox, uint32_t groupId, uint32_t peerId, const uint8_t* cTitle,
                               size_t length, void* vCore)
 {
+    std::ignore = tox;
     Core* core = static_cast<Core*>(vCore);
     QString author;
     // from tox.h: "If peer_number == UINT32_MAX, then author is unknown (e.g. initial joining the conference)."
@@ -1024,15 +1035,17 @@ void Core::onGroupTitleChange(Tox*, uint32_t groupId, uint32_t peerId, const uin
 /**
  * @brief Handling of custom lossless packets received by toxcore. Currently only used to forward toxext packets to CoreExt
  */
-void Core::onLosslessPacket(Tox*, uint32_t friendId,
+void Core::onLosslessPacket(Tox* tox, uint32_t friendId,
                             const uint8_t* data, size_t length, void* vCore)
 {
+    std::ignore = tox;
     Core* core = static_cast<Core*>(vCore);
     core->ext->onLosslessPacket(friendId, data, length);
 }
 
-void Core::onReadReceiptCallback(Tox*, uint32_t friendId, uint32_t receipt, void* core)
+void Core::onReadReceiptCallback(Tox* tox, uint32_t friendId, uint32_t receipt, void* core)
 {
+    std::ignore = tox;
     emit static_cast<Core*>(core)->receiptRecieved(friendId, ReceiptNum{receipt});
 }
 

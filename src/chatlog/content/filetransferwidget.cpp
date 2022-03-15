@@ -181,8 +181,9 @@ bool FileTransferWidget::drawButtonAreaNeeded() const
            && !(ui->leftButton->isVisible() && ui->leftButton->objectName() == "ok");
 }
 
-void FileTransferWidget::paintEvent(QPaintEvent*)
+void FileTransferWidget::paintEvent(QPaintEvent* event)
 {
+    std::ignore = event;
     // required by Hi-DPI support as border-image doesn't work.
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);

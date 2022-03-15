@@ -37,9 +37,9 @@ public:
 
     ~SessionChatLog();
     const ChatLogItem& at(ChatLogIdx idx) const override;
-    SearchResult searchForward(SearchPos startIdx, const QString& phrase,
+    SearchResult searchForward(SearchPos startPos, const QString& phrase,
                                const ParameterSearch& parameter) const override;
-    SearchResult searchBackward(SearchPos startIdx, const QString& phrase,
+    SearchResult searchBackward(SearchPos startPos, const QString& phrase,
                                 const ParameterSearch& parameter) const override;
     ChatLogIdx getFirstIdx() const override;
     ChatLogIdx getNextIdx() const override;

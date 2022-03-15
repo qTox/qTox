@@ -436,8 +436,9 @@ void SessionChatLog::onMessageComplete(DispatchedMessageId id)
     emit itemUpdated(messageIt->first);
 }
 
-void SessionChatLog::onMessageBroken(DispatchedMessageId id, BrokenMessageReason)
+void SessionChatLog::onMessageBroken(DispatchedMessageId id, BrokenMessageReason reason)
 {
+    std::ignore = reason;
     auto chatLogIdxIt = outgoingMessages.find(id);
 
     if (chatLogIdxIt == outgoingMessages.end()) {

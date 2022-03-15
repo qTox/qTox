@@ -46,7 +46,7 @@ public:
         FriendRequest = 2
     };
 
-    AddFriendForm(ToxId ownId_, Settings&);
+    AddFriendForm(ToxId ownId_, Settings& settings);
     AddFriendForm(const AddFriendForm&) = delete;
     AddFriendForm& operator=(const AddFriendForm&) = delete;
     ~AddFriendForm();

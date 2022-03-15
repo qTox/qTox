@@ -76,12 +76,13 @@ CoreExt::Packet::Packet(
     ToxExtensionMessages* toxExtMessages_,
     uint32_t friendId_,
     std::mutex* toxext_mutex_,
-    PacketPassKey)
+    PacketPassKey passKey)
     : toxext_mutex(toxext_mutex_)
     , toxExtMessages(toxExtMessages_)
     , packetList(packetList_)
     , friendId(friendId_)
 {
+    std::ignore = passKey;
     assert(toxext_mutex != nullptr);
 }
 

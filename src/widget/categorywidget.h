@@ -34,7 +34,7 @@ class CategoryWidget : public GenericChatItemWidget
 {
     Q_OBJECT
 public:
-    explicit CategoryWidget(bool compact_, Settings&, QWidget* parent = nullptr);
+    explicit CategoryWidget(bool compact_, Settings& settings, QWidget* parent = nullptr);
 
     bool isExpanded() const;
     void setExpanded(bool isExpanded, bool save = true);
@@ -71,8 +71,9 @@ private:
     virtual void onExpand()
     {
     }
-    virtual void onAddFriendWidget(FriendWidget*)
+    virtual void onAddFriendWidget(FriendWidget* widget)
     {
+        std::ignore = widget;
     }
 
     QWidget* listWidget;

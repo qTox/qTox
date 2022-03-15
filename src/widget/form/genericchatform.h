@@ -72,8 +72,8 @@ class GenericChatForm : public QWidget
     Q_OBJECT
 public:
     GenericChatForm(const Core& core_, const Chat* chat, IChatLog& chatLog_,
-                    IMessageDispatcher& messageDispatcher_, DocumentCache&,
-                    SmileyPack&, Settings&, QWidget* parent_ = nullptr);
+                    IMessageDispatcher& messageDispatcher_, DocumentCache& documentCache,
+                    SmileyPack& smileyPack, Settings& settings, QWidget* parent_ = nullptr);
     ~GenericChatForm() override;
 
     void setName(const QString& newName);
@@ -124,8 +124,8 @@ protected:
                                    const QDateTime& datetime, bool isAction, bool isSent, bool colorizeName = false);
     void adjustFileMenuPosition();
     void hideEvent(QHideEvent* event) override;
-    void showEvent(QShowEvent*) override;
-    bool event(QEvent*) final;
+    void showEvent(QShowEvent* event) override;
+    bool event(QEvent* event) final;
     void resizeEvent(QResizeEvent* event) final;
     bool eventFilter(QObject* object, QEvent* event) final;
     bool searchInText(const QString& phrase, const ParameterSearch& parameter, SearchDirection direction);

@@ -37,7 +37,7 @@ class CameraSource : public VideoSource
     Q_OBJECT
 
 public:
-    explicit CameraSource(Settings&);
+    explicit CameraSource(Settings& settings);
     ~CameraSource();
     void setupDefault();
     bool isNone() const;

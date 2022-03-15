@@ -32,7 +32,7 @@ class CustomTextDocument : public QTextDocument
 {
     Q_OBJECT
 public:
-    CustomTextDocument(SmileyPack&, Settings&, QObject* parent = nullptr);
+    CustomTextDocument(SmileyPack& smileyPack, Settings& settings, QObject* parent = nullptr);
 
 protected:
     virtual QVariant loadResource(int type, const QUrl& name);

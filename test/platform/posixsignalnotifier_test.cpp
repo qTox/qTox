@@ -54,7 +54,8 @@ void TestPosixSignalNotifier::checkUsrSignalHandling()
 }
 
 namespace {
-void sighandler(int) {
+void sighandler(int sig) {
+    std::ignore = sig;
 }
 }
 

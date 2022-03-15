@@ -27,8 +27,8 @@ class Settings;
 class ContentLayout : public QVBoxLayout
 {
 public:
-    ContentLayout(Settings&);
-    explicit ContentLayout(Settings&, QWidget* parent);
+    ContentLayout(Settings& settings);
+    explicit ContentLayout(Settings& settings, QWidget* parent);
     ~ContentLayout();
 
     void clear();

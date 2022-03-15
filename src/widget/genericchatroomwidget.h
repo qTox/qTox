@@ -36,7 +36,7 @@ class GenericChatroomWidget : public GenericChatItemWidget
 {
     Q_OBJECT
 public:
-    explicit GenericChatroomWidget(bool compact, Settings&, QWidget* parent = nullptr);
+    explicit GenericChatroomWidget(bool compact, Settings& settings, QWidget* parent = nullptr);
 
 public slots:
     virtual void setAsActiveChatroom() = 0;
@@ -54,7 +54,7 @@ public slots:
         return nullptr;
     }
 
-    bool eventFilter(QObject*, QEvent*) final;
+    bool eventFilter(QObject* object, QEvent* event) final;
 
     bool isActive();
 

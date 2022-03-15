@@ -26,7 +26,7 @@ class Settings;
 class ToxSave
 {
 public:
-    explicit ToxSave(Settings&);
+    explicit ToxSave(Settings& settings);
     bool handleToxSave(const QString& path);
     static bool toxSaveEventHandler(const QByteArray& eventData, void* userData);
 

@@ -39,7 +39,7 @@ public:
         Active = 2,      // Red
     };
 
-    explicit SearchForm(Settings&, QWidget* parent = nullptr);
+    explicit SearchForm(Settings& settings, QWidget* parent = nullptr);
     void removeSearchPhrase();
     QString getSearchPhrase() const;
     ParameterSearch getParameterSearch();

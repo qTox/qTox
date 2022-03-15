@@ -43,8 +43,9 @@ signals:
     void clicked();
 
 protected:
-    void mouseReleaseEvent(QMouseEvent*) final
+    void mouseReleaseEvent(QMouseEvent* event) final
     {
+        std::ignore = event;
         emit clicked();
     }
 };
@@ -53,7 +54,7 @@ class ProfileForm : public QWidget
 {
     Q_OBJECT
 public:
-    ProfileForm(IProfileInfo* profileInfo_, Settings&, QWidget* parent = nullptr);
+    ProfileForm(IProfileInfo* profileInfo_, Settings& settings, QWidget* parent = nullptr);
     ~ProfileForm();
     void show(ContentLayout* contentLayout);
     bool isShown() const;

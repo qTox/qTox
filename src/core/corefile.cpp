@@ -396,9 +396,10 @@ void CoreFile::handleAvatarOffer(uint32_t friendId, uint32_t fileId, bool accept
     addFile(friendId, fileId, file);
 }
 
-void CoreFile::onFileControlCallback(Tox*, uint32_t friendId, uint32_t fileId,
+void CoreFile::onFileControlCallback(Tox* tox, uint32_t friendId, uint32_t fileId,
                                      Tox_File_Control control, void* vCore)
 {
+    std::ignore = tox;
     Core* core = static_cast<Core*>(vCore);
     CoreFile* coreFile = core->getCoreFile();
     ToxFile* file = coreFile->findFile(friendId, fileId);

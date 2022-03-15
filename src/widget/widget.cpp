@@ -82,8 +82,9 @@
 #include "tool/removefrienddialog.h"
 #include "src/persistence/smileypack.h"
 
-bool toxActivateEventHandler(const QByteArray&, void* userData)
+bool toxActivateEventHandler(const QByteArray& data, void* userData)
 {
+    std::ignore = data;
     std::ignore = userData;
     Widget* widget = Nexus::getDesktopGUI();
     if (!widget) {
@@ -1083,9 +1084,9 @@ void Widget::cleanupNotificationSound()
     audioNotification.reset();
 }
 
-void Widget::incomingNotification(uint32_t friendnumber)
+void Widget::incomingNotification(uint32_t friendNum)
 {
-    const auto& friendId = FriendList::id2Key(friendnumber);
+    const auto& friendId = FriendList::id2Key(friendNum);
     newFriendMessageAlert(friendId, {}, false);
 
     // loop until call answered or rejected
@@ -1149,8 +1150,9 @@ void Widget::dispatchFile(ToxFile file)
     filesForm->onFileUpdated(file);
 }
 
-void Widget::dispatchFileWithBool(ToxFile file, bool)
+void Widget::dispatchFileWithBool(ToxFile file, bool pausedOrBroken)
 {
+    std::ignore = pausedOrBroken;
     dispatchFile(file);
 }
 
@@ -1255,8 +1257,9 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     }
 }
 
-void Widget::addFriendFailed(const ToxPk&, const QString& errorInfo)
+void Widget::addFriendFailed(const ToxPk& userId, const QString& errorInfo)
 {
+    std::ignore = userId;
     QString info = QString(tr("Couldn't send friend request"));
     if (!errorInfo.isEmpty()) {
         info = info + QStringLiteral(": ") + errorInfo;
@@ -1452,7 +1455,7 @@ void Widget::onReceiptReceived(int friendId, ReceiptNum receipt)
     friendMessageDispatchers[f->getPublicKey()]->onReceiptReceived(receipt);
 }
 
-void Widget::onExtendedMessageSupport(uint32_t friendNumber, bool compatible)
+void Widget::onExtendedMessageSupport(uint32_t friendNumber, bool supported)
 {
     const auto& friendKey = FriendList::id2Key(friendNumber);
     Friend* f = FriendList::findFriend(friendKey);
@@ -1460,7 +1463,7 @@ void Widget::onExtendedMessageSupport(uint32_t friendNumber, bool compatible)
         return;
     }
 
-    f->setExtendedMessageSupport(compatible);
+    f->setExtendedMessageSupport(supported);
 }
 
 void Widget::onFriendExtMessageReceived(uint32_t friendNumber, const QString& message)
@@ -2227,9 +2230,9 @@ void Widget::onEmptyGroupCreated(uint32_t groupnumber, const GroupId& groupId, c
     }
 }
 
-void Widget::onGroupJoined(int groupId, const GroupId& groupPersistentId)
+void Widget::onGroupJoined(int groupNum, const GroupId& groupId)
 {
-    createGroup(groupId, groupPersistentId);
+    createGroup(groupNum, groupId);
 }
 
 /**

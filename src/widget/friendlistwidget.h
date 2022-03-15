@@ -45,7 +45,7 @@ class FriendListWidget : public QWidget
     Q_OBJECT
 public:
     using SortingMode = Settings::FriendListSortingMode;
-    FriendListWidget(const Core&, Widget* parent, Settings&, bool groupsOnTop = true);
+    FriendListWidget(const Core& core, Widget* parent, Settings& settings, bool groupsOnTop = true);
     ~FriendListWidget();
     void setMode(SortingMode mode);
     SortingMode getMode() const;
@@ -62,7 +62,7 @@ public:
 
     void cycleChats(GenericChatroomWidget* activeChatroomWidget, bool forward);
 
-    void updateActivityTime(const QDateTime& date);
+    void updateActivityTime(const QDateTime& time);
 
 signals:
     void onCompactChanged(bool compact);

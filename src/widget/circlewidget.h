@@ -29,7 +29,7 @@ class CircleWidget final : public CategoryWidget
 {
     Q_OBJECT
 public:
-    CircleWidget(const Core& core_, FriendListWidget* parent, int id_, Settings&);
+    CircleWidget(const Core& core_, FriendListWidget* parent, int id_, Settings& settings);
     ~CircleWidget();
 
     void editName();

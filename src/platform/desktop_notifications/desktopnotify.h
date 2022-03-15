@@ -34,7 +34,7 @@ class DesktopNotify : public QObject
 {
     Q_OBJECT
 public:
-    explicit DesktopNotify(Settings&);
+    explicit DesktopNotify(Settings& settings);
 
 public slots:
     void notifyMessage(const NotificationData& notificationData);

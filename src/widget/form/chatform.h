@@ -51,8 +51,8 @@ class ChatForm : public GenericChatForm
     Q_OBJECT
 public:
     ChatForm(Profile& profile, Friend* chatFriend, IChatLog& chatLog_,
-        IMessageDispatcher& messageDispatcher_, DocumentCache&, SmileyPack&,
-        CameraSource&, Settings&);
+        IMessageDispatcher& messageDispatcher_, DocumentCache& documentCache, SmileyPack& smileyPack,
+        CameraSource& cameraSource, Settings& settings);
     ~ChatForm() override;
     void setStatusMessage(const QString& newMessage);
 

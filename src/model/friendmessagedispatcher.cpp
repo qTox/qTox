@@ -107,8 +107,9 @@ void FriendMessageDispatcher::onExtReceiptReceived(uint64_t receiptId)
  * @brief Handles status change for friend
  * @note Parameters just to fit slot api
  */
-void FriendMessageDispatcher::onFriendOnlineOfflineChanged(const ToxPk&, bool isOnline)
+void FriendMessageDispatcher::onFriendOnlineOfflineChanged(const ToxPk& friendPk, bool isOnline)
 {
+    std::ignore = friendPk;
     if (isOnline) {
         auto messagesToResend = offlineMsgEngine.removeAllMessages();
         for (auto const& message : messagesToResend) {

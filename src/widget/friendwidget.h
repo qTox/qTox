@@ -35,7 +35,7 @@ class FriendWidget : public GenericChatroomWidget, public IFriendListItem
 {
     Q_OBJECT
 public:
-    FriendWidget(std::shared_ptr<FriendChatroom> chatform_, bool compact_, Settings&);
+    FriendWidget(std::shared_ptr<FriendChatroom> chatroom_, bool compact_, Settings& settings);
 
     void contextMenuEvent(QContextMenuEvent* event) final;
     void setAsActiveChatroom() final;

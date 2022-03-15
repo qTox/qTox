@@ -34,7 +34,7 @@ class SmileyPack : public QObject
     Q_OBJECT
 
 public:
-    explicit SmileyPack(ISmileySettings&);
+    explicit SmileyPack(ISmileySettings& settings);
     SmileyPack(SmileyPack&) = delete;
     SmileyPack& operator=(const SmileyPack&) = delete;
     ~SmileyPack() override;
@@ -44,7 +44,7 @@ public:
 
     QString smileyfied(const QString& msg);
     QList<QStringList> getEmoticons() const;
-    std::shared_ptr<QIcon> getAsIcon(const QString& key) const;
+    std::shared_ptr<QIcon> getAsIcon(const QString& emoticon) const;
     static QString getAsRichText(const QString& key);
 
 private slots:

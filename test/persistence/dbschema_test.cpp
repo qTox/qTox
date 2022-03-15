@@ -61,7 +61,7 @@ private slots:
 
 private:
     bool initSucess{false};
-    void createSchemaAtVersion(std::shared_ptr<RawDatabase>, const std::vector<SqliteMasterEntry>& schema);
+    void createSchemaAtVersion(std::shared_ptr<RawDatabase> db, const std::vector<SqliteMasterEntry>& schema);
     void verifyDb(std::shared_ptr<RawDatabase> db, const std::vector<SqliteMasterEntry>& expectedSql);
 };
 

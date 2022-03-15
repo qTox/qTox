@@ -73,16 +73,18 @@ void PasswordEdit::unregisterHandler()
 #endif
 }
 
-void PasswordEdit::showEvent(QShowEvent*)
+void PasswordEdit::showEvent(QShowEvent* event)
 {
+    std::ignore = event;
 #ifdef ENABLE_CAPSLOCK_INDICATOR
     action->setVisible(Platform::capsLockEnabled());
 #endif
     registerHandler();
 }
 
-void PasswordEdit::hideEvent(QHideEvent*)
+void PasswordEdit::hideEvent(QHideEvent* event)
 {
+    std::ignore = event;
     unregisterHandler();
 }
 
@@ -101,8 +103,8 @@ void PasswordEdit::EventHandler::updateActions()
 {
     bool caps = Platform::capsLockEnabled();
 
-    for (QAction* action : actions)
-        action->setVisible(caps);
+    for (QAction* actionIt : actions)
+        actionIt->setVisible(caps);
 }
 
 bool PasswordEdit::EventHandler::eventFilter(QObject* obj, QEvent* event)

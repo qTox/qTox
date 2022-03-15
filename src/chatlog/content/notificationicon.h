@@ -31,7 +31,7 @@ class NotificationIcon : public ChatLineContent
 {
     Q_OBJECT
 public:
-    explicit NotificationIcon(Settings&, QSize size);
+    explicit NotificationIcon(Settings& settings, QSize size);
 
     QRectF boundingRect() const override;
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,

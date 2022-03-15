@@ -33,7 +33,7 @@ class CallConfirmWidget final : public QWidget
 {
     Q_OBJECT
 public:
-    explicit CallConfirmWidget(Settings&, const QWidget* anchor_);
+    explicit CallConfirmWidget(Settings& settings, const QWidget* anchor_);
 
 signals:
     void accepted();
@@ -46,7 +46,7 @@ protected:
     void paintEvent(QPaintEvent* event) final;
     void showEvent(QShowEvent* event) final;
     void hideEvent(QHideEvent* event) final;
-    bool eventFilter(QObject*, QEvent* event) final;
+    bool eventFilter(QObject* object, QEvent* event) final;
 
 private:
     const QWidget* anchor;

@@ -32,7 +32,7 @@ class GeneralForm : public GenericForm
 {
     Q_OBJECT
 public:
-    explicit GeneralForm(SettingsWidget* parent, Settings&);
+    explicit GeneralForm(SettingsWidget* parent, Settings& settings);
     ~GeneralForm();
     QString getFormName() final
     {

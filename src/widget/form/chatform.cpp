@@ -782,8 +782,10 @@ void ChatForm::hideNetcam()
     netcam.reset();
 }
 
-void ChatForm::onSplitterMoved(int, int)
+void ChatForm::onSplitterMoved(int pos, int index)
 {
+    std::ignore = pos;
+    std::ignore = index;
     if (netcam) {
         netcam->setShowMessages(bodySplitter->sizes()[1] == 0);
     }

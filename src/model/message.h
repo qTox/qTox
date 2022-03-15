@@ -112,7 +112,7 @@ public:
     MessageProcessor(const SharedParams& sharedParams_);
 
     std::vector<Message> processOutgoingMessage(bool isAction, const QString& content, ExtensionSet extensions);
-    Message processIncomingCoreMessage(bool isAction, const QString& content);
+    Message processIncomingCoreMessage(bool isAction, const QString& message);
     Message processIncomingExtMessage(const QString& content);
 
     /**

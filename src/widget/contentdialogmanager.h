@@ -35,13 +35,13 @@ class ContentDialogManager : public QObject, public IDialogsManager
     Q_OBJECT
 public:
     ContentDialog* current();
-    bool chatWidgetExists(const ChatId& groupId);
+    bool chatWidgetExists(const ChatId& chatId);
     void focusChat(const ChatId& chatId);
     void updateFriendStatus(const ToxPk& friendPk);
-    void updateGroupStatus(const GroupId& friendPk);
+    void updateGroupStatus(const GroupId& groupId);
     bool isChatActive(const ChatId& chatId);
     ContentDialog* getFriendDialog(const ToxPk& friendPk) const;
-    ContentDialog* getGroupDialog(const GroupId& friendPk) const;
+    ContentDialog* getGroupDialog(const GroupId& groupId) const;
 
     IDialogs* getFriendDialogs(const ToxPk& friendPk) const;
     IDialogs* getGroupDialogs(const GroupId& groupId) const;

@@ -141,8 +141,9 @@ void CallConfirmWidget::reposition()
     update();
 }
 
-void CallConfirmWidget::paintEvent(QPaintEvent*)
+void CallConfirmWidget::paintEvent(QPaintEvent* event)
 {
+    std::ignore = event;
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setBrush(brush);
@@ -152,8 +153,9 @@ void CallConfirmWidget::paintEvent(QPaintEvent*)
     painter.drawPolygon(spikePoly);
 }
 
-void CallConfirmWidget::showEvent(QShowEvent*)
+void CallConfirmWidget::showEvent(QShowEvent* event)
 {
+    std::ignore = event;
     // Kriby: Legacy comment, is this still true?
     // If someone does show() from Widget or lower, the event will reach us
     // because it's our parent, and we could show up in the wrong form.
@@ -163,16 +165,18 @@ void CallConfirmWidget::showEvent(QShowEvent*)
     update();
 }
 
-void CallConfirmWidget::hideEvent(QHideEvent*)
+void CallConfirmWidget::hideEvent(QHideEvent* event)
 {
+    std::ignore = event;
     if (parentWidget())
         parentWidget()->removeEventFilter(this);
 
     setParent(nullptr);
 }
 
-bool CallConfirmWidget::eventFilter(QObject*, QEvent* event)
+bool CallConfirmWidget::eventFilter(QObject* object, QEvent* event)
 {
+    std::ignore = object;
     if (event->type() == QEvent::Resize)
         reposition();
 

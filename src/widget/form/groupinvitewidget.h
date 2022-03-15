@@ -33,7 +33,7 @@ class GroupInviteWidget : public QWidget
 {
     Q_OBJECT
 public:
-    GroupInviteWidget(QWidget* parent, const GroupInvite& invite, Settings&);
+    GroupInviteWidget(QWidget* parent, const GroupInvite& invite, Settings& settings);
     void retranslateUi();
     const GroupInvite getInviteInfo() const;
 

@@ -168,8 +168,9 @@ void VideoSurface::onSourceStopped()
     update();
 }
 
-void VideoSurface::paintEvent(QPaintEvent*)
+void VideoSurface::paintEvent(QPaintEvent* event)
 {
+    std::ignore = event;
     lock();
 
     QPainter painter(this);

@@ -42,7 +42,7 @@ class GroupInviteForm : public QWidget
 {
     Q_OBJECT
 public:
-    explicit GroupInviteForm(Settings&);
+    explicit GroupInviteForm(Settings& settings);
     ~GroupInviteForm();
 
     void show(ContentLayout* contentLayout);

@@ -54,8 +54,10 @@ void ScreenGrabberOverlayItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
         screnshootGrabber->beginRectChooser(event);
 }
 
-void ScreenGrabberOverlayItem::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
+void ScreenGrabberOverlayItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
+    std::ignore = option;
+    std::ignore = widget;
     painter->setBrush(brush());
     painter->setPen(pen());
 

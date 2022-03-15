@@ -117,11 +117,11 @@ CoreVideoSource* ToxCall::getVideoSource() const
     return videoSource;
 }
 
-ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av_,
+ToxFriendCall::ToxFriendCall(uint32_t friendNum, bool VideoEnabled, CoreAV& av_,
     IAudioControl& audio_, CameraSource& cameraSource_)
     : ToxCall(VideoEnabled, av_, audio_)
     , sink(audio_.makeSink())
-    , friendId{FriendNum}
+    , friendId{friendNum}
     , cameraSource{cameraSource_}
 {
     connect(audioSource.get(), &IAudioSource::frameAvailable, this,
@@ -144,8 +144,8 @@ ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av_,
         }
         cameraSource.subscribe();
         videoInConn = QObject::connect(&cameraSource, &VideoSource::frameAvailable,
-                                       [&av_, FriendNum](std::shared_ptr<VideoFrame> frame) {
-                                           av_.sendCallVideo(FriendNum, frame);
+                                       [&av_, friendNum](std::shared_ptr<VideoFrame> frame) {
+                                           av_.sendCallVideo(friendNum, frame);
                                        });
         if (!videoInConn) {
             qDebug() << "Video connection not working";

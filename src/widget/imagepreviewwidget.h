@@ -36,7 +36,7 @@ public:
     ImagePreviewButton& operator=(ImagePreviewButton&&) = delete;
 
     void setIconFromFile(const QString& filename);
-    void setIconFromPixmap(const QPixmap& image);
+    void setIconFromPixmap(const QPixmap& pixmap);
 private:
     void initialize(const QPixmap& image);
 };

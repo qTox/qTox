@@ -47,7 +47,7 @@ class SettingsWidget : public QWidget
     Q_OBJECT
 public:
     SettingsWidget(UpdateCheck* updateCheck, IAudioControl& audio, Core *core,
-        SmileyPack&, CameraSource&, Settings&, Widget* parent = nullptr);
+        SmileyPack& smileyPack, CameraSource& cameraSource, Settings& settings, Widget* parent = nullptr);
     ~SettingsWidget();
 
     bool isShown() const;
@@ -60,7 +60,7 @@ public slots:
     void onUpdateAvailable(void);
 
 private slots:
-    void onTabChanged(int);
+    void onTabChanged(int index);
 
 private:
     void retranslateUi();

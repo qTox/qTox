@@ -32,7 +32,7 @@ class PrivacyForm : public GenericForm
 {
     Q_OBJECT
 public:
-    PrivacyForm(Core* core_, Settings&);
+    PrivacyForm(Core* core_, Settings& settings);
     ~PrivacyForm();
     QString getFormName() final
     {
@@ -49,7 +49,7 @@ private slots:
     void on_randomNosapamButton_clicked();
     void on_nospamLineEdit_textChanged();
     void on_blackListTextEdit_textChanged();
-    void showEvent(QShowEvent*) final;
+    void showEvent(QShowEvent* event) final;
 
 private:
     void retranslateUi();

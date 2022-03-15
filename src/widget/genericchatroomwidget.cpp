@@ -56,8 +56,10 @@ GenericChatroomWidget::GenericChatroomWidget(bool compact_, Settings& settings_,
     compactChange(isCompact());
 }
 
-bool GenericChatroomWidget::eventFilter(QObject*, QEvent*)
+bool GenericChatroomWidget::eventFilter(QObject* object, QEvent* event)
 {
+    std::ignore = object;
+    std::ignore = event;
     return true; // Disable all events.
 }
 
@@ -177,8 +179,9 @@ void GenericChatroomWidget::mouseReleaseEvent(QMouseEvent* event)
     }
 }
 
-void GenericChatroomWidget::enterEvent(QEvent*)
+void GenericChatroomWidget::enterEvent(QEvent* event)
 {
+    std::ignore = event;
     if (!active)
         setBackgroundRole(QPalette::Highlight);
 }

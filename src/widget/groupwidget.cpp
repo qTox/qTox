@@ -260,8 +260,9 @@ void GroupWidget::dragEnterEvent(QDragEnterEvent* ev)
     }
 }
 
-void GroupWidget::dragLeaveEvent(QDragLeaveEvent*)
+void GroupWidget::dragLeaveEvent(QDragLeaveEvent* event)
 {
+    std::ignore = event;
     if (!active) {
         setBackgroundRole(QPalette::Window);
     }

@@ -42,19 +42,19 @@ public:
     {
         return false;
     }
-    void setEnableIPv6(bool) override {}
+    void setEnableIPv6(bool enable) override { std::ignore = enable; }
 
     bool getForceTCP() const override
     {
         return false;
     }
-    void setForceTCP(bool) override {}
+    void setForceTCP(bool force) override { std::ignore = force; }
 
     bool getEnableLanDiscovery() const override
     {
         return false;
     }
-    void setEnableLanDiscovery(bool) override {}
+    void setEnableLanDiscovery(bool enable) override { std::ignore = enable; }
 
     QString getProxyAddr() const override
     {

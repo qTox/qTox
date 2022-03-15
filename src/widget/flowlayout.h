@@ -55,7 +55,7 @@ public:
     int verticalSpacing() const;
     Qt::Orientations expandingDirections() const;
     bool hasHeightForWidth() const;
-    int heightForWidth(int) const;
+    int heightForWidth(int width) const;
     int count() const;
     QLayoutItem* itemAt(int index) const;
     QSize minimumSize() const;

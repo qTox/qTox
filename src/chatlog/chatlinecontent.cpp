@@ -35,32 +35,38 @@ int ChatLineContent::type() const
     return GraphicsItemType::ChatLineContentType;
 }
 
-void ChatLineContent::selectionMouseMove(QPointF)
+void ChatLineContent::selectionMouseMove(QPointF scenePos)
 {
+    std::ignore = scenePos;
 }
 
-void ChatLineContent::selectionStarted(QPointF)
+void ChatLineContent::selectionStarted(QPointF scenePos)
 {
+    std::ignore = scenePos;
 }
 
 void ChatLineContent::selectionCleared()
 {
 }
 
-void ChatLineContent::selectionDoubleClick(QPointF)
+void ChatLineContent::selectionDoubleClick(QPointF scenePos)
 {
+    std::ignore = scenePos;
 }
 
-void ChatLineContent::selectionTripleClick(QPointF)
+void ChatLineContent::selectionTripleClick(QPointF scenePos)
 {
+    std::ignore = scenePos;
 }
 
-void ChatLineContent::selectionFocusChanged(bool)
+void ChatLineContent::selectionFocusChanged(bool focusIn)
 {
+    std::ignore = focusIn;
 }
 
-bool ChatLineContent::isOverSelection(QPointF) const
+bool ChatLineContent::isOverSelection(QPointF scenePos) const
 {
+    std::ignore = scenePos;
     return false;
 }
 
@@ -79,8 +85,9 @@ qreal ChatLineContent::getAscent() const
     return 0.0;
 }
 
-void ChatLineContent::visibilityChanged(bool)
+void ChatLineContent::visibilityChanged(bool visible)
 {
+    std::ignore = visible;
 }
 
 void ChatLineContent::reloadTheme()

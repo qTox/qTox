@@ -92,7 +92,7 @@ class ToxFriendCall : public ToxCall
     Q_OBJECT
 public:
     ToxFriendCall() = delete;
-    ToxFriendCall(uint32_t friendId, bool VideoEnabled, CoreAV& av_, IAudioControl& audio_, CameraSource&);
+    ToxFriendCall(uint32_t friendNum, bool VideoEnabled, CoreAV& av_, IAudioControl& audio_, CameraSource& cameraSource);
     ToxFriendCall(ToxFriendCall&& other) = delete;
     ToxFriendCall& operator=(ToxFriendCall&& other) = delete;
     ~ToxFriendCall();

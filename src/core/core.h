@@ -120,7 +120,7 @@ public slots:
     QByteArray getToxSaveData();
 
     void acceptFriendRequest(const ToxPk& friendPk);
-    void requestFriendship(const ToxId& friendAddress, const QString& message);
+    void requestFriendship(const ToxId& friendId, const QString& message);
     void groupInviteFriend(uint32_t friendId, int groupId);
     int createGroup(uint8_t type = TOX_CONFERENCE_TYPE_AV);
 
@@ -197,9 +197,9 @@ signals:
     void failedToRemoveFriend(uint32_t friendId);
 
 private:
-    Core(QThread* coreThread_, IBootstrapListGenerator& bootstrapNodes_, const ICoreSettings& settings_);
+    Core(QThread* coreThread_, IBootstrapListGenerator& bootstrapListGenerator_, const ICoreSettings& settings_);
 
-    static void onFriendRequest(Tox* tox, const uint8_t* cUserId, const uint8_t* cMessage,
+    static void onFriendRequest(Tox* tox, const uint8_t* cFriendPk, const uint8_t* cMessage,
                                 size_t cMessageSize, void* core);
     static void onFriendMessage(Tox* tox, uint32_t friendId, Tox_Message_Type type,
                                 const uint8_t* cMessage, size_t cMessageSize, void* core);
@@ -216,8 +216,8 @@ private:
                               const uint8_t* cookie, size_t length, void* vCore);
     static void onGroupMessage(Tox* tox, uint32_t groupId, uint32_t peerId, Tox_Message_Type type,
                                const uint8_t* cMessage, size_t length, void* vCore);
-    static void onGroupPeerListChange(Tox*, uint32_t groupId, void* core);
-    static void onGroupPeerNameChange(Tox*, uint32_t groupId, uint32_t peerId, const uint8_t* name,
+    static void onGroupPeerListChange(Tox* tox, uint32_t groupId, void* core);
+    static void onGroupPeerNameChange(Tox* tox, uint32_t groupId, uint32_t peerId, const uint8_t* name,
                                       size_t length, void* core);
     static void onGroupTitleChange(Tox* tox, uint32_t groupId, uint32_t peerId,
                                    const uint8_t* cTitle, size_t length, void* vCore);

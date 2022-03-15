@@ -17,11 +17,11 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <memory>
-
 #include "audio/audio.h"
 #include "audio/iaudiosettings.h"
 #include "backend/openal.h"
+
+#include <memory>
 
 /**
  * @brief Select the audio backend

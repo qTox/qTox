@@ -40,9 +40,9 @@ public:
         CUSTOM
     };
 
-    Text(DocumentCache&, Settings&, const QString& txt = "", const QFont& font = QFont(),
-        bool enableElide = false, const QString& rawText = QString(),
-        const TextType& type = NORMAL,
+    Text(DocumentCache& documentCache, Settings& settings, const QString& txt = "",
+        const QFont& font = QFont(), bool enableElide = false,
+        const QString& rawText = QString(), const TextType& type = NORMAL,
         const QColor& custom = Style::getColor(Style::ColorPalette::MainText));
     virtual ~Text();
 
@@ -66,7 +66,7 @@ public:
     QRectF boundingRect() const final;
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) final;
 
-    void visibilityChanged(bool keepInMemory) final;
+    void visibilityChanged(bool visible) final;
     void reloadTheme() final;
 
     qreal getAscent() const final;
