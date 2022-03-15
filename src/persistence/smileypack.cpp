@@ -105,14 +105,14 @@ bool isAscii(const QString& string)
 
 } // namespace
 
-SmileyPack::SmileyPack(Settings& settings_)
+SmileyPack::SmileyPack(ISmileySettings& settings_)
     : cleanupTimer{new QTimer(this)}
     , settings{settings_}
 {
     loadingMutex.lock();
     QtConcurrent::run(this, &SmileyPack::load, settings.getSmileyPack());
-    connect(&settings, &Settings::smileyPackChanged, this,
-            &SmileyPack::onSmileyPackChanged);
+    settings.connectTo_smileyPackChanged(this,
+        [&](const QString&) { onSmileyPackChanged(); });
     connect(cleanupTimer, &QTimer::timeout, this, &SmileyPack::cleanupIconsCache);
     cleanupTimer->start(CLEANUP_TIMEOUT);
 }

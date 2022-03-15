@@ -17,8 +17,9 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "src/persistence/ismileysettings.h"
 #include "src/persistence/smileypack.h"
-#include "src/persistence/settings.h"
+#include "util/interface.h"
 
 #include <QtTest/QtTest>
 #include <QSignalSpy>
@@ -28,6 +29,19 @@
 #include <QGuiApplication>
 
 #include <memory>
+
+class MockSettings : public QObject, public ISmileySettings
+{
+Q_OBJECT
+public:
+    QString getSmileyPack() const override;
+    SIGNAL_IMPL(MockSettings, smileyPackChanged, const QString& name);
+};
+
+QString MockSettings::getSmileyPack() const
+{
+    return ":/smileys/emojione/emoticons.xml";
+}
 
 class TestSmileyPack : public QObject
 {
@@ -41,7 +55,7 @@ private slots:
     void testSmilifyAsciiEmoticon();
 private:
     std::unique_ptr<QGuiApplication> app;
-    std::unique_ptr<Settings> settings;
+    std::unique_ptr<MockSettings> settings;
 };
 
 TestSmileyPack::TestSmileyPack()
@@ -53,7 +67,7 @@ TestSmileyPack::TestSmileyPack()
     static int qtTestAppArgc = 3;
 
     app = std::unique_ptr<QGuiApplication>(new QGuiApplication(qtTestAppArgc, qtTestAppArgv));
-    settings = std::unique_ptr<Settings>(new Settings());
+    settings = std::unique_ptr<MockSettings>(new MockSettings());
 }
 
 /**

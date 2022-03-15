@@ -323,6 +323,8 @@ set(${PROJECT_NAME}_SOURCES
   src/persistence/igroupsettings.h
   src/persistence/inotificationsettings.cpp
   src/persistence/inotificationsettings.h
+  src/persistence/ismileysettings.cpp
+  src/persistence/ismileysettings.h
   src/persistence/offlinemsgengine.cpp
   src/persistence/offlinemsgengine.h
   src/persistence/paths.cpp

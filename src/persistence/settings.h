@@ -28,6 +28,7 @@
 #include "src/persistence/ifriendsettings.h"
 #include "src/persistence/igroupsettings.h"
 #include "src/persistence/inotificationsettings.h"
+#include "src/persistence/ismileysettings.h"
 #include "src/video/ivideosettings.h"
 
 #include "util/compatiblerecursivemutex.h"
@@ -54,7 +55,8 @@ class Settings : public QObject,
                  public IGroupSettings,
                  public IAudioSettings,
                  public IVideoSettings,
-                 public INotificationSettings
+                 public INotificationSettings,
+                 public ISmileySettings
 {
     Q_OBJECT
 
@@ -219,7 +221,6 @@ signals:
 
     // ChatView
     void useEmoticonsChanged(bool enabled);
-    void smileyPackChanged(const QString& name);
     void emojiFontPointSizeChanged(int size);
     void dontGroupWindowsChanged(bool enabled);
     void groupchatPositionChanged(bool enabled);
@@ -407,8 +408,9 @@ public:
     bool isAnimationEnabled() const;
     void setAnimationEnabled(bool newValue);
 
-    QString getSmileyPack() const;
+    QString getSmileyPack() const override;
     void setSmileyPack(const QString& value);
+    SIGNAL_IMPL(Settings, smileyPackChanged, const QString& name);
 
     int getThemeColor() const;
     void setThemeColor(int value);
