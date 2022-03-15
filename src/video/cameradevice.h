@@ -36,7 +36,7 @@ class Settings;
 class CameraDevice
 {
 public:
-    static CameraDevice* open(Settings& settings, QString devName, VideoMode mode = VideoMode());
+    static CameraDevice* open(QString devName, VideoMode mode = VideoMode());
     void open();
     bool close();
 
@@ -52,7 +52,7 @@ public:
 
 private:
     CameraDevice(const QString& devName_, AVFormatContext* context_);
-    static CameraDevice* open(Settings& settings, QString devName, AVDictionary** options);
+    static CameraDevice* open(QString devName, AVDictionary** options);
     static bool getDefaultInputFormat();
     static QVector<QPair<QString, QString>> getRawDeviceListGeneric();
     static QVector<VideoMode> getScreenModes();

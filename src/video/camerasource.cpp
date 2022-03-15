@@ -261,7 +261,7 @@ void CameraSource::openDevice()
     }
 
     // We need to create a new CameraDevice
-    device = CameraDevice::open(settings, deviceName, mode);
+    device = CameraDevice::open(deviceName, mode);
 
     if (!device) {
         qWarning() << "Failed to open device!";
