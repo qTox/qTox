@@ -52,7 +52,7 @@ class GroupInvite;
 class Profile;
 class Core;
 class IBootstrapListGenerator;
-class DhtServer;
+struct DhtServer;
 
 using ToxCorePtr = std::unique_ptr<Core>;
 

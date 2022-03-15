@@ -20,7 +20,7 @@
 #pragma once
 
 #include <QList>
-class DhtServer;
+struct DhtServer;
 
 class IBootstrapListGenerator
 {
