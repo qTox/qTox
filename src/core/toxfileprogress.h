@@ -41,7 +41,6 @@ public:
 private:
     // Should never be modified, but do not want to lose assignment operators
     uint64_t filesize;
-    size_t speedSampleCount;
     int samplePeriodMs;
 
     struct Sample

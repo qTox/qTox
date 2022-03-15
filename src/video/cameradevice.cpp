@@ -79,12 +79,10 @@ AvFindInputFormatRet iformat{nullptr};
 QHash<QString, CameraDevice*> CameraDevice::openDevices;
 QMutex CameraDevice::openDeviceLock, CameraDevice::iformatLock;
 
-CameraDevice::CameraDevice(const QString& devName_, AVFormatContext* context_,
-    Settings& settings_)
+CameraDevice::CameraDevice(const QString& devName_, AVFormatContext* context_)
     : devName{devName_}
     , context{context_}
     , refcount{1}
-    , settings{settings_}
 {
 }
 
@@ -133,7 +131,7 @@ CameraDevice* CameraDevice::open(Settings& settings, QString devName, AVDictiona
     fctx->max_analyze_duration = aduration;
 #endif
 
-    dev = new CameraDevice{devName, fctx, settings};
+    dev = new CameraDevice{devName, fctx};
     openDevices[devName] = dev;
 
 out:
