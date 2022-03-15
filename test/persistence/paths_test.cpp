@@ -42,12 +42,14 @@ private:
 };
 
 namespace {
+#if PATHS_VERSION_TCS_COMPLIANT
 const QLatin1String globalSettingsFile{"qtox.ini"};
 const QLatin1String profileFolder{"profiles"};
 const QLatin1String themeFolder{"themes"};
 const QLatin1String avatarsFolder{"avatars"};
 const QLatin1String transfersFolder{"transfers"};
 const QLatin1String screenshotsFolder{"screenshots"};
+#endif // PATHS_VERSION_TCS_COMPLIANT
 const QString sep{QDir::separator()};
 }
 

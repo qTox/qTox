@@ -33,6 +33,8 @@
 
 namespace {
 const QLatin1String globalSettingsFile{"qtox.ini"};
+
+#if PATHS_VERSION_TCS_COMPLIANT
 const QLatin1String profileFolder{"profiles"};
 const QLatin1String themeFolder{"themes"};
 const QLatin1String avatarsFolder{"avatars"};
@@ -47,6 +49,7 @@ const QLatin1String TCSToxFileFolder{"~/Library/Application Support/Tox"};
 #else
 const QLatin1String TCSToxFileFolder{"~/.config/tox/"};
 #endif
+#endif // PATHS_VERSION_TCS_COMPLIANT
 } // namespace
 
 /**
