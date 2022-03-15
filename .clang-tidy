@@ -1,0 +1,5 @@
+Checks: '
+	-*,
+	readability-named-parameter,
+	readability-inconsistent-declaration-parameter-name'
+WarningsAsErrors: "*"
