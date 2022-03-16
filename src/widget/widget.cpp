@@ -1382,19 +1382,19 @@ void Widget::openDialog(GenericChatroomWidget* widget, bool newWindow)
     widget->updateStatusLight();
 
     GenericChatForm* form;
-    GroupId id;
     const Friend* frnd = widget->getFriend();
     const Group* group = widget->getGroup();
+    auto contentDialogManager = ContentDialogManager::getInstance();
+    bool chatFormIsSet;
     if (frnd) {
         form = chatForms[frnd->getPublicKey()];
+        contentDialogManager->focusChat(frnd->getPersistentId());
+        chatFormIsSet = contentDialogManager->chatWidgetExists(frnd->getPersistentId());
     } else {
-        id = group->getPersistentId();
-        form = groupChatForms[id].data();
+        form = groupChatForms[group->getPersistentId()].data();
+        contentDialogManager->focusChat(group->getPersistentId());
+        chatFormIsSet = contentDialogManager->chatWidgetExists(group->getPersistentId());
     }
-    bool chatFormIsSet;
-    ContentDialogManager::getInstance()->focusChat(id);
-    chatFormIsSet = ContentDialogManager::getInstance()->chatWidgetExists(id);
-
 
     if ((chatFormIsSet || form->isVisible()) && !newWindow) {
         return;
