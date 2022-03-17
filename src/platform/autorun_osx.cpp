@@ -25,11 +25,12 @@
 #include <QStandardPaths>
 
 namespace {
-int state;
+bool state;
 } // namespace
 
-bool Platform::setAutorun(const Settings&, bool on)
+bool Platform::setAutorun(const Settings& settings, bool on)
 {
+    std::ignore = settings;
     QString qtoxPlist =
         QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
                         + QDir::separator() + "Library" + QDir::separator() + "LaunchAgents"
@@ -45,7 +46,8 @@ bool Platform::setAutorun(const Settings&, bool on)
     return true;
 }
 
-bool Platform::getAutorun(const Settings&)
+bool Platform::getAutorun(const Settings& settings)
 {
+    std::ignore = settings;
     return state;
 }
