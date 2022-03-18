@@ -569,3 +569,37 @@ bool ToxcoreErrorParser::parseErr(Toxav_Err_Call_Control error, int line)
     qCritical() << line << "Unknown Toxav_Err_Call_Control error code:" << error;
     return false;
 }
+
+bool ToxcoreErrorParser::parseErr(Toxav_Err_Call error, int line)
+{
+    switch (error) {
+    case TOXAV_ERR_CALL_OK:
+        return true;
+
+    case TOXAV_ERR_CALL_MALLOC:
+        qCritical() << line << ": A resource allocation error occurred.";
+        return false;
+
+    case TOXAV_ERR_CALL_SYNC:
+        qCritical() << line << ": Synchronization error occurred.";
+        return false;
+
+    case TOXAV_ERR_CALL_FRIEND_NOT_FOUND:
+        qCritical() << line << ": The friend number did not designate a valid friend.";
+        return false;
+
+    case TOXAV_ERR_CALL_FRIEND_NOT_CONNECTED:
+        qCritical() << line << ": The friend was valid, but not currently connected.";
+        return false;
+
+    case TOXAV_ERR_CALL_FRIEND_ALREADY_IN_CALL:
+        qCritical() << line << ": Attempted to call a friend while already in a call with them.";
+        return false;
+
+    case TOXAV_ERR_CALL_INVALID_BIT_RATE:
+        qCritical() << line << ": Audio or video bit rate is invalid.";
+        return false;
+    }
+    qCritical() << line << "Unknown Toxav_Err_Call error code:" << error;
+    return false;
+}

@@ -292,9 +292,12 @@ bool CoreAV::startCall(uint32_t friendNum, bool video)
     }
 
     uint32_t videoBitrate = video ? VIDEO_DEFAULT_BITRATE : 0;
-    if (!toxav_call(toxav.get(), friendNum, audioSettings.getAudioBitrate(), videoBitrate,
-                    nullptr))
+    Toxav_Err_Call err;
+    toxav_call(toxav.get(), friendNum, audioSettings.getAudioBitrate(), videoBitrate,
+                    &err);
+    if (!PARSE_ERR(err)) {
         return false;
+    }
 
     // Audio backend must be set before making a call
     assert(audio != nullptr);
