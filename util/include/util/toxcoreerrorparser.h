@@ -22,6 +22,7 @@
 #include <QDebug>
 
 #include <tox/tox.h>
+#include <tox/toxav.h>
 
 /**
  * @brief Parse and log toxcore error enums.
@@ -54,4 +55,5 @@ namespace ToxcoreErrorParser {
     bool parseErr(Tox_Err_File_Get error, int line);
     bool parseErr(Tox_Err_File_Send error, int line);
     bool parseErr(Tox_Err_File_Send_Chunk error, int line);
+    bool parseErr(Toxav_Err_Call_Control error, int line);
 } // namespace ToxcoreErrorParser

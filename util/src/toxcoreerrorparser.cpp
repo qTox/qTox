@@ -543,3 +543,29 @@ bool ToxcoreErrorParser::parseErr(Tox_Err_File_Send_Chunk error, int line)
     qCritical() << line << "Unknown Tox_Err_File_Send_Chunk error code:" << error;
     return false;
 }
+
+bool ToxcoreErrorParser::parseErr(Toxav_Err_Call_Control error, int line)
+{
+    switch (error) {
+    case TOXAV_ERR_CALL_CONTROL_OK:
+        return true;
+
+    case TOXAV_ERR_CALL_CONTROL_SYNC:
+        qCritical() << line << ": Synchronization error occurred.";
+        return false;
+
+    case TOXAV_ERR_CALL_CONTROL_FRIEND_NOT_FOUND:
+        qCritical() << line << ": The friend_number passed did not designate a valid friend.";
+        return false;
+
+    case TOXAV_ERR_CALL_CONTROL_FRIEND_NOT_IN_CALL:
+        qCritical() << line << ": This client is currently not in a call with the friend.";
+        return false;
+
+    case TOXAV_ERR_CALL_CONTROL_INVALID_TRANSITION:
+        qCritical() << line << ": Call already paused or resumed.";
+        return false;
+    }
+    qCritical() << line << "Unknown Toxav_Err_Call_Control error code:" << error;
+    return false;
+}
