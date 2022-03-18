@@ -58,4 +58,5 @@ namespace ToxcoreErrorParser {
     bool parseErr(Toxav_Err_Bit_Rate_Set error, int line);
     bool parseErr(Toxav_Err_Call_Control error, int line);
     bool parseErr(Toxav_Err_Call error, int line);
+    bool parseErr(Tox_Err_Options_New error, int line);
 } // namespace ToxcoreErrorParser

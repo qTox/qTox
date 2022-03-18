@@ -21,6 +21,7 @@
 
 #include "src/core/icoresettings.h"
 #include "src/core/toxlogger.h"
+#include "util/toxcoreerrorparser.h"
 
 #include <tox/tox.h>
 
@@ -69,9 +70,10 @@ ToxOptions::operator Tox_Options*()
 std::unique_ptr<ToxOptions> ToxOptions::makeToxOptions(const QByteArray& savedata,
                                                        const ICoreSettings& s)
 {
-    Tox_Options* tox_opts = tox_options_new(nullptr);
+    Tox_Err_Options_New err;
+    Tox_Options* tox_opts = tox_options_new(&err);
 
-    if (!tox_opts) {
+    if (!PARSE_ERR(err) || !tox_opts) {
         qWarning() << "Failed to create Tox_Options";
         return {};
     }

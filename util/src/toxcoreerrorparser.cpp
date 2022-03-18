@@ -629,3 +629,17 @@ bool ToxcoreErrorParser::parseErr(Toxav_Err_Call error, int line)
     qCritical() << line << "Unknown Toxav_Err_Call error code:" << error;
     return false;
 }
+
+bool ToxcoreErrorParser::parseErr(Tox_Err_Options_New error, int line)
+{
+    switch (error) {
+    case TOX_ERR_OPTIONS_NEW_OK:
+        return true;
+
+    case TOX_ERR_OPTIONS_NEW_MALLOC:
+        qCritical() << line << ": Failed to allocate memory.";
+        return false;
+    }
+    qCritical() << line << "Unknown Tox_Err_Options_New error code:" << error;
+    return false;
+}
