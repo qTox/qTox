@@ -501,3 +501,45 @@ bool ToxcoreErrorParser::parseErr(Tox_Err_File_Send error, int line)
     qCritical() << line << "Unknown Tox_Err_File_Send error code:" << error;
     return false;
 }
+
+bool ToxcoreErrorParser::parseErr(Tox_Err_File_Send_Chunk error, int line)
+{
+    switch (error) {
+    case TOX_ERR_FILE_SEND_CHUNK_OK:
+        return true;
+
+    case TOX_ERR_FILE_SEND_CHUNK_NULL:
+        qCritical() << line << ": The length parameter was non-zero, but data was NULL.";
+        return false;
+
+    case TOX_ERR_FILE_SEND_CHUNK_FRIEND_NOT_FOUND:
+        qCritical() << line << ": The friend_number passed did not designate a valid friend.";
+        return false;
+
+    case TOX_ERR_FILE_SEND_CHUNK_FRIEND_NOT_CONNECTED:
+        qCritical() << line << ": This client is currently not connected to the friend.";
+        return false;
+
+    case TOX_ERR_FILE_SEND_CHUNK_NOT_FOUND:
+        qCritical() << line << ": No file transfer with the given file number was found for the given friend.";
+        return false;
+
+    case TOX_ERR_FILE_SEND_CHUNK_NOT_TRANSFERRING:
+        qCritical() << line << ": File transfer was found but isn't in a transferring state.";
+        return false;
+
+    case TOX_ERR_FILE_SEND_CHUNK_INVALID_LENGTH:
+        qCritical() << line << ": Attempted to send more or less data than requested.";
+        return false;
+
+    case TOX_ERR_FILE_SEND_CHUNK_SENDQ:
+        qCritical() << line << ": Packet queue is full.";
+        return false;
+
+    case TOX_ERR_FILE_SEND_CHUNK_WRONG_POSITION:
+        qCritical() << line << ": Position parameter was wrong.";
+        return false;
+    }
+    qCritical() << line << "Unknown Tox_Err_File_Send_Chunk error code:" << error;
+    return false;
+}

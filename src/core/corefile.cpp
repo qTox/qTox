@@ -502,7 +502,9 @@ void CoreFile::onFileDataCallback(Tox* tox, uint32_t friendId, uint32_t fileId, 
             qWarning("onFileDataCallback: Failed to read from file");
             file->status = ToxFile::CANCELED;
             emit coreFile->fileTransferCancelled(*file);
-            tox_file_send_chunk(tox, friendId, fileId, pos, nullptr, 0, nullptr);
+            Tox_Err_File_Send_Chunk err;
+            tox_file_send_chunk(tox, friendId, fileId, pos, nullptr, 0, &err);
+            PARSE_ERR(err);
             coreFile->removeFile(friendId, fileId);
             return;
         }
@@ -510,8 +512,9 @@ void CoreFile::onFileDataCallback(Tox* tox, uint32_t friendId, uint32_t fileId, 
         file->hashGenerator->addData(reinterpret_cast<const char*>(data.get()), length);
     }
 
-    if (!tox_file_send_chunk(tox, friendId, fileId, pos, data.get(), nread, nullptr)) {
-        qWarning("onFileDataCallback: Failed to send data chunk");
+    Tox_Err_File_Send_Chunk err;
+    tox_file_send_chunk(tox, friendId, fileId, pos, data.get(), nread, &err);
+    if (!PARSE_ERR(err)) {
         return;
     }
     if (file->fileKind != TOX_FILE_KIND_AVATAR) {

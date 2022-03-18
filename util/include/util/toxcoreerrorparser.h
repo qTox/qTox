@@ -53,4 +53,5 @@ namespace ToxcoreErrorParser {
     bool parseErr(Tox_Err_File_Control error, int line);
     bool parseErr(Tox_Err_File_Get error, int line);
     bool parseErr(Tox_Err_File_Send error, int line);
+    bool parseErr(Tox_Err_File_Send_Chunk error, int line);
 } // namespace ToxcoreErrorParser
