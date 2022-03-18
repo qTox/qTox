@@ -117,7 +117,7 @@ struct FileDbInsertionData
     FileDbInsertionData();
 
     RowId historyId;
-    QString fileId;
+    QByteArray fileId;
     QString fileName;
     QString filePath;
     int64_t size;
@@ -199,13 +199,13 @@ public:
                        const QDateTime& time, bool isDelivered, ExtensionSet extensions,
                        QString dispName, const std::function<void(RowId)>& insertIdCallback = {});
 
-    void addNewFileMessage(const ToxPk& friendPk, const QString& fileId,
+    void addNewFileMessage(const ToxPk& friendPk, const QByteArray& fileId,
                            const QString& fileName, const QString& filePath, int64_t size,
                            const ToxPk& sender, const QDateTime& time, QString const& dispName);
 
     void addNewSystemMessage(const ToxPk& friendPk, const SystemMessage& systemMessage);
 
-    void setFileFinished(const QString& fileId, bool success, const QString& filePath, const QByteArray& fileHash);
+    void setFileFinished(const QByteArray& fileId, bool success, const QString& filePath, const QByteArray& fileHash);
     size_t getNumMessagesForFriend(const ToxPk& friendPk);
     size_t getNumMessagesForFriendBeforeDate(const ToxPk& friendPk, const QDateTime& date);
     QList<HistMessage> getMessagesForFriend(const ToxPk& friendPk, size_t firstIdx, size_t lastIdx);
@@ -219,10 +219,10 @@ public:
     void markAsBroken(RowId messageId, BrokenMessageReason reason);
 
 signals:
-    void fileInserted(RowId dbId, QString fileId);
+    void fileInserted(RowId dbId, QByteArray fileId);
 
 private slots:
-    void onFileInserted(RowId dbId, QString fileId);
+    void onFileInserted(RowId dbId, QByteArray fileId);
 
 private:
     QVector<RawDatabase::Query>
@@ -245,6 +245,6 @@ private:
     };
 
     // This needs to be a shared pointer to avoid callback lifetime issues
-    QHash<QString, FileInfo> fileInfos;
+    QHash<QByteArray, FileInfo> fileInfos;
     Settings& settings;
 };

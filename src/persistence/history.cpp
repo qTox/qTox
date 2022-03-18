@@ -280,7 +280,7 @@ void History::removeFriendHistory(const ToxPk& friendPk)
     }
 }
 
-void History::onFileInserted(RowId dbId, QString fileId)
+void History::onFileInserted(RowId dbId, QByteArray fileId)
 {
     auto& fileInfo = fileInfos[fileId];
     if (fileInfo.finished) {
@@ -330,7 +330,7 @@ History::generateNewFileTransferQueries(const ToxPk& friendPk, const ToxPk& send
                                .arg(insertionData.size)
                                .arg(insertionData.direction)
                                .arg(ToxFile::CANCELED),
-                           {dispName.toUtf8(), insertionData.fileId.toUtf8(),
+                           {dispName.toUtf8(), insertionData.fileId,
                             insertionData.fileName.toUtf8(), insertionData.filePath.toUtf8(),
                             QByteArray()},
                            [weakThis, fileId](RowId id) {
@@ -362,7 +362,7 @@ RawDatabase::Query History::generateFileFinished(RowId id, bool success, const Q
     }
 }
 
-void History::addNewFileMessage(const ToxPk& friendPk, const QString& fileId,
+void History::addNewFileMessage(const ToxPk& friendPk, const QByteArray& fileId,
                                 const QString& fileName, const QString& filePath, int64_t size,
                                 const ToxPk& sender, const QDateTime& time, QString const& dispName)
 {
@@ -435,7 +435,7 @@ void History::addNewMessage(const ToxPk& friendPk, const QString& message, const
                                                 extensionSet, dispName, insertIdCallback));
 }
 
-void History::setFileFinished(const QString& fileId, bool success, const QString& filePath,
+void History::setFileFinished(const QByteArray& fileId, bool success, const QString& filePath,
                               const QByteArray& fileHash)
 {
     if (historyAccessBlocked()) {
@@ -562,7 +562,7 @@ QList<History::HistMessage> History::getMessagesForFriend(const ToxPk& friendPk,
             it = std::next(row.begin(), fileOffset);
             assert(!it->isNull());
             const auto fileKind = TOX_FILE_KIND_DATA;
-            const auto resumeFileId = (*it++).toString().toUtf8();
+            const auto resumeFileId = (*it++).toByteArray();
             const auto fileName = (*it++).toString();
             const auto filePath = (*it++).toString();
             const auto filesize = (*it++).toLongLong();
