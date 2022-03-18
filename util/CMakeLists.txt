@@ -20,9 +20,10 @@ add_library(util_library STATIC
     "include/util/interface.h"
     "include/util/strongtype.h"
     "include/util/display.h"
-    "src/display.cpp")
+    "src/display.cpp"
+    "include/util/toxcoreerrorparser.h"
+    "src/toxcoreerrorparser.cpp")
 
 # We need this directory, and users of our library will need it too
 target_include_directories(util_library PUBLIC include/)
 target_link_libraries(util_library PRIVATE Qt5::Core)
-
