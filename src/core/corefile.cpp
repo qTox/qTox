@@ -26,11 +26,16 @@
 #include "src/model/status.h"
 #include "src/model/toxclientstandards.h"
 #include "util/compatiblerecursivemutex.h"
+#include "util/toxcoreerrorparser.h"
+
 #include <QDebug>
 #include <QDir>
 #include <QFile>
 #include <QRegularExpression>
 #include <QThread>
+
+#include <tox/tox.h>
+
 #include <cassert>
 #include <memory>
 
@@ -109,26 +114,7 @@ void CoreFile::sendAvatarFile(uint32_t friendId, const QByteArray& data)
     Tox_Err_File_Send error;
     const uint32_t fileNum = tox_file_send(tox, friendId, TOX_FILE_KIND_AVATAR, filesize,
                                     file_id, file_name, nameLength, &error);
-
-    switch (error) {
-    case TOX_ERR_FILE_SEND_OK:
-        break;
-    case TOX_ERR_FILE_SEND_FRIEND_NOT_CONNECTED:
-        qCritical() << "Friend not connected";
-        return;
-    case TOX_ERR_FILE_SEND_FRIEND_NOT_FOUND:
-        qCritical() << "Friend not found";
-        return;
-    case TOX_ERR_FILE_SEND_NAME_TOO_LONG:
-        qCritical() << "Name too long";
-        return;
-    case TOX_ERR_FILE_SEND_NULL:
-        qCritical() << "Send null";
-        return;
-    case TOX_ERR_FILE_SEND_TOO_MANY:
-        qCritical() << "Too many outgoing transfers";
-        return;
-    default:
+    if (!PARSE_ERR(error)) {
         return;
     }
 
@@ -150,8 +136,8 @@ void CoreFile::sendFile(uint32_t friendId, QString filename, QString filePath,
     Tox_Err_File_Send sendErr;
     uint32_t fileNum = tox_file_send(tox, friendId, TOX_FILE_KIND_DATA, filesize,
                                      nullptr, fileName.data(), fileName.size(), &sendErr);
-    if (sendErr != TOX_ERR_FILE_SEND_OK) {
-        qWarning() << "sendFile: Can't create the Tox file sender (" << sendErr << ")";
+
+    if (!PARSE_ERR(sendErr)) {
         emit fileSendFailed(friendId, fileName.getQString());
         return;
     }

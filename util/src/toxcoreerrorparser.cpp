@@ -412,3 +412,33 @@ bool ToxcoreErrorParser::parseErr(Tox_Err_Get_Port error, int line)
     qCritical() << line << "Unknown Tox_Err_Get_Port error code:" << error;
     return false;
 }
+
+bool ToxcoreErrorParser::parseErr(Tox_Err_File_Send error, int line)
+{
+    switch (error) {
+    case TOX_ERR_FILE_SEND_OK:
+        return true;
+
+    case TOX_ERR_FILE_SEND_NULL:
+        qCritical() << line << ": One of the arguments to the function was NULL when it was not expected.";
+        return false;
+
+    case TOX_ERR_FILE_SEND_FRIEND_NOT_FOUND:
+        qCritical() << line << ": The friend_number passed did not designate a valid friend.";
+        return false;
+
+    case TOX_ERR_FILE_SEND_FRIEND_NOT_CONNECTED:
+        qCritical() << line << ": This client is currently not connected to the friend.";
+        return false;
+
+    case TOX_ERR_FILE_SEND_NAME_TOO_LONG:
+        qCritical() << line << ": Filename length exceeded TOX_MAX_FILENAME_LENGTH bytes.";
+        return false;
+
+    case TOX_ERR_FILE_SEND_TOO_MANY:
+        qCritical() << line << ": Too many ongoing transfers.";
+        return false;
+    }
+    qCritical() << line << "Unknown Tox_Err_File_Send error code:" << error;
+    return false;
+}
