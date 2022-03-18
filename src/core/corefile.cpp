@@ -122,8 +122,12 @@ void CoreFile::sendAvatarFile(uint32_t friendId, const QByteArray& data)
     file.fileKind = TOX_FILE_KIND_AVATAR;
     file.avatarData = data;
     file.resumeFileId.resize(TOX_FILE_ID_LENGTH);
+    Tox_Err_File_Get fileGetErr;
     tox_file_get_file_id(tox, friendId, fileNum, reinterpret_cast<uint8_t*>(file.resumeFileId.data()),
-                         nullptr);
+                         &fileGetErr);
+    if (!PARSE_ERR(fileGetErr)) {
+        return;
+    }
     addFile(friendId, fileNum, file);
 }
 
@@ -145,8 +149,12 @@ void CoreFile::sendFile(uint32_t friendId, QString filename, QString filePath,
 
     ToxFile file{fileNum, friendId, fileName.getQString(), filePath, static_cast<uint64_t>(filesize), ToxFile::SENDING};
     file.resumeFileId.resize(TOX_FILE_ID_LENGTH);
+    Tox_Err_File_Get fileGetErr;
     tox_file_get_file_id(tox, friendId, fileNum, reinterpret_cast<uint8_t*>(file.resumeFileId.data()),
-                         nullptr);
+                         &fileGetErr);
+    if (!PARSE_ERR(fileGetErr)) {
+        return;
+    }
     if (!file.open(false)) {
         qWarning() << QString("sendFile: Can't open file, error: %1").arg(file.file->errorString());
     }
@@ -327,7 +335,11 @@ void CoreFile::onFileReceiveCallback(Tox* tox, uint32_t friendId, uint32_t fileI
         static_assert(TOX_HASH_LENGTH <= TOX_FILE_ID_LENGTH,
                         "TOX_HASH_LENGTH > TOX_FILE_ID_LENGTH!");
         uint8_t avatarHash[TOX_FILE_ID_LENGTH];
-        tox_file_get_file_id(tox, friendId, fileId, avatarHash, nullptr);
+        Tox_Err_File_Get fileGetErr;
+        tox_file_get_file_id(tox, friendId, fileId, avatarHash, &fileGetErr);
+        if (!PARSE_ERR(fileGetErr)) {
+            return;
+        }
         QByteArray avatarBytes{static_cast<const char*>(static_cast<const void*>(avatarHash)),
                                 TOX_HASH_LENGTH};
         emit core->fileAvatarOfferReceived(friendId, fileId, avatarBytes, filesize);
@@ -348,8 +360,12 @@ void CoreFile::onFileReceiveCallback(Tox* tox, uint32_t friendId, uint32_t fileI
     ToxFile file{fileId, friendId, filename.getBytes(), "", filesize, ToxFile::RECEIVING};
     file.fileKind = kind;
     file.resumeFileId.resize(TOX_FILE_ID_LENGTH);
+    Tox_Err_File_Get fileGetErr;
     tox_file_get_file_id(tox, friendId, fileId, reinterpret_cast<uint8_t*>(file.resumeFileId.data()),
-                         nullptr);
+                         &fileGetErr);
+    if (!PARSE_ERR(fileGetErr)) {
+        return;
+    }
     coreFile->addFile(friendId, fileId, file);
     if (kind != TOX_FILE_KIND_AVATAR) {
         emit coreFile->fileReceiveRequested(file);
@@ -377,8 +393,12 @@ void CoreFile::handleAvatarOffer(uint32_t friendId, uint32_t fileId, bool accept
     ToxFile file{fileId, friendId, "<avatar>", "", filesize, ToxFile::RECEIVING};
     file.fileKind = TOX_FILE_KIND_AVATAR;
     file.resumeFileId.resize(TOX_FILE_ID_LENGTH);
+    Tox_Err_File_Get getErr;
     tox_file_get_file_id(tox, friendId, fileId, reinterpret_cast<uint8_t*>(file.resumeFileId.data()),
-                         nullptr);
+                         &getErr);
+    if (!PARSE_ERR(getErr)) {
+        return;
+    }
     addFile(friendId, fileId, file);
 }
 
