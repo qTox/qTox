@@ -50,6 +50,7 @@ namespace ToxcoreErrorParser {
     bool parseErr(Tox_Err_Set_Typing error, int line);
     bool parseErr(Tox_Err_Conference_Delete error, int line);
     bool parseErr(Tox_Err_Get_Port error, int line);
+    bool parseErr(Tox_Err_File_Control error, int line);
     bool parseErr(Tox_Err_File_Get error, int line);
     bool parseErr(Tox_Err_File_Send error, int line);
 } // namespace ToxcoreErrorParser

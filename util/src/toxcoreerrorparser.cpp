@@ -413,6 +413,43 @@ bool ToxcoreErrorParser::parseErr(Tox_Err_Get_Port error, int line)
     return false;
 }
 
+bool ToxcoreErrorParser::parseErr(Tox_Err_File_Control error, int line)
+{
+    switch (error) {
+    case TOX_ERR_FILE_CONTROL_OK:
+        return true;
+
+    case TOX_ERR_FILE_CONTROL_FRIEND_NOT_FOUND:
+        qCritical() << line << ": The friend_number passed did not designate a valid friend.";
+        return false;
+
+    case TOX_ERR_FILE_CONTROL_FRIEND_NOT_CONNECTED:
+        qCritical() << line << ": This client is currently not connected to the friend.";
+        return false;
+
+    case TOX_ERR_FILE_CONTROL_NOT_FOUND:
+         qCritical() << line << ": No file transfer with the given file number was found for the given friend.";
+         return false;
+
+    case TOX_ERR_FILE_CONTROL_NOT_PAUSED:
+        qCritical() << line << ": A RESUME control was sent, but the file transfer is running normally.";
+        return false;
+
+    case TOX_ERR_FILE_CONTROL_DENIED:
+        qCritical() << line << ": A RESUME control was sent, but the file transfer was paused by the other party.";
+        return false;
+
+    case TOX_ERR_FILE_CONTROL_ALREADY_PAUSED:
+        qCritical() << line << ": A PAUSE control was sent, but the file transfer was already paused.";
+        return false;
+
+    case TOX_ERR_FILE_CONTROL_SENDQ:
+        qCritical() << line << ": Packet queue is full.";
+    }
+    qCritical() << line << "Unknown Tox_Err_File_Control error code:" << error;
+    return false;
+}
+
 bool ToxcoreErrorParser::parseErr(Tox_Err_File_Get error, int line)
 {
     switch (error) {

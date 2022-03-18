@@ -190,13 +190,15 @@ void CoreFile::pauseResumeFile(uint32_t friendId, uint32_t fileId)
         emit fileTransferAccepted(*file);
     }
 
+    Tox_Err_File_Control err;
     if (file->pauseStatus.localPaused()) {
         tox_file_control(tox, file->friendId, file->fileNum, TOX_FILE_CONTROL_PAUSE,
-                         nullptr);
+                         &err);
     } else {
         tox_file_control(tox, file->friendId, file->fileNum, TOX_FILE_CONTROL_RESUME,
-                         nullptr);
+                         &err);
     }
+    PARSE_ERR(err);
 }
 
 void CoreFile::cancelFileSend(uint32_t friendId, uint32_t fileId)
@@ -209,9 +211,13 @@ void CoreFile::cancelFileSend(uint32_t friendId, uint32_t fileId)
         return;
     }
 
+    Tox_Err_File_Control err;
+    tox_file_control(tox, file->friendId, file->fileNum, TOX_FILE_CONTROL_CANCEL, &err);
+    if (!PARSE_ERR(err)) {
+        return;
+    }
     file->status = ToxFile::CANCELED;
     emit fileTransferCancelled(*file);
-    tox_file_control(tox, file->friendId, file->fileNum, TOX_FILE_CONTROL_CANCEL, nullptr);
     removeFile(friendId, fileId);
 }
 
@@ -224,9 +230,13 @@ void CoreFile::cancelFileRecv(uint32_t friendId, uint32_t fileId)
         qWarning("cancelFileRecv: No such file in queue");
         return;
     }
+    Tox_Err_File_Control err;
+    tox_file_control(tox, file->friendId, file->fileNum, TOX_FILE_CONTROL_CANCEL, &err);
+    if (!PARSE_ERR(err)) {
+        return;
+    }
     file->status = ToxFile::CANCELED;
     emit fileTransferCancelled(*file);
-    tox_file_control(tox, file->friendId, file->fileNum, TOX_FILE_CONTROL_CANCEL, nullptr);
     removeFile(friendId, fileId);
 }
 
@@ -239,9 +249,13 @@ void CoreFile::rejectFileRecvRequest(uint32_t friendId, uint32_t fileId)
         qWarning("rejectFileRecvRequest: No such file in queue");
         return;
     }
+    Tox_Err_File_Control err;
+    tox_file_control(tox, file->friendId, file->fileNum, TOX_FILE_CONTROL_CANCEL, &err);
+    if (!PARSE_ERR(err)) {
+        return;
+    }
     file->status = ToxFile::CANCELED;
     emit fileTransferCancelled(*file);
-    tox_file_control(tox, file->friendId, file->fileNum, TOX_FILE_CONTROL_CANCEL, nullptr);
     removeFile(friendId, fileId);
 }
 
@@ -259,9 +273,13 @@ void CoreFile::acceptFileRecvRequest(uint32_t friendId, uint32_t fileId, QString
         qWarning() << "acceptFileRecvRequest: Unable to open file";
         return;
     }
+    Tox_Err_File_Control err;
+    tox_file_control(tox, file->friendId, file->fileNum, TOX_FILE_CONTROL_RESUME, &err);
+    if (!PARSE_ERR(err)) {
+        return;
+    }
     file->status = ToxFile::TRANSMITTING;
     emit fileTransferAccepted(*file);
-    tox_file_control(tox, file->friendId, file->fileNum, TOX_FILE_CONTROL_RESUME, nullptr);
 }
 
 ToxFile* CoreFile::findFile(uint32_t friendId, uint32_t fileId)
@@ -321,7 +339,9 @@ void CoreFile::onFileReceiveCallback(Tox* tox, uint32_t friendId, uint32_t fileI
         if (!filesize) {
             qDebug() << QString("Received empty avatar request %1:%2").arg(friendId).arg(fileId);
             // Avatars of size 0 means explicitely no avatar
-            tox_file_control(tox, friendId, fileId, TOX_FILE_CONTROL_CANCEL, nullptr);
+            Tox_Err_File_Control err;
+            tox_file_control(tox, friendId, fileId, TOX_FILE_CONTROL_CANCEL, &err);
+            PARSE_ERR(err);
             emit core->friendAvatarRemoved(core->getFriendPublicKey(friendId));
             return;
         }
@@ -329,7 +349,9 @@ void CoreFile::onFileReceiveCallback(Tox* tox, uint32_t friendId, uint32_t fileI
             qWarning() <<
                 QString("Received avatar request from %1 with size %2.").arg(friendId).arg(filesize) +
                 QString(" The max size allowed for avatars is %3. Cancelling transfer.").arg(ToxClientStandards::MaxAvatarSize);
-            tox_file_control(tox, friendId, fileId, TOX_FILE_CONTROL_CANCEL, nullptr);
+            Tox_Err_File_Control err;
+            tox_file_control(tox, friendId, fileId, TOX_FILE_CONTROL_CANCEL, &err);
+            PARSE_ERR(err);
             return;
         }
         static_assert(TOX_HASH_LENGTH <= TOX_FILE_ID_LENGTH,
@@ -380,15 +402,21 @@ void CoreFile::handleAvatarOffer(uint32_t friendId, uint32_t fileId, bool accept
         qDebug() << QString("Received avatar request %1:%2. Rejected since it is in cache.")
                         .arg(friendId)
                         .arg(fileId);
-        tox_file_control(tox, friendId, fileId, TOX_FILE_CONTROL_CANCEL, nullptr);
+        Tox_Err_File_Control err;
+        tox_file_control(tox, friendId, fileId, TOX_FILE_CONTROL_CANCEL, &err);
+        PARSE_ERR(err);
         return;
     }
 
+    Tox_Err_File_Control err;
+    tox_file_control(tox, friendId, fileId, TOX_FILE_CONTROL_RESUME, &err);
+    if (!PARSE_ERR(err)) {
+        return;
+    }
     // It's an avatar and we don't have it, autoaccept the transfer
     qDebug() << QString("Received avatar request %1:%2. Accepted.")
                     .arg(friendId)
                     .arg(fileId);
-    tox_file_control(tox, friendId, fileId, TOX_FILE_CONTROL_RESUME, nullptr);
 
     ToxFile file{fileId, friendId, "<avatar>", "", filesize, ToxFile::RECEIVING};
     file.fileKind = TOX_FILE_KIND_AVATAR;
@@ -499,7 +527,9 @@ void CoreFile::onFileRecvChunkCallback(Tox* tox, uint32_t friendId, uint32_t fil
     ToxFile* file = coreFile->findFile(friendId, fileId);
     if (!file) {
         qWarning("onFileRecvChunkCallback: No such file in queue");
-        tox_file_control(tox, friendId, fileId, TOX_FILE_CONTROL_CANCEL, nullptr);
+        Tox_Err_File_Control err;
+        tox_file_control(tox, friendId, fileId, TOX_FILE_CONTROL_CANCEL, &err);
+        PARSE_ERR(err);
         return;
     }
 
@@ -509,7 +539,9 @@ void CoreFile::onFileRecvChunkCallback(Tox* tox, uint32_t friendId, uint32_t fil
             file->status = ToxFile::CANCELED;
             emit coreFile->fileTransferCancelled(*file);
         }
-        tox_file_control(tox, friendId, fileId, TOX_FILE_CONTROL_CANCEL, nullptr);
+        Tox_Err_File_Control err;
+        tox_file_control(tox, friendId, fileId, TOX_FILE_CONTROL_CANCEL, &err);
+        PARSE_ERR(err);
         coreFile->removeFile(friendId, fileId);
         return;
     }
