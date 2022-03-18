@@ -40,11 +40,9 @@ bool ToxcoreErrorParser::parseErr(Tox_Err_Conference_Title error, int line)
     case TOX_ERR_CONFERENCE_TITLE_FAIL_SEND:
         qCritical() << line << ": Failed to send title packet";
         return false;
-
-    default:
-        qCritical() << line << ": Unknown Tox_Err_Conference_Title error code:" << error;
-        return false;
     }
+    qCritical() << line << ": Unknown Tox_Err_Conference_Title error code:" << error;
+    return false;
 }
 
 bool ToxcoreErrorParser::parseErr(Tox_Err_Friend_Send_Message error, int line)
@@ -76,11 +74,9 @@ bool ToxcoreErrorParser::parseErr(Tox_Err_Friend_Send_Message error, int line)
     case TOX_ERR_FRIEND_SEND_MESSAGE_EMPTY:
         qCritical() << line << "Attempted to send an empty message";
         return false;
-
-    default:
-        qCritical() << line << "Unknown friend send message error:" << static_cast<int>(error);
-        return false;
     }
+    qCritical() << line << "Unknown friend send message error:" << static_cast<int>(error);
+    return false;
 }
 
 bool ToxcoreErrorParser::parseErr(Tox_Err_Conference_Send_Message error, int line)
@@ -104,11 +100,9 @@ bool ToxcoreErrorParser::parseErr(Tox_Err_Conference_Send_Message error, int lin
     case TOX_ERR_CONFERENCE_SEND_MESSAGE_TOO_LONG:
         qCritical() << line << "Message too long";
         return false;
-
-    default:
-        qCritical() << line << "Unknown Tox_Err_Conference_Send_Message  error:" << static_cast<int>(error);
-        return false;
     }
+    qCritical() << line << "Unknown Tox_Err_Conference_Send_Message  error:" << static_cast<int>(error);
+    return false;
 }
 
 bool ToxcoreErrorParser::parseErr(Tox_Err_Conference_Peer_Query error, int line)
@@ -128,11 +122,9 @@ bool ToxcoreErrorParser::parseErr(Tox_Err_Conference_Peer_Query error, int line)
     case TOX_ERR_CONFERENCE_PEER_QUERY_PEER_NOT_FOUND:
         qCritical() << line << "Peer not found";
         return false;
-
-    default:
-        qCritical() << line << "Unknown Tox_Err_Conference_Peer_Query error code:" << error;
-        return false;
     }
+    qCritical() << line << "Unknown Tox_Err_Conference_Peer_Query error code:" << error;
+    return false;
 }
 
 bool ToxcoreErrorParser::parseErr(Tox_Err_Conference_Join error, int line)
@@ -164,11 +156,9 @@ bool ToxcoreErrorParser::parseErr(Tox_Err_Conference_Join error, int line)
     case TOX_ERR_CONFERENCE_JOIN_WRONG_TYPE:
         qCritical() << line << "Wrong conference type";
         return false;
-
-    default:
-        qCritical() << line << "Unknown Tox_Err_Conference_Join error code:" << error;
-        return false;
     }
+    qCritical() << line << "Unknown Tox_Err_Conference_Join error code:" << error;
+    return false;
 }
 
 bool ToxcoreErrorParser::parseErr(Tox_Err_Conference_Get_Type error, int line)
@@ -180,11 +170,9 @@ bool ToxcoreErrorParser::parseErr(Tox_Err_Conference_Get_Type error, int line)
     case TOX_ERR_CONFERENCE_GET_TYPE_CONFERENCE_NOT_FOUND:
         qCritical() << line << "Conference not found";
         return false;
-
-    default:
-        qCritical() << line << "Unknown Tox_Err_Conference_Get_Type error code:" << error;
-        return false;
     }
+    qCritical() << line << "Unknown Tox_Err_Conference_Get_Type error code:" << error;
+    return false;
 }
 
 bool ToxcoreErrorParser::parseErr(Tox_Err_Conference_Invite error, int line)
@@ -204,11 +192,9 @@ bool ToxcoreErrorParser::parseErr(Tox_Err_Conference_Invite error, int line)
     case TOX_ERR_CONFERENCE_INVITE_NO_CONNECTION:
         qCritical() << line << "Cannot invite to conference that we're not connected to";
         return false;
-
-    default:
-        qWarning() << "Unknown Tox_Err_Conference_Invite error code:" << error;
-        return false;
     }
+    qWarning() << "Unknown Tox_Err_Conference_Invite error code:" << error;
+    return false;
 }
 
 bool ToxcoreErrorParser::parseErr(Tox_Err_Conference_New error, int line)
@@ -220,11 +206,9 @@ bool ToxcoreErrorParser::parseErr(Tox_Err_Conference_New error, int line)
     case TOX_ERR_CONFERENCE_NEW_INIT:
         qCritical() << line << "The conference instance failed to initialize";
         return false;
-
-    default:
-        qCritical() << line << "Unknown Tox_Err_Conference_New error code:" << error;
-        return false;
     }
+    qCritical() << line << "Unknown Tox_Err_Conference_New error code:" << error;
+    return false;
 }
 
 bool ToxcoreErrorParser::parseErr(Tox_Err_Friend_By_Public_Key error, int line)
@@ -240,11 +224,9 @@ bool ToxcoreErrorParser::parseErr(Tox_Err_Friend_By_Public_Key error, int line)
     case TOX_ERR_FRIEND_BY_PUBLIC_KEY_NOT_FOUND:
         // we use this as a check for friendship, so this can be an expected result
         return false;
-
-    default:
-        qCritical() << line << "Unknown Tox_Err_Friend_By_Public_Key error code:" << error;
-        return false;
     }
+    qCritical() << line << "Unknown Tox_Err_Friend_By_Public_Key error code:" << error;
+    return false;
 }
 
 bool ToxcoreErrorParser::parseErr(Tox_Err_Bootstrap error, int line)
@@ -264,11 +246,9 @@ bool ToxcoreErrorParser::parseErr(Tox_Err_Bootstrap error, int line)
     case TOX_ERR_BOOTSTRAP_BAD_PORT:
         qCritical() << line << "out of range port";
         return false;
-
-    default:
-        qCritical() << line << "Unknown Tox_Err_bootstrap error code:" << error;
-        return false;
     }
+    qCritical() << line << "Unknown Tox_Err_bootstrap error code:" << error;
+    return false;
 }
 
 bool ToxcoreErrorParser::parseErr(Tox_Err_Friend_Add error, int line)
@@ -308,12 +288,9 @@ bool ToxcoreErrorParser::parseErr(Tox_Err_Friend_Add error, int line)
     case TOX_ERR_FRIEND_ADD_MALLOC:
         qCritical() << line << "A memory allocation failed when trying to increase the friend list size.";
         return false;
-
-    default:
-        qCritical() << line << "Unknown Tox_Err_Friend_Add error code:" << error;
-        return false;
-
     }
+    qCritical() << line << "Unknown Tox_Err_Friend_Add error code:" << error;
+    return false;
 }
 
 bool ToxcoreErrorParser::parseErr(Tox_Err_Friend_Delete error, int line)
@@ -325,11 +302,9 @@ bool ToxcoreErrorParser::parseErr(Tox_Err_Friend_Delete error, int line)
     case TOX_ERR_FRIEND_DELETE_FRIEND_NOT_FOUND:
         qCritical() << line << "There is no friend with the given friend number";
         return false;
-
-    default:
-        qCritical() << line << "Unknown Tox_Err_Friend_Delete error code:" << error;
-        return false;
     }
+    qCritical() << line << "Unknown Tox_Err_Friend_Delete error code:" << error;
+    return false;
 }
 
 bool ToxcoreErrorParser::parseErr(Tox_Err_Set_Info error, int line)
@@ -345,11 +320,9 @@ bool ToxcoreErrorParser::parseErr(Tox_Err_Set_Info error, int line)
     case TOX_ERR_SET_INFO_TOO_LONG:
         qCritical() << line << "Information length exceeded maximum permissible size.";
         return false;
-
-    default:
-        qCritical() << line << "Unknown Tox_Err_Set_Info error code:" << error;
-        return false;
     }
+    qCritical() << line << "Unknown Tox_Err_Set_Info error code:" << error;
+    return false;
 }
 
 bool ToxcoreErrorParser::parseErr(Tox_Err_Friend_Query error, int line)
@@ -365,11 +338,9 @@ bool ToxcoreErrorParser::parseErr(Tox_Err_Friend_Query error, int line)
     case TOX_ERR_FRIEND_QUERY_FRIEND_NOT_FOUND:
         qCritical() << line << "The friend_number did not designate a valid friend.";
         return false;
-
-    default:
-        qCritical() << line << "Unknown Tox_Err_Friend_Query error code:" << error;
-        return false;
     }
+    qCritical() << line << "Unknown Tox_Err_Friend_Query error code:" << error;
+    return false;
 }
 
 bool ToxcoreErrorParser::parseErr(Tox_Err_Friend_Get_Public_Key error, int line)
@@ -381,11 +352,9 @@ bool ToxcoreErrorParser::parseErr(Tox_Err_Friend_Get_Public_Key error, int line)
     case TOX_ERR_FRIEND_GET_PUBLIC_KEY_FRIEND_NOT_FOUND:
         qCritical() << line << "There is no friend with the given friend number";
         return false;
-
-    default:
-        qCritical() << line << "Unknown Tox_Err_Friend_Get_Public_Key error code:" << error;
-        return false;
     }
+    qCritical() << line << "Unknown Tox_Err_Friend_Get_Public_Key error code:" << error;
+    return false;
 }
 
 bool ToxcoreErrorParser::parseErr(Tox_Err_Friend_Get_Last_Online error, int line)
@@ -397,11 +366,9 @@ bool ToxcoreErrorParser::parseErr(Tox_Err_Friend_Get_Last_Online error, int line
     case TOX_ERR_FRIEND_GET_LAST_ONLINE_FRIEND_NOT_FOUND:
         qCritical() << line << "There is no friend with the given friend number";
         return false;
-
-    default:
-        qCritical() << line << "Unknown Tox_Err_Friend_Get_Last_Online error code:" << error;
-        return false;
     }
+    qCritical() << line << "Unknown Tox_Err_Friend_Get_Last_Online error code:" << error;
+    return false;
 }
 
 bool ToxcoreErrorParser::parseErr(Tox_Err_Set_Typing error, int line)
@@ -413,11 +380,9 @@ bool ToxcoreErrorParser::parseErr(Tox_Err_Set_Typing error, int line)
     case TOX_ERR_SET_TYPING_FRIEND_NOT_FOUND:
         qCritical() << line << "There is no friend with the given friend number";
         return false;
-
-    default:
-        qCritical() << line << "Unknown Tox_Err_Set_Typing error code:" << error;
-        return false;
     }
+    qCritical() << line << "Unknown Tox_Err_Set_Typing error code:" << error;
+    return false;
 }
 
 bool ToxcoreErrorParser::parseErr(Tox_Err_Conference_Delete error, int line)
@@ -429,11 +394,9 @@ bool ToxcoreErrorParser::parseErr(Tox_Err_Conference_Delete error, int line)
     case TOX_ERR_CONFERENCE_DELETE_CONFERENCE_NOT_FOUND:
         qCritical() << line << "The conference number passed did not designate a valid conference.";
         return false;
-
-    default:
-        qCritical() << line << "Unknown Tox_Err_Conference_Delete error code:" << error;
-        return false;
     }
+    qCritical() << line << "Unknown Tox_Err_Conference_Delete error code:" << error;
+    return false;
 }
 
 bool ToxcoreErrorParser::parseErr(Tox_Err_Get_Port error, int line)
@@ -445,9 +408,7 @@ bool ToxcoreErrorParser::parseErr(Tox_Err_Get_Port error, int line)
     case TOX_ERR_GET_PORT_NOT_BOUND:
         qCritical() << line << "Tox instance was not bound to any port.";
         return false;
-
-    default:
-        qCritical() << line << "Unknown Tox_Err_Get_Port error code:" << error;
-        return false;
     }
+    qCritical() << line << "Unknown Tox_Err_Get_Port error code:" << error;
+    return false;
 }
