@@ -544,6 +544,32 @@ bool ToxcoreErrorParser::parseErr(Tox_Err_File_Send_Chunk error, int line)
     return false;
 }
 
+bool ToxcoreErrorParser::parseErr(Toxav_Err_Bit_Rate_Set error, int line)
+{
+    switch (error) {
+    case TOXAV_ERR_BIT_RATE_SET_OK:
+        return true;
+
+    case TOXAV_ERR_BIT_RATE_SET_SYNC:
+        qCritical() << line << ": Synchronization error occurred.";
+        return false;
+
+    case TOXAV_ERR_BIT_RATE_SET_INVALID_BIT_RATE:
+        qCritical() << line << ": The bit rate passed was not one of the supported values.";
+        return false;
+
+    case TOXAV_ERR_BIT_RATE_SET_FRIEND_NOT_FOUND:
+        qCritical() << line << ": The friend_number passed did not designate a valid friend.";
+        return false;
+
+    case TOXAV_ERR_BIT_RATE_SET_FRIEND_NOT_IN_CALL:
+        qCritical() << line << ": This client is currently not in a call with the friend.";
+        return false;
+    }
+    qCritical() << line << "Unknown Toxav_Err_Bit_Rate_Set error code:" << error;
+    return false;
+}
+
 bool ToxcoreErrorParser::parseErr(Toxav_Err_Call_Control error, int line)
 {
     switch (error) {
