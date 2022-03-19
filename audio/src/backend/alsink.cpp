@@ -98,9 +98,9 @@ void AlSink::kill()
     emit invalidated();
 }
 
-AlSink::AlSink(OpenAL& al, uint sourceId)
+AlSink::AlSink(OpenAL& al, uint sourceId_)
     : audio(al)
-    , sourceId{sourceId}
+    , sourceId{sourceId_}
 {}
 
 AlSink::operator bool() const
