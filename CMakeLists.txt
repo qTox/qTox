@@ -626,10 +626,10 @@ target_link_libraries(${PROJECT_NAME}_static
   ${ALL_LIBRARIES}
   coverage_config)
 
+target_link_libraries(${PROJECT_NAME}_static qtox::warnings)
 target_link_libraries(${PROJECT_NAME}_static util_library)
 target_link_libraries(${PROJECT_NAME}_static audio_library)
 target_link_libraries(${PROJECT_NAME}_static translations_library)
-target_link_libraries(${PROJECT_NAME}_static qtox::warnings)
 
 add_executable(${PROJECT_NAME}
   WIN32

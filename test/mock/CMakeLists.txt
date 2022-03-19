@@ -29,4 +29,5 @@ target_link_libraries(mock_library
   util_library
   Qt5::Core
   Qt5::Network
-  Qt5::Gui)
+  Qt5::Gui
+  qtox::warnings)
