@@ -26,7 +26,7 @@
 #include <QString>
 
 namespace {
-constexpr int SCHEMA_VERSION = 9;
+constexpr int SCHEMA_VERSION = 10;
 
 struct BadEntry
 {
@@ -262,7 +262,8 @@ bool DbUpgrader::dbSchemaUpgrade(std::shared_ptr<RawDatabase>& db)
     using DbSchemaUpgradeFn = bool (*)(RawDatabase&);
     std::vector<DbSchemaUpgradeFn> upgradeFns = {dbSchema0to1, dbSchema1to2, dbSchema2to3,
                                                  dbSchema3to4, dbSchema4to5, dbSchema5to6,
-                                                 dbSchema6to7, dbSchema7to8, dbSchema8to9};
+                                                 dbSchema6to7, dbSchema7to8, dbSchema8to9,
+                                                 dbSchema9to10};
 
     assert(databaseSchemaVersion < static_cast<int>(upgradeFns.size()));
     assert(upgradeFns.size() == SCHEMA_VERSION);
@@ -608,5 +609,20 @@ bool DbUpgrader::dbSchema8to9(RawDatabase& db)
     const auto badPeers = getInvalidPeers(db);
     mergeDuplicatePeers(upgradeQueries, db, badPeers);
     upgradeQueries += RawDatabase::Query(QStringLiteral("PRAGMA user_version = 9;"));
+    return db.execNow(upgradeQueries);
+}
+
+bool DbUpgrader::dbSchema9to10(RawDatabase& db)
+{
+    // not technically a schema update, but still a database version update based on healing invalid user data.
+    // We inserted some empty resume_file_id's due to #6553. Heal the under-length entries.
+    // The resume file ID isn't actually used for loaded files at this time, so we can heal it to an arbitrary
+    // value of full length.
+    constexpr int resumeFileIdLengthNow = 32;
+    QByteArray dummyResumeId(resumeFileIdLengthNow, 0);
+    QVector<RawDatabase::Query> upgradeQueries;
+    upgradeQueries += RawDatabase::Query(QStringLiteral("UPDATE file_transfers SET file_restart_id = ? WHERE LENGTH(file_restart_id) != 32;"),
+        {dummyResumeId});
+    upgradeQueries += RawDatabase::Query(QStringLiteral("PRAGMA user_version = 10;"));
     return db.execNow(upgradeQueries);
 }

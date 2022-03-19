@@ -19,12 +19,54 @@
 
 #include "src/persistence/db/rawdatabase.h"
 #include "src/persistence/dbupgrader.h"
+#include "src/core/toxfile.h"
 
 #include <QtTest/QtTest>
 #include <QString>
 
 #include <algorithm>
 #include <memory>
+
+namespace {
+bool insertFileId(RawDatabase& db, int row, bool valid)
+{
+    QByteArray validResumeId(32, 1);
+    QByteArray invalidResumeId;
+
+    QByteArray resumeId;
+    if (valid) {
+        resumeId = validResumeId;
+    } else {
+        resumeId = invalidResumeId;
+    }
+
+    QVector<RawDatabase::Query> upgradeQueries;
+    upgradeQueries += RawDatabase::Query(
+        QString("INSERT INTO file_transfers "
+        "    (id, message_type, sender_alias, "
+        "    file_restart_id, file_name, file_path, "
+        "    file_hash, file_size, direction, file_state) "
+        "VALUES ( "
+        "    %1, "
+        "    'F', "
+        "    1, "
+        "    ?, "
+        "    %2, "
+        "    %3, "
+        "    %4, "
+        "    1, "
+        "    1, "
+        "    %5 "
+        ");")
+        .arg(row)
+        .arg("\"fooname\"")
+        .arg("\"foo/path\"")
+        .arg("\"foohash\"")
+        .arg(ToxFile::CANCELED)
+        , {resumeId});
+    return db.execNow(upgradeQueries);
+}
+} // namespace
 
 struct SqliteMasterEntry {
     QString name;
@@ -54,6 +96,7 @@ private slots:
     void test6to7();
     // test7to8 omitted, version only upgrade, versions are not verified in this
     // test8to9 omitted, data corruption correction upgrade with no schema change
+    void test9to10();
     // test suite
     void cleanupTestCase() const;
 
@@ -66,7 +109,7 @@ private:
 const QString testFileList[] = {"testCreation.db", "testIsNewDbTrue.db", "testIsNewDbFalse.db",
                                 "test0to1.db",     "test1to2.db",        "test2to3.db",
                                 "test3to4.db",     "test4to5.db",        "test5to6.db",
-                                "test6to7.db"};
+                                "test6to7.db",     "test9to10.db"};
 
 // db schemas can be select with "SELECT name, sql FROM sqlite_master;" on the database.
 
@@ -162,6 +205,8 @@ const std::vector<SqliteMasterEntry> schema7{
      "FOREIGN KEY (id, message_type) REFERENCES history(id, message_type))"},
     {"chat_id_idx", "CREATE INDEX chat_id_idx on history (chat_id)"}};
 
+const std::vector<SqliteMasterEntry> schema9 = schema7;
+const std::vector<SqliteMasterEntry> schema10 = schema9;
 
 void TestDbSchema::initTestCase()
 {
@@ -432,6 +477,35 @@ void TestDbSchema::test6to7()
     createSchemaAtVersion(db, schema6);
     QVERIFY(DbUpgrader::dbSchema6to7(*db));
     verifyDb(db, schema7);
+}
+
+void TestDbSchema::test9to10()
+{
+    auto db = std::shared_ptr<RawDatabase>{new RawDatabase{"test9to10.db", {}, {}}};
+    createSchemaAtVersion(db, schema9);
+
+    QVERIFY(insertFileId(*db, 1, true));
+    QVERIFY(insertFileId(*db, 2, true));
+    QVERIFY(insertFileId(*db, 3, false));
+    QVERIFY(insertFileId(*db, 4, true));
+    QVERIFY(insertFileId(*db, 5, false));
+    QVERIFY(DbUpgrader::dbSchema9to10(*db));
+    int numHealed = 0;
+    int numUnchanged = 0;
+    QVERIFY(db->execNow(RawDatabase::Query("SELECT file_restart_id from file_transfers;",
+        [&](const QVector<QVariant>& row) {
+        auto resumeId = row[0].toByteArray();
+        if (resumeId == QByteArray(32, 0)) {
+            ++numHealed;
+        } else if (resumeId == QByteArray(32, 1)) {
+            ++numUnchanged;
+        } else {
+            QFAIL("Invalid file_restart_id");
+        }
+        })));
+    QVERIFY(numHealed == 2);
+    QVERIFY(numUnchanged == 3);
+    verifyDb(db, schema10);
 }
 
 QTEST_GUILESS_MAIN(TestDbSchema)
