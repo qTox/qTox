@@ -135,7 +135,7 @@ qreal OpenAL::outputVolume() const
         checkAlError();
     }
 
-    return volume;
+    return static_cast<qreal>(volume);
 }
 
 /**
@@ -613,7 +613,7 @@ float OpenAL::getVolume()
     float sumOfSquares = 0;
     for (quint32 i = 0; i < samples; i++) {
         float sample = static_cast<float>(inputBuffer[i]) / std::numeric_limits<int16_t>::max();
-        sumOfSquares += std::pow(sample, 2);
+        sumOfSquares += std::pow(sample, 2.f);
     }
     const float rms = std::sqrt(sumOfSquares / samples);
     // our calculated normalized volume could possibly be above 1 because our RMS assumes a sinusoidal wave
@@ -644,7 +644,7 @@ void OpenAL::doInput()
 
     applyGain(inputBuffer, AUDIO_FRAME_SAMPLE_COUNT_TOTAL, gainFactor);
 
-    float volume = getVolume();
+    auto volume = static_cast<qreal>(getVolume());
     if (volume >= inputThreshold) {
         isActive = true;
         emit startActive(voiceHold);
