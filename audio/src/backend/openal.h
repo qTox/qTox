@@ -127,7 +127,7 @@ private:
     void cleanupBuffers(uint sourceId);
     void cleanupSound();
 
-    float getVolume();
+    qreal getVolume();
 
 protected:
     IAudioSettings& settings;

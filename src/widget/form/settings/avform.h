@@ -82,7 +82,7 @@ private slots:
     void on_videoModescomboBox_currentIndexChanged(int index);
 
     void rescanDevices();
-    void setVolume(float value);
+    void setVolume(qreal value);
 
 protected:
     void updateVideoModes(int curIndex);

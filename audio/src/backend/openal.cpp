@@ -588,19 +588,19 @@ void OpenAL::cleanupOutput()
  *
  * @return normalized volume between 0-1
  */
-float OpenAL::getVolume()
+qreal OpenAL::getVolume()
 {
     const quint32 samples = AUDIO_FRAME_SAMPLE_COUNT_TOTAL;
-    const float rootTwo = 1.414213562; // sqrt(2), but sqrt is not constexpr
+    const qreal rootTwo = 1.414213562; // sqrt(2), but sqrt is not constexpr
     // calculate volume as the root mean squared of amplitudes in the sample
-    float sumOfSquares = 0;
+    qreal sumOfSquares = 0;
     for (quint32 i = 0; i < samples; i++) {
-        float sample = static_cast<float>(inputBuffer[i]) / std::numeric_limits<int16_t>::max();
+        auto sample = static_cast<qreal>(inputBuffer[i]) / std::numeric_limits<int16_t>::max();
         sumOfSquares += std::pow(sample, 2);
     }
-    const float rms = std::sqrt(sumOfSquares / samples);
+    const qreal rms = std::sqrt(sumOfSquares / samples);
     // our calculated normalized volume could possibly be above 1 because our RMS assumes a sinusoidal wave
-    const float normalizedVolume = std::min(rms * rootTwo, 1.0f);
+    const qreal normalizedVolume = std::min(rms * rootTwo, 1.0);
     return normalizedVolume;
 }
 
@@ -627,7 +627,7 @@ void OpenAL::doInput()
 
     applyGain(inputBuffer, AUDIO_FRAME_SAMPLE_COUNT_TOTAL, gainFactor);
 
-    float volume = getVolume();
+    auto volume = getVolume();
     if (volume >= inputThreshold) {
         isActive = true;
         emit startActive(voiceHold);
@@ -693,7 +693,7 @@ QStringList OpenAL::outDeviceNames()
 
     if (pDeviceList) {
         while (*pDeviceList) {
-            int len = static_cast<int>(strlen(pDeviceList));
+            auto len = strlen(pDeviceList);
             list << QString::fromUtf8(pDeviceList, len);
             pDeviceList += len + 1;
         }
@@ -709,7 +709,7 @@ QStringList OpenAL::inDeviceNames()
 
     if (pDeviceList) {
         while (*pDeviceList) {
-            int len = static_cast<int>(strlen(pDeviceList));
+            auto len = strlen(pDeviceList);
             list << QString::fromUtf8(pDeviceList, len);
             pDeviceList += len + 1;
         }

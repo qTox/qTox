@@ -171,9 +171,9 @@ void AVForm::rescanDevices()
     getVideoDevices();
 }
 
-void AVForm::setVolume(float value)
+void AVForm::setVolume(qreal value)
 {
-    volumeDisplay->setValue(getStepsFromValue(static_cast<qreal>(value), audio.minOutputVolume(), audio.maxOutputVolume()));
+    volumeDisplay->setValue(getStepsFromValue(value, audio.minOutputVolume(), audio.maxOutputVolume()));
 }
 
 void AVForm::on_videoModescomboBox_currentIndexChanged(int index)

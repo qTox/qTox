@@ -40,6 +40,6 @@ public:
 signals:
     void frameAvailable(const int16_t* pcm, size_t sample_count, uint8_t channels,
                         uint32_t sampling_rate);
-    void volumeAvailable(float value);
+    void volumeAvailable(qreal value);
     void invalidated();
 };
