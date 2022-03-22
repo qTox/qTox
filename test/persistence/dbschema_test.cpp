@@ -90,6 +90,7 @@ private slots:
     // test7to8 omitted, version only upgrade, versions are not verified in this
     // test8to9 omitted, data corruption correction upgrade with no schema change
     void test9to10();
+    // test10to11 handled in dbTo11_test
     // test suite
 
 private:
@@ -115,7 +116,7 @@ void TestDbSchema::testCreation()
     QVector<RawDatabase::Query> queries;
     auto db = std::shared_ptr<RawDatabase>{new RawDatabase{testDatabaseFile->fileName(), {}, {}}};
     QVERIFY(DbUpgrader::createCurrentSchema(*db));
-    DbUtility::verifyDb(db, DbUtility::schema7);
+    DbUtility::verifyDb(db, DbUtility::schema11);
 }
 
 void TestDbSchema::testIsNewDb()
