@@ -122,23 +122,6 @@ void OpenAL::checkAlcError(ALCdevice* device) noexcept
 }
 
 /**
- * @brief Returns the current output volume (between 0 and 1)
- */
-qreal OpenAL::outputVolume() const
-{
-    QMutexLocker locker(&audioLock);
-
-    ALfloat volume = 0.0;
-
-    if (alOutDev) {
-        alGetListenerf(AL_GAIN, &volume);
-        checkAlError();
-    }
-
-    return volume;
-}
-
-/**
  * @brief Set the master output volume.
  *
  * @param[in] volume   the master volume (between 0 and 1)

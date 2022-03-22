@@ -35,9 +35,6 @@
  * @var IAudioControl::AUDIO_FRAME_SAMPLE_COUNT
  * @brief Frame sample count
  *
- * @fn qreal IAudioControl::outputVolume() const
- * @brief Returns the current output volume (between 0 and 1)
- *
  * @fn void IAudioControl::setOutputVolume(qreal volume)
  * @brief Set the master output volume.
  *
@@ -105,7 +102,6 @@ class IAudioControl : public QObject
 
 public:
     virtual ~IAudioControl() = default;
-    virtual qreal outputVolume() const = 0;
     virtual void setOutputVolume(qreal volume) = 0;
     virtual qreal maxOutputVolume() const = 0;
     virtual qreal minOutputVolume() const = 0;

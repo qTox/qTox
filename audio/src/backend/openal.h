@@ -63,7 +63,6 @@ public:
     {
         return 0;
     }
-    qreal outputVolume() const;
     void setOutputVolume(qreal volume);
 
     qreal minInputGain() const;
