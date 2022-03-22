@@ -18,7 +18,7 @@
 */
 
 #include "src/persistence/db/rawdatabase.h"
-#include "src/persistence/dbupgrader.h"
+#include "src/persistence/db/upgrades/dbupgrader.h"
 
 #include "dbutility/dbutility.h"
 

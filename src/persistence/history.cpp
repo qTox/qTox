@@ -23,7 +23,7 @@
 #include "history.h"
 #include "profile.h"
 #include "settings.h"
-#include "dbupgrader.h"
+#include "db/upgrades/dbupgrader.h"
 #include "db/rawdatabase.h"
 #include "src/core/toxpk.h"
 
