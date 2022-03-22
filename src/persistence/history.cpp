@@ -43,32 +43,51 @@ MessageState getMessageState(bool isPending, bool isBroken)
     return messageState;
 }
 
-QString generatePeerIdString(ToxPk const& pk)
+void addAuthorIdSubQuery(QString& queryString, QVector<QByteArray>& boundParams, const ToxPk& authorPk)
 {
-    return QString("(SELECT id FROM peers WHERE public_key = '%1')").arg(pk.toString());
-
+    boundParams.append(authorPk.getByteArray());
+    queryString += "(SELECT id FROM authors WHERE public_key = ?)";
 }
 
-RawDatabase::Query generateEnsurePkInPeers(ToxPk const& pk)
+void addChatIdSubQuery(QString& queryString, QVector<QByteArray>& boundParams, const ChatId& chatId)
 {
-    return RawDatabase::Query{QStringLiteral("INSERT OR IGNORE INTO peers (public_key) "
-                                "VALUES ('%1')").arg(pk.toString())};
+    boundParams.append(chatId.getByteArray());
+    queryString += "(SELECT id FROM chats WHERE uuid = ?)";
+}
+
+RawDatabase::Query generateEnsurePkInChats(ToxPk const& pk)
+{
+    return RawDatabase::Query{QStringLiteral("INSERT OR IGNORE INTO chats (uuid) "
+                                "VALUES (?)"), {pk.getByteArray()}};
+}
+
+RawDatabase::Query generateEnsurePkInAuthors(ToxPk const& pk)
+{
+    return RawDatabase::Query{QStringLiteral("INSERT OR IGNORE INTO authors (public_key) "
+                                "VALUES (?)"), {pk.getByteArray()}};
 }
 
 RawDatabase::Query generateUpdateAlias(ToxPk const& pk, QString const& dispName)
 {
-    return RawDatabase::Query(
-            QString("INSERT OR IGNORE INTO aliases (owner, display_name) VALUES (%1, ?);").arg(generatePeerIdString(pk)),
-            {dispName.toUtf8()});
+    QVector<QByteArray> boundParams;
+    QString queryString = QStringLiteral(
+            "INSERT OR IGNORE INTO aliases (owner, display_name) VALUES (");
+    addAuthorIdSubQuery(queryString, boundParams, pk);
+    queryString += ", ?);";
+    boundParams += dispName.toUtf8();
+    return RawDatabase::Query{queryString, boundParams};
 }
 
 RawDatabase::Query generateHistoryTableInsertion(char type, const QDateTime& time, const ToxPk& friendPk)
 {
-    return RawDatabase::Query(QString("INSERT INTO history (message_type, timestamp, chat_id) "
-                                      "VALUES ('%1', %2, %3);")
-                                  .arg(type)
-                                  .arg(time.toMSecsSinceEpoch())
-                                  .arg(generatePeerIdString(friendPk)));
+    QVector<QByteArray> boundParams;
+    QString queryString = QStringLiteral("INSERT INTO history (message_type, timestamp, chat_id) "
+                                      "VALUES ('%1', %2, ")
+                                      .arg(type)
+                                      .arg(time.toMSecsSinceEpoch());
+    addChatIdSubQuery(queryString, boundParams, friendPk);
+    queryString += ");";
+    return RawDatabase::Query(queryString, boundParams);
 }
 
 /**
@@ -88,21 +107,25 @@ generateNewTextMessageQueries(const ToxPk& friendPk, const QString& message, con
 {
     QVector<RawDatabase::Query> queries;
 
-    queries += generateEnsurePkInPeers(friendPk);
-    queries += generateEnsurePkInPeers(sender);
+    queries += generateEnsurePkInChats(friendPk);
+    queries += generateEnsurePkInAuthors(sender);
     queries += generateUpdateAlias(sender, dispName);
     queries += generateHistoryTableInsertion('T', time, friendPk);
 
-    queries += RawDatabase::Query(
-        QString("INSERT INTO text_messages (id, message_type, sender_alias, message) "
+    QVector<QByteArray> boundParams;
+    QString queryString = QStringLiteral(
+                "INSERT INTO text_messages (id, message_type, sender_alias, message) "
                 "VALUES ( "
                 "    last_insert_rowid(), "
                 "    'T', "
-                "    (SELECT id FROM aliases WHERE owner=%1 and display_name=?), "
-                "    ?"
-                ");")
-            .arg(generatePeerIdString(sender)),
-        {dispName.toUtf8(), message.toUtf8()}, insertIdCallback);
+                "    (SELECT id FROM aliases WHERE owner=");
+    addAuthorIdSubQuery(queryString, boundParams, sender);
+    queryString += " and display_name=?";
+    boundParams += dispName.toUtf8();
+    queryString += "), ?";
+    boundParams += message.toUtf8();
+    queryString += ");";
+    queries += RawDatabase::Query(queryString, boundParams, insertIdCallback);
 
     if (!isDelivered) {
         queries += RawDatabase::Query{
@@ -120,7 +143,7 @@ QVector<RawDatabase::Query> generateNewSystemMessageQueries(const ToxPk& friendP
 {
     QVector<RawDatabase::Query> queries;
 
-    queries += generateEnsurePkInPeers(friendPk);
+    queries += generateEnsurePkInChats(friendPk);
     queries += generateHistoryTableInsertion('S', systemMessage.timestamp, friendPk);
 
     QVector<QByteArray> blobs;
@@ -230,8 +253,9 @@ void History::eraseHistory()
                 "DELETE FROM file_transfers;"
                 "DELETE FROM system_messages;"
                 "DELETE FROM history;"
+                "DELETE FROM chats;"
                 "DELETE FROM aliases;"
-                "DELETE FROM peers;"
+                "DELETE FROM authors;"
                 "VACUUM;");
 }
 
@@ -245,37 +269,59 @@ void History::removeFriendHistory(const ToxPk& friendPk)
         return;
     }
 
-    QString queryText = QString("DELETE FROM faux_offline_pending "
+    QVector<QByteArray> boundParams;
+    QString queryString = QStringLiteral("DELETE FROM faux_offline_pending "
                                 "WHERE faux_offline_pending.id IN ( "
                                 "    SELECT faux_offline_pending.id FROM faux_offline_pending "
                                 "    LEFT JOIN history ON faux_offline_pending.id = history.id "
-                                "    WHERE chat_id=%1 "
+                                "    WHERE chat_id=");
+    addChatIdSubQuery(queryString, boundParams, friendPk);
+    queryString += QStringLiteral(
                                 "); "
                                 "DELETE FROM broken_messages "
                                 "WHERE broken_messages.id IN ( "
                                 "    SELECT broken_messages.id FROM broken_messages "
                                 "    LEFT JOIN history ON broken_messages.id = history.id "
-                                "    WHERE chat_id=%1 "
+                                "    WHERE chat_id=");
+    addChatIdSubQuery(queryString, boundParams, friendPk);
+    queryString += QStringLiteral(
                                 "); "
                                 "DELETE FROM text_messages "
                                 "WHERE id IN ("
                                 "   SELECT id from history "
-                                "   WHERE message_type = 'T' AND chat_id=%1);"
+                                "   WHERE message_type = 'T' AND chat_id=");
+    addChatIdSubQuery(queryString, boundParams, friendPk);
+    queryString += QStringLiteral(
+                                ");"
                                 "DELETE FROM file_transfers "
                                 "WHERE id IN ( "
                                 "    SELECT id from history "
-                                "    WHERE message_type = 'F' AND chat_id=%1);"
+                                "    WHERE message_type = 'F' AND chat_id=");
+    addChatIdSubQuery(queryString, boundParams, friendPk);
+    queryString += QStringLiteral(
+                                ");"
                                 "DELETE FROM system_messages "
                                 "WHERE id IN ( "
                                 "   SELECT id from history "
-                                "   WHERE message_type = 'S' AND chat_id=%1);"
-                                "DELETE FROM history WHERE chat_id=%1; "
-                                "DELETE FROM aliases WHERE owner=%1; "
-                                "DELETE FROM peers WHERE id=%1; "
-                                "VACUUM;")
-                            .arg(generatePeerIdString(friendPk));
+                                "   WHERE message_type = 'S' AND chat_id=");
+    addChatIdSubQuery(queryString, boundParams, friendPk);
+    queryString += QStringLiteral(");"
+                                "DELETE FROM history WHERE chat_id=");
+    addChatIdSubQuery(queryString, boundParams, friendPk);
+    queryString += QStringLiteral("; "
+                                "DELETE FROM chats WHERE id=");
+    addChatIdSubQuery(queryString, boundParams, friendPk);
+    queryString += QStringLiteral("; "
+                                "DELETE FROM aliases WHERE owner=");
+    addAuthorIdSubQuery(queryString, boundParams, friendPk);
+    queryString += QStringLiteral("; "
+                                "DELETE FROM authors WHERE id=");
+    addAuthorIdSubQuery(queryString, boundParams, friendPk);
+    queryString += QStringLiteral("; "
+                                "VACUUM;");
 
-    if (!db->execNow(queryText)) {
+    RawDatabase::Query query = {queryString, boundParams};
+    if (!db->execNow(query)) {
         qWarning() << "Failed to remove friend's history";
     }
 }
@@ -300,16 +346,16 @@ History::generateNewFileTransferQueries(const ToxPk& friendPk, const ToxPk& send
 {
     QVector<RawDatabase::Query> queries;
 
-    queries += generateEnsurePkInPeers(friendPk);
-    queries += generateEnsurePkInPeers(sender);
+    queries += generateEnsurePkInChats(friendPk);
+    queries += generateEnsurePkInAuthors(sender);
     queries += generateUpdateAlias(sender, dispName);
     queries += generateHistoryTableInsertion('F', time, friendPk);
 
     std::weak_ptr<History> weakThis = shared_from_this();
     auto fileId = insertionData.fileId;
 
-    queries +=
-        RawDatabase::Query(QString(
+    QString queryString;
+    queryString += QStringLiteral(
                                "INSERT INTO file_transfers "
                                "    (id, message_type, sender_alias, "
                                "    file_restart_id, file_name, file_path, "
@@ -317,28 +363,29 @@ History::generateNewFileTransferQueries(const ToxPk& friendPk, const ToxPk& send
                                "VALUES ( "
                                "    last_insert_rowid(), "
                                "    'F', "
-                               "    (SELECT id FROM aliases WHERE owner=%1 AND display_name=?), "
-                               "    ?, "
-                               "    ?, "
-                               "    ?, "
-                               "    ?, "
-                               "    %2, "
-                               "    %3, "
-                               "    %4 "
-                               ");")
-                               .arg(generatePeerIdString(sender))
-                               .arg(insertionData.size)
-                               .arg(insertionData.direction)
-                               .arg(ToxFile::CANCELED),
-                           {dispName.toUtf8(), insertionData.fileId,
-                            insertionData.fileName.toUtf8(), insertionData.filePath.toUtf8(),
-                            QByteArray()},
+                               "    (SELECT id FROM aliases WHERE owner=");
+    QVector<QByteArray> boundParams;
+    addAuthorIdSubQuery(queryString, boundParams, sender);
+    queryString +=  " AND display_name=?";
+    boundParams += dispName.toUtf8();
+    queryString += "), ?";
+    boundParams += insertionData.fileId;
+    queryString += ", ?";
+    boundParams += insertionData.fileName.toUtf8();
+    queryString += ", ?";
+    boundParams += insertionData.filePath.toUtf8();
+    queryString += ", ?";
+    boundParams += QByteArray();
+    queryString += QStringLiteral(", %1, %2, %3);")
+                        .arg(insertionData.size)
+                        .arg(insertionData.direction)
+                        .arg(ToxFile::CANCELED);
+    queries += RawDatabase::Query(queryString, boundParams,
                            [weakThis, fileId](RowId id) {
                                auto pThis = weakThis.lock();
                                if (pThis)
                                    emit pThis->fileInserted(id, fileId);
                            });
-
     return queries;
 }
 
@@ -472,9 +519,8 @@ size_t History::getNumMessagesForFriendBeforeDate(const ToxPk& friendPk, const Q
 
     QString queryText = QString("SELECT COUNT(history.id) "
                                 "FROM history "
-                                "JOIN peers chat ON chat_id = chat.id "
-                                "WHERE chat.public_key='%1'")
-                            .arg(friendPk.toString());
+                                "JOIN chats ON chat_id = chats.id "
+                                "WHERE chats.uuid = ?");
 
     if (date.isNull()) {
         queryText += ";";
@@ -487,7 +533,7 @@ size_t History::getNumMessagesForFriendBeforeDate(const ToxPk& friendPk, const Q
         numMessages = row[0].toLongLong();
     };
 
-    db->execNow({queryText, rowCallback});
+    db->execNow({queryText, {friendPk.getByteArray()}, rowCallback});
 
     return numMessages;
 }
@@ -500,30 +546,6 @@ QList<History::HistMessage> History::getMessagesForFriend(const ToxPk& friendPk,
     }
 
     QList<HistMessage> messages;
-
-    // Don't forget to update the rowCallback if you change the selected columns!
-    QString queryText =
-        QString(
-            "SELECT history.id, history.message_type, history.timestamp, faux_offline_pending.id, "
-            "    faux_offline_pending.required_extensions, broken_messages.id, text_messages.message, "
-            "    file_restart_id, file_name, file_path, file_size, file_transfers.direction, "
-            "    file_state, peers.public_key as sender_key, aliases.display_name, "
-            "    system_messages.system_message_type, system_messages.arg1, system_messages.arg2, "
-            "    system_messages.arg3, system_messages.arg4 "
-            "FROM history "
-            "LEFT JOIN text_messages ON history.id = text_messages.id "
-            "LEFT JOIN file_transfers ON history.id = file_transfers.id "
-            "LEFT JOIN system_messages ON system_messages.id == history.id "
-            "LEFT JOIN aliases ON text_messages.sender_alias = aliases.id OR "
-            "file_transfers.sender_alias = aliases.id "
-            "LEFT JOIN peers ON aliases.owner = peers.id "
-            "LEFT JOIN faux_offline_pending ON faux_offline_pending.id = history.id "
-            "LEFT JOIN broken_messages ON broken_messages.id = history.id "
-            "WHERE history.chat_id = %1 "
-            "LIMIT %2 OFFSET %3;")
-            .arg(generatePeerIdString(friendPk))
-            .arg(lastIdx - firstIdx)
-            .arg(firstIdx);
 
     auto rowCallback = [&friendPk, &messages](const QVector<QVariant>& row) {
         // If the select statement is changed please update these constants
@@ -552,10 +574,10 @@ QList<History::HistMessage> History::getMessagesForFriend(const ToxPk& friendPk,
             assert(!it->isNull());
             const auto messageContent = (*it++).toString();
             it = std::next(row.begin(), senderOffset);
-            const auto senderKey = (*it++).toString();
+            const auto senderKey = ToxPk{(*it++).toByteArray()};
             const auto senderName = QString::fromUtf8((*it++).toByteArray().replace('\0', ""));
             messages += HistMessage(id, messageState, requiredExtensions, timestamp,
-                                    friendPk.toString(), senderName, senderKey, messageContent);
+                                    friendPk, senderName, senderKey, messageContent);
             break;
         }
         case 'F': {
@@ -575,9 +597,9 @@ QList<History::HistMessage> History::getMessagesForFriend(const ToxPk& friendPk,
             file.status = status;
 
             it = std::next(row.begin(), senderOffset);
-            const auto senderKey = (*it++).toString();
+            const auto senderKey = ToxPk{(*it++).toByteArray()};
             const auto senderName = QString::fromUtf8((*it++).toByteArray().replace('\0', ""));
-            messages += HistMessage(id, messageState, timestamp, friendPk.toString(), senderName,
+            messages += HistMessage(id, messageState, timestamp, friendPk, senderName,
                                     senderKey, file);
             break;
         }
@@ -594,12 +616,37 @@ QList<History::HistMessage> History::getMessagesForFriend(const ToxPk& friendPk,
             });
             it = argEnd;
 
-            messages += HistMessage(id, timestamp, friendPk.toString(), systemMessage);
+            messages += HistMessage(id, timestamp, friendPk, systemMessage);
             break;
         }
     };
 
-    db->execNow({queryText, rowCallback});
+    // Don't forget to update the rowCallback if you change the selected columns!
+    QString queryString =
+        QStringLiteral(
+            "SELECT history.id, history.message_type, history.timestamp, faux_offline_pending.id, "
+            "    faux_offline_pending.required_extensions, broken_messages.id, text_messages.message, "
+            "    file_restart_id, file_name, file_path, file_size, file_transfers.direction, "
+            "    file_state, authors.public_key as sender_key, aliases.display_name, "
+            "    system_messages.system_message_type, system_messages.arg1, system_messages.arg2, "
+            "    system_messages.arg3, system_messages.arg4 "
+            "FROM history "
+            "LEFT JOIN text_messages ON history.id = text_messages.id "
+            "LEFT JOIN file_transfers ON history.id = file_transfers.id "
+            "LEFT JOIN system_messages ON system_messages.id == history.id "
+            "LEFT JOIN aliases ON text_messages.sender_alias = aliases.id OR "
+            "file_transfers.sender_alias = aliases.id "
+            "LEFT JOIN authors ON aliases.owner = authors.id "
+            "LEFT JOIN faux_offline_pending ON faux_offline_pending.id = history.id "
+            "LEFT JOIN broken_messages ON broken_messages.id = history.id "
+            "WHERE history.chat_id = ");
+    QVector<QByteArray> boundParams;
+    addChatIdSubQuery(queryString, boundParams, friendPk);
+    queryString += QStringLiteral(
+            " LIMIT %1 OFFSET %2;")
+            .arg(lastIdx - firstIdx)
+            .arg(firstIdx);
+    db->execNow({queryString, boundParams, rowCallback});
 
     return messages;
 }
@@ -609,20 +656,6 @@ QList<History::HistMessage> History::getUndeliveredMessagesForFriend(const ToxPk
     if (historyAccessBlocked()) {
         return {};
     }
-
-    auto queryText =
-        QString(
-            "SELECT history.id, history.timestamp, faux_offline_pending.id, "
-            "    faux_offline_pending.required_extensions, broken_messages.id, text_messages.message, "
-            "    peers.public_key as sender_key, aliases.display_name "
-            "FROM history "
-            "JOIN text_messages ON history.id = text_messages.id "
-            "JOIN aliases ON text_messages.sender_alias = aliases.id "
-            "JOIN peers ON aliases.owner = peers.id "
-            "JOIN faux_offline_pending ON faux_offline_pending.id = history.id "
-            "LEFT JOIN broken_messages ON broken_messages.id = history.id "
-            "WHERE history.chat_id = %1 AND history.message_type = 'T';")
-            .arg(generatePeerIdString(friendPk));
 
     QList<History::HistMessage> ret;
     auto rowCallback = [&friendPk, &ret](const QVector<QVariant>& row) {
@@ -635,16 +668,31 @@ QList<History::HistMessage> History::getUndeliveredMessagesForFriend(const ToxPk
         auto extensionSet = ExtensionSet((*it++).toLongLong());
         auto isBroken = !(*it++).isNull();
         auto messageContent = (*it++).toString();
-        auto senderKey = (*it++).toString();
+        auto senderKey = ToxPk{(*it++).toByteArray()};
         auto displayName = QString::fromUtf8((*it++).toByteArray().replace('\0', ""));
 
         MessageState messageState = getMessageState(isPending, isBroken);
 
-        ret += {id,          messageState, extensionSet,  timestamp, friendPk.toString(),
+        ret += {id,          messageState, extensionSet,  timestamp, friendPk,
                 displayName, senderKey,    messageContent};
     };
 
-    db->execNow({queryText, rowCallback});
+    QString queryString =
+        QStringLiteral(
+            "SELECT history.id, history.timestamp, faux_offline_pending.id, "
+            "    faux_offline_pending.required_extensions, broken_messages.id, text_messages.message, "
+            "    authors.public_key as sender_key, aliases.display_name "
+            "FROM history "
+            "JOIN text_messages ON history.id = text_messages.id "
+            "JOIN aliases ON text_messages.sender_alias = aliases.id "
+            "JOIN authors ON aliases.owner = authors.id "
+            "JOIN faux_offline_pending ON faux_offline_pending.id = history.id "
+            "LEFT JOIN broken_messages ON broken_messages.id = history.id "
+            "WHERE history.chat_id = ");
+    QVector<QByteArray> boundParams;
+    addChatIdSubQuery(queryString, boundParams, friendPk);
+    queryString += QStringLiteral(" AND history.message_type = 'T';");
+    db->execNow({queryString, boundParams, rowCallback});
 
     return ret;
 }
@@ -730,19 +778,20 @@ QDateTime History::getDateWhereFindPhrase(const ToxPk& friendPk, const QDateTime
         break;
     }
 
-    QString queryText =
+    auto query = RawDatabase::Query(
         QStringLiteral("SELECT timestamp "
                        "FROM history "
-                       "JOIN peers chat ON chat_id = chat.id "
+                       "JOIN chats ON chat_id = chats.id "
                        "JOIN text_messages ON history.id = text_messages.id "
-                       "WHERE chat.public_key='%1' "
-                       "AND %2 "
-                       "%3")
-            .arg(friendPk.toString())
+                       "WHERE chats.uuid = ? "
+                       "AND %1 "
+                       "%2")
             .arg(message)
-            .arg(period);
+            .arg(period),
+            {friendPk.getByteArray()},
+            rowCallback);
 
-    db->execNow({queryText, rowCallback});
+    db->execNow(query);
 
     return result;
 }
@@ -767,39 +816,6 @@ QList<History::DateIdx> History::getNumMessagesForFriendBeforeDateBoundaries(con
         return {};
     }
 
-    auto friendPkString = friendPk.toString();
-
-    // No guarantee that this is the most efficient way to do this...
-    // We want to count messages that happened for a friend before a
-    // certain date. We do this by re-joining our table a second time
-    // but this time with the only filter being that our id is less than
-    // the ID of the corresponding row in the table that is grouped by day
-    auto countMessagesForFriend =
-        QString("SELECT COUNT(*) - 1 " // Count - 1 corresponds to 0 indexed message id for friend
-                "FROM history countHistory "            // Import unfiltered table as countHistory
-                "JOIN peers chat ON chat_id = chat.id " // link chat_id to chat.id
-                "WHERE chat.public_key = '%1'"          // filter this conversation
-                "AND countHistory.id <= history.id") // and filter that our unfiltered table history id only has elements up to history.id
-            .arg(friendPkString);
-
-    auto limitString = (maxNum) ? QString("LIMIT %1").arg(maxNum) : QString("");
-
-    auto queryString = QString("SELECT (%1), (timestamp / 1000 / 60 / 60 / 24) AS day "
-                               "FROM history "
-                               "JOIN peers chat ON chat_id = chat.id "
-                               "WHERE chat.public_key = '%2' "
-                               "AND timestamp >= %3 "
-                               "GROUP by day "
-                               "%4;")
-                           .arg(countMessagesForFriend)
-                           .arg(friendPkString)
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
-                           .arg(QDateTime(from.startOfDay()).toMSecsSinceEpoch())
-#else
-                           .arg(QDateTime(from).toMSecsSinceEpoch())
-#endif
-                           .arg(limitString);
-
     QList<DateIdx> dateIdxs;
     auto rowCallback = [&dateIdxs](const QVector<QVariant>& row) {
         DateIdx dateIdx;
@@ -809,7 +825,39 @@ QList<History::DateIdx> History::getNumMessagesForFriendBeforeDateBoundaries(con
         dateIdxs.append(dateIdx);
     };
 
-    db->execNow({queryString, rowCallback});
+    // No guarantee that this is the most efficient way to do this...
+    // We want to count messages that happened for a friend before a
+    // certain date. We do this by re-joining our table a second time
+    // but this time with the only filter being that our id is less than
+    // the ID of the corresponding row in the table that is grouped by day
+    auto countMessagesForFriend =
+        QStringLiteral("SELECT COUNT(*) - 1 " // Count - 1 corresponds to 0 indexed message id for friend
+                "FROM history countHistory "            // Import unfiltered table as countHistory
+                "JOIN chats ON chat_id = chats.id " // link chat_id to chat.id
+                "WHERE chats.uuid = ?"          // filter this conversation
+                "AND countHistory.id <= history.id"); // and filter that our unfiltered table history id only has elements up to history.id
+
+    auto limitString = (maxNum) ? QString("LIMIT %1").arg(maxNum) : QString("");
+
+    auto query = RawDatabase::Query(QStringLiteral(
+                        "SELECT (%1), (timestamp / 1000 / 60 / 60 / 24) AS day "
+                               "FROM history "
+                               "JOIN chats ON chat_id = chats.id "
+                               "WHERE chats.uuid = ? "
+                               "AND timestamp >= %2 "
+                               "GROUP by day "
+                               "%3;")
+                           .arg(countMessagesForFriend)
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+                           .arg(QDateTime(from.startOfDay()).toMSecsSinceEpoch())
+#else
+                           .arg(QDateTime(from).toMSecsSinceEpoch())
+#endif
+                           .arg(limitString),
+                           {friendPk.getByteArray(), friendPk.getByteArray()},
+                           rowCallback);
+
+    db->execNow(query);
 
     return dateIdxs;
 }
