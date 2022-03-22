@@ -74,6 +74,13 @@ public:
             , rowCallback{rowCallback_}
         {
         }
+        Query(QString query_, QVector<QByteArray> blobs_,
+            const std::function<void(const QVector<QVariant>&)>& rowCallback_)
+            : query{query_.toUtf8()}
+            , blobs{blobs_}
+            , rowCallback{rowCallback_}
+        {
+        }
         Query() = default;
 
     private:

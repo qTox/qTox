@@ -37,4 +37,5 @@ namespace DbUpgrader
     bool dbSchema6to7(RawDatabase& db);
     bool dbSchema7to8(RawDatabase& db);
     bool dbSchema8to9(RawDatabase& db);
+    // 9to10 from DbTo10::dbSchema9to10
 }

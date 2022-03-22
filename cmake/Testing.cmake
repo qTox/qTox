@@ -48,6 +48,7 @@ auto_test(net bsu "${${PROJECT_NAME}_RESOURCES}" "") # needs nodes list
 auto_test(chatlog chatlinestorage "" "")
 auto_test(persistence paths "" "")
 auto_test(persistence dbschema "" "dbutility_library")
+auto_test(persistence/dbupgrade dbTo10 "" "dbutility_library")
 auto_test(persistence offlinemsgengine "" "")
 if(NOT "${SMILEYS}" STREQUAL "DISABLED")
   auto_test(persistence smileypack "${SMILEY_RESOURCES}" "") # needs emojione
