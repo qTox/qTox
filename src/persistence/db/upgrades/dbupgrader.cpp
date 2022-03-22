@@ -21,6 +21,7 @@
 #include "src/core/chatid.h"
 #include "src/core/toxpk.h"
 #include "src/persistence/db/rawdatabase.h"
+#include "src/persistence/db/upgrades/dbto11.h"
 
 #include <QDebug>
 #include <QString>
@@ -263,7 +264,7 @@ bool DbUpgrader::dbSchemaUpgrade(std::shared_ptr<RawDatabase>& db)
     std::vector<DbSchemaUpgradeFn> upgradeFns = {dbSchema0to1, dbSchema1to2, dbSchema2to3,
                                                  dbSchema3to4, dbSchema4to5, dbSchema5to6,
                                                  dbSchema6to7, dbSchema7to8, dbSchema8to9,
-                                                 dbSchema9to10};
+                                                 dbSchema9to10, DbTo11::dbSchema10to11};
 
     assert(databaseSchemaVersion < static_cast<int>(upgradeFns.size()));
     assert(upgradeFns.size() == SCHEMA_VERSION);
@@ -286,13 +287,15 @@ bool DbUpgrader::createCurrentSchema(RawDatabase& db)
 {
     QVector<RawDatabase::Query> queries;
     queries += RawDatabase::Query(QStringLiteral(
-        "CREATE TABLE peers (id INTEGER PRIMARY KEY, "
-        "public_key TEXT NOT NULL UNIQUE);"
+        "CREATE TABLE authors (id INTEGER PRIMARY KEY, "
+        "public_key BLOB NOT NULL UNIQUE);"
+        "CREATE TABLE chats (id INTEGER PRIMARY KEY, "
+        "uuid BLOB NOT NULL UNIQUE);"
         "CREATE TABLE aliases (id INTEGER PRIMARY KEY, "
         "owner INTEGER, "
         "display_name BLOB NOT NULL, "
         "UNIQUE(owner, display_name), "
-        "FOREIGN KEY (owner) REFERENCES peers(id));"
+        "FOREIGN KEY (owner) REFERENCES authors(id));"
         "CREATE TABLE history "
         "(id INTEGER PRIMARY KEY, "
         "message_type CHAR(1) NOT NULL DEFAULT 'T' CHECK (message_type in ('T','F','S')), "
@@ -301,7 +304,7 @@ bool DbUpgrader::createCurrentSchema(RawDatabase& db)
         // Message subtypes want to reference the following as a foreign key. Foreign keys must be
         // guaranteed to be unique. Since an ID is already unique, id + message type is also unique
         "UNIQUE (id, message_type), "
-        "FOREIGN KEY (chat_id) REFERENCES peers(id)); "
+        "FOREIGN KEY (chat_id) REFERENCES chats(id)); "
         "CREATE TABLE text_messages "
         "(id INTEGER PRIMARY KEY, "
         "message_type CHAR(1) NOT NULL CHECK (message_type = 'T'), "

@@ -138,8 +138,8 @@ class History : public QObject, public std::enable_shared_from_this<History>
 public:
     struct HistMessage
     {
-        HistMessage(RowId id_, MessageState state_, ExtensionSet extensionSet_, QDateTime timestamp_, QString chat_, QString dispName_,
-                    QString sender_, QString message)
+        HistMessage(RowId id_, MessageState state_, ExtensionSet extensionSet_, QDateTime timestamp_, ToxPk chat_, QString dispName_,
+                    ToxPk sender_, QString message)
             : chat{chat_}
             , sender{sender_}
             , dispName{dispName_}
@@ -150,8 +150,8 @@ public:
             , content(std::move(message))
         {}
 
-        HistMessage(RowId id_, MessageState state_, QDateTime timestamp_, QString chat_, QString dispName_,
-                    QString sender_, ToxFile file)
+        HistMessage(RowId id_, MessageState state_, QDateTime timestamp_, ToxPk chat_, QString dispName_,
+                    ToxPk sender_, ToxFile file)
             : chat{chat_}
             , sender{sender_}
             , dispName{dispName_}
@@ -161,7 +161,7 @@ public:
             , content(std::move(file))
         {}
 
-        HistMessage(RowId id_, QDateTime timestamp_, QString chat_, SystemMessage systemMessage)
+        HistMessage(RowId id_, QDateTime timestamp_, ToxPk chat_, SystemMessage systemMessage)
             : chat{chat_}
             , timestamp{timestamp_}
             , id{id_}
@@ -169,8 +169,8 @@ public:
             , content(std::move(systemMessage))
         {}
 
-        QString chat;
-        QString sender;
+        ToxPk chat;
+        ToxPk sender;
         QString dispName;
         QDateTime timestamp;
         RowId id;

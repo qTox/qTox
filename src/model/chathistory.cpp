@@ -363,15 +363,13 @@ void ChatHistory::loadHistoryIntoSessionChatLog(ChatLogIdx start) const
         auto currentIdx = nextIdx++;
         switch (message.content.getType()) {
         case HistMessageContentType::file: {
-            auto sender = ToxPk(message.sender);
             const auto date = message.timestamp;
             const auto file = message.content.asFile();
             const auto chatLogFile = ChatLogFile{date, file};
-            sessionChatLog.insertFileAtIdx(currentIdx, sender, message.dispName, chatLogFile);
+            sessionChatLog.insertFileAtIdx(currentIdx, message.sender, message.dispName, chatLogFile);
             break;
         }
         case HistMessageContentType::message: {
-            auto sender = ToxPk(message.sender);
             auto messageContent = message.content.asMessage();
 
             auto isAction = handleActionPrefix(messageContent);
@@ -394,15 +392,15 @@ void ChatHistory::loadHistoryIntoSessionChatLog(ChatLogIdx start) const
             auto chatLogMessage = ChatLogMessage{message.state, processedMessage};
             switch (message.state) {
                 case MessageState::complete:
-                    sessionChatLog.insertCompleteMessageAtIdx(currentIdx, sender, message.dispName,
+                    sessionChatLog.insertCompleteMessageAtIdx(currentIdx, message.sender, message.dispName,
                                                               chatLogMessage);
                     break;
                 case MessageState::pending:
-                    sessionChatLog.insertIncompleteMessageAtIdx(currentIdx, sender, message.dispName,
+                    sessionChatLog.insertIncompleteMessageAtIdx(currentIdx, message.sender, message.dispName,
                                                                 chatLogMessage, dispatchedMessageIt.key());
                     break;
                 case MessageState::broken:
-                    sessionChatLog.insertBrokenMessageAtIdx(currentIdx, sender, message.dispName,
+                    sessionChatLog.insertBrokenMessageAtIdx(currentIdx, message.sender, message.dispName,
                                                             chatLogMessage);
                     break;
             }
