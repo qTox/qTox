@@ -905,7 +905,7 @@ QVariant RawDatabase::extractData(sqlite3_stmt* stmt, int col)
     } else {
         const char* data = reinterpret_cast<const char*>(sqlite3_column_blob(stmt, col));
         int len = sqlite3_column_bytes(stmt, col);
-        return QByteArray::fromRawData(data, len);
+        return QByteArray(data, len);
     }
 }
 
