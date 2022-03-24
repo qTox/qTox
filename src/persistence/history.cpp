@@ -355,7 +355,7 @@ RawDatabase::Query History::generateFileFinished(RowId id, bool success, const Q
                                   {filePath.toUtf8(), fileHash});
     } else {
         return RawDatabase::Query(QStringLiteral("UPDATE file_transfers "
-                                                 "SET finished = %1 "
+                                                 "SET file_state = %1 "
                                                  "WHERE id = %2")
                                       .arg(file_state)
                                       .arg(id.get()));
