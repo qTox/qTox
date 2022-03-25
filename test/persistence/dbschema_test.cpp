@@ -25,6 +25,7 @@
 
 #include <QtTest/QtTest>
 #include <QString>
+#include <QTemporaryFile>
 
 #include <algorithm>
 #include <array>
@@ -75,7 +76,8 @@ class TestDbSchema : public QObject
 {
     Q_OBJECT
 private slots:
-    void initTestCase();
+    void init();
+    void cleanup();
     void testCreation();
     void testIsNewDb();
     void test0to1();
@@ -89,47 +91,40 @@ private slots:
     // test8to9 omitted, data corruption correction upgrade with no schema change
     void test9to10();
     // test suite
-    void cleanupTestCase() const;
-
 private:
-    bool initSucess{false};
+    std::unique_ptr<QTemporaryFile> testDatabaseFile;
 };
 
-void TestDbSchema::initTestCase()
+void TestDbSchema::init()
 {
-    for (const auto& path : DbUtility::testFileList) {
-        QVERIFY(!QFileInfo{path}.exists());
-    }
-    initSucess = true;
+    testDatabaseFile = std::unique_ptr<QTemporaryFile>(new QTemporaryFile());
+    // fileName is only defined once the file is opened. Since RawDatabase
+    // will be openening the file itself not using QFile, open and close it now.
+    QVERIFY(testDatabaseFile->open());
+    testDatabaseFile->close();
 }
 
-void TestDbSchema::cleanupTestCase() const
+void TestDbSchema::cleanup()
 {
-    if (!initSucess) {
-        qWarning() << "init failed, skipping cleanup to avoid loss of data";
-        return;
-    }
-    for (const auto& path : DbUtility::testFileList) {
-        QFile::remove(path);
-    }
+    testDatabaseFile.reset();
 }
 
 void TestDbSchema::testCreation()
 {
     QVector<RawDatabase::Query> queries;
-    auto db = std::shared_ptr<RawDatabase>{new RawDatabase{"testCreation.db", {}, {}}};
+    auto db = std::shared_ptr<RawDatabase>{new RawDatabase{testDatabaseFile->fileName(), {}, {}}};
     QVERIFY(DbUpgrader::createCurrentSchema(*db));
     DbUtility::verifyDb(db, DbUtility::schema7);
 }
 
 void TestDbSchema::testIsNewDb()
 {
-    auto db = std::shared_ptr<RawDatabase>{new RawDatabase{"testIsNewDbTrue.db", {}, {}}};
+    auto db = std::shared_ptr<RawDatabase>{new RawDatabase{testDatabaseFile->fileName(), {}, {}}};
     bool success = false;
     bool newDb = DbUpgrader::isNewDb(db, success);
     QVERIFY(success);
     QVERIFY(newDb == true);
-    db = std::shared_ptr<RawDatabase>{new RawDatabase{"testIsNewDbFalse.db", {}, {}}};
+    db = std::shared_ptr<RawDatabase>{new RawDatabase{testDatabaseFile->fileName(), {}, {}}};
     createSchemaAtVersion(db, DbUtility::schema0);
     newDb = DbUpgrader::isNewDb(db, success);
     QVERIFY(success);
@@ -138,7 +133,7 @@ void TestDbSchema::testIsNewDb()
 
 void TestDbSchema::test0to1()
 {
-    auto db = std::shared_ptr<RawDatabase>{new RawDatabase{"test0to1.db", {}, {}}};
+    auto db = std::shared_ptr<RawDatabase>{new RawDatabase{testDatabaseFile->fileName(), {}, {}}};
     createSchemaAtVersion(db, DbUtility::schema0);
     QVERIFY(DbUpgrader::dbSchema0to1(*db));
     DbUtility::verifyDb(db, DbUtility::schema1);
@@ -159,7 +154,7 @@ void TestDbSchema::test1to2()
     https://github.com/qTox/qTox/issues/5776
     */
 
-    auto db = std::shared_ptr<RawDatabase>{new RawDatabase{"test1to2.db", {}, {}}};
+    auto db = std::shared_ptr<RawDatabase>{new RawDatabase{testDatabaseFile->fileName(), {}, {}}};
     createSchemaAtVersion(db, DbUtility::schema1);
 
     const QString myPk = "AC18841E56CCDEE16E93E10E6AB2765BE54277D67F1372921B5B418A6B330D3D";
@@ -241,7 +236,7 @@ void TestDbSchema::test1to2()
 
 void TestDbSchema::test2to3()
 {
-    auto db = std::shared_ptr<RawDatabase>{new RawDatabase{"test2to3.db", {}, {}}};
+    auto db = std::shared_ptr<RawDatabase>{new RawDatabase{testDatabaseFile->fileName(), {}, {}}};
     createSchemaAtVersion(db, DbUtility::schema2);
 
     // since we don't enforce foreign key contraints in the db, we can stick in IDs to other tables
@@ -303,7 +298,7 @@ void TestDbSchema::test2to3()
 
 void TestDbSchema::test3to4()
 {
-    auto db = std::shared_ptr<RawDatabase>{new RawDatabase{"test3to4.db", {}, {}}};
+    auto db = std::shared_ptr<RawDatabase>{new RawDatabase{testDatabaseFile->fileName(), {}, {}}};
     createSchemaAtVersion(db, DbUtility::schema3);
     QVERIFY(DbUpgrader::dbSchema3to4(*db));
     DbUtility::verifyDb(db, DbUtility::schema4);
@@ -311,7 +306,7 @@ void TestDbSchema::test3to4()
 
 void TestDbSchema::test4to5()
 {
-    auto db = std::shared_ptr<RawDatabase>{new RawDatabase{"test4to5.db", {}, {}}};
+    auto db = std::shared_ptr<RawDatabase>{new RawDatabase{testDatabaseFile->fileName(), {}, {}}};
     createSchemaAtVersion(db, DbUtility::schema4);
     QVERIFY(DbUpgrader::dbSchema4to5(*db));
     DbUtility::verifyDb(db, DbUtility::schema5);
@@ -319,7 +314,7 @@ void TestDbSchema::test4to5()
 
 void TestDbSchema::test5to6()
 {
-    auto db = std::shared_ptr<RawDatabase>{new RawDatabase{"test5to6.db", {}, {}}};
+    auto db = std::shared_ptr<RawDatabase>{new RawDatabase{testDatabaseFile->fileName(), {}, {}}};
     createSchemaAtVersion(db, DbUtility::schema5);
     QVERIFY(DbUpgrader::dbSchema5to6(*db));
     DbUtility::verifyDb(db, DbUtility::schema6);
@@ -327,7 +322,7 @@ void TestDbSchema::test5to6()
 
 void TestDbSchema::test6to7()
 {
-    auto db = std::shared_ptr<RawDatabase>{new RawDatabase{"test6to7.db", {}, {}}};
+    auto db = std::shared_ptr<RawDatabase>{new RawDatabase{testDatabaseFile->fileName(), {}, {}}};
     // foreign_keys are enabled by History constructor and required for this upgrade to work on older sqlite versions
     db->execNow(
         "PRAGMA foreign_keys = ON;");
