@@ -21,11 +21,14 @@
 #include "src/persistence/dbupgrader.h"
 #include "src/core/toxfile.h"
 
+#include "dbutility/dbutility.h"
+
 #include <QString>
 #include <QTemporaryFile>
 #include <QtTest/QtTest>
 
 #include <algorithm>
+#include <array>
 #include <memory>
 
 namespace {
@@ -69,18 +72,6 @@ bool insertFileId(RawDatabase& db, int row, bool valid)
 }
 } // namespace
 
-struct SqliteMasterEntry {
-    QString name;
-    QString sql;
-};
-
-bool operator==(const SqliteMasterEntry& lhs, const SqliteMasterEntry& rhs);
-bool operator==(const SqliteMasterEntry& lhs, const SqliteMasterEntry& rhs)
-{
-    return lhs.name == rhs.name &&
-        lhs.sql == rhs.sql;
-}
-
 class TestDbSchema : public QObject
 {
     Q_OBJECT
@@ -102,142 +93,8 @@ private slots:
     // test suite
 
 private:
-    void createSchemaAtVersion(std::shared_ptr<RawDatabase> db, const std::vector<SqliteMasterEntry>& schema);
-    void verifyDb(std::shared_ptr<RawDatabase> db, const std::vector<SqliteMasterEntry>& expectedSql);
     std::unique_ptr<QTemporaryFile> testDatabaseFile;
 };
-
-const QString testFileList[] = {"testCreation.db", "testIsNewDbTrue.db", "testIsNewDbFalse.db",
-                                "test0to1.db",     "test1to2.db",        "test2to3.db",
-                                "test3to4.db",     "test4to5.db",        "test5to6.db",
-                                "test6to7.db",     "test9to10.db"};
-
-// db schemas can be select with "SELECT name, sql FROM sqlite_master;" on the database.
-
-const std::vector<SqliteMasterEntry> schema0 {
-    {"aliases", "CREATE TABLE aliases (id INTEGER PRIMARY KEY, owner INTEGER, display_name BLOB NOT NULL, UNIQUE(owner, display_name))"},
-    {"faux_offline_pending", "CREATE TABLE faux_offline_pending (id INTEGER PRIMARY KEY)"},
-    {"history", "CREATE TABLE history (id INTEGER PRIMARY KEY, timestamp INTEGER NOT NULL, chat_id INTEGER NOT NULL, sender_alias INTEGER NOT NULL, message BLOB NOT NULL)"},
-    {"peers", "CREATE TABLE peers (id INTEGER PRIMARY KEY, public_key TEXT NOT NULL UNIQUE)"}
-};
-
-// added file transfer history
-const std::vector<SqliteMasterEntry> schema1 {
-    {"aliases", "CREATE TABLE aliases (id INTEGER PRIMARY KEY, owner INTEGER, display_name BLOB NOT NULL, UNIQUE(owner, display_name))"},
-    {"faux_offline_pending", "CREATE TABLE faux_offline_pending (id INTEGER PRIMARY KEY)"},
-    {"file_transfers", "CREATE TABLE file_transfers (id INTEGER PRIMARY KEY, chat_id INTEGER NOT NULL, file_restart_id BLOB NOT NULL, file_name BLOB NOT NULL, file_path BLOB NOT NULL, file_hash BLOB NOT NULL, file_size INTEGER NOT NULL, direction INTEGER NOT NULL, file_state INTEGER NOT NULL)"},
-    {"history", "CREATE TABLE history (id INTEGER PRIMARY KEY, timestamp INTEGER NOT NULL, chat_id INTEGER NOT NULL, sender_alias INTEGER NOT NULL, message BLOB NOT NULL, file_id INTEGER)"},
-    {"peers", "CREATE TABLE peers (id INTEGER PRIMARY KEY, public_key TEXT NOT NULL UNIQUE)"}
-};
-
-// move stuck faux offline messages do a table of "broken" messages
-const std::vector<SqliteMasterEntry> schema2 {
-    {"aliases", "CREATE TABLE aliases (id INTEGER PRIMARY KEY, owner INTEGER, display_name BLOB NOT NULL, UNIQUE(owner, display_name))"},
-    {"faux_offline_pending", "CREATE TABLE faux_offline_pending (id INTEGER PRIMARY KEY)"},
-    {"file_transfers", "CREATE TABLE file_transfers (id INTEGER PRIMARY KEY, chat_id INTEGER NOT NULL, file_restart_id BLOB NOT NULL, file_name BLOB NOT NULL, file_path BLOB NOT NULL, file_hash BLOB NOT NULL, file_size INTEGER NOT NULL, direction INTEGER NOT NULL, file_state INTEGER NOT NULL)"},
-    {"history", "CREATE TABLE history (id INTEGER PRIMARY KEY, timestamp INTEGER NOT NULL, chat_id INTEGER NOT NULL, sender_alias INTEGER NOT NULL, message BLOB NOT NULL, file_id INTEGER)"},
-    {"peers", "CREATE TABLE peers (id INTEGER PRIMARY KEY, public_key TEXT NOT NULL UNIQUE)"},
-    {"broken_messages", "CREATE TABLE broken_messages (id INTEGER PRIMARY KEY)"}
-};
-
-// move stuck 0-length action messages to the existing "broken_messages" table. Not a real schema upgrade.
-const auto schema3 = schema2;
-
-// create index in history table on chat_id to improve query speed. Not a real schema upgrade.
-const std::vector<SqliteMasterEntry> schema4 {
-    {"aliases", "CREATE TABLE aliases (id INTEGER PRIMARY KEY, owner INTEGER, display_name BLOB NOT NULL, UNIQUE(owner, display_name))"},
-    {"faux_offline_pending", "CREATE TABLE faux_offline_pending (id INTEGER PRIMARY KEY)"},
-    {"file_transfers", "CREATE TABLE file_transfers (id INTEGER PRIMARY KEY, chat_id INTEGER NOT NULL, file_restart_id BLOB NOT NULL, file_name BLOB NOT NULL, file_path BLOB NOT NULL, file_hash BLOB NOT NULL, file_size INTEGER NOT NULL, direction INTEGER NOT NULL, file_state INTEGER NOT NULL)"},
-    {"history", "CREATE TABLE history (id INTEGER PRIMARY KEY, timestamp INTEGER NOT NULL, chat_id INTEGER NOT NULL, sender_alias INTEGER NOT NULL, message BLOB NOT NULL, file_id INTEGER)"},
-    {"peers", "CREATE TABLE peers (id INTEGER PRIMARY KEY, public_key TEXT NOT NULL UNIQUE)"},
-    {"broken_messages", "CREATE TABLE broken_messages (id INTEGER PRIMARY KEY)"},
-    {"chat_id_idx", "CREATE INDEX chat_id_idx on history (chat_id)"}
-};
-
-// added foreign keys
-const std::vector<SqliteMasterEntry> schema5 {
-    {"aliases", "CREATE TABLE aliases (id INTEGER PRIMARY KEY, owner INTEGER, display_name BLOB NOT NULL, UNIQUE(owner, display_name), FOREIGN KEY (owner) REFERENCES peers(id))"},
-    {"faux_offline_pending", "CREATE TABLE faux_offline_pending (id INTEGER PRIMARY KEY, FOREIGN KEY (id) REFERENCES history(id))"},
-    {"file_transfers", "CREATE TABLE file_transfers (id INTEGER PRIMARY KEY, chat_id INTEGER NOT NULL, file_restart_id BLOB NOT NULL, file_name BLOB NOT NULL, file_path BLOB NOT NULL, file_hash BLOB NOT NULL, file_size INTEGER NOT NULL, direction INTEGER NOT NULL, file_state INTEGER NOT NULL)"},
-    {"history", "CREATE TABLE history (id INTEGER PRIMARY KEY, timestamp INTEGER NOT NULL, chat_id INTEGER NOT NULL, sender_alias INTEGER NOT NULL, message BLOB NOT NULL, file_id INTEGER, FOREIGN KEY (file_id) REFERENCES file_transfers(id), FOREIGN KEY (chat_id) REFERENCES peers(id), FOREIGN KEY (sender_alias) REFERENCES aliases(id))"},
-    {"peers", "CREATE TABLE peers (id INTEGER PRIMARY KEY, public_key TEXT NOT NULL UNIQUE)"},
-    {"broken_messages", "CREATE TABLE broken_messages (id INTEGER PRIMARY KEY, FOREIGN KEY (id) REFERENCES history(id))"},
-    {"chat_id_idx", "CREATE INDEX chat_id_idx on history (chat_id)"}
-};
-
-// added toxext extensions
-const std::vector<SqliteMasterEntry> schema6 {
-    {"aliases", "CREATE TABLE aliases (id INTEGER PRIMARY KEY, owner INTEGER, display_name BLOB NOT NULL, UNIQUE(owner, display_name), FOREIGN KEY (owner) REFERENCES peers(id))"},
-    {"faux_offline_pending", "CREATE TABLE faux_offline_pending (id INTEGER PRIMARY KEY, required_extensions INTEGER NOT NULL DEFAULT 0, FOREIGN KEY (id) REFERENCES history(id))"},
-    {"file_transfers", "CREATE TABLE file_transfers (id INTEGER PRIMARY KEY, chat_id INTEGER NOT NULL, file_restart_id BLOB NOT NULL, file_name BLOB NOT NULL, file_path BLOB NOT NULL, file_hash BLOB NOT NULL, file_size INTEGER NOT NULL, direction INTEGER NOT NULL, file_state INTEGER NOT NULL)"},
-    {"history", "CREATE TABLE history (id INTEGER PRIMARY KEY, timestamp INTEGER NOT NULL, chat_id INTEGER NOT NULL, sender_alias INTEGER NOT NULL, message BLOB NOT NULL, file_id INTEGER, FOREIGN KEY (file_id) REFERENCES file_transfers(id), FOREIGN KEY (chat_id) REFERENCES peers(id), FOREIGN KEY (sender_alias) REFERENCES aliases(id))"},
-    {"peers", "CREATE TABLE peers (id INTEGER PRIMARY KEY, public_key TEXT NOT NULL UNIQUE)"},
-    {"broken_messages", "CREATE TABLE broken_messages (id INTEGER PRIMARY KEY, reason INTEGER NOT NULL DEFAULT 0, FOREIGN KEY (id) REFERENCES history(id))"},
-    {"chat_id_idx", "CREATE INDEX chat_id_idx on history (chat_id)"}
-};
-
-const std::vector<SqliteMasterEntry> schema7{
-    {"aliases", "CREATE TABLE aliases (id INTEGER PRIMARY KEY, owner INTEGER, display_name BLOB "
-                "NOT NULL, UNIQUE(owner, display_name), FOREIGN KEY (owner) REFERENCES peers(id))"},
-    {"faux_offline_pending",
-     "CREATE TABLE faux_offline_pending (id INTEGER PRIMARY KEY, required_extensions INTEGER NOT "
-     "NULL DEFAULT 0, FOREIGN KEY (id) REFERENCES history(id))"},
-    {"file_transfers",
-     "CREATE TABLE file_transfers (id INTEGER PRIMARY KEY, message_type CHAR(1) NOT NULL CHECK "
-     "(message_type = 'F'), sender_alias INTEGER NOT NULL, file_restart_id BLOB NOT NULL, "
-     "file_name BLOB NOT NULL, file_path BLOB NOT NULL, file_hash BLOB NOT NULL, file_size INTEGER "
-     "NOT NULL, direction INTEGER NOT NULL, file_state INTEGER NOT NULL, FOREIGN KEY (id, "
-     "message_type) REFERENCES history(id, message_type), FOREIGN KEY (sender_alias) REFERENCES "
-     "aliases(id))"},
-    {"history",
-     "CREATE TABLE history (id INTEGER PRIMARY KEY, message_type CHAR(1) NOT NULL DEFAULT 'T' "
-     "CHECK (message_type in ('T','F','S')), timestamp INTEGER NOT NULL, chat_id INTEGER NOT NULL, "
-     "UNIQUE (id, message_type), FOREIGN KEY (chat_id) REFERENCES peers(id))"},
-    {"text_messages", "CREATE TABLE text_messages (id INTEGER PRIMARY KEY, message_type CHAR(1) "
-                      "NOT NULL CHECK (message_type = 'T'), sender_alias INTEGER NOT NULL, message "
-                      "BLOB NOT NULL, FOREIGN KEY (id, message_type) REFERENCES history(id, "
-                      "message_type), FOREIGN KEY (sender_alias) REFERENCES aliases(id))"},
-    {"peers", "CREATE TABLE peers (id INTEGER PRIMARY KEY, public_key TEXT NOT NULL UNIQUE)"},
-    {"broken_messages", "CREATE TABLE broken_messages (id INTEGER PRIMARY KEY, reason INTEGER NOT "
-                        "NULL DEFAULT 0, FOREIGN KEY (id) REFERENCES history(id))"},
-    {"system_messages",
-     "CREATE TABLE system_messages (id INTEGER PRIMARY KEY, message_type CHAR(1) NOT NULL CHECK "
-     "(message_type = 'S'), system_message_type INTEGER NOT NULL, arg1 BLOB, arg2 BLOB, arg3 BLOB, arg4 BLOB, "
-     "FOREIGN KEY (id, message_type) REFERENCES history(id, message_type))"},
-    {"chat_id_idx", "CREATE INDEX chat_id_idx on history (chat_id)"}};
-
-const std::vector<SqliteMasterEntry> schema9 = schema7;
-const std::vector<SqliteMasterEntry> schema10 = schema9;
-
-void TestDbSchema::verifyDb(std::shared_ptr<RawDatabase> db, const std::vector<SqliteMasterEntry>& expectedSql)
-{
-    QVERIFY(db->execNow(RawDatabase::Query(QStringLiteral(
-        "SELECT name, sql FROM sqlite_master;"),
-        [&](const QVector<QVariant>& row) {
-            const QString tableName = row[0].toString();
-            if (row[1].isNull()) {
-                // implicit indexes are automatically created for primary key constraints and unique constraints
-                // so their existence is already covered by the table creation SQL
-                return;
-            }
-            QString tableSql = row[1].toString();
-            // table and column names can be quoted. UPDATE TEABLE automatically quotes the new names, but this
-            // has no functional impact on the schema. Strip quotes for comparison so that our created schema
-            // matches schema made from UPDATE TABLEs.
-            const QString unquotedTableSql = tableSql.remove("\"");
-            SqliteMasterEntry entry{tableName, unquotedTableSql};
-            QVERIFY(std::find(expectedSql.begin(), expectedSql.end(), entry) != expectedSql.end());
-        })));
-}
-
-void TestDbSchema::createSchemaAtVersion(std::shared_ptr<RawDatabase> db, const std::vector<SqliteMasterEntry>& schema)
-{
-    QVector<RawDatabase::Query> queries;
-    for (auto const& entry : schema) {
-        queries += entry.sql;
-    }
-    QVERIFY(db->execNow(queries));
-}
 
 void TestDbSchema::init()
 {
@@ -258,7 +115,7 @@ void TestDbSchema::testCreation()
     QVector<RawDatabase::Query> queries;
     auto db = std::shared_ptr<RawDatabase>{new RawDatabase{testDatabaseFile->fileName(), {}, {}}};
     QVERIFY(DbUpgrader::createCurrentSchema(*db));
-    verifyDb(db, schema7);
+    DbUtility::verifyDb(db, DbUtility::schema7);
 }
 
 void TestDbSchema::testIsNewDb()
@@ -269,7 +126,7 @@ void TestDbSchema::testIsNewDb()
     QVERIFY(success);
     QVERIFY(newDb == true);
     db = std::shared_ptr<RawDatabase>{new RawDatabase{testDatabaseFile->fileName(), {}, {}}};
-    createSchemaAtVersion(db, schema0);
+    createSchemaAtVersion(db, DbUtility::schema0);
     newDb = DbUpgrader::isNewDb(db, success);
     QVERIFY(success);
     QVERIFY(newDb == false);
@@ -278,9 +135,9 @@ void TestDbSchema::testIsNewDb()
 void TestDbSchema::test0to1()
 {
     auto db = std::shared_ptr<RawDatabase>{new RawDatabase{testDatabaseFile->fileName(), {}, {}}};
-    createSchemaAtVersion(db, schema0);
+    createSchemaAtVersion(db, DbUtility::schema0);
     QVERIFY(DbUpgrader::dbSchema0to1(*db));
-    verifyDb(db, schema1);
+    DbUtility::verifyDb(db, DbUtility::schema1);
 }
 
 void TestDbSchema::test1to2()
@@ -299,7 +156,7 @@ void TestDbSchema::test1to2()
     */
 
     auto db = std::shared_ptr<RawDatabase>{new RawDatabase{testDatabaseFile->fileName(), {}, {}}};
-    createSchemaAtVersion(db, schema1);
+    createSchemaAtVersion(db, DbUtility::schema1);
 
     const QString myPk = "AC18841E56CCDEE16E93E10E6AB2765BE54277D67F1372921B5B418A6B330D3D";
     const QString friend1Pk = "FE34BC6D87B66E958C57BBF205F9B79B62BE0AB8A4EFC1F1BB9EC4D0D8FB0663";
@@ -352,7 +209,7 @@ void TestDbSchema::test1to2()
 
     QVERIFY(db->execNow(queries));
     QVERIFY(DbUpgrader::dbSchema1to2(*db));
-    verifyDb(db, schema2);
+    DbUtility::verifyDb(db, DbUtility::schema2);
 
     long brokenCount = -1;
     RawDatabase::Query brokenCountQuery = {"SELECT COUNT(*) FROM broken_messages;", [&](const QVector<QVariant>& row) {
@@ -381,7 +238,7 @@ void TestDbSchema::test1to2()
 void TestDbSchema::test2to3()
 {
     auto db = std::shared_ptr<RawDatabase>{new RawDatabase{testDatabaseFile->fileName(), {}, {}}};
-    createSchemaAtVersion(db, schema2);
+    createSchemaAtVersion(db, DbUtility::schema2);
 
     // since we don't enforce foreign key contraints in the db, we can stick in IDs to other tables
     // to avoid generating proper entries for peers and aliases tables, since they aren't actually
@@ -437,31 +294,31 @@ void TestDbSchema::test2to3()
     QVERIFY(db->execNow(totalHistoryCountQuery));
     QVERIFY(totalHisoryCount == 4);
 
-    verifyDb(db, schema3);
+    DbUtility::verifyDb(db, DbUtility::schema3);
 }
 
 void TestDbSchema::test3to4()
 {
     auto db = std::shared_ptr<RawDatabase>{new RawDatabase{testDatabaseFile->fileName(), {}, {}}};
-    createSchemaAtVersion(db, schema3);
+    createSchemaAtVersion(db, DbUtility::schema3);
     QVERIFY(DbUpgrader::dbSchema3to4(*db));
-    verifyDb(db, schema4);
+    DbUtility::verifyDb(db, DbUtility::schema4);
 }
 
 void TestDbSchema::test4to5()
 {
     auto db = std::shared_ptr<RawDatabase>{new RawDatabase{testDatabaseFile->fileName(), {}, {}}};
-    createSchemaAtVersion(db, schema4);
+    createSchemaAtVersion(db, DbUtility::schema4);
     QVERIFY(DbUpgrader::dbSchema4to5(*db));
-    verifyDb(db, schema5);
+    DbUtility::verifyDb(db, DbUtility::schema5);
 }
 
 void TestDbSchema::test5to6()
 {
     auto db = std::shared_ptr<RawDatabase>{new RawDatabase{testDatabaseFile->fileName(), {}, {}}};
-    createSchemaAtVersion(db, schema5);
+    createSchemaAtVersion(db, DbUtility::schema5);
     QVERIFY(DbUpgrader::dbSchema5to6(*db));
-    verifyDb(db, schema6);
+    DbUtility::verifyDb(db, DbUtility::schema6);
 }
 
 void TestDbSchema::test6to7()
@@ -470,15 +327,15 @@ void TestDbSchema::test6to7()
     // foreign_keys are enabled by History constructor and required for this upgrade to work on older sqlite versions
     db->execNow(
         "PRAGMA foreign_keys = ON;");
-    createSchemaAtVersion(db, schema6);
+    createSchemaAtVersion(db, DbUtility::schema6);
     QVERIFY(DbUpgrader::dbSchema6to7(*db));
-    verifyDb(db, schema7);
+    DbUtility::verifyDb(db, DbUtility::schema7);
 }
 
 void TestDbSchema::test9to10()
 {
     auto db = std::shared_ptr<RawDatabase>{new RawDatabase{testDatabaseFile->fileName(), {}, {}}};
-    createSchemaAtVersion(db, schema9);
+    createSchemaAtVersion(db, DbUtility::schema9);
 
     QVERIFY(insertFileId(*db, 1, true));
     QVERIFY(insertFileId(*db, 2, true));
@@ -501,7 +358,7 @@ void TestDbSchema::test9to10()
         })));
     QVERIFY(numHealed == 2);
     QVERIFY(numUnchanged == 3);
-    verifyDb(db, schema10);
+    verifyDb(db, DbUtility::schema10);
 }
 
 QTEST_GUILESS_MAIN(TestDbSchema)

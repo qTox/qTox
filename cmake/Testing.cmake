@@ -29,13 +29,15 @@ function(auto_test subsystem module extra_deps)
     ${PROJECT_NAME}_static
     ${CHECK_LIBRARIES}
     Qt5::Test
-    mock_library)
+    mock_library
+    dbutility_library)
   add_test(
     NAME test_${module}
     COMMAND ${TEST_CROSSCOMPILING_EMULATOR} test_${module})
 endfunction()
 
 add_subdirectory(test/mock)
+add_subdirectory(test/dbutility)
 
 auto_test(core core "${${PROJECT_NAME}_RESOURCES}")
 auto_test(core chatid "")
