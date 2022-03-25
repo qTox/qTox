@@ -22,15 +22,14 @@
 
 enable_testing()
 
-function(auto_test subsystem module extra_deps)
+function(auto_test subsystem module extra_res extra_libs)
   add_executable(test_${module}
-    test/${subsystem}/${module}_test.cpp ${extra_deps})
+    test/${subsystem}/${module}_test.cpp ${extra_res})
   target_link_libraries(test_${module}
     ${PROJECT_NAME}_static
     ${CHECK_LIBRARIES}
     Qt5::Test
-    mock_library
-    dbutility_library)
+    ${extra_libs})
   add_test(
     NAME test_${module}
     COMMAND ${TEST_CROSSCOMPILING_EMULATOR} test_${module})
@@ -39,29 +38,29 @@ endfunction()
 add_subdirectory(test/mock)
 add_subdirectory(test/dbutility)
 
-auto_test(core core "${${PROJECT_NAME}_RESOURCES}")
-auto_test(core chatid "")
-auto_test(core toxid "")
-auto_test(core toxstring "")
-auto_test(core fileprogress "")
-auto_test(chatlog textformatter "")
-auto_test(net bsu "${${PROJECT_NAME}_RESOURCES}") # needs nodes list
-auto_test(chatlog chatlinestorage "")
-auto_test(persistence paths "")
-auto_test(persistence dbschema "")
-auto_test(persistence offlinemsgengine "")
+auto_test(core core "${${PROJECT_NAME}_RESOURCES}" "mock_library")
+auto_test(core chatid "" "")
+auto_test(core toxid "" "")
+auto_test(core toxstring "" "")
+auto_test(core fileprogress "" "")
+auto_test(chatlog textformatter "" "")
+auto_test(net bsu "${${PROJECT_NAME}_RESOURCES}" "") # needs nodes list
+auto_test(chatlog chatlinestorage "" "")
+auto_test(persistence paths "" "")
+auto_test(persistence dbschema "" "dbutility_library")
+auto_test(persistence offlinemsgengine "" "")
 if(NOT "${SMILEYS}" STREQUAL "DISABLED")
-  auto_test(persistence smileypack "${SMILEY_RESOURCES}") # needs emojione
+  auto_test(persistence smileypack "${SMILEY_RESOURCES}" "") # needs emojione
 endif()
-auto_test(model friendlistmanager "")
-auto_test(model friendmessagedispatcher "")
-auto_test(model groupmessagedispatcher "")
-auto_test(model messageprocessor "")
-auto_test(model sessionchatlog "")
-auto_test(model exiftransform "")
-auto_test(model notificationgenerator "")
-auto_test(widget filesform "")
+auto_test(model friendlistmanager "" "")
+auto_test(model friendmessagedispatcher "" "")
+auto_test(model groupmessagedispatcher "" "mock_library")
+auto_test(model messageprocessor "" "")
+auto_test(model sessionchatlog "" "")
+auto_test(model exiftransform "" "")
+auto_test(model notificationgenerator "" "mock_library")
+auto_test(widget filesform "" "")
 
 if (UNIX)
-  auto_test(platform posixsignalnotifier "")
+  auto_test(platform posixsignalnotifier "" "")
 endif()
