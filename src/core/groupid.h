@@ -31,4 +31,5 @@ public:
     explicit GroupId(const QByteArray& rawId);
     explicit GroupId(const uint8_t* rawId);
     int getSize() const override;
+    std::unique_ptr<ChatId> clone() const override;
 };

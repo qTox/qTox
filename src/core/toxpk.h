@@ -33,4 +33,5 @@ public:
     explicit ToxPk(const uint8_t* rawId);
     explicit ToxPk(const QString& pk);
     int getSize() const override;
+    std::unique_ptr<ChatId> clone() const override;
 };
