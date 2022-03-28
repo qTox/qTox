@@ -67,3 +67,8 @@ int GroupId::getSize() const
 {
     return size;
 }
+
+std::unique_ptr<ChatId> GroupId::clone() const
+{
+    return std::unique_ptr<ChatId>(new GroupId(*this));
+}
