@@ -450,17 +450,17 @@ co może powodować problemy z rozmowami wideo.</translation>
     </message>
     <message>
         <source>Tox ID, 76 hexadecimal characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Tox ID, 76 znaków szesnastkowych</translation>
     </message>
     <message>
         <source>%1 Tox ID is invalid</source>
         <comment>Tox address error</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 Tox ID jest nieprawidłowe</translation>
     </message>
     <message>
         <source>76 hexadecimal characters</source>
         <extracomment>Tox ID format description</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>76 znaków szesnastkowych</translation>
     </message>
 </context>
 <context>
@@ -508,11 +508,11 @@ co może powodować problemy z rozmowami wideo.</translation>
     </message>
     <message>
         <source>Changes here are applied only after restarting qTox.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zmiany zostaną zastosowane dopiero po zrestartowaniu qTox.</translation>
     </message>
     <message>
         <source>Save file</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapisz plik</translation>
     </message>
 </context>
 <context>
@@ -589,7 +589,7 @@ co może powodować problemy z rozmowami wideo.</translation>
     </message>
     <message>
         <source>Connection settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ustawienia połączenia</translation>
     </message>
     <message>
         <source>Disabling this allows, e.g., Tox over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
