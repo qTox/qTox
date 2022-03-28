@@ -100,11 +100,11 @@ hvilket kan give problemer ved videoopkald.</translation>
     </message>
     <message>
         <source>Use slider to set the volume of your speakers.</source>
-        <translation type="unfinished"></translation>
+        <translation>Brug skyderen til at indstille lydstyrken på dine højttalere.</translation>
     </message>
     <message>
         <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to reduce bandwidth usage.</source>
-        <translation type="unfinished"></translation>
+        <translation>Transmitteret lydkvalitet. Sænk denne indstilling, hvis din båndbredde ikke er høj nok, eller hvis du vil reducere brugen af båndbredde.</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
