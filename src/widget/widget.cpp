@@ -142,7 +142,7 @@ void Widget::acceptFileTransfer(const ToxFile& file, const QString& path)
 Widget* Widget::instance{nullptr};
 
 Widget::Widget(Profile &profile_, IAudioControl& audio_, CameraSource& cameraSource_,
-    Settings& settings_, Style& style_, IPC& ipc_, QWidget* parent)
+    Settings& settings_, Style& style_, IPC& ipc_, Nexus& nexus_, QWidget* parent)
     : QMainWindow(parent)
     , profile{profile_}
     , trayMenu{nullptr}
@@ -165,6 +165,7 @@ Widget::Widget(Profile &profile_, IAudioControl& audio_, CameraSource& cameraSou
     , contentDialogManager(new ContentDialogManager(*friendList))
     , ipc{ipc_}
     , toxSave(new ToxSave{settings, ipc, this})
+    , nexus{nexus_}
 {
     installEventFilter(this);
     QString locale = settings.getTranslation();
@@ -314,7 +315,7 @@ void Widget::init()
     updateCheck->checkForUpdate();
 #endif
 
-    profileInfo = new ProfileInfo(core, &profile, settings);
+    profileInfo = new ProfileInfo(core, &profile, settings, nexus);
     profileForm = new ProfileForm(profileInfo, settings, style, *messageBoxManager);
 
 #if DESKTOP_NOTIFICATIONS
@@ -392,10 +393,10 @@ void Widget::init()
     new QShortcut(Qt::Key_F11, this, SLOT(toggleFullscreen()));
 
 #ifdef Q_OS_MAC
-    QMenuBar* globalMenu = Nexus::getInstance().globalMenuBar;
-    QAction* windowMenu = Nexus::getInstance().windowMenu->menuAction();
-    QAction* viewMenu = Nexus::getInstance().viewMenu->menuAction();
-    QAction* frontAction = Nexus::getInstance().frontAction;
+    QMenuBar* globalMenu = nexus.globalMenuBar;
+    QAction* windowMenu = nexus.windowMenu->menuAction();
+    QAction* viewMenu = nexus.viewMenu->menuAction();
+    QAction* frontAction = nexus.frontAction;
 
     fileMenu = globalMenu->insertMenu(viewMenu, new QMenu(this));
 
@@ -411,14 +412,14 @@ void Widget::init()
 
     fileMenu->menu()->addSeparator();
     logoutAction = fileMenu->menu()->addAction(QString());
-    connect(logoutAction, &QAction::triggered, []() { Nexus::getInstance().showLogin(); });
+    connect(logoutAction, &QAction::triggered, [this]() { nexus.showLogin(); });
 
     editMenu = globalMenu->insertMenu(viewMenu, new QMenu(this));
     editMenu->menu()->addSeparator();
 
-    viewMenu->menu()->insertMenu(Nexus::getInstance().fullscreenAction, filterMenu);
+    viewMenu->menu()->insertMenu(nexus.fullscreenAction, filterMenu);
 
-    viewMenu->menu()->insertSeparator(Nexus::getInstance().fullscreenAction);
+    viewMenu->menu()->insertSeparator(nexus.fullscreenAction);
 
     contactMenu = globalMenu->insertMenu(windowMenu, new QMenu(this));
 
@@ -426,7 +427,7 @@ void Widget::init()
     connect(addContactAction, &QAction::triggered, this, &Widget::onAddClicked);
 
     nextConversationAction = new QAction(this);
-    Nexus::getInstance().windowMenu->insertAction(frontAction, nextConversationAction);
+    nexus.windowMenu->insertAction(frontAction, nextConversationAction);
     nextConversationAction->setShortcut(QKeySequence::SelectNextPage);
     connect(nextConversationAction, &QAction::triggered, [this]() {
         if (contentDialogManager->current() == QApplication::activeWindow())
@@ -436,7 +437,7 @@ void Widget::init()
     });
 
     previousConversationAction = new QAction(this);
-    Nexus::getInstance().windowMenu->insertAction(frontAction, previousConversationAction);
+    nexus.windowMenu->insertAction(frontAction, previousConversationAction);
     previousConversationAction->setShortcut(QKeySequence::SelectPreviousPage);
     connect(previousConversationAction, &QAction::triggered, [this] {
         if (contentDialogManager->current() == QApplication::activeWindow())
@@ -464,9 +465,9 @@ void Widget::init()
     dockChangeStatusMenu->addSeparator();
     dockChangeStatusMenu->addAction(statusAway);
     dockChangeStatusMenu->addAction(statusBusy);
-    Nexus::getInstance().dockMenu->addAction(dockChangeStatusMenu->menuAction());
+    nexus.dockMenu->addAction(dockChangeStatusMenu->menuAction());
 
-    connect(this, &Widget::windowStateChanged, &Nexus::getInstance(), &Nexus::onWindowStateChanged);
+    connect(this, &Widget::windowStateChanged, &nexus, &Nexus::onWindowStateChanged);
 #endif
 
     contentLayout = nullptr;
@@ -518,7 +519,7 @@ void Widget::init()
     }
 
 #ifdef Q_OS_MAC
-    Nexus::getInstance().updateWindows();
+    nexus.updateWindows();
 #endif
 }
 
@@ -1865,7 +1866,7 @@ void Widget::registerContentDialog(ContentDialog& contentDialog) const
     connect(&contentDialog, &ContentDialog::connectFriendWidget, this, &Widget::connectFriendWidget);
 
 #ifdef Q_OS_MAC
-    Nexus& n = Nexus::getInstance();
+    Nexus& n = nexus;
     connect(&contentDialog, &ContentDialog::destroyed, &n, &Nexus::updateWindowsClosed);
     connect(&contentDialog, &ContentDialog::windowStateChanged, &n, &Nexus::onWindowStateChanged);
     connect(contentDialog.windowHandle(), &QWindow::windowTitleChanged, &n, &Nexus::updateWindows);
@@ -1944,12 +1945,12 @@ ContentLayout* Widget::createContentDialog(DialogType type) const
     dialog->show();
 
 #ifdef Q_OS_MAC
-    connect(dialog, &Dialog::destroyed, &Nexus::getInstance(), &Nexus::updateWindowsClosed);
-    connect(dialog, &ActivateDialog::windowStateChanged, &Nexus::getInstance(),
+    connect(dialog, &Dialog::destroyed, &nexus, &Nexus::updateWindowsClosed);
+    connect(dialog, &ActivateDialog::windowStateChanged, &nexus,
             &Nexus::updateWindowsStates);
-    connect(dialog->windowHandle(), &QWindow::windowTitleChanged, &Nexus::getInstance(),
+    connect(dialog->windowHandle(), &QWindow::windowTitleChanged, &nexus,
             &Nexus::updateWindows);
-    Nexus::getInstance().updateWindows();
+    nexus.updateWindows();
 #endif
 
     return contentLayoutDialog;
@@ -2268,7 +2269,7 @@ bool Widget::event(QEvent* e)
         emit windowStateChanged(windowState());
 
     case QEvent::WindowStateChange:
-        Nexus::getInstance().updateWindowsStates();
+        nexus.updateWindowsStates();
 #endif
         break;
     default:
@@ -2336,7 +2337,7 @@ void Widget::onTryCreateTrayIcon()
             }
 
 #ifdef Q_OS_MAC
-            Nexus::getInstance().dockMenu->setAsDockMenu();
+            nexus.dockMenu->setAsDockMenu();
 #endif
         } else if (!isVisible()) {
             show();
@@ -2701,7 +2702,7 @@ void Widget::retranslateUi()
 
 
 #ifdef Q_OS_MAC
-    Nexus::getInstance().retranslateUi();
+    nexus.retranslateUi();
 
     filterMenu->menuAction()->setText(tr("Filter..."));
 

@@ -92,6 +92,7 @@ class FriendList;
 class GroupList;
 class IPC;
 class ToxSave;
+class Nexus;
 
 class Widget final : public QMainWindow
 {
@@ -127,7 +128,7 @@ private:
 
 public:
     Widget(Profile& profile_, IAudioControl& audio_, CameraSource& cameraSource,
-        Settings& settings, Style& style, IPC& ipc, QWidget* parent = nullptr);
+        Settings& settings, Style& style, IPC& ipc, Nexus& nexus, QWidget* parent = nullptr);
     ~Widget() override;
     void init();
     void setCentralWidget(QWidget* widget, const QString& widgetName);
@@ -403,4 +404,5 @@ private:
     std::unique_ptr<ContentDialogManager> contentDialogManager;
     IPC& ipc;
     std::unique_ptr<ToxSave> toxSave;
+    Nexus& nexus;
 };

@@ -28,6 +28,7 @@
 #include "src/nexus.h"
 #include "src/net/toxuri.h"
 #include "src/widget/widget.h"
+#include "src/video/camerasource.h"
 
 #if defined(Q_OS_UNIX)
 #include "src/platform/posixsignalnotifier.h"
@@ -355,35 +356,31 @@ int AppManager::run()
         return -1;
     }
 
-    // TODO(sudden6): remove once we get rid of Nexus
-    Nexus& nexus = Nexus::getInstance();
     // TODO(kriby): Consider moving application initializing variables into a globalSettings object
     //  note: Because Settings is shouldering global settings as well as model specific ones it
     //  cannot be integrated into a central model object yet
-    nexus.setSettings(settings.get());
-    nexus.setMessageBoxManager(messageBoxManager.get());
-    nexus.setIpc(ipc.get());
-    auto& cameraSource = nexus.getCameraSource();
+    cameraSource = std::unique_ptr<CameraSource>(new CameraSource{*settings});
+    nexus = std::unique_ptr<Nexus>(new Nexus{*settings, *messageBoxManager, *cameraSource, *ipc});
     // Autologin
     // TODO (kriby): Shift responsibility of linking views to model objects from nexus
     // Further: generate view instances separately (loginScreen, mainGUI, audio)
     Profile* profile = nullptr;
     if (autoLogin && Profile::exists(profileName, settings->getPaths()) && !Profile::isEncrypted(profileName, settings->getPaths())) {
-        profile = Profile::loadProfile(profileName, QString(), *settings, &parser, cameraSource, *messageBoxManager);
+        profile = Profile::loadProfile(profileName, QString(), *settings, &parser, *cameraSource, *messageBoxManager);
         if (!profile) {
             QMessageBox::information(nullptr, tr("Error"),
                                      tr("Failed to load profile automatically."));
         }
     }
     if (profile) {
-        nexus.bootstrapWithProfile(profile);
+        nexus->bootstrapWithProfile(profile);
     } else {
-        nexus.setParser(&parser);
-        int returnval = nexus.showLogin(profileName);
+        nexus->setParser(&parser);
+        int returnval = nexus->showLogin(profileName);
         if (returnval == QDialog::Rejected) {
             return -1;
         }
-        profile = nexus.getProfile();
+        profile = nexus->getProfile();
     }
 
     uriDialog = std::unique_ptr<ToxURIDialog>(new ToxURIDialog(nullptr, profile->getCore(), *messageBoxManager));
@@ -391,14 +388,14 @@ int AppManager::run()
     if (ipc->isAttached()) {
         // Start to accept Inter-process communication
         ipc->registerEventHandler("uri", &toxURIEventHandler, uriDialog.get());
-        nexus.registerIpcHandlers();
+        nexus->registerIpcHandlers();
     }
 
     // Event was not handled by already running instance therefore we handle it ourselves
     if (eventType == "uri") {
         uriDialog->handleToxURI(firstParam);
     } else if (eventType == ToxSave::eventHandlerKey) {
-        nexus.handleToxSave(firstParam);
+        nexus->handleToxSave(firstParam);
     }
 
     connect(qapp.get(), &QApplication::aboutToQuit, this, &AppManager::cleanup);
@@ -413,14 +410,14 @@ void AppManager::cleanup()
     // force save early even though destruction saves, because Windows OS will
     // close qTox before cleanup() is finished if logging out or shutting down,
     // once the top level window has exited, which occurs in ~Widget within
-    // ~Nexus. Re-ordering Nexus destruction is not trivial.
+    // ~nexus-> Re-ordering Nexus destruction is not trivial.
     if (settings) {
         settings->saveGlobal();
         settings->savePersonal();
         settings->sync();
     }
 
-    Nexus::destroyInstance();
+    nexus.reset();
     settings.reset();
     qDebug() << "Cleanup success";
 

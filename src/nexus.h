@@ -50,16 +50,13 @@ class Nexus : public QObject
 {
     Q_OBJECT
 public:
+    Nexus(Settings& settings, IMessageBoxManager& messageBoxManager,
+        CameraSource& cameraSource, IPC& ipc, QObject* parent = nullptr);
+    ~Nexus();
     void start();
     void showMainGUI();
-    void setSettings(Settings* settings_);
-    void setMessageBoxManager(IMessageBoxManager* messageBoxManager);
-    void setIpc(IPC* ipc);
     void setParser(QCommandLineParser* parser_);
-    static Nexus& getInstance();
-    static void destroyInstance();
     Profile* getProfile();
-    CameraSource& getCameraSource();
     void registerIpcHandlers();
     bool handleToxSave(const QString& path);
 
@@ -101,19 +98,17 @@ public slots:
     void bootstrapWithProfile(Profile* p);
 
 private:
-    explicit Nexus(QObject* parent = nullptr);
     void connectLoginScreen(const LoginScreen& loginScreen);
     void setProfile(Profile* p);
-    ~Nexus();
 
 private:
     Profile* profile;
-    Settings* settings;
+    Settings& settings;
     Widget* widget;
     std::unique_ptr<IAudioControl> audioControl;
     QCommandLineParser* parser = nullptr;
-    std::unique_ptr<CameraSource> cameraSource;
+    CameraSource& cameraSource;
     std::unique_ptr<Style> style;
-    IMessageBoxManager* messageBoxManager = nullptr;
-    IPC* ipc = nullptr;
+    IMessageBoxManager& messageBoxManager;
+    IPC& ipc;
 };

@@ -99,10 +99,11 @@ bool tryRemoveFile(const QString& filepath)
  * @param profile Pointer to Profile.
  * @note All pointers parameters shouldn't be null.
  */
-ProfileInfo::ProfileInfo(Core* core_, Profile* profile_, Settings& settings_)
+ProfileInfo::ProfileInfo(Core* core_, Profile* profile_, Settings& settings_, Nexus& nexus_)
     : profile{profile_}
     , core{core_}
     , settings{settings_}
+    , nexus{nexus_}
 {
     connect(core_, &Core::idSet, this, &ProfileInfo::idChanged);
     connect(core_, &Core::usernameSet, this, &ProfileInfo::usernameChanged);
@@ -235,7 +236,7 @@ IProfileInfo::SaveResult ProfileInfo::exportProfile(const QString& path) const
 QStringList ProfileInfo::removeProfile()
 {
     QStringList manualDeleteFiles = profile->remove();
-    QMetaObject::invokeMethod(&Nexus::getInstance(), "showLogin");
+    QMetaObject::invokeMethod(&nexus, "showLogin");
     return manualDeleteFiles;
 }
 
@@ -246,7 +247,7 @@ void ProfileInfo::logout()
 {
     // TODO(kriby): Refactor all of these invokeMethod calls with connect() properly when possible
     settings.saveGlobal();
-    QMetaObject::invokeMethod(&Nexus::getInstance(), "showLogin",
+    QMetaObject::invokeMethod(&nexus, "showLogin",
                               Q_ARG(QString, settings.getCurrentProfile()));
 }
 

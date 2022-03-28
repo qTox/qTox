@@ -28,6 +28,8 @@ class Settings;
 class IPC;
 class QApplication;
 class ToxURIDialog;
+class Nexus;
+class CameraSource;
 
 class AppManager : public QObject
 {
@@ -47,4 +49,6 @@ private:
     std::unique_ptr<Settings> settings;
     std::unique_ptr<IPC> ipc;
     std::unique_ptr<ToxURIDialog> uriDialog;
+    std::unique_ptr<CameraSource> cameraSource;
+    std::unique_ptr<Nexus> nexus;
 };

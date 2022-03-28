@@ -31,6 +31,7 @@
 #include "widget/loginscreen.h"
 #include "src/widget/tool/messageboxmanager.h"
 #include "audio/audio.h"
+#include "src/ipc.h"
 
 #include <QApplication>
 #include <QCommandLineParser>
@@ -59,16 +60,18 @@
 
 Q_DECLARE_OPAQUE_POINTER(ToxAV*)
 
-namespace {
-Nexus* nexus{nullptr};
-} // namespace
-
-Nexus::Nexus(QObject* parent)
+Nexus::Nexus(Settings& settings_, IMessageBoxManager& messageBoxManager_,
+    CameraSource& cameraSource_, IPC& ipc_, QObject* parent)
     : QObject(parent)
     , profile{nullptr}
+    , settings{settings_}
     , widget{nullptr}
+    , cameraSource{cameraSource_}
     , style{new Style()}
+    , messageBoxManager{messageBoxManager_}
+    , ipc{ipc_}
 {
+    QObject::connect(this, &Nexus::saveGlobal, &settings, &Settings::saveGlobal);
 }
 
 Nexus::~Nexus()
@@ -166,7 +169,7 @@ int Nexus::showLogin(const QString& profileName)
     delete profile;
     profile = nullptr;
 
-    LoginScreen loginScreen{*settings, *style, profileName};
+    LoginScreen loginScreen{settings, *style, profileName};
     connectLoginScreen(loginScreen);
 
     QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
@@ -192,22 +195,10 @@ void Nexus::bootstrapWithProfile(Profile* p)
     profile = p;
 
     if (profile) {
-        audioControl = std::unique_ptr<IAudioControl>(Audio::makeAudio(*settings));
+        audioControl = std::unique_ptr<IAudioControl>(Audio::makeAudio(settings));
         assert(audioControl != nullptr);
         profile->getCore().getAv()->setAudio(*audioControl);
         start();
-    }
-}
-
-void Nexus::setSettings(Settings* settings_)
-{
-    cameraSource = std::unique_ptr<CameraSource>(new CameraSource{*settings_});
-    if (settings) {
-        QObject::disconnect(this, &Nexus::saveGlobal, settings, &Settings::saveGlobal);
-    }
-    settings = settings_;
-    if (settings) {
-        QObject::connect(this, &Nexus::saveGlobal, settings, &Settings::saveGlobal);
     }
 }
 
@@ -222,10 +213,10 @@ void Nexus::connectLoginScreen(const LoginScreen& loginScreen)
     QObject::connect(&loginScreen, &LoginScreen::createNewProfile, this, &Nexus::onCreateNewProfile);
     QObject::connect(&loginScreen, &LoginScreen::loadProfile, this, &Nexus::onLoadProfile);
     // LoginScreen -> Settings
-    QObject::connect(&loginScreen, &LoginScreen::autoLoginChanged, settings, &Settings::setAutoLogin);
-    QObject::connect(&loginScreen, &LoginScreen::autoLoginChanged, settings, &Settings::saveGlobal);
+    QObject::connect(&loginScreen, &LoginScreen::autoLoginChanged, &settings, &Settings::setAutoLogin);
+    QObject::connect(&loginScreen, &LoginScreen::autoLoginChanged, &settings, &Settings::saveGlobal);
     // Settings -> LoginScreen
-    QObject::connect(settings, &Settings::autoLoginChanged, &loginScreen,
+    QObject::connect(&settings, &Settings::autoLoginChanged, &loginScreen,
                      &LoginScreen::onAutoLoginChanged);
 }
 
@@ -235,8 +226,8 @@ void Nexus::showMainGUI()
     assert(profile);
 
     // Create GUI
-    widget = new Widget(*profile, *audioControl, *cameraSource, *settings, *style,
-        *ipc);
+    widget = new Widget(*profile, *audioControl, cameraSource, settings, *style,
+        ipc, *this);
 
     // Start GUI
     widget->init();
@@ -263,23 +254,6 @@ void Nexus::showMainGUI()
 }
 
 /**
- * @brief Returns the singleton instance.
- */
-Nexus& Nexus::getInstance()
-{
-    if (!nexus)
-        nexus = new Nexus;
-
-    return *nexus;
-}
-
-void Nexus::destroyInstance()
-{
-    delete nexus;
-    nexus = nullptr;
-}
-
-/**
  * @brief Get current user profile.
  * @return nullptr if not started, profile otherwise.
  */
@@ -295,8 +269,8 @@ Profile* Nexus::getProfile()
  */
 void Nexus::onCreateNewProfile(const QString& name, const QString& pass)
 {
-    setProfile(Profile::createProfile(name, pass, *settings, parser, *cameraSource,
-        *messageBoxManager));
+    setProfile(Profile::createProfile(name, pass, settings, parser, cameraSource,
+        messageBoxManager));
     parser = nullptr; // only apply cmdline proxy settings once
 }
 
@@ -305,8 +279,8 @@ void Nexus::onCreateNewProfile(const QString& name, const QString& pass)
  */
 void Nexus::onLoadProfile(const QString& name, const QString& pass)
 {
-    setProfile(Profile::loadProfile(name, pass, *settings, parser, *cameraSource,
-        *messageBoxManager));
+    setProfile(Profile::loadProfile(name, pass, settings, parser, cameraSource,
+        messageBoxManager));
     parser = nullptr; // only apply cmdline proxy settings once
 }
 /**
@@ -329,21 +303,6 @@ void Nexus::setProfile(Profile* p)
 void Nexus::setParser(QCommandLineParser* parser_)
 {
     parser = parser_;
-}
-
-CameraSource& Nexus::getCameraSource()
-{
-    return *cameraSource;
-}
-
-void Nexus::setMessageBoxManager(IMessageBoxManager* messageBoxManager_)
-{
-    messageBoxManager = messageBoxManager_;
-}
-
-void Nexus::setIpc(IPC* ipc_)
-{
-    ipc = ipc_;
 }
 
 void Nexus::registerIpcHandlers()
