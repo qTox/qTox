@@ -438,6 +438,7 @@ bu da video görüşmelerinde sorunlara yol açabilir.</translation>
         <source>Ready to import %n contact(s), click send to confirm</source>
         <translation>
             <numerusform>%n kişiyi içe aktarmaya hazır, onaylamak için göndere tıklayın</numerusform>
+            <numerusform>%n kişiyi içe aktarmaya hazır, onaylamak için göndere tıklayın</numerusform>
         </translation>
     </message>
     <message>
@@ -1223,6 +1224,7 @@ tamamen kapanmak yerine tepsiye kapanacak.</translation>
         <comment>Number of users in chat</comment>
         <translation>
             <numerusform>%n kullanıcı sohbette</numerusform>
+            <numerusform>%n kullanıcı sohbette</numerusform>
         </translation>
     </message>
     <message>
@@ -1287,6 +1289,7 @@ tamamen kapanmak yerine tepsiye kapanacak.</translation>
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
         <translation>
+            <numerusform>%n kullanıcı sohbette</numerusform>
             <numerusform>%n kullanıcı sohbette</numerusform>
         </translation>
     </message>
@@ -1716,12 +1719,12 @@ Lütfen aynı parolayı iki kez girdiğinizden emin olun.</translation>
     <message>
         <source>Executable file</source>
         <comment>popup title</comment>
-        <translation type="unfinished">Çalıştırılabilir dosya</translation>
+        <translation>Çalıştırılabilir dosya</translation>
     </message>
     <message>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
-        <translation type="unfinished">qTox&apos;tan çalıştırılabilir bir dosyayı açmasını istediniz. Çalıştırılabilir dosyalar bilgisayarınıza zarar verebilir. Bu dosyayı açmak istediğinize emin misiniz?</translation>
+        <translation>qTox&apos;tan çalıştırılabilir bir dosyayı açmasını istediniz. Çalıştırılabilir dosyalar bilgisayarınıza zarar verebilir. Bu dosyayı açmak istediğinize emin misiniz?</translation>
     </message>
 </context>
 <context>
@@ -1800,6 +1803,7 @@ Lütfen aynı parolayı iki kez girdiğinizden emin olun.</translation>
         <source>Unread message(s)</source>
         <translation>
             <numerusform>Okunmamış mesaj</numerusform>
+            <numerusform>Okunmamış mesajlar</numerusform>
         </translation>
     </message>
 </context>
@@ -2487,11 +2491,11 @@ Bu kimlik NoSpam kodunu (mavi) ve sağlama toplamını (gri) içerir.</translati
     </message>
     <message>
         <source>You have joined the group</source>
-        <translation type="unfinished"></translation>
+        <translation>Gruba katıldınız</translation>
     </message>
     <message>
         <source>You have left the group</source>
-        <translation type="unfinished"></translation>
+        <translation>Gruptan ayrıldınız</translation>
     </message>
 </context>
 <context>
@@ -2658,15 +2662,15 @@ Bu kimlik NoSpam kodunu (mavi) ve sağlama toplamını (gri) içerir.</translati
     </message>
     <message>
         <source>Failed to load personal settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Kişisel ayarlar yüklenemedi</translation>
     </message>
     <message>
         <source>Unable to upgrade settings from version %1 to version %2. Cannot start qTox.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayarlar %1 sürümünden %2 sürümüne yükseltilemedi. qTox başlatılamıyor.</translation>
     </message>
     <message>
         <source>Failed to load global settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Genel ayarlar yüklenemedi</translation>
     </message>
 </context>
 <context>
@@ -3021,11 +3025,13 @@ Bu kimlik NoSpam kodunu (mavi) ve sağlama toplamını (gri) içerir.</translati
         <source>%n new friend request(s)</source>
         <translation>
             <numerusform>%n yeni arkadaşlık isteği</numerusform>
+            <numerusform>%n yeni arkadaşlık isteği</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n new group invite(s)</source>
         <translation>
+            <numerusform>%n yeni grup daveti</numerusform>
             <numerusform>%n yeni grup daveti</numerusform>
         </translation>
     </message>
