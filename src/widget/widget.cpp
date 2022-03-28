@@ -81,21 +81,7 @@
 #include "src/widget/tool/messageboxmanager.h"
 #include "tool/removechatdialog.h"
 #include "src/persistence/smileypack.h"
-
-bool toxActivateEventHandler(const QByteArray& data, void* userData)
-{
-    std::ignore = data;
-    std::ignore = userData;
-    Widget* widget = Nexus::getDesktopGUI();
-    if (!widget) {
-        return true;
-    }
-
-    qDebug() << "Handling [activate] event from other instance";
-    widget->forceShow();
-
-    return true;
-}
+#include "src/ipc.h"
 
 namespace {
 
@@ -111,7 +97,19 @@ bool tryRemoveFile(const QString& filepath)
     tmp.remove();
     return writable;
 }
+
+const QString activateHandlerKey("activate");
+
 } // namespace
+
+bool Widget::toxActivateEventHandler(const QByteArray& data, void* userData)
+{
+    std::ignore = data;
+
+    qDebug() << "Handling" << activateHandlerKey << "event from other instance";
+    static_cast<Widget*>(userData)->forceShow();
+    return true;
+}
 
 void Widget::acceptFileTransfer(const ToxFile& file, const QString& path)
 {
@@ -142,7 +140,7 @@ void Widget::acceptFileTransfer(const ToxFile& file, const QString& path)
 Widget* Widget::instance{nullptr};
 
 Widget::Widget(Profile &profile_, IAudioControl& audio_, CameraSource& cameraSource_,
-    Settings& settings_, Style& style_, QWidget* parent)
+    Settings& settings_, Style& style_, IPC& ipc_, QWidget* parent)
     : QMainWindow(parent)
     , profile{profile_}
     , trayMenu{nullptr}
@@ -163,6 +161,7 @@ Widget::Widget(Profile &profile_, IAudioControl& audio_, CameraSource& cameraSou
     , friendList(new FriendList())
     , groupList(new GroupList())
     , contentDialogManager(new ContentDialogManager(*friendList))
+    , ipc{ipc_}
 {
     installEventFilter(this);
     QString locale = settings.getTranslation();
@@ -608,6 +607,8 @@ void Widget::updateIcons()
 
 Widget::~Widget()
 {
+    ipc.unregisterEventHandler(activateHandlerKey);
+
     QWidgetList windowList = QApplication::topLevelWidgets();
 
     for (QWidget* window : windowList) {
@@ -2754,4 +2755,9 @@ void Widget::formatWindowTitle(const QString& content)
     } else {
         setWindowTitle(content + " - qTox");
     }
+}
+
+void Widget::registerActivate()
+{
+    ipc.registerEventHandler(activateHandlerKey, &toxActivateEventHandler, this);
 }

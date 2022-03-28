@@ -22,14 +22,19 @@
 class QString;
 class QByteArray;
 class Settings;
+class IPC;
+class QString;
 
 class ToxSave
 {
 public:
-    explicit ToxSave(Settings& settings);
+    const static QString eventHandlerKey;
+    ToxSave(Settings& settings, IPC& ipc);
+    ~ToxSave();
     bool handleToxSave(const QString& path);
     static bool toxSaveEventHandler(const QByteArray& eventData, void* userData);
 
 private:
     Settings& settings;
+    IPC& ipc;
 };

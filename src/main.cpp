@@ -369,7 +369,7 @@ int main(int argc, char* argv[])
         if (firstParam.startsWith("tox:")) {
             eventType = "uri";
         } else if (firstParam.endsWith(".tox")) {
-            eventType = "save";
+            eventType = ToxSave::eventHandlerKey;
         } else {
             qCritical() << "Invalid argument";
             return EXIT_FAILURE;
@@ -403,6 +403,7 @@ int main(int argc, char* argv[])
     //  cannot be integrated into a central model object yet
     nexus.setSettings(settings.get());
     nexus.setMessageBoxManager(messageBoxManager.get());
+    nexus.setIpc(&ipc);
     auto& cameraSource = Nexus::getCameraSource();
     // Autologin
     // TODO (kriby): Shift responsibility of linking views to model objects from nexus
@@ -427,19 +428,19 @@ int main(int argc, char* argv[])
     }
 
     uriDialog = std::unique_ptr<ToxURIDialog>(new ToxURIDialog(nullptr, profile->getCore(), *messageBoxManager));
-    toxSave = std::unique_ptr<ToxSave>(new ToxSave{*settings});
+    toxSave = std::unique_ptr<ToxSave>(new ToxSave{*settings, ipc});
 
     if (ipc.isAttached()) {
         // Start to accept Inter-process communication
         ipc.registerEventHandler("uri", &toxURIEventHandler, uriDialog.get());
-        ipc.registerEventHandler("save", &ToxSave::toxSaveEventHandler, toxSave.get());
-        ipc.registerEventHandler("activate", &toxActivateEventHandler, nullptr);
+        ipc.registerEventHandler(ToxSave::eventHandlerKey, &ToxSave::toxSaveEventHandler, toxSave.get());
+        nexus.registerActivate();
     }
 
     // Event was not handled by already running instance therefore we handle it ourselves
     if (eventType == "uri") {
         uriDialog->handleToxURI(firstParam);
-    } else if (eventType == "save") {
+    } else if (eventType == ToxSave::eventHandlerKey) {
         toxSave->handleToxSave(firstParam);
     }
 

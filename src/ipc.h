@@ -26,6 +26,7 @@
 #include <QTimer>
 #include <ctime>
 #include <functional>
+#include <mutex>
 
 using IPCEventHandler = std::function<bool(const QByteArray&, void*)>;
 
@@ -42,7 +43,7 @@ protected:
     static const int OWNERSHIP_TIMEOUT_S = 5;
 
 public:
-    IPC(uint32_t profileId_);
+    explicit IPC(uint32_t profileId_);
     ~IPC();
 
     struct IPCEvent
@@ -69,6 +70,7 @@ public:
     time_t postEvent(const QString& name, const QByteArray& data = QByteArray(), uint32_t dest = 0);
     bool isCurrentOwner();
     void registerEventHandler(const QString& name, IPCEventHandler handler, void* userData);
+    void unregisterEventHandler(const QString& name);
     bool isEventAccepted(time_t time);
     bool waitUntilAccepted(time_t time, int32_t timeout = -1);
     bool isAttached() const;
@@ -93,5 +95,6 @@ private:
     uint64_t globalId;
     uint32_t profileId;
     QSharedMemory globalMemory;
+    mutable std::mutex eventHandlersMutex;
     QMap<QString, Callback> eventHandlers;
 };

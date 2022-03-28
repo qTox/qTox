@@ -35,6 +35,7 @@ class QCommandLineParser;
 class CameraSource;
 class Style;
 class IMessageBoxManager;
+class IPC;
 
 #ifdef Q_OS_MAC
 class QMenuBar;
@@ -53,12 +54,14 @@ public:
     void showMainGUI();
     void setSettings(Settings* settings_);
     void setMessageBoxManager(IMessageBoxManager* messageBoxManager);
+    void setIpc(IPC* ipc);
     void setParser(QCommandLineParser* parser_);
     static Nexus& getInstance();
     static void destroyInstance();
     Profile* getProfile();
     static Widget* getDesktopGUI();
     static CameraSource& getCameraSource();
+    void registerActivate();
 
 
 #ifdef Q_OS_MAC
@@ -113,4 +116,5 @@ private:
     std::unique_ptr<CameraSource> cameraSource;
     std::unique_ptr<Style> style;
     IMessageBoxManager* messageBoxManager = nullptr;
+    IPC* ipc = nullptr;
 };

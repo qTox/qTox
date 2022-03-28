@@ -90,7 +90,7 @@ class IMessageBoxManager;
 class ContentDialogManager;
 class FriendList;
 class GroupList;
-class RemoveChatDialog;
+class IPC;
 
 class Widget final : public QMainWindow
 {
@@ -126,7 +126,7 @@ private:
 
 public:
     Widget(Profile& profile_, IAudioControl& audio_, CameraSource& cameraSource,
-        Settings& settings, Style& style, QWidget* parent = nullptr);
+        Settings& settings, Style& style, IPC& ipc, QWidget* parent = nullptr);
     ~Widget() override;
     void init();
     void setCentralWidget(QWidget* widget, const QString& widgetName);
@@ -154,6 +154,8 @@ public:
     bool groupsVisible() const;
 
     void resetIcon();
+    void registerActivate();
+    static bool toxActivateEventHandler(const QByteArray& data, void* userData);
 
 public slots:
     void reloadTheme();
@@ -397,6 +399,5 @@ private:
     std::unique_ptr<FriendList> friendList;
     std::unique_ptr<GroupList> groupList;
     std::unique_ptr<ContentDialogManager> contentDialogManager;
+    IPC& ipc;
 };
-
-bool toxActivateEventHandler(const QByteArray& data, void* userData);
