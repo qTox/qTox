@@ -37,6 +37,7 @@ class QShowEvent;
 class CameraSource;
 class Settings;
 class Style;
+class Profile;
 
 class NetCamView : public QWidget
 {
@@ -44,7 +45,7 @@ class NetCamView : public QWidget
 
 public:
     NetCamView(ToxPk friendPk_, CameraSource& cameraSource, Settings& settings,
-        Style& style, QWidget* parent = nullptr);
+        Style& style, Profile& profile, QWidget* parent = nullptr);
     ~NetCamView();
 
     virtual void show(VideoSource* source, const QString& title);

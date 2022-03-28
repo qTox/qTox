@@ -24,9 +24,10 @@
 #include "src/persistence/profile.h"
 #include "src/persistence/ifriendsettings.h"
 
-AboutFriend::AboutFriend(const Friend* f_, IFriendSettings* const settings_)
+AboutFriend::AboutFriend(const Friend* f_, IFriendSettings* const settings_, Profile& profile_)
     : f{f_}
     , settings{settings_}
+    , profile{profile_}
 {
     settings->connectTo_contactNoteChanged(this, [=](const ToxPk& pk, const QString& note) {
         std::ignore = pk;
@@ -65,7 +66,7 @@ ToxPk AboutFriend::getPublicKey() const
 QPixmap AboutFriend::getAvatar() const
 {
     const ToxPk pk = f->getPublicKey();
-    const QPixmap avatar = Nexus::getProfile()->loadAvatar(pk);
+    const QPixmap avatar = profile.loadAvatar(pk);
     return avatar.isNull() ? QPixmap(QStringLiteral(":/img/contact_dark.svg"))
                            : avatar;
 }
@@ -125,7 +126,7 @@ void AboutFriend::setAutoGroupInvite(bool enabled)
 bool AboutFriend::clearHistory()
 {
     const ToxPk pk = f->getPublicKey();
-    History* const history = Nexus::getProfile()->getHistory();
+    History* const history = profile.getHistory();
     if (history) {
         history->removeChatHistory(pk);
         return true;
@@ -136,7 +137,7 @@ bool AboutFriend::clearHistory()
 
 bool AboutFriend::isHistoryExistence()
 {
-    History* const history = Nexus::getProfile()->getHistory();
+    History* const history = profile.getHistory();
     if (history) {
         const ToxPk pk = f->getPublicKey();
         return history->historyExists(pk);

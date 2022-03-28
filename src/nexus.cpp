@@ -284,7 +284,7 @@ void Nexus::destroyInstance()
  */
 Profile* Nexus::getProfile()
 {
-    return getInstance().profile;
+    return profile;
 }
 
 /**

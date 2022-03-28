@@ -55,7 +55,7 @@ const QSize defaultSize(720, 400);
 
 ContentDialog::ContentDialog(const Core &core, Settings& settings_,
     Style& style_, IMessageBoxManager& messageBoxManager_, FriendList& friendList_,
-    QWidget* parent)
+    Profile& profile_, QWidget* parent)
     : ActivateDialog(style_, parent, Qt::Window)
     , splitter{new QSplitter(this)}
     , friendLayout{new FriendListLayout(this)}
@@ -66,6 +66,7 @@ ContentDialog::ContentDialog(const Core &core, Settings& settings_,
     , style{style_}
     , messageBoxManager{messageBoxManager_}
     , friendList{friendList_}
+    , profile{profile_}
 {
     friendLayout->setMargin(0);
     friendLayout->setSpacing(0);
@@ -162,7 +163,8 @@ FriendWidget* ContentDialog::addFriend(std::shared_ptr<FriendChatroom> chatroom,
     const auto compact = settings.getCompactLayout();
     auto frnd = chatroom->getFriend();
     const auto& friendPk = frnd->getPublicKey();
-    auto friendWidget = new FriendWidget(chatroom, compact, settings, style, messageBoxManager);
+    auto friendWidget = new FriendWidget(chatroom, compact, settings, style,
+        messageBoxManager, profile);
     emit connectFriendWidget(*friendWidget);
     chatWidgets[friendPk] = friendWidget;
     friendLayout->addFriendWidget(friendWidget, frnd->getStatus());

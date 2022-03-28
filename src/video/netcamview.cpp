@@ -48,7 +48,7 @@ const auto BTN_STYLE_SHEET_PATH = QStringLiteral("chatForm/fullScreenButtons.css
 }
 
 NetCamView::NetCamView(ToxPk friendPk_, CameraSource& cameraSource_,
-    Settings& settings_, Style& style_, QWidget* parent)
+    Settings& settings_, Style& style_, Profile& profile, QWidget* parent)
     : QWidget(parent)
     , selfFrame{nullptr}
     , friendPk{friendPk_}
@@ -115,12 +115,12 @@ NetCamView::NetCamView(ToxPk friendPk_, CameraSource& cameraSource_,
     buttonPanelLayout->addWidget(exitFullScreenButton);
     buttonPanelLayout->addStretch();
 
-    videoSurface = new VideoSurface(Nexus::getProfile()->loadAvatar(friendPk), this);
+    videoSurface = new VideoSurface(profile.loadAvatar(friendPk), this);
     videoSurface->setMinimumHeight(256);
 
     verLayout->insertWidget(0, videoSurface, 1);
 
-    selfVideoSurface = new VideoSurface(Nexus::getProfile()->loadAvatar(), this, true);
+    selfVideoSurface = new VideoSurface(profile.loadAvatar(), this, true);
     selfVideoSurface->setObjectName(QStringLiteral("CamVideoSurface"));
     selfVideoSurface->setMouseTracking(true);
     selfVideoSurface->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -149,10 +149,10 @@ NetCamView::NetCamView(ToxPk friendPk_, CameraSource& cameraSource_,
         selfFrame->resetBoundary(boundingRect);
     });
 
-    connections += connect(Nexus::getProfile(), &Profile::selfAvatarChanged,
+    connections += connect(&profile, &Profile::selfAvatarChanged,
                            [this](const QPixmap& pixmap) { selfVideoSurface->setAvatar(pixmap); });
 
-    connections += connect(Nexus::getProfile(), &Profile::friendAvatarChanged,
+    connections += connect(&profile, &Profile::friendAvatarChanged,
                            [this](ToxPk friendPkArg, const QPixmap& pixmap) {
                                if (friendPk == friendPkArg)
                                    videoSurface->setAvatar(pixmap);

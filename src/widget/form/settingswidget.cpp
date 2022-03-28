@@ -43,7 +43,8 @@
 
 SettingsWidget::SettingsWidget(UpdateCheck* updateCheck, IAudioControl& audio,
     Core* core, SmileyPack& smileyPack, CameraSource& cameraSource,
-        Settings& settings, Style& style, IMessageBoxManager& messageBoxManager, Widget* parent)
+        Settings& settings, Style& style, IMessageBoxManager& messageBoxManager,
+        Profile& profile, Widget* parent)
     : QWidget(parent, Qt::Window)
 {
     CoreAV* coreAV = core->getAv();
@@ -62,7 +63,7 @@ SettingsWidget::SettingsWidget(UpdateCheck* updateCheck, IAudioControl& audio,
     connect(gfrm.get(), &GeneralForm::updateIcons, parent, &Widget::updateIcons);
 
     std::unique_ptr<UserInterfaceForm> uifrm(new UserInterfaceForm(smileyPack, settings, style, this));
-    std::unique_ptr<PrivacyForm> pfrm(new PrivacyForm(core, settings, style));
+    std::unique_ptr<PrivacyForm> pfrm(new PrivacyForm(core, settings, style, profile));
     connect(pfrm.get(), &PrivacyForm::clearAllReceipts, parent, &Widget::clearAllReceipts);
 
     AVForm* rawAvfrm = new AVForm(audio, coreAV, cameraSource, audioSettings, videoSettings, style);

@@ -268,7 +268,7 @@ void Widget::init()
     sharedMessageProcessorParams.reset(new MessageProcessor::SharedParams(core->getMaxMessageSize(), coreExt->getMaxExtendedMessageSize()));
 
     chatListWidget = new FriendListWidget(*core, this, settings, style,
-        *messageBoxManager, *friendList, settings.getGroupchatPosition());
+        *messageBoxManager, *friendList, profile, settings.getGroupchatPosition());
     connect(chatListWidget, &FriendListWidget::searchCircle, this, &Widget::searchCircle);
     connect(chatListWidget, &FriendListWidget::connectCircleWidget, this,
             &Widget::connectCircleWidget);
@@ -306,7 +306,7 @@ void Widget::init()
     connect(updateCheck.get(), &UpdateCheck::updateAvailable, this, &Widget::onUpdateAvailable);
 #endif
     settingsWidget = new SettingsWidget(updateCheck.get(), audio, core, *smileyPack,
-        cameraSource, settings, style, *messageBoxManager, this);
+        cameraSource, settings, style, *messageBoxManager, profile, this);
 #if UPDATE_CHECK_ENABLED
     updateCheck->checkForUpdate();
 #endif
@@ -1159,7 +1159,7 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     auto rawChatroom = new FriendChatroom(newfriend, contentDialogManager.get(), *core, settings);
     std::shared_ptr<FriendChatroom> chatroom(rawChatroom);
     const auto compact = settings.getCompactLayout();
-    auto widget = new FriendWidget(chatroom, compact, settings, style, *messageBoxManager);
+    auto widget = new FriendWidget(chatroom, compact, settings, style, *messageBoxManager, profile);
     connectFriendWidget(*widget);
     auto history = profile.getHistory();
 
@@ -1831,7 +1831,7 @@ void Widget::onUpdateAvailable()
 ContentDialog* Widget::createContentDialog() const
 {
     ContentDialog* contentDialog = new ContentDialog(*core, settings, style,
-        *messageBoxManager, *friendList);
+        *messageBoxManager, *friendList, profile);
 
     registerContentDialog(*contentDialog);
     return contentDialog;

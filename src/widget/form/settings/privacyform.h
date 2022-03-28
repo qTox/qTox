@@ -24,6 +24,7 @@
 class Core;
 class Settings;
 class Style;
+class Profile;
 
 namespace Ui {
 class PrivacySettings;
@@ -33,7 +34,7 @@ class PrivacyForm : public GenericForm
 {
     Q_OBJECT
 public:
-    PrivacyForm(Core* core_, Settings& settings, Style& style);
+    PrivacyForm(Core* core_, Settings& settings, Style& style, Profile& profile);
     ~PrivacyForm();
     QString getFormName() final
     {
@@ -59,4 +60,5 @@ private:
     Ui::PrivacySettings* bodyUI;
     Core* core;
     Settings& settings;
+    Profile& profile;
 };

@@ -32,13 +32,15 @@ class CircleWidget;
 class Settings;
 class Style;
 class IMessageBoxManager;
+class Profile;
 
 class FriendWidget : public GenericChatroomWidget, public IFriendListItem
 {
     Q_OBJECT
 public:
     FriendWidget(std::shared_ptr<FriendChatroom> chatroom, bool compact_,
-        Settings& settings, Style& style, IMessageBoxManager& messageBoxManager);
+        Settings& settings, Style& style, IMessageBoxManager& messageBoxManager,
+        Profile& profile);
 
     void contextMenuEvent(QContextMenuEvent* event) final;
     void setAsActiveChatroom() final;
@@ -92,4 +94,5 @@ public:
     Settings& settings;
     Style& style;
     IMessageBoxManager& messageBoxManager;
+    Profile& profile;
 };

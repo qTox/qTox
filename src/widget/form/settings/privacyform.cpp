@@ -38,11 +38,12 @@
 #include <chrono>
 #include <random>
 
-PrivacyForm::PrivacyForm(Core* core_, Settings& settings_, Style& style)
+PrivacyForm::PrivacyForm(Core* core_, Settings& settings_, Style& style, Profile& profile_)
     : GenericForm(QPixmap(":/img/settings/privacy.png"), style)
     , bodyUI(new Ui::PrivacySettings)
     , core{core_}
     , settings{settings_}
+    , profile{profile_}
 {
     bodyUI->setupUi(this);
 
@@ -70,7 +71,7 @@ void PrivacyForm::on_cbKeepHistory_stateChanged()
                                   tr("Do you want to permanently delete all chat history?"),
                                   QMessageBox::Yes | QMessageBox::No);
         if (dialogDelHistory == QMessageBox::Yes) {
-            Nexus::getProfile()->getHistory()->eraseHistory();
+            profile.getHistory()->eraseHistory();
         }
     }
 }

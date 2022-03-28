@@ -598,8 +598,7 @@ void Settings::resetToDefault()
 
     // Remove file with profile settings
     QDir dir(paths.getSettingsDirPath());
-    Profile* profile = Nexus::getProfile();
-    QString localPath = dir.filePath(profile->getName() + ".ini");
+    QString localPath = dir.filePath(loadedProfile->getName() + ".ini");
     QFile local(localPath);
     if (local.exists())
         local.remove();

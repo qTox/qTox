@@ -27,13 +27,15 @@ class Settings;
 class Style;
 class IMessageBoxManager;
 class FriendList;
+class Profile;
 
 class CircleWidget final : public CategoryWidget
 {
     Q_OBJECT
 public:
     CircleWidget(const Core& core_, FriendListWidget* parent, int id_, Settings& settings,
-        Style& style, IMessageBoxManager& messageboxManager, FriendList& friendList);
+        Style& style, IMessageBoxManager& messageboxManager, FriendList& friendList,
+        Profile& profile);
     ~CircleWidget();
 
     void editName();
@@ -63,4 +65,5 @@ private:
     Style& style;
     IMessageBoxManager& messageBoxManager;
     FriendList& friendList;
+    Profile& profile;
 };

@@ -43,6 +43,7 @@ class CameraSource;
 class Settings;
 class Style;
 class IMessageBoxManager;
+class Profile;
 
 class SettingsWidget : public QWidget
 {
@@ -50,7 +51,8 @@ class SettingsWidget : public QWidget
 public:
     SettingsWidget(UpdateCheck* updateCheck, IAudioControl& audio, Core *core,
         SmileyPack& smileyPack, CameraSource& cameraSource, Settings& settings,
-        Style& style, IMessageBoxManager& messageBoxManager, Widget* parent = nullptr);
+        Style& style, IMessageBoxManager& messageBoxManager, Profile& profile,
+        Widget* parent = nullptr);
     ~SettingsWidget();
 
     bool isShown() const;

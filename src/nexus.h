@@ -56,7 +56,7 @@ public:
     void setParser(QCommandLineParser* parser_);
     static Nexus& getInstance();
     static void destroyInstance();
-    static Profile* getProfile();
+    Profile* getProfile();
     static Widget* getDesktopGUI();
     static CameraSource& getCameraSource();
 

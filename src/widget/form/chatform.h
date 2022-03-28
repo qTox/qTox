@@ -46,6 +46,7 @@ class DocumentCache;
 class SmileyPack;
 class Settings;
 class Style;
+class Profile;
 class IMessageBoxManager;
 class ContentDialogManager;
 class FriendList;
@@ -152,4 +153,5 @@ private:
     Settings& settings;
     Style& style;
     ContentDialogManager& contentDialogManager;
+    Profile& profile;
 };
