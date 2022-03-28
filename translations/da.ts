@@ -33,7 +33,7 @@
     </message>
     <message>
         <source>Playback device</source>
-        <translation type="unfinished">Afspilnings-enhed</translation>
+        <translation>Afspilningsenhed</translation>
     </message>
     <message>
         <source>Capture device</source>
@@ -45,11 +45,11 @@
     </message>
     <message>
         <source>Video Settings</source>
-        <translation type="unfinished">Video-indstillinger</translation>
+        <translation>Videoindstillinger</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation type="unfinished">Videoenhed</translation>
+        <translation>Videoenhed</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -57,15 +57,18 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vælg opløsningen på dit kamera.
+Jo højere værdi, jo bedre videokvalitet vil dine venner modtage.
+Bemærk, at ved bedre videokvalitet, kræves en bedre internetforbindelse,
+hvilket kan give problemer ved videoopkald.</translation>
     </message>
     <message>
         <source>Resolution</source>
-        <translation type="unfinished">Opløsning</translation>
+        <translation>Kameraopløsning</translation>
     </message>
     <message>
         <source>Rescan devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Genscan enheder</translation>
     </message>
     <message>
         <source>Test Sound</source>
@@ -93,7 +96,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Grænseværdi</translation>
     </message>
     <message>
         <source>Use slider to set the volume of your speakers.</source>
