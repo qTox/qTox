@@ -270,64 +270,86 @@ void History::removeChatHistory(const ChatId& chatId)
         return;
     }
 
+    QVector<RawDatabase::Query> queries;
     QVector<QByteArray> boundParams;
-    QString queryString = QStringLiteral("DELETE FROM faux_offline_pending "
-                                "WHERE faux_offline_pending.id IN ( "
-                                "    SELECT faux_offline_pending.id FROM faux_offline_pending "
-                                "    LEFT JOIN history ON faux_offline_pending.id = history.id "
-                                "    WHERE chat_id=");
+    QString queryString = QStringLiteral(
+        "DELETE FROM faux_offline_pending "
+        "WHERE faux_offline_pending.id IN ( "
+        "    SELECT faux_offline_pending.id FROM faux_offline_pending "
+        "    LEFT JOIN history ON faux_offline_pending.id = history.id "
+        "    WHERE chat_id=");
     addChatIdSubQuery(queryString, boundParams, chatId);
-    queryString += QStringLiteral(
-                                "); "
-                                "DELETE FROM broken_messages "
-                                "WHERE broken_messages.id IN ( "
-                                "    SELECT broken_messages.id FROM broken_messages "
-                                "    LEFT JOIN history ON broken_messages.id = history.id "
-                                "    WHERE chat_id=");
-    addChatIdSubQuery(queryString, boundParams, chatId);
-    queryString += QStringLiteral(
-                                "); "
-                                "DELETE FROM text_messages "
-                                "WHERE id IN ("
-                                "   SELECT id from history "
-                                "   WHERE message_type = 'T' AND chat_id=");
-    addChatIdSubQuery(queryString, boundParams, chatId);
-    queryString += QStringLiteral(
-                                ");"
-                                "DELETE FROM file_transfers "
-                                "WHERE id IN ( "
-                                "    SELECT id from history "
-                                "    WHERE message_type = 'F' AND chat_id=");
-    addChatIdSubQuery(queryString, boundParams, chatId);
-    queryString += QStringLiteral(
-                                ");"
-                                "DELETE FROM system_messages "
-                                "WHERE id IN ( "
-                                "   SELECT id from history "
-                                "   WHERE message_type = 'S' AND chat_id=");
-    addChatIdSubQuery(queryString, boundParams, chatId);
-    queryString += QStringLiteral(");"
-                                "DELETE FROM history WHERE chat_id=");
-    addChatIdSubQuery(queryString, boundParams, chatId);
-    queryString += QStringLiteral("; "
-                                "DELETE FROM chats WHERE id=");
-    addChatIdSubQuery(queryString, boundParams, chatId);
+    queryString += QStringLiteral(")");
+    queries += {queryString, boundParams};
+    boundParams.clear();
 
-    queryString += QStringLiteral("; "
-                                "DELETE FROM aliases WHERE id NOT IN ( "
-                                "   SELECT DISTINCT sender_alias FROM text_messages "
-                                "   UNION "
-                                "   SELECT DISTINCT sender_alias FROM file_transfers);");
+    queryString = QStringLiteral(
+        "DELETE FROM broken_messages "
+        "WHERE broken_messages.id IN ( "
+        "    SELECT broken_messages.id FROM broken_messages "
+        "    LEFT JOIN history ON broken_messages.id = history.id "
+        "    WHERE chat_id=");
+    addChatIdSubQuery(queryString, boundParams, chatId);
+    queryString += QStringLiteral(")");
+    queries += {queryString, boundParams};
+    boundParams.clear();
 
-    queryString += QStringLiteral(
-                                "DELETE FROM authors WHERE id NOT IN ( "
-                                "   SELECT DISTINCT owner FROM aliases);");
+    queryString = QStringLiteral(
+        "DELETE FROM text_messages "
+        "WHERE id IN ("
+        "   SELECT id from history "
+        "   WHERE message_type = 'T' AND chat_id=");
+    addChatIdSubQuery(queryString, boundParams, chatId);
+    queryString += QStringLiteral(")");
+    queries += {queryString, boundParams};
+    boundParams.clear();
 
-    queryString += QStringLiteral("VACUUM;");
+    queryString = QStringLiteral(
+        "DELETE FROM file_transfers "
+        "WHERE id IN ( "
+        "    SELECT id from history "
+        "    WHERE message_type = 'F' AND chat_id=");
+    addChatIdSubQuery(queryString, boundParams, chatId);
+    queryString += QStringLiteral(")");
+    queries += {queryString, boundParams};
+    boundParams.clear();
 
-    RawDatabase::Query query = {queryString, boundParams};
-    if (!db->execNow(query)) {
+    queryString = QStringLiteral(
+        "DELETE FROM system_messages "
+        "WHERE id IN ( "
+        "   SELECT id from history "
+        "   WHERE message_type = 'S' AND chat_id=");
+    addChatIdSubQuery(queryString, boundParams, chatId);
+    queryString += QStringLiteral(")");
+    queries += {queryString, boundParams};
+    boundParams.clear();
+
+    queryString = QStringLiteral(
+        "DELETE FROM history WHERE chat_id=");
+    addChatIdSubQuery(queryString, boundParams, chatId);
+    queries += {queryString, boundParams};
+    boundParams.clear();
+
+    queryString = QStringLiteral(
+        "DELETE FROM chats WHERE id=");
+    addChatIdSubQuery(queryString, boundParams, chatId);
+    queries += {queryString, boundParams};
+    boundParams.clear();
+
+    queries += RawDatabase::Query{QStringLiteral(
+        "DELETE FROM aliases WHERE id NOT IN ( "
+        "   SELECT DISTINCT sender_alias FROM text_messages "
+        "   UNION "
+        "   SELECT DISTINCT sender_alias FROM file_transfers)")};
+
+    queries += RawDatabase::Query{QStringLiteral(
+        "DELETE FROM authors WHERE id NOT IN ( "
+        "   SELECT DISTINCT owner FROM aliases)")};
+
+    if (!db->execNow(queries)) {
         qWarning() << "Failed to remove friend's history";
+    } else {
+        db->execNow(RawDatabase::Query{QStringLiteral("VACUUM")});
     }
 }
 
