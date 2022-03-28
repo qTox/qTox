@@ -41,6 +41,7 @@ public:
     const uint8_t* getData() const;
     bool isEmpty() const;
     virtual int getSize() const = 0;
+    virtual std::unique_ptr<ChatId> clone() const = 0;
 
 protected:
     ChatId();
