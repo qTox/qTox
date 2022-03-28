@@ -158,10 +158,9 @@ public:
     void createPersonal(const QString& basename) const;
 
     void savePersonal();
-    void savePersonal(Profile* profile);
 
     void loadGlobal();
-    void loadPersonal(QString profileName, const ToxEncrypt* passKey, bool newProfile);
+    void loadPersonal(const Profile& profile, bool newProfile);
 
     void resetToDefault();
 
@@ -718,4 +717,5 @@ private:
     int globalSettingsVersion = 0;
     int personalSettingsVersion = 0;
     IMessageBoxManager& messageBoxManager;
+    const Profile* loadedProfile = nullptr;
 };

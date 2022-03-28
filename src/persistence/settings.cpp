@@ -278,7 +278,7 @@ void Settings::updateProfileData(Profile* profile, const QCommandLineParser* par
     }
     setCurrentProfile(profile->getName());
     saveGlobal();
-    loadPersonal(profile->getName(), profile->getPasskey(), newProfile);
+    loadPersonal(*profile, newProfile);
     if (parser) {
         applyCommandLineOptions(*parser);
     }
@@ -467,22 +467,23 @@ bool Settings::applyCommandLineOptions(const QCommandLineParser& parser)
     return true;
 }
 
-void Settings::loadPersonal(QString profileName, const ToxEncrypt* passKey, bool newProfile)
+void Settings::loadPersonal(const Profile& profile, bool newProfile)
 {
     QMutexLocker locker{&bigLock};
 
+    loadedProfile = &profile;
     QDir dir(paths.getSettingsDirPath());
     QString filePath = dir.filePath(globalSettingsFile);
 
     // load from a profile specific friend data list if possible
-    QString tmp = dir.filePath(profileName + ".ini");
+    QString tmp = dir.filePath(profile.getName() + ".ini");
     if (QFile(tmp).exists()) { // otherwise, filePath remains the global file
         filePath = tmp;
     }
 
     qDebug() << "Loading personal settings from" << filePath;
 
-    SettingsSerializer ps(filePath, passKey);
+    SettingsSerializer ps(filePath, profile.getPasskey());
     ps.load();
     friendLst.clear();
 
@@ -746,26 +747,17 @@ void Settings::saveGlobal()
 }
 
 /**
- * @brief Asynchronous, saves the current profile.
+ * @brief Asynchronous, saves the profile.
  */
 void Settings::savePersonal()
 {
-    savePersonal(Nexus::getProfile());
-}
-
-/**
- * @brief Asynchronous, saves the profile.
- * @param profile Profile to save.
- */
-void Settings::savePersonal(Profile* profile)
-{
-    if (!profile) {
+    if (!loadedProfile) {
         qDebug() << "Could not save personal settings because there is no active profile";
         return;
     }
     QMetaObject::invokeMethod(this, "savePersonal",
-                              Q_ARG(QString, profile->getName()),
-                              Q_ARG(const ToxEncrypt*, profile->getPasskey()));
+                              Q_ARG(QString, loadedProfile->getName()),
+                              Q_ARG(const ToxEncrypt*, loadedProfile->getPasskey()));
 }
 
 void Settings::savePersonal(QString profileName, const ToxEncrypt* passkey)

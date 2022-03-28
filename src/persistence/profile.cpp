@@ -387,7 +387,7 @@ Profile::~Profile()
     }
 
     onSaveToxSave();
-    settings.savePersonal(this);
+    settings.savePersonal();
     settings.sync();
     ProfileLocker::assertLock(paths);
     assert(ProfileLocker::getCurLockName() == name);
