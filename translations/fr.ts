@@ -718,19 +718,19 @@ afin que vous puissiez enregistrer le fichier sur windows.</translation>
     <name>ChatWidget</name>
     <message>
         <source>pending</source>
-        <translation type="unfinished">en cours</translation>
+        <translation>en cours</translation>
     </message>
     <message>
         <source>%1 is typing</source>
-        <translation type="unfinished">%1 est en train d&apos;écrire</translation>
+        <translation>%1 est en train d&apos;écrire</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Copier</translation>
+        <translation>Copier</translation>
     </message>
     <message>
         <source>Select all</source>
-        <translation type="unfinished">Tout sélectionner</translation>
+        <translation>Tout sélectionner</translation>
     </message>
 </context>
 <context>
@@ -797,7 +797,7 @@ afin que vous puissiez enregistrer le fichier sur windows.</translation>
     </message>
     <message>
         <source>Multipart Messages: </source>
-        <translation>Messages en plusieurs parties&#x202f;: </translation>
+        <translation>Messages en plusieurs parties : </translation>
     </message>
 </context>
 <context>
@@ -1124,7 +1124,7 @@ afin que vous puissiez enregistrer le fichier sur windows.</translation>
     </message>
     <message>
         <source>Max autoaccept file size (0 to disable):</source>
-        <translation>Taille maximale du fichier pour autoaccepter (0 pour désactiver)&#x202f;:</translation>
+        <translation>Taille maximale du fichier pour autoaccepter (0 pour désactiver) :</translation>
     </message>
     <message>
         <source> MB</source>
@@ -1151,7 +1151,7 @@ au lieu de fermer entièrement.</translation>
     </message>
     <message>
         <source>Add a chat message when a user joins or leaves a group</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher un message quand quelqu&apos;un rejoint ou quitte un groupe</translation>
     </message>
 </context>
 <context>
@@ -1459,7 +1459,7 @@ Partagez-le avec vos amis pour commencer à chatter.</translation>
     </message>
     <message>
         <source>Load history from:</source>
-        <translation type="unfinished"></translation>
+        <translation>Chargement de l&apos;historique depuis :</translation>
     </message>
 </context>
 <context>
@@ -1715,12 +1715,12 @@ Veuillez vous assurer d&apos;entrer deux fois le même mot de passe.</translatio
     <message>
         <source>Executable file</source>
         <comment>popup title</comment>
-        <translation type="unfinished">Fichier exécutable</translation>
+        <translation>Fichier exécutable</translation>
     </message>
     <message>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
-        <translation type="unfinished">Vous avez demandé à qTox d&apos;ouvrir un fichier exécutable. Les fichiers exécutables peuvent potentiellement endommager votre ordinateur. Êtes-vous sûr(e) de vouloir ouvrir ce fichier&#xa0;?</translation>
+        <translation>Vous avez demandé à qTox d&apos;ouvrir un fichier exécutable. Les fichiers exécutables peuvent potentiellement endommager votre ordinateur. Êtes-vous sûr(e) de vouloir ouvrir ce fichier&#xa0;?</translation>
     </message>
 </context>
 <context>
@@ -2153,7 +2153,7 @@ Cet identifiant comprend le code NoSpam (en bleu) et la somme de contrôle (en g
     <message>
         <source>Warning: You have chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
-        <translation>Attention&#x202f;: vous avez choisi un fichier de sauvegarde non-Tox&#x202f;; ignoré.</translation>
+        <translation>Attention : vous avez choisi un fichier de sauvegarde non-Tox ; ignoré.</translation>
     </message>
     <message>
         <source>Profile already exists</source>
@@ -2382,116 +2382,116 @@ Cet identifiant comprend le code NoSpam (en bleu) et la somme de contrôle (en g
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation type="unfinished">Impossible d&apos;envoyer le fichier «&#xa0;%1&#xa0;»</translation>
+        <translation>Impossible d&apos;envoyer le fichier «&#xa0;%1&#xa0;»</translation>
     </message>
     <message>
         <source>%1 has joined the group</source>
-        <translation type="unfinished">%1 a rejoint le groupe</translation>
+        <translation>%1 a rejoint le groupe</translation>
     </message>
     <message>
         <source>%1 has left the group</source>
-        <translation type="unfinished">%1 a quitté le groupe</translation>
+        <translation>%1 a quitté le groupe</translation>
     </message>
     <message>
         <source>%1 is now known as %2</source>
-        <translation type="unfinished">%1 maintenant s&apos;appele %2</translation>
+        <translation>%1 maintenant s&apos;appele %2</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
-        <translation type="unfinished">%1 a modifié le titre en %2</translation>
+        <translation>%1 a modifié le titre en %2</translation>
     </message>
     <message>
         <source>Cleared</source>
-        <translation type="unfinished">Effacé</translation>
+        <translation>Effacé</translation>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
-        <translation type="unfinished">L&apos;appel avec %1 s&apos;est terminé de façon inattendue. %2</translation>
+        <translation>L&apos;appel avec %1 s&apos;est terminé de façon inattendue. %2</translation>
     </message>
     <message>
         <source>Call with %1 ended. %2</source>
-        <translation type="unfinished">Appel avec %1 terminé. %2</translation>
+        <translation>Appel avec %1 terminé. %2</translation>
     </message>
     <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation type="unfinished">%1 est maintenant %2</translation>
+        <translation>%1 est maintenant %2</translation>
     </message>
     <message>
         <source>Calling %1</source>
-        <translation type="unfinished">Appel de %1 en cours</translation>
+        <translation>Appel de %1 en cours</translation>
     </message>
     <message>
         <source>%1 calling</source>
-        <translation type="unfinished">%1 appelle</translation>
+        <translation>%1 appelle</translation>
     </message>
     <message>
         <source>Message failed to send</source>
-        <translation type="unfinished">L&apos;envoi du message a échoué</translation>
+        <translation>L&apos;envoi du message a échoué</translation>
     </message>
     <message>
         <source>Initializing</source>
-        <translation type="unfinished"></translation>
+        <translation>Initialisation</translation>
     </message>
     <message>
         <source>Transmitting</source>
-        <translation type="unfinished"></translation>
+        <translation>Envoi</translation>
     </message>
     <message>
         <source>Finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Terminé</translation>
     </message>
     <message>
         <source>Broken</source>
-        <translation type="unfinished"></translation>
+        <translation>Interrompu</translation>
     </message>
     <message>
         <source>Canceled</source>
-        <translation type="unfinished"></translation>
+        <translation>Annulé</translation>
     </message>
     <message>
         <source>Paused</source>
-        <translation type="unfinished">En pause</translation>
+        <translation>En pause</translation>
     </message>
     <message>
         <source>Remote paused</source>
-        <translation type="unfinished">Commande à distance en pause</translation>
+        <translation>Commande à distance en pause</translation>
     </message>
     <message>
         <source>File Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom de fichier</translation>
     </message>
     <message>
         <source>Contact</source>
-        <translation type="unfinished"></translation>
+        <translation>Contact</translation>
     </message>
     <message>
         <source>Progress</source>
-        <translation type="unfinished"></translation>
+        <translation>Progrès</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Taille</translation>
     </message>
     <message>
         <source>Speed</source>
-        <translation type="unfinished"></translation>
+        <translation>Vitesse</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished">Statut</translation>
+        <translation>Statut</translation>
     </message>
     <message>
         <source>Control</source>
-        <translation type="unfinished"></translation>
+        <translation>Controlle</translation>
     </message>
     <message>
         <source>You have joined the group</source>
-        <translation type="unfinished"></translation>
+        <translation>Vous avez rejoint le groupe</translation>
     </message>
     <message>
         <source>You have left the group</source>
-        <translation type="unfinished"></translation>
+        <translation>Vous avez quitté le groupe</translation>
     </message>
 </context>
 <context>
@@ -2600,11 +2600,11 @@ Cet identifiant comprend le code NoSpam (en bleu) et la somme de contrôle (en g
     </message>
     <message>
         <source>Select Date Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Choisissez la fenêtre de date</translation>
     </message>
     <message>
         <source>Select a date</source>
-        <translation type="unfinished">Sélectionnez une date</translation>
+        <translation>Sélectionnez une date</translation>
     </message>
 </context>
 <context>
@@ -2658,15 +2658,15 @@ Cet identifiant comprend le code NoSpam (en bleu) et la somme de contrôle (en g
     </message>
     <message>
         <source>Failed to load personal settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Échec du chargement des paramètres personnels</translation>
     </message>
     <message>
         <source>Unable to upgrade settings from version %1 to version %2. Cannot start qTox.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de mettre à niveau les paramètres de la version %1 vers la version %2. Impossible de démarrer qTox.</translation>
     </message>
     <message>
         <source>Failed to load global settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Échec du chargement des paramètres globaux</translation>
     </message>
 </context>
 <context>

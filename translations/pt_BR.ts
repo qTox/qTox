@@ -719,19 +719,19 @@ de forma que você possa salvar o arquivo no Windows.</translation>
     <name>ChatWidget</name>
     <message>
         <source>pending</source>
-        <translation type="unfinished">pendente</translation>
+        <translation>pendente</translation>
     </message>
     <message>
         <source>%1 is typing</source>
-        <translation type="unfinished">%1 está digitando</translation>
+        <translation>%1 está digitando</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Copiar</translation>
+        <translation>Copiar</translation>
     </message>
     <message>
         <source>Select all</source>
-        <translation type="unfinished">Selecionar tudo</translation>
+        <translation>Selecionar tudo</translation>
     </message>
 </context>
 <context>
@@ -1158,7 +1158,7 @@ ao invés de fechar.</translation>
     </message>
     <message>
         <source>Add a chat message when a user joins or leaves a group</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar uma mensagem de chat quando um usuário entra ou sai de um grupo</translation>
     </message>
 </context>
 <context>
@@ -1466,7 +1466,7 @@ Compartilhe com seus amigos para começar a conversar.</translation>
     </message>
     <message>
         <source>Load history from:</source>
-        <translation type="unfinished"></translation>
+        <translation>Carregar histórico de:</translation>
     </message>
 </context>
 <context>
@@ -1723,12 +1723,12 @@ Certifique-se de que você entrou a mesma senha duas vezes.</translation>
     <message>
         <source>Executable file</source>
         <comment>popup title</comment>
-        <translation type="unfinished">Arquivo executável</translation>
+        <translation>Arquivo executável</translation>
     </message>
     <message>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
-        <translation type="unfinished">Você pediu ao qTox para abrir um arquivo executável. Executáveis podem potencialmente danificar seu computador. Tem certeza de que deseja abrir este arquivo?</translation>
+        <translation>Você pediu ao qTox para abrir um arquivo executável. Executáveis podem potencialmente danificar seu computador. Tem certeza de que deseja abrir este arquivo?</translation>
     </message>
 </context>
 <context>
@@ -2390,116 +2390,116 @@ Este ID inclui o código NoSpam (em azul) e o checkum (em cinza).</translation>
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation type="unfinished">Falha ao enviar o arquivo &quot;%1&quot;</translation>
+        <translation>Falha ao enviar o arquivo &quot;%1&quot;</translation>
     </message>
     <message>
         <source>%1 has joined the group</source>
-        <translation type="unfinished">%1 entrou no grupo</translation>
+        <translation>%1 entrou no grupo</translation>
     </message>
     <message>
         <source>%1 has left the group</source>
-        <translation type="unfinished">%1 saiu do grupo</translation>
+        <translation>%1 saiu do grupo</translation>
     </message>
     <message>
         <source>%1 is now known as %2</source>
-        <translation type="unfinished">%1 agora se chama %2</translation>
+        <translation>%1 agora se chama %2</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
-        <translation type="unfinished">%1 definiu o título como %2</translation>
+        <translation>%1 definiu o título como %2</translation>
     </message>
     <message>
         <source>Cleared</source>
-        <translation type="unfinished">Removidas</translation>
+        <translation>Removidas</translation>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
-        <translation type="unfinished">A chamada com %1 terminou inesperadamente. %2</translation>
+        <translation>A chamada com %1 terminou inesperadamente. %2</translation>
     </message>
     <message>
         <source>Call with %1 ended. %2</source>
-        <translation type="unfinished">Chamada para %1 terminada. %2</translation>
+        <translation>Chamada para %1 terminada. %2</translation>
     </message>
     <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation type="unfinished">%1 agora é %2</translation>
+        <translation>%1 agora é %2</translation>
     </message>
     <message>
         <source>Calling %1</source>
-        <translation type="unfinished">Chamando %1</translation>
+        <translation>Chamando %1</translation>
     </message>
     <message>
         <source>%1 calling</source>
-        <translation type="unfinished">%1 chamando</translation>
+        <translation>%1 chamando</translation>
     </message>
     <message>
         <source>Message failed to send</source>
-        <translation type="unfinished">Falha no envio da mensagem</translation>
+        <translation>Falha no envio da mensagem</translation>
     </message>
     <message>
         <source>Initializing</source>
-        <translation type="unfinished"></translation>
+        <translation>Inicializando</translation>
     </message>
     <message>
         <source>Transmitting</source>
-        <translation type="unfinished"></translation>
+        <translation>Transmitindo</translation>
     </message>
     <message>
         <source>Finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Terminado</translation>
     </message>
     <message>
         <source>Broken</source>
-        <translation type="unfinished"></translation>
+        <translation>Rompido</translation>
     </message>
     <message>
         <source>Canceled</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancelado</translation>
     </message>
     <message>
         <source>Paused</source>
-        <translation type="unfinished">Pausado</translation>
+        <translation>Pausado</translation>
     </message>
     <message>
         <source>Remote paused</source>
-        <translation type="unfinished">Pausa no remoto</translation>
+        <translation>Pausa no remoto</translation>
     </message>
     <message>
         <source>File Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome do Arquivo</translation>
     </message>
     <message>
         <source>Contact</source>
-        <translation type="unfinished"></translation>
+        <translation>Contato</translation>
     </message>
     <message>
         <source>Progress</source>
-        <translation type="unfinished"></translation>
+        <translation>Progresso</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamanho</translation>
     </message>
     <message>
         <source>Speed</source>
-        <translation type="unfinished"></translation>
+        <translation>Velocidade</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished">Status</translation>
+        <translation>Status</translation>
     </message>
     <message>
         <source>Control</source>
-        <translation type="unfinished"></translation>
+        <translation>Controle</translation>
     </message>
     <message>
         <source>You have joined the group</source>
-        <translation type="unfinished"></translation>
+        <translation>Você entrou no grupo</translation>
     </message>
     <message>
         <source>You have left the group</source>
-        <translation type="unfinished"></translation>
+        <translation>Você deixou o grupo</translation>
     </message>
 </context>
 <context>
@@ -2608,11 +2608,11 @@ Este ID inclui o código NoSpam (em azul) e o checkum (em cinza).</translation>
     </message>
     <message>
         <source>Select Date Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Caixa de diálogo Selecionar data</translation>
     </message>
     <message>
         <source>Select a date</source>
-        <translation type="unfinished">Selecionar uma data</translation>
+        <translation>Selecione uma data</translation>
     </message>
 </context>
 <context>
@@ -2666,15 +2666,15 @@ Este ID inclui o código NoSpam (em azul) e o checkum (em cinza).</translation>
     </message>
     <message>
         <source>Failed to load personal settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha no carregamento de configurações pessoais</translation>
     </message>
     <message>
         <source>Unable to upgrade settings from version %1 to version %2. Cannot start qTox.</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi possível atualizar as configurações da versão %1 para a versão %2. Não é possível iniciar o qTox.</translation>
     </message>
     <message>
         <source>Failed to load global settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha ao carregar configurações globais</translation>
     </message>
 </context>
 <context>
