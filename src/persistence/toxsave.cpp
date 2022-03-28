@@ -21,12 +21,22 @@
 #include "src/persistence/settings.h"
 #include "src/widget/widget.h"
 #include "src/nexus.h"
+#include "src/ipc.h"
 #include "src/widget/tool/profileimporter.h"
 #include <QCoreApplication>
+#include <QString>
 
-ToxSave::ToxSave(Settings& settings_)
+const QString ToxSave::eventHandlerKey = QStringLiteral("save");
+
+ToxSave::ToxSave(Settings& settings_, IPC& ipc_)
     : settings{settings_}
+    , ipc{ipc_}
 {}
+
+ToxSave::~ToxSave()
+{
+    ipc.unregisterEventHandler(eventHandlerKey);
+}
 
 bool ToxSave::toxSaveEventHandler(const QByteArray& eventData, void* userData)
 {

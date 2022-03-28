@@ -235,7 +235,8 @@ void Nexus::showMainGUI()
     assert(profile);
 
     // Create GUI
-    widget = new Widget(*profile, *audioControl, *cameraSource, *settings, *style);
+    widget = new Widget(*profile, *audioControl, *cameraSource, *settings, *style,
+        *ipc);
 
     // Start GUI
     widget->init();
@@ -347,6 +348,16 @@ CameraSource& Nexus::getCameraSource()
 void Nexus::setMessageBoxManager(IMessageBoxManager* messageBoxManager_)
 {
     messageBoxManager = messageBoxManager_;
+}
+
+void Nexus::setIpc(IPC* ipc_)
+{
+    ipc = ipc_;
+}
+
+void Nexus::registerActivate()
+{
+    widget->registerActivate();
 }
 
 #ifdef Q_OS_MAC
