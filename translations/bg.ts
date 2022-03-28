@@ -45,11 +45,11 @@
     </message>
     <message>
         <source>Video Settings</source>
-        <translation>Видео настройки</translation>
+        <translation>Настройки на видео</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation>Видео устройство</translation>
+        <translation>Устройство за видео</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -121,7 +121,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
-        <translation type="unfinished">Пусни тестов звук за проверка на звука.</translation>
+        <translation>Звук за проверка със смяна на силата.</translation>
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
@@ -281,7 +281,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Auto-accept call:</source>
-        <translation type="unfinished">Автоматично приемане на обаждане:</translation>
+        <translation>Автоматично приемане на обаждания:</translation>
     </message>
     <message>
         <source>Auto-accept group invites</source>
@@ -635,7 +635,7 @@ which may lead to problems with video calls.</source>
         <translation>Името на файла съдържа недействителни символи</translation>
     </message>
     <message>
-        <source>Illegal characters have been changed to _ 
+        <source>Illegal characters have been changed to _
 so you can save the file on Windows.</source>
         <translation>Невалидните знаци бяха преобразувани в _
 за да запазите файла в Уиндоус.</translation>
@@ -719,19 +719,19 @@ so you can save the file on Windows.</source>
     <name>ChatWidget</name>
     <message>
         <source>pending</source>
-        <translation type="unfinished">в очакване</translation>
+        <translation>в очакване</translation>
     </message>
     <message>
         <source>%1 is typing</source>
-        <translation type="unfinished">%1 въвежда</translation>
+        <translation>%1 въвежда</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Копиране</translation>
+        <translation>Копиране</translation>
     </message>
     <message>
         <source>Select all</source>
-        <translation type="unfinished">Избери всички</translation>
+        <translation>Избор на всички</translation>
     </message>
 </context>
 <context>
@@ -885,14 +885,14 @@ so you can save the file on Windows.</source>
     <message>
         <source>Remote paused</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
+        <translation>На пауза от отсрещната страна</translation>
     </message>
 </context>
 <context>
     <name>FilesForm</name>
     <message>
         <source>Downloads</source>
-        <translation>Сваляния</translation>
+        <translation>Изтеглени</translation>
     </message>
     <message>
         <source>Uploads</source>
@@ -1109,7 +1109,7 @@ so you can save the file on Windows.</source>
     </message>
     <message>
         <source>Start qTox on operating system startup (current profile).</source>
-        <translation>Зарежда qTox при стартиране на операционната система (текущ профил)</translation>
+        <translation>Зарежда qTox при стартиране на операционната система (текущия профил)</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
@@ -1152,7 +1152,7 @@ instead of closing entirely.</source>
     </message>
     <message>
         <source>Add a chat message when a user joins or leaves a group</source>
-        <translation type="unfinished"></translation>
+        <translation>Съобщение в чата, когато потребител се присъедини или напусне група</translation>
     </message>
 </context>
 <context>
@@ -1354,12 +1354,12 @@ Profile does not contain your history.</source>
     <message>
         <source>Rename profile.</source>
         <comment>tooltip for renaming profile button</comment>
-        <translation>Преименуване на профила</translation>
+        <translation>Преименува профила.</translation>
     </message>
     <message>
         <source>Delete profile.</source>
         <comment>delete profile button tooltip</comment>
-        <translation>Изтриване на профил</translation>
+        <translation>Изтрива профила.</translation>
     </message>
     <message>
         <source>Go back to the login screen</source>
@@ -1382,7 +1382,7 @@ Profile does not contain your history.</source>
     <message>
         <source>Remove your password and encryption from your profile.</source>
         <comment>Tooltip for the `Remove password` button.</comment>
-        <translation>Премахва паролата и криптиране от профила</translation>
+        <translation>Премахва паролата и криптиране от профила.</translation>
     </message>
     <message>
         <source>Name input</source>
@@ -1460,7 +1460,7 @@ Share it with your friends to begin chatting.</source>
     </message>
     <message>
         <source>Load history from:</source>
-        <translation type="unfinished"></translation>
+        <translation>Зареждане на историята от:</translation>
     </message>
 </context>
 <context>
@@ -1816,7 +1816,7 @@ Please make sure to enter the same password twice.</source>
     </message>
     <message>
         <source>Incoming file transfer</source>
-        <translation type="unfinished">Входящ трансфер на файлове</translation>
+        <translation>Получаване на входящ файл</translation>
     </message>
     <message>
         <source>%1 - file transfer</source>
@@ -2379,127 +2379,139 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>negotitating</source>
         <comment>contact status</comment>
-        <translation type="unfinished">преговори</translation>
+        <translation>преговори</translation>
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation type="unfinished">Неуспешно изпратен файл &quot;%1&quot;</translation>
+        <translation>Неуспешно изпратен файл „%1“</translation>
     </message>
     <message>
         <source>%1 has joined the group</source>
-        <translation type="unfinished">%1 се присъедини към групата</translation>
+        <translation>%1 се присъедини към групата</translation>
     </message>
     <message>
         <source>%1 has left the group</source>
-        <translation type="unfinished">%1 напусна групата</translation>
+        <translation>%1 напусна групата</translation>
     </message>
     <message>
         <source>%1 is now known as %2</source>
-        <translation type="unfinished">%1 се преименува като %2</translation>
+        <translation>%1 се преименува на %2</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
-        <translation type="unfinished">%1 промени заглавието на %2</translation>
+        <translation>%1 промени заглавието на %2</translation>
     </message>
     <message>
         <source>Cleared</source>
-        <translation type="unfinished">Почистено</translation>
+        <translation>Почистено</translation>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
-        <translation type="unfinished">Връзката с %1 завърши неочаквано. %2</translation>
+        <translation>Разговорът с %1 приключи неочаквано. %2</translation>
     </message>
     <message>
         <source>Call with %1 ended. %2</source>
-        <translation type="unfinished">Разговор с %1 приключи. %2</translation>
+        <translation>Разговорът с %1 приключи. %2</translation>
     </message>
     <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation type="unfinished">%1 вече е %2</translation>
+        <translation>%1 вече е %2</translation>
     </message>
     <message>
         <source>Calling %1</source>
-        <translation type="unfinished">Позвъняване на %1</translation>
+        <translation>Позвъняване на %1</translation>
     </message>
     <message>
         <source>%1 calling</source>
-        <translation type="unfinished">%1 звъни</translation>
+        <translation>Позвъняване от %1</translation>
     </message>
     <message>
         <source>Message failed to send</source>
-        <translation type="unfinished">Съобщението не успя да се изпрати</translation>
+        <translation>Съобщението не е изпратено</translation>
     </message>
     <message>
         <source>Initializing</source>
-        <translation type="unfinished"></translation>
+        <translation>Подготовка</translation>
     </message>
     <message>
         <source>Transmitting</source>
-        <translation type="unfinished"></translation>
+        <translation>Предаване</translation>
     </message>
     <message>
         <source>Finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Завършено</translation>
     </message>
     <message>
         <source>Broken</source>
-        <translation type="unfinished"></translation>
+        <translation>Прекъснато</translation>
     </message>
     <message>
         <source>Canceled</source>
-        <translation type="unfinished"></translation>
+        <translation>Отменено</translation>
     </message>
     <message>
         <source>Paused</source>
-        <translation type="unfinished">Паузирано</translation>
+        <translation>На пауза</translation>
     </message>
     <message>
         <source>Remote paused</source>
-        <translation type="unfinished"></translation>
+        <translation>На пауза от отсрещната страна</translation>
     </message>
     <message>
         <source>File Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Име на файл</translation>
     </message>
     <message>
         <source>Contact</source>
-        <translation type="unfinished"></translation>
+        <translation>Контакт</translation>
     </message>
     <message>
         <source>Progress</source>
-        <translation type="unfinished"></translation>
+        <translation>Напредък</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Големина</translation>
     </message>
     <message>
         <source>Speed</source>
-        <translation type="unfinished"></translation>
+        <translation>Скорост</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished">Статус</translation>
+        <translation>Състояние</translation>
     </message>
     <message>
         <source>Control</source>
-        <translation type="unfinished"></translation>
+        <translation>Управление</translation>
     </message>
     <message>
         <source>You have joined the group</source>
-        <translation type="unfinished"></translation>
+        <translation>Присъединихте се към групата</translation>
     </message>
     <message>
         <source>You have left the group</source>
-        <translation type="unfinished"></translation>
+        <translation>Напуснахте групата</translation>
     </message>
 </context>
 <context>
     <name>RemoveChatDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation type="unfinished">Премахване на контакт</translation>
+        <translation>Премахване на контакт</translation>
+    </message>
+    <message>
+        <source>Also remove chat history</source>
+        <translation>Също да се премахне хронологията на разговора</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Премахване</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove %1 from your contacts list?</source>
+        <translation>Сигурни ли сте, че искате да премахнете %1 от вашия лист с контакти?</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
@@ -2601,11 +2613,11 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Select Date Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Диалог за избор на дата</translation>
     </message>
     <message>
         <source>Select a date</source>
-        <translation type="unfinished">Избери дата</translation>
+        <translation>Изберете дата</translation>
     </message>
 </context>
 <context>
@@ -2659,11 +2671,11 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Failed to load personal settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Грешка при зареждане на личните настройки</translation>
     </message>
     <message>
         <source>Unable to upgrade settings from version %1 to version %2. Cannot start qTox.</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновяването на настройките от издание %1 до издание %2 е невъзможно. qTox не може да бъде стартиран.</translation>
     </message>
     <message>
         <source>Failed to load global settings</source>
@@ -3052,7 +3064,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Add contact...</source>
-        <translation>Добави контакт…</translation>
+        <translation>Добавяне на контакт…</translation>
     </message>
     <message>
         <source>Next conversation</source>
