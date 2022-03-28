@@ -435,7 +435,7 @@ which may lead to problems with video calls.</source>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
         <translation>
-            <numerusform>已经准备好导入 %n 个联系人，单击“发送”以确认</numerusform>
+            <numerusform>准备好导入 %n 位联系人，单击“发送”以确认</numerusform>
         </translation>
     </message>
     <message>
@@ -717,19 +717,19 @@ so you can save the file on Windows.</source>
     <name>ChatWidget</name>
     <message>
         <source>pending</source>
-        <translation type="unfinished">等待</translation>
+        <translation>待处理</translation>
     </message>
     <message>
         <source>%1 is typing</source>
-        <translation type="unfinished">%1 正在输入</translation>
+        <translation>%1 正在输入</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">复制</translation>
+        <translation>复制</translation>
     </message>
     <message>
         <source>Select all</source>
-        <translation type="unfinished">全选</translation>
+        <translation>全选</translation>
     </message>
 </context>
 <context>
@@ -1150,7 +1150,7 @@ instead of closing entirely.</source>
     </message>
     <message>
         <source>Add a chat message when a user joins or leaves a group</source>
-        <translation type="unfinished"></translation>
+        <translation>当用户加入或离开一个群组时，添加一则聊天消息</translation>
     </message>
 </context>
 <context>
@@ -1456,7 +1456,7 @@ Share it with your friends to begin chatting.</source>
     </message>
     <message>
         <source>Load history from:</source>
-        <translation type="unfinished"></translation>
+        <translation>从以下位置加载历史记录：</translation>
     </message>
 </context>
 <context>
@@ -1712,12 +1712,12 @@ Please make sure to enter the same password twice.</source>
     <message>
         <source>Executable file</source>
         <comment>popup title</comment>
-        <translation type="unfinished">可执行文件</translation>
+        <translation>可执行文件</translation>
     </message>
     <message>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
-        <translation type="unfinished">您正在使用 qTox 打开一个可执行文件。可执行文件可能会破坏您的计算机。确定要打开此文件吗？</translation>
+        <translation>你请求 qTox 打开一个可执行文件。可执行文件可能会破坏您的计算机。确定要打开此文件吗？</translation>
     </message>
 </context>
 <context>
@@ -2378,116 +2378,116 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation type="unfinished">文件“%1”发送失败</translation>
+        <translation>文件 “%1” 发送失败</translation>
     </message>
     <message>
         <source>%1 has joined the group</source>
-        <translation type="unfinished">%1 加入了群组</translation>
+        <translation>%1 加入了群组</translation>
     </message>
     <message>
         <source>%1 has left the group</source>
-        <translation type="unfinished">%1 离开了群</translation>
+        <translation>%1 离开了群</translation>
     </message>
     <message>
         <source>%1 is now known as %2</source>
-        <translation type="unfinished">%1 更名为 %2</translation>
+        <translation>%1 现在叫 %2</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
-        <translation type="unfinished">%1 已将标题设置为 %2</translation>
+        <translation>%1 已将标题设置为 %2</translation>
     </message>
     <message>
         <source>Cleared</source>
-        <translation type="unfinished">已清除</translation>
+        <translation>已清除</translation>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
-        <translation type="unfinished">与 %1 的通话意外中断。%2</translation>
+        <translation>与 %1 的通话意外中断。%2</translation>
     </message>
     <message>
         <source>Call with %1 ended. %2</source>
-        <translation type="unfinished">与 %1 的通话结束. %2</translation>
+        <translation>与 %1 的通话结束. %2</translation>
     </message>
     <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation type="unfinished">%1 现在 %2</translation>
+        <translation>%1 现在是 %2</translation>
     </message>
     <message>
         <source>Calling %1</source>
-        <translation type="unfinished">正在呼叫 %1</translation>
+        <translation>正在呼叫 %1</translation>
     </message>
     <message>
         <source>%1 calling</source>
-        <translation type="unfinished">%1 呼叫</translation>
+        <translation>%1 呼叫中</translation>
     </message>
     <message>
         <source>Message failed to send</source>
-        <translation type="unfinished">消息发送失败</translation>
+        <translation>消息发送失败</translation>
     </message>
     <message>
         <source>Initializing</source>
-        <translation type="unfinished"></translation>
+        <translation>初始化中</translation>
     </message>
     <message>
         <source>Transmitting</source>
-        <translation type="unfinished"></translation>
+        <translation>传输中</translation>
     </message>
     <message>
         <source>Finished</source>
-        <translation type="unfinished"></translation>
+        <translation>已完成</translation>
     </message>
     <message>
         <source>Broken</source>
-        <translation type="unfinished"></translation>
+        <translation>损坏</translation>
     </message>
     <message>
         <source>Canceled</source>
-        <translation type="unfinished"></translation>
+        <translation>已取消</translation>
     </message>
     <message>
         <source>Paused</source>
-        <translation type="unfinished">已暂停</translation>
+        <translation>已暂停</translation>
     </message>
     <message>
         <source>Remote paused</source>
-        <translation type="unfinished">远程暂停</translation>
+        <translation>远程暂停</translation>
     </message>
     <message>
         <source>File Name</source>
-        <translation type="unfinished"></translation>
+        <translation>文件名</translation>
     </message>
     <message>
         <source>Contact</source>
-        <translation type="unfinished"></translation>
+        <translation>联系人</translation>
     </message>
     <message>
         <source>Progress</source>
-        <translation type="unfinished"></translation>
+        <translation>进度</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>大小</translation>
     </message>
     <message>
         <source>Speed</source>
-        <translation type="unfinished"></translation>
+        <translation>速度</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished">状态</translation>
+        <translation>状态</translation>
     </message>
     <message>
         <source>Control</source>
-        <translation type="unfinished"></translation>
+        <translation>控制</translation>
     </message>
     <message>
         <source>You have joined the group</source>
-        <translation type="unfinished"></translation>
+        <translation>你已加入该群</translation>
     </message>
     <message>
         <source>You have left the group</source>
-        <translation type="unfinished"></translation>
+        <translation>你已离开该群</translation>
     </message>
 </context>
 <context>
@@ -2596,11 +2596,11 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Select Date Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>选择日期对话框</translation>
     </message>
     <message>
         <source>Select a date</source>
-        <translation type="unfinished">选择日期</translation>
+        <translation>选择日期</translation>
     </message>
 </context>
 <context>
@@ -2654,15 +2654,15 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Failed to load personal settings</source>
-        <translation type="unfinished"></translation>
+        <translation>未能加载个人设置</translation>
     </message>
     <message>
         <source>Unable to upgrade settings from version %1 to version %2. Cannot start qTox.</source>
-        <translation type="unfinished"></translation>
+        <translation>无法将设置从版本 %1 升级到版本 %2。无法启动 qTox。</translation>
     </message>
     <message>
         <source>Failed to load global settings</source>
-        <translation type="unfinished"></translation>
+        <translation>加载全局设置失败</translation>
     </message>
 </context>
 <context>
@@ -3053,6 +3053,13 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Previous conversation</source>
         <translation>上一个对话</translation>
+    </message>
+</context>
+<context>
+    <name></name>
+    <message>
+        <source>Ready to import %n contact, click send to confirm</source>
+        <translation>准备好导入 %n 位联系人，点击“发送”以确认</translation>
     </message>
 </context>
 </TS>
