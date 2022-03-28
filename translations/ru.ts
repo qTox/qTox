@@ -721,19 +721,19 @@ so you can save the file on Windows.</source>
     <name>ChatWidget</name>
     <message>
         <source>pending</source>
-        <translation type="unfinished">в ожидании</translation>
+        <translation>в ожидании</translation>
     </message>
     <message>
         <source>%1 is typing</source>
-        <translation type="unfinished">%1 печатает</translation>
+        <translation>%1 печатает</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Копировать</translation>
+        <translation>Копировать</translation>
     </message>
     <message>
         <source>Select all</source>
-        <translation type="unfinished">Выбрать все</translation>
+        <translation>Выбрать все</translation>
     </message>
 </context>
 <context>
@@ -1155,7 +1155,7 @@ instead of closing entirely.</source>
     </message>
     <message>
         <source>Add a chat message when a user joins or leaves a group</source>
-        <translation type="unfinished"></translation>
+        <translation>Отправлять сообщение в чат, когда пользователь вступает в группу, или покидает её</translation>
     </message>
 </context>
 <context>
@@ -1465,7 +1465,7 @@ Share it with your friends to begin chatting.</source>
     </message>
     <message>
         <source>Load history from:</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузить историю из:</translation>
     </message>
 </context>
 <context>
@@ -1721,12 +1721,12 @@ Please make sure to enter the same password twice.</source>
     <message>
         <source>Executable file</source>
         <comment>popup title</comment>
-        <translation type="unfinished">Исполняемый файл</translation>
+        <translation>Исполняемый файл</translation>
     </message>
     <message>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
-        <translation type="unfinished">Вы просите qTox открыть исполняемый файл. Исполняемые файлы могут нанести вред вашему компьютеру. Вы уверены, что хотите открыть этот файл?</translation>
+        <translation>Вы просите qTox открыть исполняемый файл. Исполняемые файлы могут нанести вред вашему компьютеру. Вы уверены, что хотите открыть этот файл?</translation>
     </message>
 </context>
 <context>
@@ -2388,120 +2388,120 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>negotitating</source>
         <comment>contact status</comment>
-        <translation>переговоры</translation>
+        <translation>переговаривается</translation>
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation type="unfinished">Не удалось отправить файл &quot;%1&quot;</translation>
+        <translation>Не удалось отправить файл &quot;%1&quot;</translation>
     </message>
     <message>
         <source>%1 has joined the group</source>
-        <translation type="unfinished">%1 присоединился к группе</translation>
+        <translation>%1 присоединился к группе</translation>
     </message>
     <message>
         <source>%1 has left the group</source>
-        <translation type="unfinished">%1 покинул группу</translation>
+        <translation>%1 покинул группу</translation>
     </message>
     <message>
         <source>%1 is now known as %2</source>
-        <translation type="unfinished">%1 в настоящее время известен как %2</translation>
+        <translation>%1 теперь известен как %2</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
-        <translation type="unfinished">%1 сменил заголовок на %2</translation>
+        <translation>%1 сменил заголовок на %2</translation>
     </message>
     <message>
         <source>Cleared</source>
-        <translation type="unfinished">Очищено</translation>
+        <translation>Очищено</translation>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
-        <translation type="unfinished">Разговор с %1 неожиданно прервался. %2</translation>
+        <translation>Разговор с %1 неожиданно прервался. %2</translation>
     </message>
     <message>
         <source>Call with %1 ended. %2</source>
-        <translation type="unfinished">Разговор с %1 завершился. %2</translation>
+        <translation>Разговор с %1 завершился. %2</translation>
     </message>
     <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation type="unfinished">%1 сейчас %2</translation>
+        <translation>%1 теперь %2</translation>
     </message>
     <message>
         <source>Calling %1</source>
-        <translation type="unfinished">Вызов %1</translation>
+        <translation>Вызов %1</translation>
     </message>
     <message>
         <source>%1 calling</source>
-        <translation type="unfinished">Входящий звонок от %1</translation>
+        <translation>Входящий звонок от %1</translation>
     </message>
     <message>
         <source>Message failed to send</source>
-        <translation type="unfinished">Не удалось отправить сообщение</translation>
+        <translation>Не удалось отправить сообщение</translation>
     </message>
     <message>
         <source>Initializing</source>
-        <translation type="unfinished"></translation>
+        <translation>Подготовка</translation>
     </message>
     <message>
         <source>Transmitting</source>
-        <translation type="unfinished"></translation>
+        <translation>Передача</translation>
     </message>
     <message>
         <source>Finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Завершено</translation>
     </message>
     <message>
         <source>Broken</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось</translation>
     </message>
     <message>
         <source>Canceled</source>
-        <translation type="unfinished"></translation>
+        <translation>Отменено</translation>
     </message>
     <message>
         <source>Paused</source>
-        <translation type="unfinished">Пауза</translation>
+        <translation>Приостановлено</translation>
     </message>
     <message>
         <source>Remote paused</source>
-        <translation type="unfinished">Приостановлено дистанционно</translation>
+        <translation>Приостановлено дистанционно</translation>
     </message>
     <message>
         <source>File Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Имя файла</translation>
     </message>
     <message>
         <source>Contact</source>
-        <translation type="unfinished"></translation>
+        <translation>Контакт</translation>
     </message>
     <message>
         <source>Progress</source>
-        <translation type="unfinished"></translation>
+        <translation>Прогресс</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер</translation>
     </message>
     <message>
         <source>Speed</source>
-        <translation type="unfinished"></translation>
+        <translation>Скорость</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished">Статус</translation>
+        <translation>Статус</translation>
     </message>
     <message>
         <source>Control</source>
-        <translation type="unfinished"></translation>
+        <translation>Управление</translation>
     </message>
     <message>
         <source>You have joined the group</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы вступили в группу</translation>
     </message>
     <message>
         <source>You have left the group</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы покинули группу</translation>
     </message>
 </context>
 <context>
@@ -2610,11 +2610,11 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Select Date Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Окно выбора даты</translation>
     </message>
     <message>
         <source>Select a date</source>
-        <translation type="unfinished">Выберите дату</translation>
+        <translation>Выберите дату</translation>
     </message>
 </context>
 <context>
@@ -2668,15 +2668,15 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Failed to load personal settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось загрузить персональные настройки</translation>
     </message>
     <message>
         <source>Unable to upgrade settings from version %1 to version %2. Cannot start qTox.</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно обновить настройки с версии %1 на версию %2. Запуск qTox невозможен.</translation>
     </message>
     <message>
         <source>Failed to load global settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно загрузить глобальные настройки</translation>
     </message>
 </context>
 <context>
