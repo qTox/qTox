@@ -158,6 +158,7 @@ public:
     void createPersonal(const QString& basename) const;
 
     void savePersonal();
+    void savePersonal(Profile* profile);
 
     void loadGlobal();
     void loadPersonal(QString profileName, const ToxEncrypt* passKey, bool newProfile);
@@ -573,15 +574,14 @@ public:
 
 private:
     struct friendProp;
-    void savePersonal(QString profileName, const ToxEncrypt* passkey);
     friendProp& getOrInsertFriendPropRef(const ToxPk& id);
     static ICoreSettings::ProxyType fixInvalidProxyType(ICoreSettings::ProxyType proxyType);
 
     template <typename T>
     bool setVal(T& savedVal, T newVal);
 
-public slots:
-    void savePersonal(Profile* profile);
+private slots:
+    void savePersonal(QString profileName, const ToxEncrypt* passkey);
 
 private:
     bool loaded;

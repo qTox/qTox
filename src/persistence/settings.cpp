@@ -75,6 +75,7 @@ Settings::Settings(IMessageBoxManager& messageBoxManager_)
     settingsThread = new QThread();
     settingsThread->setObjectName("qTox Settings");
     settingsThread->start(QThread::LowPriority);
+    qRegisterMetaType<const ToxEncrypt*>("const ToxEncrypt*");
     moveToThread(settingsThread);
     loadGlobal();
 }
@@ -762,10 +763,9 @@ void Settings::savePersonal(Profile* profile)
         qDebug() << "Could not save personal settings because there is no active profile";
         return;
     }
-    if (QThread::currentThread() != settingsThread)
-        return (void)QMetaObject::invokeMethod(this, "savePersonal",
-                                               Q_ARG(Profile*, profile));
-    savePersonal(profile->getName(), profile->getPasskey());
+    QMetaObject::invokeMethod(this, "savePersonal",
+                              Q_ARG(QString, profile->getName()),
+                              Q_ARG(const ToxEncrypt*, profile->getPasskey()));
 }
 
 void Settings::savePersonal(QString profileName, const ToxEncrypt* passkey)
