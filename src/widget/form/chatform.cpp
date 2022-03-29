@@ -110,9 +110,9 @@ ChatForm::ChatForm(Profile& profile, Friend* chatFriend, IChatLog& chatLog_,
     IMessageDispatcher& messageDispatcher_, DocumentCache& documentCache_,
     SmileyPack& smileyPack_, CameraSource& cameraSource_, Settings& settings_,
     Style& style_, IMessageBoxManager& messageBoxManager,
-    ContentDialogManager& contentDialogManager_)
+    ContentDialogManager& contentDialogManager_, FriendList& friendList_)
     : GenericChatForm(profile.getCore(), chatFriend, chatLog_, messageDispatcher_,
-        documentCache_, smileyPack_, settings_, style_, messageBoxManager)
+        documentCache_, smileyPack_, settings_, style_, messageBoxManager, friendList_)
     , core{profile.getCore()}
     , f(chatFriend)
     , isTyping{false}

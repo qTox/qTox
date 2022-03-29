@@ -27,13 +27,15 @@
 #include <QSet>
 
 class Settings;
+class FriendList;
 
 class ChatHistory : public IChatLog
 {
     Q_OBJECT
 public:
     ChatHistory(Friend& f_, History* history_, const ICoreIdHandler& coreIdHandler_,
-                const Settings& settings_, IMessageDispatcher& messageDispatcher);
+                const Settings& settings_, IMessageDispatcher& messageDispatcher,
+                FriendList& friendList);
     const ChatLogItem& at(ChatLogIdx idx) const override;
     SearchResult searchForward(SearchPos startIdx, const QString& phrase,
                                const ParameterSearch& parameter) const override;

@@ -28,7 +28,7 @@ class TestFileTransferList : public QObject
 {
     Q_OBJECT
 private slots:
-
+    void init();
     void testFileTransferListConversion();
     void testEditorActionConversion();
 
@@ -44,14 +44,22 @@ private slots:
     void testAvatarIgnored();
     void testMultipleFiles();
     void testFileRemoval();
+private:
+    std::unique_ptr<FileTransferList::Model> model;
+    std::unique_ptr<FriendList> friendList;
 };
 
 using namespace FileTransferList;
 
+void TestFileTransferList::init()
+{
+    friendList = std::unique_ptr<FriendList>(new FriendList());
+    model = std::unique_ptr<Model>(new Model(*friendList));
+}
+
 void TestFileTransferList::testFileTransferListConversion()
 {
-    Model model;
-    for (int i = 0; i < model.columnCount(); ++i) {
+    for (int i = 0; i < model->columnCount(); ++i) {
         QVERIFY(toFileTransferListColumn(i) != Column::invalid);
     }
     QCOMPARE(toFileTransferListColumn(100), Column::invalid);
@@ -66,14 +74,12 @@ void TestFileTransferList::testEditorActionConversion()
 
 void TestFileTransferList::testFileName()
 {
-    Model model;
-
     ToxFile file;
     file.fileKind = TOX_FILE_KIND_DATA;
     file.fileName = "Test";
-    model.onFileUpdated(file);
+    model->onFileUpdated(file);
 
-    const auto idx = model.index(0, static_cast<int>(Column::fileName));
+    const auto idx = model->index(0, static_cast<int>(Column::fileName));
     const auto fileName = idx.data();
 
     QCOMPARE(fileName.toString(), QString("Test"));
@@ -81,13 +87,11 @@ void TestFileTransferList::testFileName()
 
 void TestFileTransferList::testProgress()
 {
-    Model model;
-
     ToxFile file(0, 0, "", "", 1000, ToxFile::FileDirection::SENDING);
     file.progress.addSample(100, QTime(1, 0, 0));
-    model.onFileUpdated(file);
+    model->onFileUpdated(file);
 
-    const auto idx = model.index(0, static_cast<int>(Column::progress));
+    const auto idx = model->index(0, static_cast<int>(Column::progress));
     const auto progress = idx.data();
 
     // Progress should be in percent units, 100/1000 == 10
@@ -96,12 +100,10 @@ void TestFileTransferList::testProgress()
 
 void TestFileTransferList::testSize()
 {
-    Model model;
-
     ToxFile file(0, 0, "", "", 1000, ToxFile::FileDirection::SENDING);
-    model.onFileUpdated(file);
+    model->onFileUpdated(file);
 
-    const auto idx = model.index(0, static_cast<int>(Column::size));
+    const auto idx = model->index(0, static_cast<int>(Column::size));
     auto size = idx.data();
 
     // Size should be a human readable string
@@ -109,21 +111,19 @@ void TestFileTransferList::testSize()
 
     // 1GB + a little to avoid floating point inaccuracy
     file = ToxFile(0, 0, "", "", 1024 * 1024 * 1024 + 2, ToxFile::FileDirection::SENDING);
-    model.onFileUpdated(file);
+    model->onFileUpdated(file);
     size = idx.data();
     QCOMPARE(size.toString(), QString("1.00GiB"));
 }
 
 void TestFileTransferList::testSpeed()
 {
-    Model model;
-
     ToxFile file(0, 0, "", "", 1024 * 1024, ToxFile::FileDirection::SENDING);
     file.progress.addSample(100 * 1024, QTime(1, 0, 0));
     file.progress.addSample(200 * 1024, QTime(1, 0, 1));
-    model.onFileUpdated(file);
+    model->onFileUpdated(file);
 
-    const auto idx = model.index(0, static_cast<int>(Column::speed));
+    const auto idx = model->index(0, static_cast<int>(Column::speed));
     const auto speed = idx.data();
 
     // Speed should be a human readable string
@@ -132,20 +132,18 @@ void TestFileTransferList::testSpeed()
 
 void TestFileTransferList::testStatus()
 {
-    Model model;
-
     ToxFile file(0, 0, "", "", 1024 * 1024, ToxFile::FileDirection::SENDING);
     file.status = ToxFile::TRANSMITTING;
-    model.onFileUpdated(file);
+    model->onFileUpdated(file);
 
-    const auto idx = model.index(0, static_cast<int>(Column::status));
+    const auto idx = model->index(0, static_cast<int>(Column::status));
     auto status = idx.data();
 
     QCOMPARE(status.toString(), QString("Transmitting"));
 
     file.status = ToxFile::PAUSED;
     file.pauseStatus.remotePause();
-    model.onFileUpdated(file);
+    model->onFileUpdated(file);
     status = idx.data();
 
     QCOMPARE(status.toString(), QString("Remote paused"));
@@ -153,7 +151,7 @@ void TestFileTransferList::testStatus()
     file.status = ToxFile::PAUSED;
     file.pauseStatus.localPause();
     file.pauseStatus.remoteResume();
-    model.onFileUpdated(file);
+    model->onFileUpdated(file);
     status = idx.data();
 
     QCOMPARE(status.toString(), QString("Paused"));
@@ -161,87 +159,82 @@ void TestFileTransferList::testStatus()
 
 void TestFileTransferList::testControl()
 {
-    Model model;
     bool cancelCalled = false;
     bool pauseCalled = false;
 
-    QObject::connect(&model, &Model::cancel, [&] (ToxFile file) {
+    QObject::connect(model.get(), &Model::cancel, [&] (ToxFile file) {
         std::ignore = file;
         cancelCalled = true;
     });
 
-    QObject::connect(&model, &Model::togglePause, [&] (ToxFile file) {
+    QObject::connect(model.get(), &Model::togglePause, [&] (ToxFile file) {
         std::ignore = file;
         pauseCalled = true;
     });
 
     ToxFile file(0, 0, "", "", 1024 * 1024, ToxFile::FileDirection::SENDING);
     file.status = ToxFile::TRANSMITTING;
-    model.onFileUpdated(file);
+    model->onFileUpdated(file);
 
-    const auto idx = model.index(0, static_cast<int>(Column::control));
-    model.setData(idx, static_cast<int>(EditorAction::pause));
+    const auto idx = model->index(0, static_cast<int>(Column::control));
+    model->setData(idx, static_cast<int>(EditorAction::pause));
 
     QVERIFY(pauseCalled);
     QVERIFY(!cancelCalled);
 
     pauseCalled = false;
-    model.setData(idx, static_cast<int>(EditorAction::cancel));
+    model->setData(idx, static_cast<int>(EditorAction::cancel));
     QVERIFY(!pauseCalled);
     QVERIFY(cancelCalled);
 
     file.status = ToxFile::TRANSMITTING;
-    model.onFileUpdated(file);
+    model->onFileUpdated(file);
     // True if paused
     QCOMPARE(idx.data().toBool(), false);
 
     file.status = ToxFile::PAUSED;
     file.pauseStatus.localPause();
-    model.onFileUpdated(file);
+    model->onFileUpdated(file);
     // True if _local_ paused
     QCOMPARE(idx.data().toBool(), true);
 }
 
 void TestFileTransferList::testAvatarIgnored()
 {
-    Model model;
-
     ToxFile file;
     file.fileKind = TOX_FILE_KIND_AVATAR;
-    model.onFileUpdated(file);
+    model->onFileUpdated(file);
 
-    QCOMPARE(model.rowCount(), 0);
+    QCOMPARE(model->rowCount(), 0);
 }
 
 void TestFileTransferList::testMultipleFiles()
 {
-    Model model;
-
     ToxFile file;
     file.resumeFileId = QByteArray();
     file.fileKind = TOX_FILE_KIND_DATA;
     file.status = ToxFile::TRANSMITTING;
     file.fileName = "a";
-    model.onFileUpdated(file);
+    model->onFileUpdated(file);
 
     // File map keys off resume file ID
     file.resumeFileId = QByteArray("asdfasdf");
     file.fileName = "b";
-    model.onFileUpdated(file);
+    model->onFileUpdated(file);
 
-    QCOMPARE(model.rowCount(), 2);
+    QCOMPARE(model->rowCount(), 2);
 
-    auto idx = model.index(0, static_cast<int>(Column::fileName));
+    auto idx = model->index(0, static_cast<int>(Column::fileName));
     QCOMPARE(idx.data().toString(), QString("a"));
 
-    idx = model.index(1, static_cast<int>(Column::fileName));
+    idx = model->index(1, static_cast<int>(Column::fileName));
     QCOMPARE(idx.data().toString(), QString("b"));
 
     // File name should be updated instead of inserting a new file since the
     // resume file ID is the same
     file.fileName = "c";
-    model.onFileUpdated(file);
-    QCOMPARE(model.rowCount(), 2);
+    model->onFileUpdated(file);
+    QCOMPARE(model->rowCount(), 2);
     QCOMPARE(idx.data().toString(), QString("c"));
 }
 
@@ -250,34 +243,32 @@ void TestFileTransferList::testFileRemoval()
     // Model should keep files in the list if they are finished, but not if they
     // were broken or canceled
 
-    Model model;
-
     ToxFile file;
     file.fileKind = TOX_FILE_KIND_DATA;
     file.status = ToxFile::TRANSMITTING;
-    model.onFileUpdated(file);
+    model->onFileUpdated(file);
 
-    QCOMPARE(model.rowCount(), 1);
+    QCOMPARE(model->rowCount(), 1);
 
     file.status = ToxFile::BROKEN;
-    model.onFileUpdated(file);
-    QCOMPARE(model.rowCount(), 0);
+    model->onFileUpdated(file);
+    QCOMPARE(model->rowCount(), 0);
 
     file.status = ToxFile::TRANSMITTING;
-    model.onFileUpdated(file);
-    QCOMPARE(model.rowCount(), 1);
+    model->onFileUpdated(file);
+    QCOMPARE(model->rowCount(), 1);
 
     file.status = ToxFile::CANCELED;
-    model.onFileUpdated(file);
-    QCOMPARE(model.rowCount(), 0);
+    model->onFileUpdated(file);
+    QCOMPARE(model->rowCount(), 0);
 
     file.status = ToxFile::TRANSMITTING;
-    model.onFileUpdated(file);
-    QCOMPARE(model.rowCount(), 1);
+    model->onFileUpdated(file);
+    QCOMPARE(model->rowCount(), 1);
 
     file.status = ToxFile::FINISHED;
-    model.onFileUpdated(file);
-    QCOMPARE(model.rowCount(), 1);
+    model->onFileUpdated(file);
+    QCOMPARE(model->rowCount(), 1);
 }
 
 QTEST_GUILESS_MAIN(TestFileTransferList)

@@ -26,9 +26,6 @@
 #include <QHash>
 #include <QMenu>
 
-QHash<ToxPk, Friend*> FriendList::friendList;
-QHash<uint32_t, ToxPk> FriendList::id2key;
-
 Friend* FriendList::addFriend(uint32_t friendId, const ToxPk& friendPk, Settings& settings)
 {
     auto friendChecker = friendList.find(friendPk);

@@ -72,6 +72,7 @@ private slots:
 private:
     MockCoreIdHandler idHandler;
     std::unique_ptr<SessionChatLog> chatLog;
+    std::unique_ptr<FriendList> friendList;
 };
 
 /**
@@ -79,7 +80,8 @@ private:
  */
 void TestSessionChatLog::init()
 {
-    chatLog = std::unique_ptr<SessionChatLog>(new SessionChatLog(idHandler));
+    friendList = std::unique_ptr<FriendList>(new FriendList());
+    chatLog = std::unique_ptr<SessionChatLog>(new SessionChatLog(idHandler, *friendList));
 }
 
 /**

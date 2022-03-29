@@ -96,7 +96,7 @@ QString fontToCss(const QFont& font, const QString& name)
  */
 QString GenericChatForm::resolveToxPk(const ToxPk& pk)
 {
-    Friend* f = FriendList::findFriend(pk);
+    Friend* f = friendList.findFriend(pk);
     if (f) {
         return f->getDisplayedName();
     }
@@ -139,7 +139,8 @@ QPushButton* createButton(const QString& name, T* self, Fun onClickSlot,
 GenericChatForm::GenericChatForm(const Core& core_, const Chat* chat, IChatLog& chatLog_,
                                  IMessageDispatcher& messageDispatcher_, DocumentCache& documentCache,
                                  SmileyPack& smileyPack_, Settings& settings_, Style& style_,
-                                 IMessageBoxManager& messageBoxManager, QWidget* parent_)
+                                 IMessageBoxManager& messageBoxManager, FriendList& friendList_,
+                                 QWidget* parent_)
     : QWidget(parent_, Qt::Window)
     , core{core_}
     , audioInputFlag(false)
@@ -149,6 +150,7 @@ GenericChatForm::GenericChatForm(const Core& core_, const Chat* chat, IChatLog& 
     , smileyPack{smileyPack_}
     , settings{settings_}
     , style{style_}
+    , friendList{friendList_}
 {
     curRow = 0;
     headWidget = new ChatFormHeader(settings, style);

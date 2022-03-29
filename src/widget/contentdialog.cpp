@@ -54,7 +54,8 @@ const QSize defaultSize(720, 400);
 } // namespace
 
 ContentDialog::ContentDialog(const Core &core, Settings& settings_,
-    Style& style_, IMessageBoxManager& messageBoxManager_, QWidget* parent)
+    Style& style_, IMessageBoxManager& messageBoxManager_, FriendList& friendList_,
+    QWidget* parent)
     : ActivateDialog(style_, parent, Qt::Window)
     , splitter{new QSplitter(this)}
     , friendLayout{new FriendListLayout(this)}
@@ -64,6 +65,7 @@ ContentDialog::ContentDialog(const Core &core, Settings& settings_,
     , settings{settings_}
     , style{style_}
     , messageBoxManager{messageBoxManager_}
+    , friendList{friendList_}
 {
     friendLayout->setMargin(0);
     friendLayout->setSpacing(0);
@@ -481,7 +483,7 @@ void ContentDialog::dragEnterEvent(QDragEnterEvent* event)
     if (frnd) {
         assert(event->mimeData()->hasFormat("toxPk"));
         ToxPk toxPk{event->mimeData()->data("toxPk")};
-        Friend* contact = FriendList::findFriend(toxPk);
+        Friend* contact = friendList.findFriend(toxPk);
         if (!contact) {
             return;
         }
@@ -514,7 +516,7 @@ void ContentDialog::dropEvent(QDropEvent* event)
     if (frnd) {
         assert(event->mimeData()->hasFormat("toxPk"));
         const ToxPk toxId(event->mimeData()->data("toxPk"));
-        Friend* contact = FriendList::findFriend(toxId);
+        Friend* contact = friendList.findFriend(toxId);
         if (!contact) {
             return;
         }
@@ -647,7 +649,7 @@ void ContentDialog::setStatusMessage(const ToxPk& friendPk, const QString& messa
 void ContentDialog::updateFriendWidget(const ToxPk& friendPk, QString alias)
 {
     std::ignore = alias;
-    Friend* f = FriendList::findFriend(friendPk);
+    Friend* f = friendList.findFriend(friendPk);
     FriendWidget* friendWidget = qobject_cast<FriendWidget*>(chatWidgets[friendPk]);
 
     Status::Status status = f->getStatus();

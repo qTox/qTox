@@ -26,14 +26,14 @@
 QHash<const GroupId, Group*> GroupList::groupList;
 QHash<uint32_t, GroupId> GroupList::id2key;
 Group* GroupList::addGroup(Core& core, int groupNum, const GroupId& groupId, const QString& name, bool isAvGroupchat,
-                           const QString& selfName)
+                           const QString& selfName, FriendList& friendList)
 {
     auto checker = groupList.find(groupId);
     if (checker != groupList.end()) {
         qWarning() << "addGroup: groupId already taken";
     }
 
-    Group* newGroup = new Group(groupNum, groupId, name, isAvGroupchat, selfName, core, core);
+    Group* newGroup = new Group(groupNum, groupId, name, isAvGroupchat, selfName, core, core, friendList);
     groupList[groupId] = newGroup;
     id2key[groupNum] = groupId;
     return newGroup;

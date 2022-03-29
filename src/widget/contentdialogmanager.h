@@ -34,6 +34,7 @@ class ContentDialogManager : public QObject, public IDialogsManager
 {
     Q_OBJECT
 public:
+    explicit ContentDialogManager(FriendList& friendList);
     ContentDialog* current();
     bool chatWidgetExists(const ChatId& chatId);
     void focusChat(const ChatId& chatId);
@@ -64,4 +65,5 @@ private:
     ContentDialog* currentDialog = nullptr;
 
     QHash<const ChatId&, ContentDialog*> chatDialogs;
+    FriendList& friendList;
 };

@@ -48,6 +48,7 @@ class Settings;
 class Style;
 class IMessageBoxManager;
 class ContentDialogManager;
+class FriendList;
 
 class ChatForm : public GenericChatForm
 {
@@ -56,7 +57,7 @@ public:
     ChatForm(Profile& profile, Friend* chatFriend, IChatLog& chatLog_,
         IMessageDispatcher& messageDispatcher_, DocumentCache& documentCache, SmileyPack& smileyPack,
         CameraSource& cameraSource, Settings& settings, Style& style, IMessageBoxManager& messageBoxManager,
-        ContentDialogManager& contentDialogManager);
+        ContentDialogManager& contentDialogManager, FriendList& friendList);
     ~ChatForm() override;
     void setStatusMessage(const QString& newMessage);
 

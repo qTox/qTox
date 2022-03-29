@@ -85,14 +85,16 @@ QString editName(const QString& name)
 
 GroupChatForm::GroupChatForm(Core& core_, Group* chatGroup, IChatLog& chatLog_,
     IMessageDispatcher& messageDispatcher_, Settings& settings_, DocumentCache& documentCache_,
-        SmileyPack& smileyPack_, Style& style_, IMessageBoxManager& messageBoxManager)
+        SmileyPack& smileyPack_, Style& style_, IMessageBoxManager& messageBoxManager,
+        FriendList& friendList_)
     : GenericChatForm(core_, chatGroup, chatLog_, messageDispatcher_,
-        documentCache_, smileyPack_, settings_, style_, messageBoxManager)
+        documentCache_, smileyPack_, settings_, style_, messageBoxManager, friendList_)
     , core{core_}
     , group(chatGroup)
     , inCall(false)
     , settings(settings_)
     , style{style_}
+    , friendList{friendList_}
 {
     nusersLabel = new QLabel();
 
@@ -298,7 +300,7 @@ void GroupChatForm::dragEnterEvent(QDragEnterEvent* ev)
         return;
     }
     ToxPk toxPk{ev->mimeData()->data("toxPk")};
-    Friend* frnd = FriendList::findFriend(toxPk);
+    Friend* frnd = friendList.findFriend(toxPk);
     if (frnd)
         ev->acceptProposedAction();
 }
@@ -309,7 +311,7 @@ void GroupChatForm::dropEvent(QDropEvent* ev)
         return;
     }
     ToxPk toxPk{ev->mimeData()->data("toxPk")};
-    Friend* frnd = FriendList::findFriend(toxPk);
+    Friend* frnd = friendList.findFriend(toxPk);
     if (!frnd)
         return;
 

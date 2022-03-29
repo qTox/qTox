@@ -41,6 +41,11 @@ void removeDialog(ContentDialog* dialog, QHash<const ChatId&, ContentDialog*>& d
 }
 } // namespace
 
+ContentDialogManager::ContentDialogManager(FriendList& friendList_)
+    : friendList{friendList_}
+{
+}
+
 ContentDialog* ContentDialogManager::current()
 {
     return currentDialog;
@@ -132,7 +137,7 @@ void ContentDialogManager::updateFriendStatus(const ToxPk& friendPk)
         dialog->updateTitleAndStatusIcon();
     }
 
-    Friend* f = FriendList::findFriend(friendPk);
+    Friend* f = friendList.findFriend(friendPk);
     dialog->updateFriendStatus(friendPk, f->getStatus());
 }
 

@@ -33,7 +33,8 @@ const int MAX_GROUP_TITLE_LENGTH = 128;
 } // namespace
 
 Group::Group(int groupId_, const GroupId persistentGroupId, const QString& name, bool isAvGroupchat,
-             const QString& selfName_, ICoreGroupQuery& groupQuery_, ICoreIdHandler& idHandler_)
+             const QString& selfName_, ICoreGroupQuery& groupQuery_, ICoreIdHandler& idHandler_,
+             FriendList& friendList_)
     : groupQuery(groupQuery_)
     , idHandler(idHandler_)
     , selfName{selfName_}
@@ -41,6 +42,7 @@ Group::Group(int groupId_, const GroupId persistentGroupId, const QString& name,
     , toxGroupNum(groupId_)
     , groupId{persistentGroupId}
     , avGroupchat{isAvGroupchat}
+    , friendList{friendList_}
 {
     // in groupchats, we only notify on messages containing your name <-- dumb
     // sound notifications should be on all messages, but system popup notification
@@ -99,7 +101,7 @@ void Group::regeneratePeerList()
         if (pk == idHandler.getSelfPublicKey()) {
             peerDisplayNames[pk] = idHandler.getUsername();
         } else {
-            peerDisplayNames[pk] = FriendList::decideNickname(pk, peers[i]);
+            peerDisplayNames[pk] = friendList.decideNickname(pk, peers[i]);
         }
     }
     for (const auto& pk : oldPeerNames.keys()) {
@@ -124,7 +126,7 @@ void Group::regeneratePeerList()
 
 void Group::updateUsername(ToxPk pk, const QString newName)
 {
-    const QString displayName = FriendList::decideNickname(pk, newName);
+    const QString displayName = friendList.decideNickname(pk, newName);
     assert(peerDisplayNames.contains(pk));
     if (peerDisplayNames[pk] != displayName) {
         // there could be no actual change even if their username changed due to an alias being set

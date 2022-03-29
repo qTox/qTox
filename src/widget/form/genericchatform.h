@@ -58,6 +58,7 @@ class SmileyPack;
 class Settings;
 class Style;
 class IMessageBoxManager;
+class FriendList;
 
 namespace Ui {
 class MainWindow;
@@ -76,7 +77,8 @@ public:
     GenericChatForm(const Core& core_, const Chat* chat, IChatLog& chatLog_,
                     IMessageDispatcher& messageDispatcher_, DocumentCache& documentCache,
                     SmileyPack& smileyPack, Settings& settings, Style& style,
-                    IMessageBoxManager& messageBoxmanager, QWidget* parent_ = nullptr);
+                    IMessageBoxManager& messageBoxmanager, FriendList& friendList,
+                    QWidget* parent_ = nullptr);
     ~GenericChatForm() override;
 
     void setName(const QString& newName);
@@ -84,7 +86,7 @@ public:
 
     void addSystemInfoMessage(const QDateTime& datetime, SystemMessageType messageType,
                               SystemMessage::Args messageArgs);
-    static QString resolveToxPk(const ToxPk& pk);
+    QString resolveToxPk(const ToxPk& pk);
     QDateTime getLatestTime() const;
 
 signals:
@@ -175,4 +177,5 @@ protected:
     SmileyPack& smileyPack;
     Settings& settings;
     Style& style;
+    FriendList& friendList;
 };

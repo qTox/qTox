@@ -107,9 +107,9 @@ firstItemAfterDate(QDate date, const std::map<ChatLogIdx, ChatLogItem>& items)
                             });
 }
 
-QString resolveToxPk(const ToxPk& pk)
+QString resolveToxPk(FriendList& friendList, const ToxPk& pk)
 {
-    Friend* f = FriendList::findFriend(pk);
+    Friend* f = friendList.findFriend(pk);
     if (f) {
         return f->getDisplayedName();
     }
@@ -125,16 +125,19 @@ QString resolveToxPk(const ToxPk& pk)
 }
 } // namespace
 
-SessionChatLog::SessionChatLog(const ICoreIdHandler& coreIdHandler_)
+SessionChatLog::SessionChatLog(const ICoreIdHandler& coreIdHandler_, FriendList& friendList_)
     : coreIdHandler(coreIdHandler_)
+    , friendList{friendList_}
 {}
 
 /**
  * @brief Alternate constructor that allows for an initial index to be set
  */
-SessionChatLog::SessionChatLog(ChatLogIdx initialIdx, const ICoreIdHandler& coreIdHandler_)
+SessionChatLog::SessionChatLog(ChatLogIdx initialIdx, const ICoreIdHandler& coreIdHandler_,
+    FriendList& friendList_)
     : coreIdHandler(coreIdHandler_)
     , nextIdx(initialIdx)
+    , friendList{friendList_}
 {}
 
 SessionChatLog::~SessionChatLog() = default;
@@ -144,7 +147,7 @@ QString SessionChatLog::resolveSenderNameFromSender(const ToxPk& sender)
     bool isSelf = sender == coreIdHandler.getSelfPublicKey();
     QString myNickName = coreIdHandler.getUsername().isEmpty() ? sender.toString() : coreIdHandler.getUsername();
 
-    return isSelf ? myNickName : resolveToxPk(sender);
+    return isSelf ? myNickName : resolveToxPk(friendList, sender);
 }
 
 const ChatLogItem& SessionChatLog::at(ChatLogIdx idx) const

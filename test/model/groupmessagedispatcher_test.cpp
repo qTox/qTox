@@ -23,6 +23,7 @@
 #include "src/model/message.h"
 #include "src/persistence/settings.h"
 #include "src/persistence/igroupsettings.h"
+#include "src/friendlist.h"
 #include "util/interface.h"
 
 #include "mock/mockcoreidhandler.h"
@@ -136,6 +137,7 @@ private:
     std::set<DispatchedMessageId> outgoingMessages;
     std::deque<Message> sentMessages;
     std::deque<Message> receivedMessages;
+    std::unique_ptr<FriendList> friendList;
 };
 
 TestGroupMessageDispatcher::TestGroupMessageDispatcher() {}
@@ -145,11 +147,13 @@ TestGroupMessageDispatcher::TestGroupMessageDispatcher() {}
  */
 void TestGroupMessageDispatcher::init()
 {
+    friendList = std::unique_ptr<FriendList>(new FriendList());
     groupSettings = std::unique_ptr<MockGroupSettings>(new MockGroupSettings());
     groupQuery = std::unique_ptr<MockGroupQuery>(new MockGroupQuery());
     coreIdHandler = std::unique_ptr<MockCoreIdHandler>(new MockCoreIdHandler());
     g = std::unique_ptr<Group>(
-        new Group(0, GroupId(), "TestGroup", false, "me", *groupQuery, *coreIdHandler));
+        new Group(0, GroupId(), "TestGroup", false, "me", *groupQuery, *coreIdHandler,
+            *friendList));
     messageSender = std::unique_ptr<MockGroupMessageSender>(new MockGroupMessageSender());
     sharedProcessorParams =
         std::unique_ptr<MessageProcessor::SharedParams>(new MessageProcessor::SharedParams(tox_max_message_length(), 10 * 1024 * 1024));

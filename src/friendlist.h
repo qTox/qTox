@@ -21,10 +21,10 @@
 
 #include <cstdint>
 
+#include <QHash>
+
 template <class T>
 class QList;
-template <class A, class B>
-class QHash;
 class Friend;
 class QByteArray;
 class QString;
@@ -34,15 +34,15 @@ class Settings;
 class FriendList
 {
 public:
-    static Friend* addFriend(uint32_t friendId, const ToxPk& friendPk, Settings& settings);
-    static Friend* findFriend(const ToxPk& friendPk);
-    static const ToxPk& id2Key(uint32_t friendId);
-    static QList<Friend*> getAllFriends();
-    static void removeFriend(const ToxPk& friendPk, Settings& settings, bool fake = false);
-    static void clear();
-    static QString decideNickname(const ToxPk& friendPk, const QString& origName);
+    Friend* addFriend(uint32_t friendId, const ToxPk& friendPk, Settings& settings);
+    Friend* findFriend(const ToxPk& friendPk);
+    const ToxPk& id2Key(uint32_t friendId);
+    QList<Friend*> getAllFriends();
+    void removeFriend(const ToxPk& friendPk, Settings& settings, bool fake = false);
+    void clear();
+    QString decideNickname(const ToxPk& friendPk, const QString& origName);
 
 private:
-    static QHash<ToxPk, Friend*> friendList;
-    static QHash<uint32_t, ToxPk> id2key;
+    QHash<ToxPk, Friend*> friendList;
+    QHash<uint32_t, ToxPk> id2key;
 };

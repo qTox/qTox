@@ -169,8 +169,9 @@ namespace FileTransferList
         return static_cast<EditorAction>(in);
     }
 
-    Model::Model(QObject* parent)
+    Model::Model(FriendList& friendList_, QObject* parent)
         : QAbstractTableModel(parent)
+        , friendList{friendList_}
     {}
 
     QVariant Model::headerData(int section, Qt::Orientation orientation, int role) const
@@ -271,7 +272,7 @@ namespace FileTransferList
                 return files[row].fileName;
             case Column::contact:
             {
-                auto f = FriendList::findFriend(FriendList::id2Key(files[row].friendId));
+                auto f = friendList.findFriend(friendList.id2Key(files[row].friendId));
                 if (f == nullptr) {
                     qWarning("Invalid friend for file transfer");
                     return "Unknown";
@@ -429,7 +430,8 @@ namespace FileTransferList
 
 } // namespace FileTransferList
 
-FilesForm::FilesForm(CoreFile& coreFile, Settings& settings, Style& style, IMessageBoxManager& messageBoxManager_)
+FilesForm::FilesForm(CoreFile& coreFile, Settings& settings, Style& style,
+    IMessageBoxManager& messageBoxManager_, FriendList& friendList)
     : QObject()
     , messageBoxManager{messageBoxManager_}
 {
@@ -440,8 +442,8 @@ FilesForm::FilesForm(CoreFile& coreFile, Settings& settings, Style& style, IMess
     head->setLayout(&headLayout);
     headLayout.addWidget(&headLabel);
 
-    recvdModel = new FileTransferList::Model(this);
-    sentModel = new FileTransferList::Model(this);
+    recvdModel = new FileTransferList::Model(friendList, this);
+    sentModel = new FileTransferList::Model(friendList, this);
 
     auto pauseFile = [&coreFile] (ToxFile file) {
         coreFile.pauseResumeFile(file.friendId, file.fileNum);

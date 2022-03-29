@@ -41,13 +41,15 @@
 QHash<int, CircleWidget*> CircleWidget::circleList;
 
 CircleWidget::CircleWidget(const Core &core_, FriendListWidget* parent, int id_,
-    Settings& settings_, Style& style_, IMessageBoxManager& messageBoxManager_)
+    Settings& settings_, Style& style_, IMessageBoxManager& messageBoxManager_,
+    FriendList& friendList_)
     : CategoryWidget(isCompact(), settings_, style_, parent)
     , id(id_)
     , core{core_}
     , settings{settings_}
     , style{style_}
     , messageBoxManager{messageBoxManager_}
+    , friendList{friendList_}
 {
     setName(settings.getCircleName(id), false);
     circleList[id] = this;
@@ -103,10 +105,10 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
         if (selectedItem == renameAction) {
             editName();
         } else if (selectedItem == removeAction) {
-            FriendListWidget* friendList = static_cast<FriendListWidget*>(parentWidget());
-            moveFriendWidgets(friendList);
+            FriendListWidget* friendListWidget = static_cast<FriendListWidget*>(parentWidget());
+            moveFriendWidgets(friendListWidget);
 
-            friendList->removeCircleWidget(this);
+            friendListWidget->removeCircleWidget(this);
 
             int replacedCircle = settings.removeCircle(id);
 
@@ -118,7 +120,7 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
 
             circleList.remove(replacedCircle);
         } else if (selectedItem == openAction) {
-            ContentDialog* dialog = new ContentDialog(core, settings, style, messageBoxManager);
+            ContentDialog* dialog = new ContentDialog(core, settings, style, messageBoxManager, friendList);
             emit newContentDialog(*dialog);
             for (int i = 0; i < friendOnlineLayout()->count(); ++i) {
                 QWidget* const widget = friendOnlineLayout()->itemAt(i)->widget();
@@ -151,7 +153,7 @@ void CircleWidget::dragEnterEvent(QDragEnterEvent* event)
         return;
     }
     ToxPk toxPk(event->mimeData()->data("toxPk"));
-    Friend* f = FriendList::findFriend(toxPk);
+    Friend* f = friendList.findFriend(toxPk);
     if (f != nullptr)
         event->acceptProposedAction();
 
@@ -179,7 +181,7 @@ void CircleWidget::dropEvent(QDropEvent* event)
     }
     // Check, that the user has a friend with the same ToxId
     ToxPk toxPk{event->mimeData()->data("toxPk")};
-    Friend* f = FriendList::findFriend(toxPk);
+    Friend* f = friendList.findFriend(toxPk);
     if (!f)
         return;
 

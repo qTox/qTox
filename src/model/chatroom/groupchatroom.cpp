@@ -27,11 +27,14 @@
 #include "src/model/group.h"
 #include "src/model/status.h"
 #include "src/persistence/settings.h"
+#include "src/friendlist.h"
 
-GroupChatroom::GroupChatroom(Group* group_, IDialogsManager* dialogsManager_, Core& core_)
+GroupChatroom::GroupChatroom(Group* group_, IDialogsManager* dialogsManager_, Core& core_,
+    FriendList& friendList_)
     : group{group_}
     , dialogsManager{dialogsManager_}
     , core{core_}
+    , friendList{friendList_}
 {
 }
 
@@ -58,12 +61,12 @@ void GroupChatroom::resetEventFlags()
 
 bool GroupChatroom::friendExists(const ToxPk& pk)
 {
-    return FriendList::findFriend(pk) != nullptr;
+    return friendList.findFriend(pk) != nullptr;
 }
 
 void GroupChatroom::inviteFriend(const ToxPk& pk)
 {
-    const Friend* frnd = FriendList::findFriend(pk);
+    const Friend* frnd = friendList.findFriend(pk);
     const auto friendId = frnd->getId();
     const auto groupId = group->getId();
     const auto canInvite = Status::isOnline(frnd->getStatus());

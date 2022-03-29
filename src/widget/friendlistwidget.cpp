@@ -101,12 +101,13 @@ qint64 timeUntilTomorrow()
 
 FriendListWidget::FriendListWidget(const Core &core_, Widget* parent,
     Settings& settings_, Style& style_, IMessageBoxManager& messageBoxManager_,
-    bool groupsOnTop)
+    FriendList& friendList_, bool groupsOnTop)
     : QWidget(parent)
     , core{core_}
     , settings{settings_}
     , style{style_}
     , messageBoxManager{messageBoxManager_}
+    , friendList{friendList_}
 {
     int countContacts = core.getFriendList().size();
     manager = new FriendListManager(countContacts, this);
@@ -525,7 +526,7 @@ void FriendListWidget::dragEnterEvent(QDragEnterEvent* event)
         return;
     }
     ToxPk toxPk(event->mimeData()->data("toxPk"));
-    Friend* frnd = FriendList::findFriend(toxPk);
+    Friend* frnd = friendList.findFriend(toxPk);
     if (frnd)
         event->acceptProposedAction();
 }
@@ -541,7 +542,7 @@ void FriendListWidget::dropEvent(QDropEvent* event)
     // Check, that the user has a friend with the same ToxPk
     assert(event->mimeData()->hasFormat("toxPk"));
     const ToxPk toxPk{event->mimeData()->data("toxPk")};
-    Friend* f = FriendList::findFriend(toxPk);
+    Friend* f = friendList.findFriend(toxPk);
     if (!f)
         return;
 
@@ -619,7 +620,7 @@ CircleWidget* FriendListWidget::createCircleWidget(int id)
     }
 
     CircleWidget* circleWidget = new CircleWidget(core, this, id, settings, style,
-        messageBoxManager);
+        messageBoxManager, friendList);
     emit connectCircleWidget(*circleWidget);
     connect(this, &FriendListWidget::onCompactChanged, circleWidget, &CircleWidget::onCompactChanged);
     connect(circleWidget, &CircleWidget::renameRequested, this, &FriendListWidget::renameCircleWidget);

@@ -19,6 +19,7 @@
 */
 
 #include "src/model/notificationgenerator.h"
+#include "src/friendlist.h"
 
 #include "mock/mockcoreidhandler.h"
 #include "mock/mockgroupquery.h"
@@ -89,10 +90,12 @@ private:
     std::unique_ptr<NotificationGenerator> notificationGenerator;
     std::unique_ptr<MockGroupQuery> groupQuery;
     std::unique_ptr<MockCoreIdHandler> coreIdHandler;
+    std::unique_ptr<FriendList> friendList;
 };
 
 void TestNotificationGenerator::init()
 {
+    friendList.reset(new FriendList());
     notificationSettings.reset(new MockNotificationSettings());
     notificationGenerator.reset(new NotificationGenerator(*notificationSettings, nullptr));
     groupQuery.reset(new MockGroupQuery());
@@ -139,7 +142,7 @@ void TestNotificationGenerator::testNotificationClear()
 
 void TestNotificationGenerator::testGroupMessage()
 {
-    Group g(0, GroupId(0), "groupName", false, "selfName", *groupQuery, *coreIdHandler);
+    Group g(0, GroupId(0), "groupName", false, "selfName", *groupQuery, *coreIdHandler, *friendList);
     auto sender = groupQuery->getGroupPeerPk(0, 0);
     g.updateUsername(sender, "sender1");
 
@@ -150,7 +153,7 @@ void TestNotificationGenerator::testGroupMessage()
 
 void TestNotificationGenerator::testMultipleGroupMessages()
 {
-    Group g(0, GroupId(0), "groupName", false, "selfName", *groupQuery, *coreIdHandler);
+    Group g(0, GroupId(0), "groupName", false, "selfName", *groupQuery, *coreIdHandler, *friendList);
 
     auto sender = groupQuery->getGroupPeerPk(0, 0);
     g.updateUsername(sender, "sender1");
@@ -182,8 +185,8 @@ void TestNotificationGenerator::testMultipleFriendSourceMessages()
 
 void TestNotificationGenerator::testMultipleGroupSourceMessages()
 {
-    Group g(0, GroupId(QByteArray(32, 0)), "groupName", false, "selfName", *groupQuery, *coreIdHandler);
-    Group g2(1, GroupId(QByteArray(32, 1)), "groupName2", false, "selfName", *groupQuery, *coreIdHandler);
+    Group g(0, GroupId(QByteArray(32, 0)), "groupName", false, "selfName", *groupQuery, *coreIdHandler, *friendList);
+    Group g2(1, GroupId(QByteArray(32, 1)), "groupName2", false, "selfName", *groupQuery, *coreIdHandler, *friendList);
 
     auto sender = groupQuery->getGroupPeerPk(0, 0);
     g.updateUsername(sender, "sender1");
@@ -200,7 +203,7 @@ void TestNotificationGenerator::testMixedSourceMessages()
     Friend f(0, ToxPk());
     f.setName("friend");
 
-    Group g(0, GroupId(QByteArray(32, 0)), "group", false, "selfName", *groupQuery, *coreIdHandler);
+    Group g(0, GroupId(QByteArray(32, 0)), "group", false, "selfName", *groupQuery, *coreIdHandler, *friendList);
 
     auto sender = groupQuery->getGroupPeerPk(0, 0);
     g.updateUsername(sender, "sender1");
@@ -315,7 +318,7 @@ void TestNotificationGenerator::testSimpleFileTransfer()
 
 void TestNotificationGenerator::testSimpleGroupMessage()
 {
-    Group g(0, GroupId(0), "groupName", false, "selfName", *groupQuery, *coreIdHandler);
+    Group g(0, GroupId(0), "groupName", false, "selfName", *groupQuery, *coreIdHandler, *friendList);
     auto sender = groupQuery->getGroupPeerPk(0, 0);
     g.updateUsername(sender, "sender1");
 

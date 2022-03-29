@@ -37,6 +37,7 @@
 #include "src/core/toxpk.h"
 #include "src/model/friendmessagedispatcher.h"
 #include "src/model/groupmessagedispatcher.h"
+#include "src/friendlist.h"
 #if DESKTOP_NOTIFICATIONS
 #include "src/model/notificationgenerator.h"
 #include "src/platform/desktop_notifications/desktopnotify.h"
@@ -392,6 +393,7 @@ private:
     CameraSource& cameraSource;
     Style& style;
     IMessageBoxManager& messageBoxManager;
+    std::unique_ptr<FriendList> friendList;
     std::unique_ptr<ContentDialogManager> contentDialogManager;
 };
 

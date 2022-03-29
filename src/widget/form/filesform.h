@@ -38,6 +38,7 @@ class Settings;
 class Style;
 class QFileInfo;
 class IMessageBoxManager;
+class FriendList;
 
 namespace FileTransferList
 {
@@ -69,7 +70,7 @@ namespace FileTransferList
     {
         Q_OBJECT
     public:
-        Model(QObject* parent = nullptr);
+        Model(FriendList& friendList, QObject* parent = nullptr);
         ~Model() = default;
 
         void onFileUpdated(const ToxFile& file);
@@ -87,6 +88,7 @@ namespace FileTransferList
     private:
         QHash<QByteArray /*file id*/, int /*row index*/> idToRow;
         std::vector<ToxFile> files;
+        FriendList& friendList;
     };
 
     class Delegate : public QStyledItemDelegate
@@ -117,7 +119,7 @@ class FilesForm : public QObject
 
 public:
     FilesForm(CoreFile& coreFile, Settings& settings, Style& style,
-        IMessageBoxManager& messageBoxManager);
+        IMessageBoxManager& messageBoxManager, FriendList& friendList);
     ~FilesForm();
 
     bool isShown() const;
