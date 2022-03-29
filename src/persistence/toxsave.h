@@ -24,12 +24,13 @@ class QByteArray;
 class Settings;
 class IPC;
 class QString;
+class QWidget;
 
 class ToxSave
 {
 public:
     const static QString eventHandlerKey;
-    ToxSave(Settings& settings, IPC& ipc);
+    ToxSave(Settings& settings, IPC& ipc, QWidget* parent);
     ~ToxSave();
     bool handleToxSave(const QString& path);
     static bool toxSaveEventHandler(const QByteArray& eventData, void* userData);
@@ -37,4 +38,5 @@ public:
 private:
     Settings& settings;
     IPC& ipc;
+    QWidget* parent;
 };

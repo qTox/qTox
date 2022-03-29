@@ -25,7 +25,6 @@
 
 class MessageBoxManager;
 class Settings;
-class ToxSave;
 class IPC;
 class QApplication;
 class ToxURIDialog;
@@ -47,6 +46,5 @@ private:
     std::unique_ptr<MessageBoxManager> messageBoxManager;
     std::unique_ptr<Settings> settings;
     std::unique_ptr<IPC> ipc;
-    std::unique_ptr<ToxSave> toxSave;
     std::unique_ptr<ToxURIDialog> uriDialog;
 };

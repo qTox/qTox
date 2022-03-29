@@ -166,7 +166,6 @@ AppManager::AppManager(int argc, char** argv)
     , messageBoxManager(new MessageBoxManager(nullptr))
     , settings(new Settings(*messageBoxManager))
     , ipc(new IPC(settings->getCurrentProfileId()))
-    , toxSave(new ToxSave(*settings, *ipc))
 {
 }
 
@@ -392,15 +391,14 @@ int AppManager::run()
     if (ipc->isAttached()) {
         // Start to accept Inter-process communication
         ipc->registerEventHandler("uri", &toxURIEventHandler, uriDialog.get());
-        ipc->registerEventHandler(ToxSave::eventHandlerKey, &ToxSave::toxSaveEventHandler, toxSave.get());
-        nexus.registerActivate();
+        nexus.registerIpcHandlers();
     }
 
     // Event was not handled by already running instance therefore we handle it ourselves
     if (eventType == "uri") {
         uriDialog->handleToxURI(firstParam);
     } else if (eventType == ToxSave::eventHandlerKey) {
-        toxSave->handleToxSave(firstParam);
+        nexus.handleToxSave(firstParam);
     }
 
     connect(qapp.get(), &QApplication::aboutToQuit, this, &AppManager::cleanup);

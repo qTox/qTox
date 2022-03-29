@@ -81,6 +81,7 @@
 #include "src/widget/tool/messageboxmanager.h"
 #include "tool/removechatdialog.h"
 #include "src/persistence/smileypack.h"
+#include "src/persistence/toxsave.h"
 #include "src/ipc.h"
 
 namespace {
@@ -99,6 +100,7 @@ bool tryRemoveFile(const QString& filepath)
 }
 
 const QString activateHandlerKey("activate");
+const QString saveHandlerKey("save");
 
 } // namespace
 
@@ -162,6 +164,7 @@ Widget::Widget(Profile &profile_, IAudioControl& audio_, CameraSource& cameraSou
     , groupList(new GroupList())
     , contentDialogManager(new ContentDialogManager(*friendList))
     , ipc{ipc_}
+    , toxSave(new ToxSave{settings, ipc, this})
 {
     installEventFilter(this);
     QString locale = settings.getTranslation();
@@ -2757,7 +2760,13 @@ void Widget::formatWindowTitle(const QString& content)
     }
 }
 
-void Widget::registerActivate()
+void Widget::registerIpcHandlers()
 {
     ipc.registerEventHandler(activateHandlerKey, &toxActivateEventHandler, this);
+    ipc.registerEventHandler(saveHandlerKey, &ToxSave::toxSaveEventHandler, toxSave.get());
+}
+
+bool Widget::handleToxSave(const QString& path)
+{
+    return toxSave->handleToxSave(path);
 }
