@@ -47,6 +47,7 @@ class SmileyPack;
 class Settings;
 class Style;
 class IMessageBoxManager;
+class ContentDialogManager;
 
 class ChatForm : public GenericChatForm
 {
@@ -54,7 +55,8 @@ class ChatForm : public GenericChatForm
 public:
     ChatForm(Profile& profile, Friend* chatFriend, IChatLog& chatLog_,
         IMessageDispatcher& messageDispatcher_, DocumentCache& documentCache, SmileyPack& smileyPack,
-        CameraSource& cameraSource, Settings& settings, Style& style, IMessageBoxManager& messageBoxManager);
+        CameraSource& cameraSource, Settings& settings, Style& style, IMessageBoxManager& messageBoxManager,
+        ContentDialogManager& contentDialogManager);
     ~ChatForm() override;
     void setStatusMessage(const QString& newMessage);
 
@@ -148,4 +150,5 @@ private:
     CameraSource& cameraSource;
     Settings& settings;
     Style& style;
+    ContentDialogManager& contentDialogManager;
 };

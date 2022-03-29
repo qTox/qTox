@@ -53,8 +53,6 @@ public:
 
     void addContentDialog(ContentDialog& dialog);
 
-    static ContentDialogManager* getInstance();
-
 private slots:
     void onDialogClose();
     void onDialogActivate();
@@ -66,6 +64,4 @@ private:
     ContentDialog* currentDialog = nullptr;
 
     QHash<const ChatId&, ContentDialog*> chatDialogs;
-
-    static ContentDialogManager* instance;
 };

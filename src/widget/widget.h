@@ -87,6 +87,8 @@ class SmileyPack;
 class CameraSource;
 class Style;
 class IMessageBoxManager;
+class ContentDialogManager;
+
 class Widget final : public QMainWindow
 {
     Q_OBJECT
@@ -390,6 +392,7 @@ private:
     CameraSource& cameraSource;
     Style& style;
     IMessageBoxManager& messageBoxManager;
+    std::unique_ptr<ContentDialogManager> contentDialogManager;
 };
 
 bool toxActivateEventHandler(const QByteArray& data, void* userData);

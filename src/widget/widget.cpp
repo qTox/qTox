@@ -160,6 +160,7 @@ Widget::Widget(Profile &profile_, IAudioControl& audio_, CameraSource& cameraSou
     , cameraSource{cameraSource_}
     , style{style_}
     , messageBoxManager(messageBoxManager_)
+    , contentDialogManager(new ContentDialogManager())
 {
     installEventFilter(this);
     QString locale = settings.getTranslation();
@@ -424,8 +425,8 @@ void Widget::init()
     Nexus::getInstance().windowMenu->insertAction(frontAction, nextConversationAction);
     nextConversationAction->setShortcut(QKeySequence::SelectNextPage);
     connect(nextConversationAction, &QAction::triggered, [this]() {
-        if (ContentDialogManager::getInstance()->current() == QApplication::activeWindow())
-            ContentDialogManager::getInstance()->current()->cycleChats(true);
+        if (contentDialogManager->current() == QApplication::activeWindow())
+            contentDialogManager->current()->cycleChats(true);
         else if (QApplication::activeWindow() == this)
             cycleChats(true);
     });
@@ -434,8 +435,8 @@ void Widget::init()
     Nexus::getInstance().windowMenu->insertAction(frontAction, previousConversationAction);
     previousConversationAction->setShortcut(QKeySequence::SelectPreviousPage);
     connect(previousConversationAction, &QAction::triggered, [this] {
-        if (ContentDialogManager::getInstance()->current() == QApplication::activeWindow())
-            ContentDialogManager::getInstance()->current()->cycleChats(false);
+        if (contentDialogManager->current() == QApplication::activeWindow())
+            contentDialogManager->current()->cycleChats(false);
         else if (QApplication::activeWindow() == this)
             cycleChats(false);
     });
@@ -1154,8 +1155,7 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     settings.updateFriendAddress(friendPk.toString());
 
     Friend* newfriend = FriendList::addFriend(friendId, friendPk, settings);
-    auto contentDialogManager = ContentDialogManager::getInstance();
-    auto rawChatroom = new FriendChatroom(newfriend, contentDialogManager, *core, settings);
+    auto rawChatroom = new FriendChatroom(newfriend, contentDialogManager.get(), *core, settings);
     std::shared_ptr<FriendChatroom> chatroom(rawChatroom);
     const auto compact = settings.getCompactLayout();
     auto widget = new FriendWidget(chatroom, compact, settings, style, messageBoxManager);
@@ -1173,7 +1173,7 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
                                       *friendMessageDispatcher);
     auto friendForm = new ChatForm(profile, newfriend, *chatHistory,
         *friendMessageDispatcher, *documentCache, *smileyPack, cameraSource,
-        settings, style, messageBoxManager);
+        settings, style, messageBoxManager, *contentDialogManager);
     connect(friendForm, &ChatForm::updateFriendActivity, this, &Widget::updateFriendActivity);
 
     friendMessageDispatchers[friendPk] = friendMessageDispatcher;
@@ -1283,7 +1283,7 @@ void Widget::onFriendStatusChanged(const ToxPk& friendPk, Status::Status status)
         setWindowTitle(widget->getTitle());
     }
 
-    ContentDialogManager::getInstance()->updateFriendStatus(friendPk);
+    contentDialogManager->updateFriendStatus(friendPk);
 }
 
 void Widget::onFriendStatusMessageChanged(int friendId, const QString& message)
@@ -1365,8 +1365,8 @@ void Widget::openDialog(GenericChatroomWidget* widget, bool newWindow)
         form = groupChatForms[id].data();
     }
     bool chatFormIsSet;
-    ContentDialogManager::getInstance()->focusChat(id);
-    chatFormIsSet = ContentDialogManager::getInstance()->chatWidgetExists(id);
+    contentDialogManager->focusChat(id);
+    chatFormIsSet = contentDialogManager->chatWidgetExists(id);
 
 
     if ((chatFormIsSet || form->isVisible()) && !newWindow) {
@@ -1377,7 +1377,7 @@ void Widget::openDialog(GenericChatroomWidget* widget, bool newWindow)
         ContentDialog* dialog = nullptr;
 
         if (!settings.getDontGroupWindows() && !newWindow) {
-            dialog = ContentDialogManager::getInstance()->current();
+            dialog = contentDialogManager->current();
         }
 
         if (dialog == nullptr) {
@@ -1454,7 +1454,7 @@ void Widget::onExtReceiptReceived(uint32_t friendNumber, uint64_t receiptId)
 void Widget::addFriendDialog(const Friend* frnd, ContentDialog* dialog)
 {
     const ToxPk& friendPk = frnd->getPublicKey();
-    ContentDialog* contentDialog = ContentDialogManager::getInstance()->getFriendDialog(friendPk);
+    ContentDialog* contentDialog = contentDialogManager->getFriendDialog(friendPk);
     bool isSeparate = settings.getSeparateWindow();
     FriendWidget* widget = friendWidgets[friendPk];
     bool isCurrent = activeChatroomWidget == widget;
@@ -1465,7 +1465,7 @@ void Widget::addFriendDialog(const Friend* frnd, ContentDialog* dialog)
     auto form = chatForms[friendPk];
     auto chatroom = friendChatrooms[friendPk];
     FriendWidget* friendWidget =
-        ContentDialogManager::getInstance()->addFriendToDialog(dialog, chatroom, form);
+        contentDialogManager->addFriendToDialog(dialog, chatroom, form);
 
     friendWidget->setStatusMsg(widget->getStatusMsg());
 
@@ -1510,7 +1510,7 @@ void Widget::addFriendDialog(const Friend* frnd, ContentDialog* dialog)
 void Widget::addGroupDialog(const Group* group, ContentDialog* dialog)
 {
     const GroupId& groupId = group->getPersistentId();
-    ContentDialog* groupDialog = ContentDialogManager::getInstance()->getGroupDialog(groupId);
+    ContentDialog* groupDialog = contentDialogManager->getGroupDialog(groupId);
     bool separated = settings.getSeparateWindow();
     GroupWidget* widget = groupWidgets[groupId];
     bool isCurrentWindow = activeChatroomWidget == widget;
@@ -1521,7 +1521,7 @@ void Widget::addGroupDialog(const Group* group, ContentDialog* dialog)
     auto chatForm = groupChatForms[groupId].data();
     auto chatroom = groupChatrooms[groupId];
     auto groupWidget =
-        ContentDialogManager::getInstance()->addGroupToDialog(dialog, chatroom, chatForm);
+        contentDialogManager->addGroupToDialog(dialog, chatroom, chatForm);
 
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 7, 0))
     auto removeGroup = QOverload<const GroupId&>::of(&Widget::removeGroup);
@@ -1556,18 +1556,18 @@ bool Widget::newFriendMessageAlert(const ToxPk& friendId, const QString& text, b
 {
     bool hasActive;
     QWidget* currentWindow;
-    ContentDialog* contentDialog = ContentDialogManager::getInstance()->getFriendDialog(friendId);
+    ContentDialog* contentDialog = contentDialogManager->getFriendDialog(friendId);
     Friend* f = FriendList::findFriend(friendId);
 
     if (contentDialog != nullptr) {
         currentWindow = contentDialog->window();
-        hasActive = ContentDialogManager::getInstance()->isChatActive(friendId);
+        hasActive = contentDialogManager->isChatActive(friendId);
     } else {
         if (settings.getSeparateWindow() && settings.getShowWindow()) {
             if (settings.getDontGroupWindows()) {
                 contentDialog = createContentDialog();
             } else {
-                contentDialog = ContentDialogManager::getInstance()->current();
+                contentDialog = contentDialogManager->current();
                 if (!contentDialog) {
                     contentDialog = createContentDialog();
                 }
@@ -1575,7 +1575,7 @@ bool Widget::newFriendMessageAlert(const ToxPk& friendId, const QString& text, b
 
             addFriendDialog(f, contentDialog);
             currentWindow = contentDialog->window();
-            hasActive = ContentDialogManager::getInstance()->isChatActive(friendId);
+            hasActive = contentDialogManager->isChatActive(friendId);
         } else {
             currentWindow = window();
             FriendWidget* widget = friendWidgets[friendId];
@@ -1603,7 +1603,7 @@ bool Widget::newFriendMessageAlert(const ToxPk& friendId, const QString& text, b
                 setWindowTitle(widget->getTitle());
             }
         } else {
-            ContentDialogManager::getInstance()->updateFriendStatus(friendId);
+            contentDialogManager->updateFriendStatus(friendId);
         }
 
         return true;
@@ -1617,13 +1617,13 @@ bool Widget::newGroupMessageAlert(const GroupId& groupId, const ToxPk& authorPk,
 {
     bool hasActive;
     QWidget* currentWindow;
-    ContentDialog* contentDialog = ContentDialogManager::getInstance()->getGroupDialog(groupId);
+    ContentDialog* contentDialog = contentDialogManager->getGroupDialog(groupId);
     Group* g = GroupList::findGroup(groupId);
     GroupWidget* widget = groupWidgets[groupId];
 
     if (contentDialog != nullptr) {
         currentWindow = contentDialog->window();
-        hasActive = ContentDialogManager::getInstance()->isChatActive(groupId);
+        hasActive = contentDialogManager->isChatActive(groupId);
     } else {
         currentWindow = window();
         hasActive = widget == activeChatroomWidget;
@@ -1648,7 +1648,7 @@ bool Widget::newGroupMessageAlert(const GroupId& groupId, const ToxPk& authorPk,
             setWindowTitle(widget->getTitle());
         }
     } else {
-        ContentDialogManager::getInstance()->updateGroupStatus(groupId);
+        contentDialogManager->updateGroupStatus(groupId);
     }
 
     return true;
@@ -1766,7 +1766,7 @@ void Widget::removeFriend(Friend* f, bool fake)
 
     chatListWidget->removeFriendWidget(widget);
 
-    ContentDialog* lastDialog = ContentDialogManager::getInstance()->getFriendDialog(friendPk);
+    ContentDialog* lastDialog = contentDialogManager->getFriendDialog(friendPk);
     if (lastDialog != nullptr) {
         lastDialog->removeFriend(friendPk);
     }
@@ -1845,7 +1845,7 @@ ContentDialog* Widget::createContentDialog() const
 
 void Widget::registerContentDialog(ContentDialog& contentDialog) const
 {
-    ContentDialogManager::getInstance()->addContentDialog(contentDialog);
+    contentDialogManager->addContentDialog(contentDialog);
     connect(&contentDialog, &ContentDialog::friendDialogShown, this, &Widget::onFriendDialogShown);
     connect(&contentDialog, &ContentDialog::groupDialogShown, this, &Widget::onGroupDialogShown);
     connect(core, &Core::usernameSet, &contentDialog, &ContentDialog::setUsername);
@@ -2071,7 +2071,7 @@ void Widget::removeGroup(Group* g, bool fake)
     }
 
     GroupList::removeGroup(groupId, fake);
-    ContentDialog* contentDialog = ContentDialogManager::getInstance()->getGroupDialog(groupId);
+    ContentDialog* contentDialog = contentDialogManager->getGroupDialog(groupId);
     if (contentDialog != nullptr) {
         contentDialog->removeGroup(groupId);
     }
@@ -2125,8 +2125,7 @@ Group* Widget::createGroup(uint32_t groupnumber, const GroupId& groupId)
             av->invalidateGroupCallPeerSource(*newgroup, user);
         });
     }
-    auto contentDialogManager = ContentDialogManager::getInstance();
-    auto rawChatroom = new GroupChatroom(newgroup, contentDialogManager, *core);
+    auto rawChatroom = new GroupChatroom(newgroup, contentDialogManager.get(), *core);
     std::shared_ptr<GroupChatroom> chatroom(rawChatroom);
 
     const auto compact = settings.getCompactLayout();

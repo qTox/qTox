@@ -41,8 +41,6 @@ void removeDialog(ContentDialog* dialog, QHash<const ChatId&, ContentDialog*>& d
 }
 } // namespace
 
-ContentDialogManager* ContentDialogManager::instance;
-
 ContentDialog* ContentDialogManager::current()
 {
     return currentDialog;
@@ -169,15 +167,6 @@ ContentDialog* ContentDialogManager::getFriendDialog(const ToxPk& friendPk) cons
 ContentDialog* ContentDialogManager::getGroupDialog(const GroupId& groupId) const
 {
     return chatDialogs.value(groupId);
-}
-
-ContentDialogManager* ContentDialogManager::getInstance()
-{
-    if (instance == nullptr) {
-        instance = new ContentDialogManager();
-    }
-
-    return instance;
 }
 
 void ContentDialogManager::addContentDialog(ContentDialog& dialog)
