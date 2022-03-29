@@ -28,9 +28,10 @@
 
 const QString ToxSave::eventHandlerKey = QStringLiteral("save");
 
-ToxSave::ToxSave(Settings& settings_, IPC& ipc_)
+ToxSave::ToxSave(Settings& settings_, IPC& ipc_, QWidget* parent_)
     : settings{settings_}
     , ipc{ipc_}
+    , parent{parent_}
 {}
 
 ToxSave::~ToxSave()
@@ -58,6 +59,6 @@ bool ToxSave::toxSaveEventHandler(const QByteArray& eventData, void* userData)
  */
 bool ToxSave::handleToxSave(const QString& path)
 {
-    ProfileImporter importer(settings, Nexus::getDesktopGUI());
+    ProfileImporter importer(settings, parent);
     return importer.importProfile(path);
 }

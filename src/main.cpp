@@ -56,7 +56,6 @@ QMutex* logBufferMutex = new QMutex();
 #endif
 
 std::unique_ptr<Settings> settings;
-std::unique_ptr<ToxSave> toxSave;
 std::unique_ptr<MessageBoxManager> messageBoxManager;
 
 void cleanup()
@@ -428,20 +427,18 @@ int main(int argc, char* argv[])
     }
 
     uriDialog = std::unique_ptr<ToxURIDialog>(new ToxURIDialog(nullptr, profile->getCore(), *messageBoxManager));
-    toxSave = std::unique_ptr<ToxSave>(new ToxSave{*settings, ipc});
 
     if (ipc.isAttached()) {
         // Start to accept Inter-process communication
         ipc.registerEventHandler("uri", &toxURIEventHandler, uriDialog.get());
-        ipc.registerEventHandler(ToxSave::eventHandlerKey, &ToxSave::toxSaveEventHandler, toxSave.get());
-        nexus.registerActivate();
+        nexus.registerIpcHandlers();
     }
 
     // Event was not handled by already running instance therefore we handle it ourselves
     if (eventType == "uri") {
         uriDialog->handleToxURI(firstParam);
     } else if (eventType == ToxSave::eventHandlerKey) {
-        toxSave->handleToxSave(firstParam);
+        nexus.handleToxSave(firstParam);
     }
 
     QObject::connect(a.get(), &QApplication::aboutToQuit, cleanup);

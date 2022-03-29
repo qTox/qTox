@@ -91,6 +91,7 @@ class ContentDialogManager;
 class FriendList;
 class GroupList;
 class IPC;
+class ToxSave;
 
 class Widget final : public QMainWindow
 {
@@ -154,8 +155,9 @@ public:
     bool groupsVisible() const;
 
     void resetIcon();
-    void registerActivate();
+    void registerIpcHandlers();
     static bool toxActivateEventHandler(const QByteArray& data, void* userData);
+    bool handleToxSave(const QString& path);
 
 public slots:
     void reloadTheme();
@@ -400,4 +402,5 @@ private:
     std::unique_ptr<GroupList> groupList;
     std::unique_ptr<ContentDialogManager> contentDialogManager;
     IPC& ipc;
+    std::unique_ptr<ToxSave> toxSave;
 };

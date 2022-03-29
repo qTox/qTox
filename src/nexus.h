@@ -59,10 +59,9 @@ public:
     static Nexus& getInstance();
     static void destroyInstance();
     Profile* getProfile();
-    static Widget* getDesktopGUI();
     static CameraSource& getCameraSource();
-    void registerActivate();
-
+    void registerIpcHandlers();
+    bool handleToxSave(const QString& path);
 
 #ifdef Q_OS_MAC
 public:

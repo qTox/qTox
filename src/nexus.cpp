@@ -331,15 +331,6 @@ void Nexus::setParser(QCommandLineParser* parser_)
     parser = parser_;
 }
 
-/**
- * @brief Get desktop GUI widget.
- * @return nullptr if not started, desktop widget otherwise.
- */
-Widget* Nexus::getDesktopGUI()
-{
-    return getInstance().widget;
-}
-
 CameraSource& Nexus::getCameraSource()
 {
     return *getInstance().cameraSource;
@@ -355,9 +346,15 @@ void Nexus::setIpc(IPC* ipc_)
     ipc = ipc_;
 }
 
-void Nexus::registerActivate()
+void Nexus::registerIpcHandlers()
 {
-    widget->registerActivate();
+    widget->registerIpcHandlers();
+}
+
+bool Nexus::handleToxSave(const QString& path)
+{
+    assert(widget);
+    return widget->handleToxSave(path);
 }
 
 #ifdef Q_OS_MAC
