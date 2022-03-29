@@ -434,6 +434,7 @@ int main(int argc, char* argv[])
     }
 
     uriDialog = std::unique_ptr<ToxURIDialog>(new ToxURIDialog(nullptr, profile->getCore(), *messageBoxManager));
+    toxSave = std::unique_ptr<ToxSave>(new ToxSave{*settings});
 
     if (ipc.isAttached()) {
         // Start to accept Inter-process communication
