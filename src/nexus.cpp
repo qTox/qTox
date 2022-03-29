@@ -333,7 +333,7 @@ void Nexus::setParser(QCommandLineParser* parser_)
 
 CameraSource& Nexus::getCameraSource()
 {
-    return *getInstance().cameraSource;
+    return *cameraSource;
 }
 
 void Nexus::setMessageBoxManager(IMessageBoxManager* messageBoxManager_)

@@ -59,7 +59,7 @@ public:
     static Nexus& getInstance();
     static void destroyInstance();
     Profile* getProfile();
-    static CameraSource& getCameraSource();
+    CameraSource& getCameraSource();
     void registerIpcHandlers();
     bool handleToxSave(const QString& path);
 

@@ -363,7 +363,7 @@ int AppManager::run()
     nexus.setSettings(settings.get());
     nexus.setMessageBoxManager(messageBoxManager.get());
     nexus.setIpc(ipc.get());
-    auto& cameraSource = Nexus::getCameraSource();
+    auto& cameraSource = nexus.getCameraSource();
     // Autologin
     // TODO (kriby): Shift responsibility of linking views to model objects from nexus
     // Further: generate view instances separately (loginScreen, mainGUI, audio)
