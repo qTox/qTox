@@ -99,7 +99,7 @@ public slots:
     void onRequestSent(const ToxPk& friendPk, const QString& message);
 
 private slots:
-    void loadDatabase(QString password);
+    void loadDatabase(QString password, IMessageBoxManager& messageBoxManager);
     void saveAvatar(const ToxPk& owner, const QByteArray& avatar);
     void removeAvatar(const ToxPk& owner);
     void onSaveToxSave();
@@ -108,7 +108,7 @@ private slots:
 
 private:
     Profile(const QString& name_, std::unique_ptr<ToxEncrypt> passkey_, Paths& paths_,
-        Settings &settings_, IMessageBoxManager& messageBoxManager);
+        Settings &settings_);
     static QStringList getFilesByExt(QString extension, Settings& settings);
     QString avatarPath(const ToxPk& owner, bool forceUnencrypted = false);
     bool saveToxSave(QByteArray data);
@@ -128,5 +128,4 @@ private:
     std::unique_ptr<BootstrapNodeUpdater> bootstrapNodes;
     Paths& paths;
     Settings& settings;
-    IMessageBoxManager& messageBoxManager;
 };

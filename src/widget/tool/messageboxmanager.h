@@ -30,6 +30,7 @@ class MessageBoxManager : public QWidget, public IMessageBoxManager
 {
 Q_OBJECT
 public:
+    explicit MessageBoxManager(QWidget* parent);
     ~MessageBoxManager() override = default;
     void showInfo(const QString& title, const QString& msg) override;
     void showWarning(const QString& title, const QString& msg) override;

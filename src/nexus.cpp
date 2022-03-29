@@ -235,7 +235,7 @@ void Nexus::showMainGUI()
     assert(profile);
 
     // Create GUI
-    widget = new Widget(*profile, *audioControl, *cameraSource, *settings, *style, *messageBoxManager);
+    widget = new Widget(*profile, *audioControl, *cameraSource, *settings, *style);
 
     // Start GUI
     widget->init();

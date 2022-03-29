@@ -27,6 +27,11 @@
 #include <QDesktopServices>
 #include <QUrl>
 
+MessageBoxManager::MessageBoxManager(QWidget* parent)
+    : QWidget(parent)
+{
+}
+
 /**
  * @brief Show some text to the user.
  * @param title Title of information window.

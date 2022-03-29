@@ -295,14 +295,13 @@ void Profile::initCore(const QByteArray& toxsave, Settings& s, bool isNewProfile
 }
 
 Profile::Profile(const QString& name_, std::unique_ptr<ToxEncrypt> passkey_, Paths& paths_,
-    Settings& settings_, IMessageBoxManager& messageBoxManager_)
+    Settings& settings_)
     : name{name_}
     , passkey{std::move(passkey_)}
     , isRemoved{false}
     , encrypted{passkey != nullptr}
     , paths{paths_}
     , settings{settings_}
-    , messageBoxManager{messageBoxManager_}
 {}
 
 /**
@@ -337,14 +336,14 @@ Profile* Profile::loadProfile(const QString& name, const QString& password, Sett
         return nullptr;
     }
 
-    Profile* p = new Profile(name, std::move(tmpKey), paths, settings, messageBoxManager);
+    Profile* p = new Profile(name, std::move(tmpKey), paths, settings);
 
     // Core settings are saved per profile, need to load them before starting Core
     constexpr bool isNewProfile = false;
     settings.updateProfileData(p, parser, isNewProfile);
 
     p->initCore(toxsave, settings, isNewProfile, cameraSource);
-    p->loadDatabase(password);
+    p->loadDatabase(password, messageBoxManager);
 
     return p;
 }
@@ -371,13 +370,13 @@ Profile* Profile::createProfile(const QString& name, const QString& password, Se
     }
 
     settings.createPersonal(name);
-    Profile* p = new Profile(name, std::move(tmpKey), paths, settings, messageBoxManager);
+    Profile* p = new Profile(name, std::move(tmpKey), paths, settings);
 
     constexpr bool isNewProfile = true;
     settings.updateProfileData(p, parser, isNewProfile);
 
     p->initCore(QByteArray(), settings, isNewProfile, cameraSource);
-    p->loadDatabase(password);
+    p->loadDatabase(password, messageBoxManager);
     return p;
 }
 
@@ -621,7 +620,7 @@ QByteArray Profile::loadAvatarData(const ToxPk& owner)
     return pic;
 }
 
-void Profile::loadDatabase(QString password)
+void Profile::loadDatabase(QString password, IMessageBoxManager& messageBoxManager)
 {
     assert(core);
 

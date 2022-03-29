@@ -124,8 +124,7 @@ private:
 
 public:
     Widget(Profile& profile_, IAudioControl& audio_, CameraSource& cameraSource,
-        Settings& settings, Style& style, IMessageBoxManager& messageBoxManager,
-        QWidget* parent = nullptr);
+        Settings& settings, Style& style, QWidget* parent = nullptr);
     ~Widget() override;
     void init();
     void setCentralWidget(QWidget* widget, const QString& widgetName);
@@ -393,7 +392,7 @@ private:
     std::unique_ptr<DocumentCache> documentCache;
     CameraSource& cameraSource;
     Style& style;
-    IMessageBoxManager& messageBoxManager;
+    IMessageBoxManager* messageBoxManager = nullptr; // freed by Qt on destruction
     std::unique_ptr<FriendList> friendList;
     std::unique_ptr<ContentDialogManager> contentDialogManager;
 };

@@ -237,7 +237,7 @@ int main(int argc, char* argv[])
         qWarning() << "Couldn't load font";
     }
 
-    messageBoxManager = std::unique_ptr<MessageBoxManager>(new MessageBoxManager());
+    messageBoxManager = std::unique_ptr<MessageBoxManager>(new MessageBoxManager(nullptr));
     settings = std::unique_ptr<Settings>(new Settings(*messageBoxManager));
 
     QString locale = settings->getTranslation();
