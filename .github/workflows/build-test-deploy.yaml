@@ -353,7 +353,7 @@ jobs:
         contents: write
     strategy:
       matrix:
-        build_type: [debug, release]
+        build_type: [Debug, Release]
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/load-docker-image
@@ -433,7 +433,7 @@ jobs:
       contents: write
     strategy:
       matrix:
-        build_type: [debug, release]
+        build_type: [Debug, Release]
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/load-docker-image

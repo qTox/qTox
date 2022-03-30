@@ -68,18 +68,18 @@ fi
 
 if [ -z "$BUILD_TYPE" ]
 then
-  echo "Error: No build type was specified. Please specify either 'release' or 'debug', case sensitive, as the second argument to the script."
+  echo "Error: No build type was specified. Please specify either 'Release' or 'Debug', case sensitive, as the second argument to the script."
   exit 1
 fi
 
-if [[ "$BUILD_TYPE" != "release" ]] && [[ "$BUILD_TYPE" != "debug" ]]
+if [[ "$BUILD_TYPE" != "Release" ]] && [[ "$BUILD_TYPE" != "Debug" ]]
 then
-  echo "Error: Incorrect build type was specified. Please specify either 'release' or 'debug', case sensitive, as the second argument to the script."
+  echo "Error: Incorrect build type was specified. Please specify either 'Release' or 'Debug', case sensitive, as the second argument to the script."
   exit 1
 fi
 
 # Spell check on windows currently not supported, disable
-if [[ "$BUILD_TYPE" == "release" ]]
+if [[ "$BUILD_TYPE" == "Release" ]]
 then
   cmake -DCMAKE_TOOLCHAIN_FILE=/build/windows-toolchain.cmake \
         -DCMAKE_PREFIX_PATH=/windows \
@@ -90,7 +90,7 @@ then
         -DSTRICT_OPTIONS=ON \
         -DTEST_CROSSCOMPILING_EMULATOR=wine \
         "$QTOX_SRC_DIR"
-elif [[ "$BUILD_TYPE" == "debug" ]]
+elif [[ "$BUILD_TYPE" == "Debug" ]]
 then
   cmake -DCMAKE_TOOLCHAIN_FILE=/build/windows-toolchain.cmake \
         -DCMAKE_PREFIX_PATH=/windows \
@@ -122,7 +122,7 @@ set -u
 
 # Strip
 set +e
-if [[ "$BUILD_TYPE" == "release" ]]
+if [[ "$BUILD_TYPE" == "Release" ]]
 then
   $ARCH-w64-mingw32-strip -s $QTOX_PREFIX_DIR/*.exe
 fi
@@ -130,7 +130,7 @@ $ARCH-w64-mingw32-strip -s $QTOX_PREFIX_DIR/*.dll
 $ARCH-w64-mingw32-strip -s $QTOX_PREFIX_DIR/*/*.dll
 set -e
 
-if [[ "$BUILD_TYPE" == "debug" ]]
+if [[ "$BUILD_TYPE" == "Debug" ]]
 then
   cp -r /debug_export/* ${QTOX_PREFIX_DIR}
 fi
@@ -141,7 +141,7 @@ zip qtox-"$ARCH"-"$BUILD_TYPE".zip -r *
 popd
 
 # Create installer
-if [[ "$BUILD_TYPE" == "release" ]]
+if [[ "$BUILD_TYPE" == "Release" ]]
 then
   mkdir -p $QTOX_PACKAGE_DIR
   pushd $QTOX_PACKAGE_DIR
