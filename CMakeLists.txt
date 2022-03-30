@@ -171,6 +171,16 @@ if(NOT "${SMILEYS}" STREQUAL "DISABLED")
 endif()
 
 set(${PROJECT_NAME}_SOURCES
+  src/appmanager.cpp
+  src/appmanager.h
+  src/friendlist.cpp
+  src/friendlist.h
+  src/grouplist.cpp
+  src/grouplist.h
+  src/ipc.cpp
+  src/ipc.h
+  src/nexus.cpp
+  src/nexus.h
   src/chatlog/chatlinecontent.cpp
   src/chatlog/chatlinecontent.h
   src/chatlog/chatlinecontentproxy.cpp
@@ -250,12 +260,6 @@ set(${PROJECT_NAME}_SOURCES
   src/core/chatid.h
   src/core/toxstring.cpp
   src/core/toxstring.h
-  src/friendlist.cpp
-  src/friendlist.h
-  src/grouplist.cpp
-  src/grouplist.h
-  src/ipc.cpp
-  src/ipc.h
   src/model/about/aboutfriend.cpp
   src/model/about/aboutfriend.h
   src/model/about/iaboutfriend.cpp
@@ -315,8 +319,6 @@ set(${PROJECT_NAME}_SOURCES
   src/net/avatarbroadcaster.h
   src/net/toxuri.cpp
   src/net/toxuri.h
-  src/nexus.cpp
-  src/nexus.h
   src/persistence/db/rawdatabase.cpp
   src/persistence/db/rawdatabase.h
   src/persistence/db/upgrades/dbupgrader.cpp

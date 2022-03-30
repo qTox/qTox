@@ -591,6 +591,57 @@ ce qui peut entraîner des problèmes lors des appels vidéo.</translation>
     </message>
 </context>
 <context>
+    <name>AppManager</name>
+    <message>
+        <source>Tox URI to parse</source>
+        <translation type="unfinished">URI Tox à analyser</translation>
+    </message>
+    <message>
+        <source>Starts new instance and loads specified profile.</source>
+        <translation type="unfinished">Démarrer une nouvelle instance et charger le profil spécifié.</translation>
+    </message>
+    <message>
+        <source>profile</source>
+        <translation type="unfinished">profil</translation>
+    </message>
+    <message>
+        <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished">Démarre une nouvelle instance et ouvre l&apos;écran de connexion.</translation>
+    </message>
+    <message>
+        <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished">Définit IPv6 &lt;on&gt;/&lt;off&gt;. La valeur par défaut est ON.</translation>
+    </message>
+    <message>
+        <source>on/off</source>
+        <translation type="unfinished">marche/arrêt</translation>
+    </message>
+    <message>
+        <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished">Définit UDP &lt;on&gt;/&lt;off&gt;. La valeur par défaut est ON.</translation>
+    </message>
+    <message>
+        <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
+        <translation type="unfinished">Définit la découverte LAN &lt;on&gt;/&lt;off&gt;. UDP &quot;off&quot; élimine cette option. La valeur par défaut est ON.</translation>
+    </message>
+    <message>
+        <source>Sets proxy settings. Default is NONE.</source>
+        <translation type="unfinished">Définit les paramètres du proxy. La valeur par défaut est AUCUN.</translation>
+    </message>
+    <message>
+        <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
+        <translation type="unfinished">(SOCKS5/HTTP/NONE):(ADRESSE):(PORT)</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Erreur</translation>
+    </message>
+    <message>
+        <source>Failed to load profile automatically.</source>
+        <translation type="unfinished">Impossible de charger le profil automatiquement.</translation>
+    </message>
+</context>
+<context>
     <name>ChatForm</name>
     <message>
         <source>Send a file</source>
@@ -2225,18 +2276,6 @@ Cet identifiant comprend le code NoSpam (en bleu) et la somme de contrôle (en g
 <context>
     <name>QObject</name>
     <message>
-        <source>Tox URI to parse</source>
-        <translation>URI Tox à analyser</translation>
-    </message>
-    <message>
-        <source>Starts new instance and loads specified profile.</source>
-        <translation>Démarrer une nouvelle instance et charger le profil spécifié.</translation>
-    </message>
-    <message>
-        <source>profile</source>
-        <translation>profil</translation>
-    </message>
-    <message>
         <source>Default</source>
         <translation>Défaut</translation>
     </message>
@@ -2284,10 +2323,6 @@ Cet identifiant comprend le code NoSpam (en bleu) et la somme de contrôle (en g
         <translation>qTox ne peux pas ouvrir vos journaux de discussions. Ils seront désactivés.</translation>
     </message>
     <message>
-        <source>Starts new instance and opens the login screen.</source>
-        <translation>Démarre une nouvelle instance et ouvre l&apos;écran de connexion.</translation>
-    </message>
-    <message>
         <source>Dark</source>
         <translation>Foncé</translation>
     </message>
@@ -2306,10 +2341,6 @@ Cet identifiant comprend le code NoSpam (en bleu) et la somme de contrôle (en g
     <message>
         <source>Dark violet</source>
         <translation>Violet foncé</translation>
-    </message>
-    <message>
-        <source>Failed to load profile automatically.</source>
-        <translation>Impossible de charger le profil automatiquement.</translation>
     </message>
     <message>
         <source>online</source>
@@ -2340,30 +2371,6 @@ Cet identifiant comprend le code NoSpam (en bleu) et la somme de contrôle (en g
         <source>Reformatting text...</source>
         <comment>Waiting for text to be reformatted</comment>
         <translation>Reformatage du texte ...</translation>
-    </message>
-    <message>
-        <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation>Définit IPv6 &lt;on&gt;/&lt;off&gt;. La valeur par défaut est ON.</translation>
-    </message>
-    <message>
-        <source>on/off</source>
-        <translation>marche/arrêt</translation>
-    </message>
-    <message>
-        <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation>Définit UDP &lt;on&gt;/&lt;off&gt;. La valeur par défaut est ON.</translation>
-    </message>
-    <message>
-        <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
-        <translation>Définit la découverte LAN &lt;on&gt;/&lt;off&gt;. UDP &quot;off&quot; élimine cette option. La valeur par défaut est ON.</translation>
-    </message>
-    <message>
-        <source>Sets proxy settings. Default is NONE.</source>
-        <translation>Définit les paramètres du proxy. La valeur par défaut est AUCUN.</translation>
-    </message>
-    <message>
-        <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
-        <translation>(SOCKS5/HTTP/NONE):(ADRESSE):(PORT)</translation>
     </message>
     <message>
         <source>%1 message(s) from %2 chats</source>

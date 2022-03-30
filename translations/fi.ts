@@ -591,6 +591,57 @@ mikä voi johtaa ongelmiin videopuheluissa.</translation>
     </message>
 </context>
 <context>
+    <name>AppManager</name>
+    <message>
+        <source>Tox URI to parse</source>
+        <translation type="unfinished">Tox URI:t järjestettäväksi</translation>
+    </message>
+    <message>
+        <source>Starts new instance and loads specified profile.</source>
+        <translation type="unfinished">Käynnistää uuden instanssin ja lataa määritetyn profiilin.</translation>
+    </message>
+    <message>
+        <source>profile</source>
+        <translation type="unfinished">Profiili</translation>
+    </message>
+    <message>
+        <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished">Aloittaa uuden istunnon ja avaa kirjautumisikkunan.</translation>
+    </message>
+    <message>
+        <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished">Kytke IPv6 &lt;päälle&gt;/&lt;pois&gt;. IPv6 on oletuksenä PÄÄLLÄ.</translation>
+    </message>
+    <message>
+        <source>on/off</source>
+        <translation type="unfinished">päällä/pois</translation>
+    </message>
+    <message>
+        <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished">Kytke UDP &lt;päällä&gt;/&lt;pois&gt;. Oletukena PÄÄLLÄ.</translation>
+    </message>
+    <message>
+        <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
+        <translation type="unfinished">Asettaa lähiverkon etsinnän &lt;päälle&gt;/&lt;pois&gt;. Ei toimi jos UDP ei ole käytössä. Oletksena asetus on PÄÄLLÄ.</translation>
+    </message>
+    <message>
+        <source>Sets proxy settings. Default is NONE.</source>
+        <translation type="unfinished">Aseta proxy-asetukset. Oletaksena proxy ei ole käytössä.</translation>
+    </message>
+    <message>
+        <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
+        <translation type="unfinished">(SOCKS5/HTTP/NONE:(osoite):(portti)</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Virhe</translation>
+    </message>
+    <message>
+        <source>Failed to load profile automatically.</source>
+        <translation type="unfinished">Profiilin automaattinen lataaminen epäonnistui.</translation>
+    </message>
+</context>
+<context>
     <name>ChatForm</name>
     <message>
         <source>Send a file</source>
@@ -2225,18 +2276,6 @@ Tämä ID sisältää spammin estävän koodin(joka on sinisellä), ja tarkistus
 <context>
     <name>QObject</name>
     <message>
-        <source>Tox URI to parse</source>
-        <translation>Tox URI:t järjestettäväksi</translation>
-    </message>
-    <message>
-        <source>Starts new instance and loads specified profile.</source>
-        <translation>Käynnistää uuden instanssin ja lataa määritetyn profiilin.</translation>
-    </message>
-    <message>
-        <source>profile</source>
-        <translation>Profiili</translation>
-    </message>
-    <message>
         <source>Default</source>
         <translation>Oletus</translation>
     </message>
@@ -2284,10 +2323,6 @@ Tämä ID sisältää spammin estävän koodin(joka on sinisellä), ja tarkistus
         <translation>qTox ei pystynyt avaamaan chatti-logeja. Ne kytketään pois.</translation>
     </message>
     <message>
-        <source>Starts new instance and opens the login screen.</source>
-        <translation>Aloittaa uuden istunnon ja avaa kirjautumisikkunan.</translation>
-    </message>
-    <message>
         <source>Dark</source>
         <translation>Tumma</translation>
     </message>
@@ -2306,10 +2341,6 @@ Tämä ID sisältää spammin estävän koodin(joka on sinisellä), ja tarkistus
     <message>
         <source>Dark violet</source>
         <translation>Tummanvioletti</translation>
-    </message>
-    <message>
-        <source>Failed to load profile automatically.</source>
-        <translation>Profiilin automaattinen lataaminen epäonnistui.</translation>
     </message>
     <message>
         <source>online</source>
@@ -2340,30 +2371,6 @@ Tämä ID sisältää spammin estävän koodin(joka on sinisellä), ja tarkistus
         <source>Reformatting text...</source>
         <comment>Waiting for text to be reformatted</comment>
         <translation>Uudelleenmuotoillaan tekstiä...</translation>
-    </message>
-    <message>
-        <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation>Kytke IPv6 &lt;päälle&gt;/&lt;pois&gt;. IPv6 on oletuksenä PÄÄLLÄ.</translation>
-    </message>
-    <message>
-        <source>on/off</source>
-        <translation>päällä/pois</translation>
-    </message>
-    <message>
-        <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation>Kytke UDP &lt;päällä&gt;/&lt;pois&gt;. Oletukena PÄÄLLÄ.</translation>
-    </message>
-    <message>
-        <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
-        <translation>Asettaa lähiverkon etsinnän &lt;päälle&gt;/&lt;pois&gt;. Ei toimi jos UDP ei ole käytössä. Oletksena asetus on PÄÄLLÄ.</translation>
-    </message>
-    <message>
-        <source>Sets proxy settings. Default is NONE.</source>
-        <translation>Aseta proxy-asetukset. Oletaksena proxy ei ole käytössä.</translation>
-    </message>
-    <message>
-        <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
-        <translation>(SOCKS5/HTTP/NONE:(osoite):(portti)</translation>
     </message>
     <message>
         <source>%1 message(s) from %2 chats</source>

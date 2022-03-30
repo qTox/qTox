@@ -592,6 +592,57 @@ which may lead to problems with video calls.</source>
     </message>
 </context>
 <context>
+    <name>AppManager</name>
+    <message>
+        <source>Tox URI to parse</source>
+        <translation type="unfinished">Tox URI за подаване</translation>
+    </message>
+    <message>
+        <source>Starts new instance and loads specified profile.</source>
+        <translation type="unfinished">Стартира нова инстанция и зарежда избран профил.</translation>
+    </message>
+    <message>
+        <source>profile</source>
+        <translation type="unfinished">профил</translation>
+    </message>
+    <message>
+        <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished">Стартира ново копие и отваря екрана за вписване.</translation>
+    </message>
+    <message>
+        <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished">Задай IPv6 &lt;вкл.&gt;/&lt;изкл.&gt;. по подр. е ВКЛ.</translation>
+    </message>
+    <message>
+        <source>on/off</source>
+        <translation type="unfinished">включено/изключено</translation>
+    </message>
+    <message>
+        <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished">Задай UDP &lt;вкл.&gt;/&lt;изкл.&gt;. по подр. е ВКЛ.</translation>
+    </message>
+    <message>
+        <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
+        <translation type="unfinished">Задай LAN откриване на &lt;вкл.&gt;/&lt;изкл.&gt;. UDP изключено го пренаписва. по подр. е ВКЛ.</translation>
+    </message>
+    <message>
+        <source>Sets proxy settings. Default is NONE.</source>
+        <translation type="unfinished">Задава настройки на прокси сървър. По подразбиране е „Липсва“</translation>
+    </message>
+    <message>
+        <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
+        <translation type="unfinished">(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Грешка</translation>
+    </message>
+    <message>
+        <source>Failed to load profile automatically.</source>
+        <translation type="unfinished">Грешка при автоматично зареждане на профил.</translation>
+    </message>
+</context>
+<context>
     <name>ChatForm</name>
     <message>
         <source>Send a file</source>
@@ -2226,18 +2277,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
 <context>
     <name>QObject</name>
     <message>
-        <source>Tox URI to parse</source>
-        <translation>Tox URI за подаване</translation>
-    </message>
-    <message>
-        <source>Starts new instance and loads specified profile.</source>
-        <translation>Стартира нова инстанция и зарежда избран профил.</translation>
-    </message>
-    <message>
-        <source>profile</source>
-        <translation>профил</translation>
-    </message>
-    <message>
         <source>Default</source>
         <translation>По подразбиране</translation>
     </message>
@@ -2285,10 +2324,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation>Работен плот</translation>
     </message>
     <message>
-        <source>Starts new instance and opens the login screen.</source>
-        <translation>Стартира ново копие и отваря екрана за вписване.</translation>
-    </message>
-    <message>
         <source>Dark</source>
         <translation>Тъмен</translation>
     </message>
@@ -2307,10 +2342,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Dark violet</source>
         <translation>Тъмно виолетово</translation>
-    </message>
-    <message>
-        <source>Failed to load profile automatically.</source>
-        <translation>Грешка при автоматично зареждане на профил.</translation>
     </message>
     <message>
         <source>online</source>
@@ -2341,30 +2372,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <source>Reformatting text...</source>
         <comment>Waiting for text to be reformatted</comment>
         <translation>Преформатиране на текст…</translation>
-    </message>
-    <message>
-        <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation>Задай IPv6 &lt;вкл.&gt;/&lt;изкл.&gt;. по подр. е ВКЛ.</translation>
-    </message>
-    <message>
-        <source>on/off</source>
-        <translation>включено/изключено</translation>
-    </message>
-    <message>
-        <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation>Задай UDP &lt;вкл.&gt;/&lt;изкл.&gt;. по подр. е ВКЛ.</translation>
-    </message>
-    <message>
-        <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
-        <translation>Задай LAN откриване на &lt;вкл.&gt;/&lt;изкл.&gt;. UDP изключено го пренаписва. по подр. е ВКЛ.</translation>
-    </message>
-    <message>
-        <source>Sets proxy settings. Default is NONE.</source>
-        <translation>Задава настройки на прокси сървър. По подразбиране е „Липсва“</translation>
-    </message>
-    <message>
-        <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
-        <translation>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</translation>
     </message>
     <message>
         <source>%1 message(s) from %2 chats</source>

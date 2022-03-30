@@ -588,6 +588,57 @@ which may lead to problems with video calls.</source>
     </message>
 </context>
 <context>
+    <name>AppManager</name>
+    <message>
+        <source>Tox URI to parse</source>
+        <translation type="unfinished">Tox URI за парсирање</translation>
+    </message>
+    <message>
+        <source>Starts new instance and loads specified profile.</source>
+        <translation type="unfinished">Отвора нова инстанца и го вчитува специфицираниот профил.</translation>
+    </message>
+    <message>
+        <source>profile</source>
+        <translation type="unfinished">профил</translation>
+    </message>
+    <message>
+        <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished">Започни нов пример и отвори го екранот за најава.</translation>
+    </message>
+    <message>
+        <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>on/off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets proxy settings. Default is NONE.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Грешка</translation>
+    </message>
+    <message>
+        <source>Failed to load profile automatically.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ChatForm</name>
     <message>
         <source>Send a file</source>
@@ -2225,18 +2276,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
 <context>
     <name>QObject</name>
     <message>
-        <source>Tox URI to parse</source>
-        <translation>Tox URI за парсирање</translation>
-    </message>
-    <message>
-        <source>Starts new instance and loads specified profile.</source>
-        <translation>Отвора нова инстанца и го вчитува специфицираниот профил.</translation>
-    </message>
-    <message>
-        <source>profile</source>
-        <translation>профил</translation>
-    </message>
-    <message>
         <source>Default</source>
         <translation></translation>
     </message>
@@ -2284,10 +2323,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation>qTox не можеше да ги отвори вашите разговорни дневници, тие ќе бидат оневозможени.</translation>
     </message>
     <message>
-        <source>Starts new instance and opens the login screen.</source>
-        <translation>Започни нов пример и отвори го екранот за најава.</translation>
-    </message>
-    <message>
         <source>Dark</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2305,10 +2340,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Dark violet</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to load profile automatically.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2339,30 +2370,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Reformatting text...</source>
         <comment>Waiting for text to be reformatted</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>on/off</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sets proxy settings. Default is NONE.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

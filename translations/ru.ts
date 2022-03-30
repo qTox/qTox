@@ -593,6 +593,57 @@ which may lead to problems with video calls.</source>
     </message>
 </context>
 <context>
+    <name>AppManager</name>
+    <message>
+        <source>Tox URI to parse</source>
+        <translation type="unfinished">Tox URI для обработки</translation>
+    </message>
+    <message>
+        <source>Starts new instance and loads specified profile.</source>
+        <translation type="unfinished">Запускает новый экземпляр и загружает указанный профиль.</translation>
+    </message>
+    <message>
+        <source>profile</source>
+        <translation type="unfinished">профиль</translation>
+    </message>
+    <message>
+        <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished">Запускает новый экземпляр и открывает экран входа.</translation>
+    </message>
+    <message>
+        <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished">Устанавливает IPv6 &lt;включённым&gt;/&lt;выключенным&gt;. По стандарту он ВКЛЮЧЁН.</translation>
+    </message>
+    <message>
+        <source>on/off</source>
+        <translation type="unfinished">включить/выключить</translation>
+    </message>
+    <message>
+        <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished">Устанавливает UDP &lt;включённым&gt;/&lt;выключенным&gt;. По стандарту он ВКЛЮЧЁН.</translation>
+    </message>
+    <message>
+        <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
+        <translation type="unfinished">Устанавливает обнаружение LAN &lt;включённым&gt;/&lt;выключенным&gt;. Перезаписывает отключённый UDP. По стандарту оно ВКЛЮЧЕНО.</translation>
+    </message>
+    <message>
+        <source>Sets proxy settings. Default is NONE.</source>
+        <translation type="unfinished">Устанавливает настройки прокси. По стандарту они ОТСУТСТВУЮТ.</translation>
+    </message>
+    <message>
+        <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
+        <translation type="unfinished">(SOCKS5/HTTP/ОТСУТСТВУЕТ):(АДРЕС):(ПОРТ)</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Ошибка</translation>
+    </message>
+    <message>
+        <source>Failed to load profile automatically.</source>
+        <translation type="unfinished">Не удалось загрузить профиль автоматически.</translation>
+    </message>
+</context>
+<context>
     <name>ChatForm</name>
     <message>
         <source>Send a file</source>
@@ -2232,21 +2283,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
 <context>
     <name>QObject</name>
     <message>
-        <source>Tox URI to parse</source>
-        <translatorcomment>Без перевода, так как весь остальной CLI на английском</translatorcomment>
-        <translation>Tox URI для обработки</translation>
-    </message>
-    <message>
-        <source>Starts new instance and loads specified profile.</source>
-        <translatorcomment>Без перевода, так как весь остальной CLI на английском</translatorcomment>
-        <translation>Запускает новый экземпляр и загружает указанный профиль.</translation>
-    </message>
-    <message>
-        <source>profile</source>
-        <translatorcomment>Без перевода, так как весь остальной CLI на английском</translatorcomment>
-        <translation>профиль</translation>
-    </message>
-    <message>
         <source>Default</source>
         <translation>По умолчанию</translation>
     </message>
@@ -2294,10 +2330,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation>qTox не может загрузить историю переписки, она будет отключена.</translation>
     </message>
     <message>
-        <source>Starts new instance and opens the login screen.</source>
-        <translation>Запускает новый экземпляр и открывает экран входа.</translation>
-    </message>
-    <message>
         <source>Dark</source>
         <translation>Темный</translation>
     </message>
@@ -2316,10 +2348,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Dark violet</source>
         <translation>Темно-фиолетовый</translation>
-    </message>
-    <message>
-        <source>Failed to load profile automatically.</source>
-        <translation>Не удалось загрузить профиль автоматически.</translation>
     </message>
     <message>
         <source>online</source>
@@ -2350,30 +2378,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <source>Reformatting text...</source>
         <comment>Waiting for text to be reformatted</comment>
         <translation>Переформатирование текста...</translation>
-    </message>
-    <message>
-        <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation>Устанавливает IPv6 &lt;включённым&gt;/&lt;выключенным&gt;. По стандарту он ВКЛЮЧЁН.</translation>
-    </message>
-    <message>
-        <source>on/off</source>
-        <translation>включить/выключить</translation>
-    </message>
-    <message>
-        <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation>Устанавливает UDP &lt;включённым&gt;/&lt;выключенным&gt;. По стандарту он ВКЛЮЧЁН.</translation>
-    </message>
-    <message>
-        <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
-        <translation>Устанавливает обнаружение LAN &lt;включённым&gt;/&lt;выключенным&gt;. Перезаписывает отключённый UDP. По стандарту оно ВКЛЮЧЕНО.</translation>
-    </message>
-    <message>
-        <source>Sets proxy settings. Default is NONE.</source>
-        <translation>Устанавливает настройки прокси. По стандарту они ОТСУТСТВУЮТ.</translation>
-    </message>
-    <message>
-        <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
-        <translation>(SOCKS5/HTTP/ОТСУТСТВУЕТ):(АДРЕС):(ПОРТ)</translation>
     </message>
     <message>
         <source>%1 message(s) from %2 chats</source>

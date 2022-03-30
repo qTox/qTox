@@ -592,6 +592,57 @@ noe som kan forårsake problemer i videosamtaler.</translation>
     </message>
 </context>
 <context>
+    <name>AppManager</name>
+    <message>
+        <source>Tox URI to parse</source>
+        <translation type="unfinished">Tox-URI som skal analyseres</translation>
+    </message>
+    <message>
+        <source>Starts new instance and loads specified profile.</source>
+        <translation type="unfinished">Starter en ny instanse og laster valgt profil.</translation>
+    </message>
+    <message>
+        <source>profile</source>
+        <translation type="unfinished">profil</translation>
+    </message>
+    <message>
+        <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished">Starter ny instans og åpner innloggingsskjermen.</translation>
+    </message>
+    <message>
+        <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished">Slår IPv6 &lt;på&gt;/&lt;av&gt;. Forvalget er PÅ.</translation>
+    </message>
+    <message>
+        <source>on/off</source>
+        <translation type="unfinished">av/på</translation>
+    </message>
+    <message>
+        <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished">Slår UDP &lt;på&gt;/&lt;av&gt;. Forvalget er PÅ.</translation>
+    </message>
+    <message>
+        <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
+        <translation type="unfinished">Setter LAN-oppdagelse &lt;på&gt;/&lt;av&gt;. UDP «av» overstyrer. Forvalget er PÅ.</translation>
+    </message>
+    <message>
+        <source>Sets proxy settings. Default is NONE.</source>
+        <translation type="unfinished">Setter mellomtjenerinnstillinger. Forvalget er INGEN.</translation>
+    </message>
+    <message>
+        <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
+        <translation type="unfinished">(SOCKS5/HTTP/INGEN):(ADRESSE):(PORT)</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Feilmelding</translation>
+    </message>
+    <message>
+        <source>Failed to load profile automatically.</source>
+        <translation type="unfinished">Klarte ikke å laste inn profil automatisk.</translation>
+    </message>
+</context>
+<context>
     <name>ChatForm</name>
     <message>
         <source>Send a file</source>
@@ -2227,18 +2278,6 @@ Denne ID-en inkluderer NoSpam-koden (i blått), og sjekksummen (i grått).</tran
 <context>
     <name>QObject</name>
     <message>
-        <source>Tox URI to parse</source>
-        <translation>Tox-URI som skal analyseres</translation>
-    </message>
-    <message>
-        <source>Starts new instance and loads specified profile.</source>
-        <translation>Starter en ny instanse og laster valgt profil.</translation>
-    </message>
-    <message>
-        <source>profile</source>
-        <translation>profil</translation>
-    </message>
-    <message>
         <source>Default</source>
         <translation>Standard</translation>
     </message>
@@ -2286,10 +2325,6 @@ Denne ID-en inkluderer NoSpam-koden (i blått), og sjekksummen (i grått).</tran
         <translation>Skrivebord</translation>
     </message>
     <message>
-        <source>Starts new instance and opens the login screen.</source>
-        <translation>Starter ny instans og åpner innloggingsskjermen.</translation>
-    </message>
-    <message>
         <source>Dark</source>
         <translation>Mørkt</translation>
     </message>
@@ -2308,10 +2343,6 @@ Denne ID-en inkluderer NoSpam-koden (i blått), og sjekksummen (i grått).</tran
     <message>
         <source>Dark violet</source>
         <translation>Mørkelilla</translation>
-    </message>
-    <message>
-        <source>Failed to load profile automatically.</source>
-        <translation>Klarte ikke å laste inn profil automatisk.</translation>
     </message>
     <message>
         <source>online</source>
@@ -2342,30 +2373,6 @@ Denne ID-en inkluderer NoSpam-koden (i blått), og sjekksummen (i grått).</tran
         <source>Reformatting text...</source>
         <comment>Waiting for text to be reformatted</comment>
         <translation type="unfinished">Reformaterer tekst …</translation>
-    </message>
-    <message>
-        <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation type="unfinished">Slår IPv6 &lt;på&gt;/&lt;av&gt;. Forvalget er PÅ.</translation>
-    </message>
-    <message>
-        <source>on/off</source>
-        <translation>av/på</translation>
-    </message>
-    <message>
-        <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation type="unfinished">Slår UDP &lt;på&gt;/&lt;av&gt;. Forvalget er PÅ.</translation>
-    </message>
-    <message>
-        <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
-        <translation>Setter LAN-oppdagelse &lt;på&gt;/&lt;av&gt;. UDP «av» overstyrer. Forvalget er PÅ.</translation>
-    </message>
-    <message>
-        <source>Sets proxy settings. Default is NONE.</source>
-        <translation>Setter mellomtjenerinnstillinger. Forvalget er INGEN.</translation>
-    </message>
-    <message>
-        <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
-        <translation>(SOCKS5/HTTP/INGEN):(ADRESSE):(PORT)</translation>
     </message>
     <message>
         <source>%1 message(s) from %2 chats</source>

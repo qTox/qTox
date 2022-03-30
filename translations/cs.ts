@@ -592,6 +592,57 @@ může dojít během video hovoru k výpadkům či jiným problémům.</translat
     </message>
 </context>
 <context>
+    <name>AppManager</name>
+    <message>
+        <source>Tox URI to parse</source>
+        <translation type="unfinished">Tox URI pro zpracování</translation>
+    </message>
+    <message>
+        <source>Starts new instance and loads specified profile.</source>
+        <translation type="unfinished">Spustit novou instanci a nahrát profil.</translation>
+    </message>
+    <message>
+        <source>profile</source>
+        <translation type="unfinished">profil</translation>
+    </message>
+    <message>
+        <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished">Spustí novou instanci a otevře přihlašovací obrazovku.</translation>
+    </message>
+    <message>
+        <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished">Nastavuje IPv6 &lt;povoleno&gt;/&lt;zakázáno&gt;. Výchozí je POVOLENO.</translation>
+    </message>
+    <message>
+        <source>on/off</source>
+        <translation type="unfinished">povoleno/zakázáno</translation>
+    </message>
+    <message>
+        <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished">Nastavuje UDP &lt;povoleno&gt;/&lt;zakázáno&gt;. Výchozí je POVOLENO.</translation>
+    </message>
+    <message>
+        <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
+        <translation type="unfinished">Nastavuje vyhledávání v Místní síti (LAN discovery) &lt;povoleno&gt;/&lt;zakázáno&gt;. Přepíše UDP zakázáno. Výchozí je POVOLENO.</translation>
+    </message>
+    <message>
+        <source>Sets proxy settings. Default is NONE.</source>
+        <translation type="unfinished">Nastavení proxy serveru. Výchozí je NONE (žádný).</translation>
+    </message>
+    <message>
+        <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
+        <translation type="unfinished">(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Chyba</translation>
+    </message>
+    <message>
+        <source>Failed to load profile automatically.</source>
+        <translation type="unfinished">Nepodařilo se automaticky načíst profil.</translation>
+    </message>
+</context>
+<context>
     <name>ChatForm</name>
     <message>
         <source>Send a file</source>
@@ -2229,18 +2280,6 @@ ID zahrnuje kód NoSpam (modře) a kontrolní součet (šedě).</translation>
 <context>
     <name>QObject</name>
     <message>
-        <source>Tox URI to parse</source>
-        <translation>Tox URI pro zpracování</translation>
-    </message>
-    <message>
-        <source>Starts new instance and loads specified profile.</source>
-        <translation>Spustit novou instanci a nahrát profil.</translation>
-    </message>
-    <message>
-        <source>profile</source>
-        <translation>profil</translation>
-    </message>
-    <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
         <translation>Jsem %1 ! Napíšeš mi ?</translation>
@@ -2288,10 +2327,6 @@ ID zahrnuje kód NoSpam (modře) a kontrolní součet (šedě).</translation>
         <translation>Plocha</translation>
     </message>
     <message>
-        <source>Starts new instance and opens the login screen.</source>
-        <translation>Spustí novou instanci a otevře přihlašovací obrazovku.</translation>
-    </message>
-    <message>
         <source>Dark</source>
         <translation>Tmavý</translation>
     </message>
@@ -2310,10 +2345,6 @@ ID zahrnuje kód NoSpam (modře) a kontrolní součet (šedě).</translation>
     <message>
         <source>Dark violet</source>
         <translation>Tmavě fialová</translation>
-    </message>
-    <message>
-        <source>Failed to load profile automatically.</source>
-        <translation>Nepodařilo se automaticky načíst profil.</translation>
     </message>
     <message>
         <source>online</source>
@@ -2344,30 +2375,6 @@ ID zahrnuje kód NoSpam (modře) a kontrolní součet (šedě).</translation>
         <source>Reformatting text...</source>
         <comment>Waiting for text to be reformatted</comment>
         <translation>Přeformátování textu…</translation>
-    </message>
-    <message>
-        <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation>Nastavuje IPv6 &lt;povoleno&gt;/&lt;zakázáno&gt;. Výchozí je POVOLENO.</translation>
-    </message>
-    <message>
-        <source>on/off</source>
-        <translation>povoleno/zakázáno</translation>
-    </message>
-    <message>
-        <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation>Nastavuje UDP &lt;povoleno&gt;/&lt;zakázáno&gt;. Výchozí je POVOLENO.</translation>
-    </message>
-    <message>
-        <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
-        <translation>Nastavuje vyhledávání v Místní síti (LAN discovery) &lt;povoleno&gt;/&lt;zakázáno&gt;. Přepíše UDP zakázáno. Výchozí je POVOLENO.</translation>
-    </message>
-    <message>
-        <source>Sets proxy settings. Default is NONE.</source>
-        <translation>Nastavení proxy serveru. Výchozí je NONE (žádný).</translation>
-    </message>
-    <message>
-        <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
-        <translation>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</translation>
     </message>
     <message>
         <source>%1 message(s) from %2 chats</source>

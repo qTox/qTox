@@ -591,6 +591,57 @@ o que pode levar a problemas com as vídeo-chamadas.</translation>
     </message>
 </context>
 <context>
+    <name>AppManager</name>
+    <message>
+        <source>Tox URI to parse</source>
+        <translation type="unfinished">URI do Tox para processar</translation>
+    </message>
+    <message>
+        <source>Starts new instance and loads specified profile.</source>
+        <translation type="unfinished">Inicia uma nova instância e carrega o perfil especificado.</translation>
+    </message>
+    <message>
+        <source>profile</source>
+        <translation type="unfinished">perfil</translation>
+    </message>
+    <message>
+        <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished">Inicia uma nova instância e abre o ecrã de início de sessão.</translation>
+    </message>
+    <message>
+        <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished">Define IPv6 &lt;ativado&gt;/&lt;desativado&gt;. O padrão é ATIVADO.</translation>
+    </message>
+    <message>
+        <source>on/off</source>
+        <translation type="unfinished">ligado/desligado</translation>
+    </message>
+    <message>
+        <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished">Define UDP &lt;ativado&gt;/&lt;desativado&gt;. O padrão é ATIVADO.</translation>
+    </message>
+    <message>
+        <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
+        <translation type="unfinished">Define a descoberta da LAN &lt;ativada&gt;/&lt;desativada&gt;. O UDP desativado elimina esta opção. O padrão é ATIVADA.</translation>
+    </message>
+    <message>
+        <source>Sets proxy settings. Default is NONE.</source>
+        <translation type="unfinished">Define as configurações de proxy. O padrão é NENHUM.</translation>
+    </message>
+    <message>
+        <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
+        <translation type="unfinished">(SOCKS5/HTTP/NENHUM):(ENDEREÇO):(PORTA)</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Erro</translation>
+    </message>
+    <message>
+        <source>Failed to load profile automatically.</source>
+        <translation type="unfinished">Falha ao carregar o perfil automaticamente.</translation>
+    </message>
+</context>
+<context>
     <name>ChatForm</name>
     <message>
         <source>Send a file</source>
@@ -2225,18 +2276,6 @@ Este ID inclui o código NoSpam (em azul) e o checkum (em cinzento).</translatio
 <context>
     <name>QObject</name>
     <message>
-        <source>Tox URI to parse</source>
-        <translation>URI do Tox para processar</translation>
-    </message>
-    <message>
-        <source>Starts new instance and loads specified profile.</source>
-        <translation>Inicia uma nova instância e carrega o perfil especificado.</translation>
-    </message>
-    <message>
-        <source>profile</source>
-        <translation>perfil</translation>
-    </message>
-    <message>
         <source>Default</source>
         <translation>Padrão</translation>
     </message>
@@ -2284,10 +2323,6 @@ Este ID inclui o código NoSpam (em azul) e o checkum (em cinzento).</translatio
         <translation>Área de trabalho</translation>
     </message>
     <message>
-        <source>Starts new instance and opens the login screen.</source>
-        <translation>Inicia uma nova instância e abre o ecrã de início de sessão.</translation>
-    </message>
-    <message>
         <source>Dark</source>
         <translation>Escuro</translation>
     </message>
@@ -2306,10 +2341,6 @@ Este ID inclui o código NoSpam (em azul) e o checkum (em cinzento).</translatio
     <message>
         <source>Dark violet</source>
         <translation>Escuro violeta</translation>
-    </message>
-    <message>
-        <source>Failed to load profile automatically.</source>
-        <translation>Falha ao carregar o perfil automaticamente.</translation>
     </message>
     <message>
         <source>online</source>
@@ -2340,30 +2371,6 @@ Este ID inclui o código NoSpam (em azul) e o checkum (em cinzento).</translatio
         <source>Reformatting text...</source>
         <comment>Waiting for text to be reformatted</comment>
         <translation>Reformatando o texto...</translation>
-    </message>
-    <message>
-        <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation>Define IPv6 &lt;ativado&gt;/&lt;desativado&gt;. O padrão é ATIVADO.</translation>
-    </message>
-    <message>
-        <source>on/off</source>
-        <translation>ligado/desligado</translation>
-    </message>
-    <message>
-        <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation>Define UDP &lt;ativado&gt;/&lt;desativado&gt;. O padrão é ATIVADO.</translation>
-    </message>
-    <message>
-        <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
-        <translation>Define a descoberta da LAN &lt;ativada&gt;/&lt;desativada&gt;. O UDP desativado elimina esta opção. O padrão é ATIVADA.</translation>
-    </message>
-    <message>
-        <source>Sets proxy settings. Default is NONE.</source>
-        <translation>Define as configurações de proxy. O padrão é NENHUM.</translation>
-    </message>
-    <message>
-        <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
-        <translation>(SOCKS5/HTTP/NENHUM):(ENDEREÇO):(PORTA)</translation>
     </message>
     <message>
         <source>%1 message(s) from %2 chats</source>

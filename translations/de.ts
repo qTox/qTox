@@ -591,6 +591,57 @@ dadurch kann es zu Problemen bei Videoanrufen kommen.</translation>
     </message>
 </context>
 <context>
+    <name>AppManager</name>
+    <message>
+        <source>Tox URI to parse</source>
+        <translation type="unfinished">Zu parsende Tox-URI</translation>
+    </message>
+    <message>
+        <source>Starts new instance and loads specified profile.</source>
+        <translation type="unfinished">Startet eine neue Instanz und lädt das angegebene Profil.</translation>
+    </message>
+    <message>
+        <source>profile</source>
+        <translation type="unfinished">Profil</translation>
+    </message>
+    <message>
+        <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished">Startet eine neue Instanz und öffnet den Anmeldebildschirm.</translation>
+    </message>
+    <message>
+        <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished">Stellt IPv6 &lt;on&gt;/&lt;off&gt;. Standardmäßig auf ON.</translation>
+    </message>
+    <message>
+        <source>on/off</source>
+        <translation type="unfinished">ein/aus</translation>
+    </message>
+    <message>
+        <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished">Legt UDP-&lt;on&gt;/&lt;off&gt; fest. Der Standardwert ist ON.</translation>
+    </message>
+    <message>
+        <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
+        <translation type="unfinished">Legt die LAN-Erkennungs-&lt;on&gt;/&lt;off&gt; fest. UDP deaktivierte Außerkraftsetzungen. Der Standardwert ist ON.</translation>
+    </message>
+    <message>
+        <source>Sets proxy settings. Default is NONE.</source>
+        <translation type="unfinished">Legt Proxy-Einstellungen fest. Der Standardwert ist KEINE.</translation>
+    </message>
+    <message>
+        <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
+        <translation type="unfinished">(SOCKS5/HTTP/KEINE):(ADRESSE):(PORT)</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Fehler</translation>
+    </message>
+    <message>
+        <source>Failed to load profile automatically.</source>
+        <translation type="unfinished">Das automatische Laden des Profils ist fehlgeschlagen.</translation>
+    </message>
+</context>
+<context>
     <name>ChatForm</name>
     <message>
         <source>Send a file</source>
@@ -2234,18 +2285,6 @@ Diese ID enthält den NoSpam-Code (in blau) und die Prüfsumme (in grau).</trans
 <context>
     <name>QObject</name>
     <message>
-        <source>Tox URI to parse</source>
-        <translation>Zu parsende Tox-URI</translation>
-    </message>
-    <message>
-        <source>Starts new instance and loads specified profile.</source>
-        <translation>Startet eine neue Instanz und lädt das angegebene Profil.</translation>
-    </message>
-    <message>
-        <source>profile</source>
-        <translation>Profil</translation>
-    </message>
-    <message>
         <source>Default</source>
         <translation>Standard</translation>
     </message>
@@ -2293,10 +2332,6 @@ Diese ID enthält den NoSpam-Code (in blau) und die Prüfsumme (in grau).</trans
         <translation>qTox konnte Ihr Gesprächsprotokoll nicht öffnen. Das Speichern der Gespräche wird deaktiviert!</translation>
     </message>
     <message>
-        <source>Starts new instance and opens the login screen.</source>
-        <translation>Startet eine neue Instanz und öffnet den Anmeldebildschirm.</translation>
-    </message>
-    <message>
         <source>Dark</source>
         <translation>Dunkel</translation>
     </message>
@@ -2315,10 +2350,6 @@ Diese ID enthält den NoSpam-Code (in blau) und die Prüfsumme (in grau).</trans
     <message>
         <source>Dark violet</source>
         <translation>Dunkelviolett</translation>
-    </message>
-    <message>
-        <source>Failed to load profile automatically.</source>
-        <translation>Das automatische Laden des Profils ist fehlgeschlagen.</translation>
     </message>
     <message>
         <source>online</source>
@@ -2349,30 +2380,6 @@ Diese ID enthält den NoSpam-Code (in blau) und die Prüfsumme (in grau).</trans
         <source>Reformatting text...</source>
         <comment>Waiting for text to be reformatted</comment>
         <translation>Neuformatierung des Texts...</translation>
-    </message>
-    <message>
-        <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation>Stellt IPv6 &lt;on&gt;/&lt;off&gt;. Standardmäßig auf ON.</translation>
-    </message>
-    <message>
-        <source>on/off</source>
-        <translation>ein/aus</translation>
-    </message>
-    <message>
-        <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation>Legt UDP-&lt;on&gt;/&lt;off&gt; fest. Der Standardwert ist ON.</translation>
-    </message>
-    <message>
-        <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
-        <translation>Legt die LAN-Erkennungs-&lt;on&gt;/&lt;off&gt; fest. UDP deaktivierte Außerkraftsetzungen. Der Standardwert ist ON.</translation>
-    </message>
-    <message>
-        <source>Sets proxy settings. Default is NONE.</source>
-        <translation>Legt Proxy-Einstellungen fest. Der Standardwert ist KEINE.</translation>
-    </message>
-    <message>
-        <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
-        <translation>(SOCKS5/HTTP/KEINE):(ADRESSE):(PORT)</translation>
     </message>
     <message>
         <source>%1 message(s) from %2 chats</source>

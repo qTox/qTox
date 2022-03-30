@@ -591,6 +591,57 @@ mis võib põhjustada probleeme videokõnedega.</translation>
     </message>
 </context>
 <context>
+    <name>AppManager</name>
+    <message>
+        <source>Tox URI to parse</source>
+        <translation type="unfinished">Toxi URI, mida kasutada</translation>
+    </message>
+    <message>
+        <source>Starts new instance and loads specified profile.</source>
+        <translation type="unfinished">Käivitab uue üksuse ja laeb määratud profiili.</translation>
+    </message>
+    <message>
+        <source>profile</source>
+        <translation type="unfinished">profiil</translation>
+    </message>
+    <message>
+        <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished">Käivitab uue koopia ja avab sisselogimise ekraani.</translation>
+    </message>
+    <message>
+        <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished">Saad IPv6 võrguprotokolli kasutamise &lt;sisse&gt;/&lt;välja&gt; lülitada. Vaikimisi on ta kasutusel.</translation>
+    </message>
+    <message>
+        <source>on/off</source>
+        <translation type="unfinished">sisse/välja</translation>
+    </message>
+    <message>
+        <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished">Saad UPD võrguprotokolli kasutamise &lt;sisse&gt;/&lt;välja&gt; lülitada. Vaikimisi on ta kasutusel.</translation>
+    </message>
+    <message>
+        <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
+        <translation type="unfinished">Saad seadmete tuvastamise kohtvõrgus &lt;sisse&gt;/&lt;välja&gt; lülitada. Vaikimisi on ta kasutusel.</translation>
+    </message>
+    <message>
+        <source>Sets proxy settings. Default is NONE.</source>
+        <translation type="unfinished">Saad seadistada puhverserveri kasutamise. Vaikimisi on puhverserver seadistamata.</translation>
+    </message>
+    <message>
+        <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
+        <translation type="unfinished">(SOCKS5/HTTP/NONE):(aadress):(port)</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Viga</translation>
+    </message>
+    <message>
+        <source>Failed to load profile automatically.</source>
+        <translation type="unfinished">Profiili automaatne laadimine ebaõnnestus.</translation>
+    </message>
+</context>
+<context>
     <name>ChatForm</name>
     <message>
         <source>Send a file</source>
@@ -2227,19 +2278,6 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
 <context>
     <name>QObject</name>
     <message>
-        <source>Tox URI to parse</source>
-        <translation>Toxi URI, mida kasutada</translation>
-    </message>
-    <message>
-        <source>Starts new instance and loads specified profile.</source>
-        <translatorcomment>Pole parim tõlge</translatorcomment>
-        <translation>Käivitab uue üksuse ja laeb määratud profiili.</translation>
-    </message>
-    <message>
-        <source>profile</source>
-        <translation>profiil</translation>
-    </message>
-    <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
         <translation>%1 siin! Ehk liitud minuga Tox keskkonnas?</translation>
@@ -2287,10 +2325,6 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
         <translation>Sissetulev kõne...</translation>
     </message>
     <message>
-        <source>Starts new instance and opens the login screen.</source>
-        <translation>Käivitab uue koopia ja avab sisselogimise ekraani.</translation>
-    </message>
-    <message>
         <source>Dark</source>
         <translation>Tume</translation>
     </message>
@@ -2309,10 +2343,6 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
     <message>
         <source>Dark violet</source>
         <translation>Tumelilla</translation>
-    </message>
-    <message>
-        <source>Failed to load profile automatically.</source>
-        <translation>Profiili automaatne laadimine ebaõnnestus.</translation>
     </message>
     <message>
         <source>online</source>
@@ -2343,30 +2373,6 @@ See ID sisaldab NoSpam koodi (sinine) ja kontrollsumma (hall).</translation>
         <source>Reformatting text...</source>
         <comment>Waiting for text to be reformatted</comment>
         <translation>Vormindan teksti uuesti...</translation>
-    </message>
-    <message>
-        <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation>Saad IPv6 võrguprotokolli kasutamise &lt;sisse&gt;/&lt;välja&gt; lülitada. Vaikimisi on ta kasutusel.</translation>
-    </message>
-    <message>
-        <source>on/off</source>
-        <translation>sisse/välja</translation>
-    </message>
-    <message>
-        <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation>Saad UPD võrguprotokolli kasutamise &lt;sisse&gt;/&lt;välja&gt; lülitada. Vaikimisi on ta kasutusel.</translation>
-    </message>
-    <message>
-        <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
-        <translation>Saad seadmete tuvastamise kohtvõrgus &lt;sisse&gt;/&lt;välja&gt; lülitada. Vaikimisi on ta kasutusel.</translation>
-    </message>
-    <message>
-        <source>Sets proxy settings. Default is NONE.</source>
-        <translation>Saad seadistada puhverserveri kasutamise. Vaikimisi on puhverserver seadistamata.</translation>
-    </message>
-    <message>
-        <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
-        <translation>(SOCKS5/HTTP/NONE):(aadress):(port)</translation>
     </message>
     <message>
         <source>%1 message(s) from %2 chats</source>

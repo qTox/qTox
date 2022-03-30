@@ -592,6 +592,57 @@ ceea ce poate duce la probleme cu apelurile video.</translation>
     </message>
 </context>
 <context>
+    <name>AppManager</name>
+    <message>
+        <source>Tox URI to parse</source>
+        <translation type="unfinished">Tox URI pentru analiză</translation>
+    </message>
+    <message>
+        <source>Starts new instance and loads specified profile.</source>
+        <translation type="unfinished">Porniți o instanță nouă și încărcați profilul specificat.</translation>
+    </message>
+    <message>
+        <source>profile</source>
+        <translation type="unfinished">profil</translation>
+    </message>
+    <message>
+        <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished">Pornește o nouă instanță și deschide ecranul de conectare.</translation>
+    </message>
+    <message>
+        <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished">Setați IPv6 &lt;pornit&gt;/&lt;oprit&gt;. Implicit este PORNIT.</translation>
+    </message>
+    <message>
+        <source>on/off</source>
+        <translation type="unfinished">pornit/oprit</translation>
+    </message>
+    <message>
+        <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished">Setați UDP &lt;pornit&gt;/&lt;oprit&gt;. Implicit este PORNIT.</translation>
+    </message>
+    <message>
+        <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
+        <translation type="unfinished">Setați descoperire LAN &lt;pornit&gt;/&lt;oprit&gt;. UDP suprascriere oprita. Implicit este PORNIT.</translation>
+    </message>
+    <message>
+        <source>Sets proxy settings. Default is NONE.</source>
+        <translation type="unfinished">Setează setările proxy. Valoarea implicită este NIMIC.</translation>
+    </message>
+    <message>
+        <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
+        <translation type="unfinished">(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Eroare</translation>
+    </message>
+    <message>
+        <source>Failed to load profile automatically.</source>
+        <translation type="unfinished">Nu s-a putut încărca automat profilul.</translation>
+    </message>
+</context>
+<context>
     <name>ChatForm</name>
     <message>
         <source>Send a file</source>
@@ -2237,18 +2288,6 @@ Acest ID include codul NoSpam (în albastru) și suma de control (în gri).</tra
 <context>
     <name>QObject</name>
     <message>
-        <source>Tox URI to parse</source>
-        <translation>Tox URI pentru analiză</translation>
-    </message>
-    <message>
-        <source>Starts new instance and loads specified profile.</source>
-        <translation>Porniți o instanță nouă și încărcați profilul specificat.</translation>
-    </message>
-    <message>
-        <source>profile</source>
-        <translation>profil</translation>
-    </message>
-    <message>
         <source>Default</source>
         <translation>Implicit</translation>
     </message>
@@ -2296,10 +2335,6 @@ Acest ID include codul NoSpam (în albastru) și suma de control (în gri).</tra
         <translation>qTox nu au putut deschide jurnalele de discuții, vor fi dezactivate.</translation>
     </message>
     <message>
-        <source>Starts new instance and opens the login screen.</source>
-        <translation>Pornește o nouă instanță și deschide ecranul de conectare.</translation>
-    </message>
-    <message>
         <source>Dark</source>
         <translation>Întunecat</translation>
     </message>
@@ -2318,10 +2353,6 @@ Acest ID include codul NoSpam (în albastru) și suma de control (în gri).</tra
     <message>
         <source>Dark violet</source>
         <translation>Violet închis</translation>
-    </message>
-    <message>
-        <source>Failed to load profile automatically.</source>
-        <translation>Nu s-a putut încărca automat profilul.</translation>
     </message>
     <message>
         <source>online</source>
@@ -2352,30 +2383,6 @@ Acest ID include codul NoSpam (în albastru) și suma de control (în gri).</tra
         <source>Reformatting text...</source>
         <comment>Waiting for text to be reformatted</comment>
         <translation>Se reformatează textul...</translation>
-    </message>
-    <message>
-        <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation>Setați IPv6 &lt;pornit&gt;/&lt;oprit&gt;. Implicit este PORNIT.</translation>
-    </message>
-    <message>
-        <source>on/off</source>
-        <translation>pornit/oprit</translation>
-    </message>
-    <message>
-        <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation>Setați UDP &lt;pornit&gt;/&lt;oprit&gt;. Implicit este PORNIT.</translation>
-    </message>
-    <message>
-        <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
-        <translation>Setați descoperire LAN &lt;pornit&gt;/&lt;oprit&gt;. UDP suprascriere oprita. Implicit este PORNIT.</translation>
-    </message>
-    <message>
-        <source>Sets proxy settings. Default is NONE.</source>
-        <translation>Setează setările proxy. Valoarea implicită este NIMIC.</translation>
-    </message>
-    <message>
-        <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
-        <translation>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</translation>
     </message>
     <message>
         <source>%1 message(s) from %2 chats</source>

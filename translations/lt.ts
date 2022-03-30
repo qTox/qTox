@@ -592,6 +592,57 @@ dėl to gali kilti vaizdo skambučių problemų.</translation>
     </message>
 </context>
 <context>
+    <name>AppManager</name>
+    <message>
+        <source>Tox URI to parse</source>
+        <translation type="unfinished">analizuoti Tox URI</translation>
+    </message>
+    <message>
+        <source>Starts new instance and loads specified profile.</source>
+        <translation type="unfinished">Atidaro naują langą ir aktyvuoja nurodytą profilį.</translation>
+    </message>
+    <message>
+        <source>profile</source>
+        <translation type="unfinished">profilis</translation>
+    </message>
+    <message>
+        <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished">Paleidžia naują egzempliorių ir atveria prisijungimo ekraną.</translation>
+    </message>
+    <message>
+        <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished">Nustato IPv6 &lt;įjungta&gt;/&lt;išjungta&gt;. Numatytoji reikšmė yra ĮJUNGTA.</translation>
+    </message>
+    <message>
+        <source>on/off</source>
+        <translation type="unfinished">įjungta/išjungta</translation>
+    </message>
+    <message>
+        <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished">Nustato UDP &lt;įjungta&gt;/&lt;išjungta&gt;. Numatytoji reikšmė yra ĮJUNGTA.</translation>
+    </message>
+    <message>
+        <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
+        <translation type="unfinished">Nustato LAN aptikimą &lt;įjungta&gt;/&lt;išjungta&gt;. UDP išjungimas turi viršenybę. Numatytasis yra ĮJUNGTA.</translation>
+    </message>
+    <message>
+        <source>Sets proxy settings. Default is NONE.</source>
+        <translation type="unfinished">Nustato įgaliotojo serverio nustatymus. Numatytoji reikšmė yra NĖRA.</translation>
+    </message>
+    <message>
+        <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
+        <translation type="unfinished">(SOCKS5/HTTP/NĖRA):(ADRESAS):(PRIEVADAS)</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Klaida</translation>
+    </message>
+    <message>
+        <source>Failed to load profile automatically.</source>
+        <translation type="unfinished">Nepavyko automatiškai įkelti profilio.</translation>
+    </message>
+</context>
+<context>
     <name>ChatForm</name>
     <message>
         <source>Send a file</source>
@@ -2231,18 +2282,6 @@ Pasidalinkite ja su draugais, kad pradėtumėte kalbėtis.
 <context>
     <name>QObject</name>
     <message>
-        <source>Tox URI to parse</source>
-        <translation>analizuoti Tox URI</translation>
-    </message>
-    <message>
-        <source>Starts new instance and loads specified profile.</source>
-        <translation>Atidaro naują langą ir aktyvuoja nurodytą profilį.</translation>
-    </message>
-    <message>
-        <source>profile</source>
-        <translation>profilis</translation>
-    </message>
-    <message>
         <source>Default</source>
         <translation>Numatyta</translation>
     </message>
@@ -2290,10 +2329,6 @@ Pasidalinkite ja su draugais, kad pradėtumėte kalbėtis.
         <translation>qTox nepavyko atidaryti pokalbių žurnalo, todėl jis buvo išjungtas.</translation>
     </message>
     <message>
-        <source>Starts new instance and opens the login screen.</source>
-        <translation>Paleidžia naują egzempliorių ir atveria prisijungimo ekraną.</translation>
-    </message>
-    <message>
         <source>Dark</source>
         <translation>Tamsi</translation>
     </message>
@@ -2312,10 +2347,6 @@ Pasidalinkite ja su draugais, kad pradėtumėte kalbėtis.
     <message>
         <source>Dark violet</source>
         <translation>Tamsiai violetinė</translation>
-    </message>
-    <message>
-        <source>Failed to load profile automatically.</source>
-        <translation>Nepavyko automatiškai įkelti profilio.</translation>
     </message>
     <message>
         <source>online</source>
@@ -2346,30 +2377,6 @@ Pasidalinkite ja su draugais, kad pradėtumėte kalbėtis.
         <source>Reformatting text...</source>
         <comment>Waiting for text to be reformatted</comment>
         <translation>Performatuojamas tekstas...</translation>
-    </message>
-    <message>
-        <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation>Nustato IPv6 &lt;įjungta&gt;/&lt;išjungta&gt;. Numatytoji reikšmė yra ĮJUNGTA.</translation>
-    </message>
-    <message>
-        <source>on/off</source>
-        <translation>įjungta/išjungta</translation>
-    </message>
-    <message>
-        <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation>Nustato UDP &lt;įjungta&gt;/&lt;išjungta&gt;. Numatytoji reikšmė yra ĮJUNGTA.</translation>
-    </message>
-    <message>
-        <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
-        <translation>Nustato LAN aptikimą &lt;įjungta&gt;/&lt;išjungta&gt;. UDP išjungimas turi viršenybę. Numatytasis yra ĮJUNGTA.</translation>
-    </message>
-    <message>
-        <source>Sets proxy settings. Default is NONE.</source>
-        <translation>Nustato įgaliotojo serverio nustatymus. Numatytoji reikšmė yra NĖRA.</translation>
-    </message>
-    <message>
-        <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
-        <translation>(SOCKS5/HTTP/NĖRA):(ADRESAS):(PRIEVADAS)</translation>
     </message>
     <message>
         <source>%1 message(s) from %2 chats</source>
