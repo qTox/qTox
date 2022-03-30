@@ -315,6 +315,8 @@ set(${PROJECT_NAME}_SOURCES
   src/net/avatarbroadcaster.h
   src/net/toxuri.cpp
   src/net/toxuri.h
+  src/appmanager.cpp
+  src/appmanager.h
   src/nexus.cpp
   src/nexus.h
   src/persistence/db/rawdatabase.cpp
