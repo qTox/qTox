@@ -41,7 +41,6 @@
 
 #include <QtWidgets/QMessageBox>
 #include <ctime>
-#include <sodium.h>
 #include <stdio.h>
 
 #if defined(Q_OS_UNIX)
@@ -288,12 +287,6 @@ int main(int argc, char* argv[])
         QObject::connect(settings.get(), &Settings::currentProfileIdChanged, &ipc, &IPC::setProfileId);
     } else {
         qWarning() << "Can't init IPC, maybe we're in a jail? Continuing with reduced multi-client functionality.";
-    }
-
-    // For the auto-updater
-    if (sodium_init() < 0) {
-        qCritical() << "Can't init libsodium";
-        return EXIT_FAILURE;
     }
 
 #ifdef LOG_TO_FILE
