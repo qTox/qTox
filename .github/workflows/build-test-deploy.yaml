@@ -8,14 +8,14 @@ jobs:
     permissions:
         contents: write
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Move nightly tag to head for nightly release
         run: git tag -f nightly && git push origin nightly -f
   build-flatpak-docker:
     name: Build flatpak docker
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ./.github/actions/build-docker-image
         name: "Build docker image"
         with:
@@ -24,7 +24,7 @@ jobs:
     name: Build ubuntu LTS docker image
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ./.github/actions/build-docker-image
         name: "Build docker image"
         with:
@@ -33,7 +33,7 @@ jobs:
     name: Build debian docker image
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ./.github/actions/build-docker-image
         name: "Build docker image"
         with:
@@ -42,7 +42,7 @@ jobs:
     name: Build old debian docker image
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ./.github/actions/build-docker-image
         name: "Build docker image"
         with:
@@ -51,7 +51,7 @@ jobs:
     name: Build almalinux docker image
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ./.github/actions/build-docker-image
         name: "Build docker image"
         with:
@@ -60,7 +60,7 @@ jobs:
     name: Build fedora docker image
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ./.github/actions/build-docker-image
         name: "Build docker image"
         with:
@@ -69,7 +69,7 @@ jobs:
     name: Build opensuse docker image
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ./.github/actions/build-docker-image
         name: "Build docker image"
         with:
@@ -78,7 +78,7 @@ jobs:
     name: Build windows docker image
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ./.github/actions/build-docker-image
         name: "Build docker image"
         with:
@@ -87,7 +87,7 @@ jobs:
     name: Build 32 bit windows docker image
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ./.github/actions/build-docker-image
         name: "Build docker image"
         with:
@@ -101,7 +101,7 @@ jobs:
         features: [full, minimal]
         build_type: [Debug, Release]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ./.github/actions/load-docker-image
         name: Load docker image
         with:
@@ -117,7 +117,7 @@ jobs:
         features: [full, minimal]
         build_type: [Debug, Release]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ./.github/actions/load-docker-image
         name: Load docker image
         with:
@@ -133,7 +133,7 @@ jobs:
         features: [full, minimal]
         build_type: [Debug, Release]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ./.github/actions/load-docker-image
         name: Load docker image
         with:
@@ -149,7 +149,7 @@ jobs:
         features: [full, minimal]
         build_type: [Debug, Release]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ./.github/actions/load-docker-image
         name: Load docker image
         with:
@@ -165,7 +165,7 @@ jobs:
         features: [full, minimal]
         build_type: [Debug, Release]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ./.github/actions/load-docker-image
         name: Load docker image
         with:
@@ -181,7 +181,7 @@ jobs:
         features: [full, minimal]
         build_type: [Debug, Release]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ./.github/actions/load-docker-image
         name: Load docker image
         with:
@@ -192,7 +192,7 @@ jobs:
     name: Check for translatable strings
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install deps
         run: sudo apt-get update && sudo apt-get install qttools5-dev
       - name: Test for modified translatable strings
@@ -206,7 +206,7 @@ jobs:
         features: [full, minimal]
         build_type: [Debug, Release]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ./.github/actions/load-docker-image
         name: Load docker image
         with:
@@ -233,7 +233,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ./.github/actions/load-docker-image
         name: Load docker image
         with:
@@ -294,7 +294,7 @@ jobs:
     permissions:
         contents: write
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ./.github/actions/load-docker-image
         name: Load docker image
         with:
@@ -355,7 +355,7 @@ jobs:
       matrix:
         build_type: [debug, release]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ./.github/actions/load-docker-image
         name: Load docker image
         with:
@@ -435,7 +435,7 @@ jobs:
       matrix:
         build_type: [debug, release]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ./.github/actions/load-docker-image
         name: Load docker image
         with:
@@ -511,7 +511,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Homebrew dependencies to build dependencies
         run: brew upgrade && brew bundle --file ./osx/Brewfile-DepBuildDeps
       - name: Build dependencies
@@ -555,7 +555,7 @@ jobs:
     name: macOS user
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Homebrew
         run: brew upgrade && brew bundle --file ./osx/Brewfile
       - name: Install toxcore and toxext
@@ -568,7 +568,7 @@ jobs:
     env:
       DOXYGEN_CONFIG_FILE: doxygen.conf
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Run
@@ -584,7 +584,7 @@ jobs:
     env:
       GITSTATS_DIR: gitstats
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Install gitstats
