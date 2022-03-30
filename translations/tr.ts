@@ -593,6 +593,57 @@ bu da video görüşmelerinde sorunlara yol açabilir.</translation>
     </message>
 </context>
 <context>
+    <name>AppManager</name>
+    <message>
+        <source>Tox URI to parse</source>
+        <translation type="unfinished">İşlenecek Tox URI&apos;si</translation>
+    </message>
+    <message>
+        <source>Starts new instance and loads specified profile.</source>
+        <translation type="unfinished">Yeni örnek başlatır ve belirtilen profili yükler.</translation>
+    </message>
+    <message>
+        <source>profile</source>
+        <translation type="unfinished">profil</translation>
+    </message>
+    <message>
+        <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished">Yeni örnek başlatır ve giriş ekranını açar.</translation>
+    </message>
+    <message>
+        <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished">IPv6&apos;yı &lt;açık&gt;/&lt;kapalı&gt; olarak ayarlar. Öntanımlı olarak AÇIK&apos;tır.</translation>
+    </message>
+    <message>
+        <source>on/off</source>
+        <translation type="unfinished">açık/kapalı</translation>
+    </message>
+    <message>
+        <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished">UDP&apos;yi &lt;açık&gt;/&lt;kapalı&gt; olarak ayarlar. Öntanımlı olarak AÇIK&apos;tır.</translation>
+    </message>
+    <message>
+        <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
+        <translation type="unfinished">LAN keşfini &lt;açık&gt;/&lt;kapalı&gt; olarak ayarlar. UDP&apos;yi kapatmak geçersiz kılar. Öntanımlı olarak AÇIK&apos;tır.</translation>
+    </message>
+    <message>
+        <source>Sets proxy settings. Default is NONE.</source>
+        <translation type="unfinished">Vekil ayarlarını belirler. Öntanımlı olarak YOK&apos;tur.</translation>
+    </message>
+    <message>
+        <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
+        <translation type="unfinished">(SOCKS5/HTTP/YOK):(ADRES):(BAĞLANTI NOKTASI)</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Hata</translation>
+    </message>
+    <message>
+        <source>Failed to load profile automatically.</source>
+        <translation type="unfinished">Profil otomatik olarak yüklenemedi.</translation>
+    </message>
+</context>
+<context>
     <name>ChatForm</name>
     <message>
         <source>Send a file</source>
@@ -2225,18 +2276,6 @@ Bu kimlik NoSpam kodunu (mavi) ve sağlama toplamını (gri) içerir.</translati
 <context>
     <name>QObject</name>
     <message>
-        <source>Tox URI to parse</source>
-        <translation>İşlenecek Tox URI&apos;si</translation>
-    </message>
-    <message>
-        <source>Starts new instance and loads specified profile.</source>
-        <translation>Yeni örnek başlatır ve belirtilen profili yükler.</translation>
-    </message>
-    <message>
-        <source>profile</source>
-        <translation>profil</translation>
-    </message>
-    <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
         <translation>%1 burada! Beni Toxlarsın belki?</translation>
@@ -2284,10 +2323,6 @@ Bu kimlik NoSpam kodunu (mavi) ve sağlama toplamını (gri) içerir.</translati
         <translation>qTox sohbet günlüklerinizi açamadı, devre dışı bırakılacaklar.</translation>
     </message>
     <message>
-        <source>Starts new instance and opens the login screen.</source>
-        <translation>Yeni örnek başlatır ve giriş ekranını açar.</translation>
-    </message>
-    <message>
         <source>Dark</source>
         <translation>Koyu</translation>
     </message>
@@ -2306,10 +2341,6 @@ Bu kimlik NoSpam kodunu (mavi) ve sağlama toplamını (gri) içerir.</translati
     <message>
         <source>Dark violet</source>
         <translation>Koyu menekşe</translation>
-    </message>
-    <message>
-        <source>Failed to load profile automatically.</source>
-        <translation>Profil otomatik olarak yüklenemedi.</translation>
     </message>
     <message>
         <source>online</source>
@@ -2340,30 +2371,6 @@ Bu kimlik NoSpam kodunu (mavi) ve sağlama toplamını (gri) içerir.</translati
         <source>Reformatting text...</source>
         <comment>Waiting for text to be reformatted</comment>
         <translation>Metin yeniden biçimlendiriliyor...</translation>
-    </message>
-    <message>
-        <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation>IPv6&apos;yı &lt;açık&gt;/&lt;kapalı&gt; olarak ayarlar. Öntanımlı olarak AÇIK&apos;tır.</translation>
-    </message>
-    <message>
-        <source>on/off</source>
-        <translation>açık/kapalı</translation>
-    </message>
-    <message>
-        <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation>UDP&apos;yi &lt;açık&gt;/&lt;kapalı&gt; olarak ayarlar. Öntanımlı olarak AÇIK&apos;tır.</translation>
-    </message>
-    <message>
-        <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
-        <translation>LAN keşfini &lt;açık&gt;/&lt;kapalı&gt; olarak ayarlar. UDP&apos;yi kapatmak geçersiz kılar. Öntanımlı olarak AÇIK&apos;tır.</translation>
-    </message>
-    <message>
-        <source>Sets proxy settings. Default is NONE.</source>
-        <translation>Vekil ayarlarını belirler. Öntanımlı olarak YOK&apos;tur.</translation>
-    </message>
-    <message>
-        <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
-        <translation>(SOCKS5/HTTP/YOK):(ADRES):(BAĞLANTI NOKTASI)</translation>
     </message>
     <message>
         <source>%1 message(s) from %2 chats</source>

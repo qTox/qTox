@@ -592,6 +592,57 @@ lo que puede provocar problemas en las videollamadas.</translation>
     </message>
 </context>
 <context>
+    <name>AppManager</name>
+    <message>
+        <source>Tox URI to parse</source>
+        <translation type="unfinished">URI Tox a utilizar</translation>
+    </message>
+    <message>
+        <source>Starts new instance and loads specified profile.</source>
+        <translation type="unfinished">Inicia una nueva instancia de qTox y carga el perfil especificado.</translation>
+    </message>
+    <message>
+        <source>profile</source>
+        <translation type="unfinished">perfil</translation>
+    </message>
+    <message>
+        <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished">Inicia una nueva instancia y abre la pantalla de inicio de sesión.</translation>
+    </message>
+    <message>
+        <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished">Establece IPv6 &lt;on&gt;/&lt;off&gt;. El valor predeterminado es ON.</translation>
+    </message>
+    <message>
+        <source>on/off</source>
+        <translation type="unfinished">encendido/apagado</translation>
+    </message>
+    <message>
+        <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished">Establece UDP &lt;on&gt;/&lt;off&gt;. Por defecto es ON.</translation>
+    </message>
+    <message>
+        <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
+        <translation type="unfinished">Establece el descubrimiento de LAN &lt;activado&gt;/&lt;desactivado&gt;. UDP deshabilitado elimina esta opción. El valor predeterminado es ACTIVADO.</translation>
+    </message>
+    <message>
+        <source>Sets proxy settings. Default is NONE.</source>
+        <translation type="unfinished">Establece la configuración del proxy. Por defecto es NINGUNO.</translation>
+    </message>
+    <message>
+        <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
+        <translation type="unfinished">(SOCKS5/HTTP/ NINGUNO):(DIRECCIÓN):(PUERTA)</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Error</translation>
+    </message>
+    <message>
+        <source>Failed to load profile automatically.</source>
+        <translation type="unfinished">No se pudo cargar el perfil automáticamente.</translation>
+    </message>
+</context>
+<context>
     <name>ChatForm</name>
     <message>
         <source>Send a file</source>
@@ -2226,18 +2277,6 @@ Este ID incluye el código NoSpam (en azul), y la suma de comprobación (en gris
 <context>
     <name>QObject</name>
     <message>
-        <source>Tox URI to parse</source>
-        <translation>URI Tox a utilizar</translation>
-    </message>
-    <message>
-        <source>Starts new instance and loads specified profile.</source>
-        <translation>Inicia una nueva instancia de qTox y carga el perfil especificado.</translation>
-    </message>
-    <message>
-        <source>profile</source>
-        <translation>perfil</translation>
-    </message>
-    <message>
         <source>Default</source>
         <translation>Predeterminado</translation>
     </message>
@@ -2285,10 +2324,6 @@ Este ID incluye el código NoSpam (en azul), y la suma de comprobación (en gris
         <translation>qTox no pudo abrir tus historiales de chat, serán deshabilitados.</translation>
     </message>
     <message>
-        <source>Starts new instance and opens the login screen.</source>
-        <translation>Inicia una nueva instancia y abre la pantalla de inicio de sesión.</translation>
-    </message>
-    <message>
         <source>Dark</source>
         <translation>Oscuro</translation>
     </message>
@@ -2307,10 +2342,6 @@ Este ID incluye el código NoSpam (en azul), y la suma de comprobación (en gris
     <message>
         <source>Dark violet</source>
         <translation>Morado</translation>
-    </message>
-    <message>
-        <source>Failed to load profile automatically.</source>
-        <translation>No se pudo cargar el perfil automáticamente.</translation>
     </message>
     <message>
         <source>online</source>
@@ -2341,30 +2372,6 @@ Este ID incluye el código NoSpam (en azul), y la suma de comprobación (en gris
         <source>Reformatting text...</source>
         <comment>Waiting for text to be reformatted</comment>
         <translation>Reformateando el texto...</translation>
-    </message>
-    <message>
-        <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation>Establece IPv6 &lt;on&gt;/&lt;off&gt;. El valor predeterminado es ON.</translation>
-    </message>
-    <message>
-        <source>on/off</source>
-        <translation>encendido/apagado</translation>
-    </message>
-    <message>
-        <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation>Establece UDP &lt;on&gt;/&lt;off&gt;. Por defecto es ON.</translation>
-    </message>
-    <message>
-        <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
-        <translation>Establece el descubrimiento de LAN &lt;activado&gt;/&lt;desactivado&gt;. UDP deshabilitado elimina esta opción. El valor predeterminado es ACTIVADO.</translation>
-    </message>
-    <message>
-        <source>Sets proxy settings. Default is NONE.</source>
-        <translation>Establece la configuración del proxy. Por defecto es NINGUNO.</translation>
-    </message>
-    <message>
-        <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
-        <translation>(SOCKS5/HTTP/ NINGUNO):(DIRECCIÓN):(PUERTA)</translation>
     </message>
     <message>
         <source>%1 message(s) from %2 chats</source>

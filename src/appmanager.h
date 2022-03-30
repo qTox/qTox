@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2019 by The qTox Project Contributors
+    Copyright © 2022 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -17,16 +17,36 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "appmanager.h"
+#pragma once
 
-#include <QDebug>
-#include <QGuiApplication>
+#include <QObject>
 
-int main(int argc, char* argv[])
+#include <memory>
+
+class MessageBoxManager;
+class Settings;
+class ToxSave;
+class IPC;
+class QApplication;
+class ToxURIDialog;
+
+class AppManager : public QObject
 {
-    AppManager appManager(argc, argv);
-    int errorcode = appManager.run();
+    Q_OBJECT
 
-    qDebug() << "Exit with status" << errorcode;
-    return errorcode;
-}
+public:
+    AppManager(int argc, char** argv);
+    ~AppManager();
+    int run();
+
+private slots:
+    void cleanup();
+private:
+    void preConstructionInitialization();
+    std::unique_ptr<QApplication> qapp;
+    std::unique_ptr<MessageBoxManager> messageBoxManager;
+    std::unique_ptr<Settings> settings;
+    std::unique_ptr<IPC> ipc;
+    std::unique_ptr<ToxSave> toxSave;
+    std::unique_ptr<ToxURIDialog> uriDialog;
+};

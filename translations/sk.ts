@@ -592,6 +592,57 @@ Rýchlosť vášho pripojenia nemusí byť vždy dostačujúca pre vyššiu kval
     </message>
 </context>
 <context>
+    <name>AppManager</name>
+    <message>
+        <source>Tox URI to parse</source>
+        <translation type="unfinished">Tox URI na preskúmanie</translation>
+    </message>
+    <message>
+        <source>Starts new instance and loads specified profile.</source>
+        <translation type="unfinished">Spustí novú inštanciu a načíta zadaný profil.</translation>
+    </message>
+    <message>
+        <source>profile</source>
+        <translation type="unfinished">profil</translation>
+    </message>
+    <message>
+        <source>Starts new instance and opens the login screen.</source>
+        <translation type="unfinished">Spustí novú inštanciu a otvorí prihlasovacie okno.</translation>
+    </message>
+    <message>
+        <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished">Nastaví IPv6 na &lt;zapnuté&gt;/&lt;vypnuté&gt;. Predvolená hodnota je zapnuté.</translation>
+    </message>
+    <message>
+        <source>on/off</source>
+        <translation type="unfinished">zapnuté/vypnuté</translation>
+    </message>
+    <message>
+        <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
+        <translation type="unfinished">Nastaví UDP na &lt;zapnuté&gt;/&lt;vypnuté&gt;. Predvolená hodnota je zapnuté.</translation>
+    </message>
+    <message>
+        <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
+        <translation type="unfinished">Nastaví zisťovanie cez LAN na &lt;zapnuté&gt;/&lt;vypnuté&gt;. Vypnuté UDP má prednosť. Predvolená hodnota je zapnuté.</translation>
+    </message>
+    <message>
+        <source>Sets proxy settings. Default is NONE.</source>
+        <translation type="unfinished">Nastaví nastavenia proxy. Predvolená hodnota je žiadne.</translation>
+    </message>
+    <message>
+        <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
+        <translation type="unfinished">(SOCKS5/HTTP/ŽIADNE):(ADRESA):(PORT)</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Chyba</translation>
+    </message>
+    <message>
+        <source>Failed to load profile automatically.</source>
+        <translation type="unfinished">Automatické načítanie profilu zlyhalo.</translation>
+    </message>
+</context>
+<context>
     <name>ChatForm</name>
     <message>
         <source>Send a file</source>
@@ -2237,18 +2288,6 @@ Toto ID obsahuje kód NoSpam (modrou) a kontrolný súčet (šedou).</translatio
 <context>
     <name>QObject</name>
     <message>
-        <source>Tox URI to parse</source>
-        <translation>Tox URI na preskúmanie</translation>
-    </message>
-    <message>
-        <source>Starts new instance and loads specified profile.</source>
-        <translation>Spustí novú inštanciu a načíta zadaný profil.</translation>
-    </message>
-    <message>
-        <source>profile</source>
-        <translation>profil</translation>
-    </message>
-    <message>
         <source>Default</source>
         <translation>Predvolená</translation>
     </message>
@@ -2296,10 +2335,6 @@ Toto ID obsahuje kód NoSpam (modrou) a kontrolný súčet (šedou).</translatio
         <translation>qTox nemohol otvoriť vaše chatové logy, logovanie bude vypnuté.</translation>
     </message>
     <message>
-        <source>Starts new instance and opens the login screen.</source>
-        <translation>Spustí novú inštanciu a otvorí prihlasovacie okno.</translation>
-    </message>
-    <message>
         <source>Dark</source>
         <translation>Tmavá</translation>
     </message>
@@ -2318,10 +2353,6 @@ Toto ID obsahuje kód NoSpam (modrou) a kontrolný súčet (šedou).</translatio
     <message>
         <source>Dark violet</source>
         <translation>Tmavofialová</translation>
-    </message>
-    <message>
-        <source>Failed to load profile automatically.</source>
-        <translation>Automatické načítanie profilu zlyhalo.</translation>
     </message>
     <message>
         <source>online</source>
@@ -2352,30 +2383,6 @@ Toto ID obsahuje kód NoSpam (modrou) a kontrolný súčet (šedou).</translatio
         <source>Reformatting text...</source>
         <comment>Waiting for text to be reformatted</comment>
         <translation>Preformátovanie textu...</translation>
-    </message>
-    <message>
-        <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation>Nastaví IPv6 na &lt;zapnuté&gt;/&lt;vypnuté&gt;. Predvolená hodnota je zapnuté.</translation>
-    </message>
-    <message>
-        <source>on/off</source>
-        <translation>zapnuté/vypnuté</translation>
-    </message>
-    <message>
-        <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation>Nastaví UDP na &lt;zapnuté&gt;/&lt;vypnuté&gt;. Predvolená hodnota je zapnuté.</translation>
-    </message>
-    <message>
-        <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
-        <translation>Nastaví zisťovanie cez LAN na &lt;zapnuté&gt;/&lt;vypnuté&gt;. Vypnuté UDP má prednosť. Predvolená hodnota je zapnuté.</translation>
-    </message>
-    <message>
-        <source>Sets proxy settings. Default is NONE.</source>
-        <translation>Nastaví nastavenia proxy. Predvolená hodnota je žiadne.</translation>
-    </message>
-    <message>
-        <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
-        <translation>(SOCKS5/HTTP/ŽIADNE):(ADRESA):(PORT)</translation>
     </message>
     <message>
         <source>%1 message(s) from %2 chats</source>
