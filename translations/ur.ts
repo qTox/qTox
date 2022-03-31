@@ -2485,6 +2485,14 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <source>You have left the group</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Failed to load chat history</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Database version (%1) is newer than we currently support (%2). Please upgrade qTox.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoveChatDialog</name>

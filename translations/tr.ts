@@ -2493,6 +2493,14 @@ Bu kimlik NoSpam kodunu (mavi) ve sağlama toplamını (gri) içerir.</translati
         <source>You have left the group</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Failed to load chat history</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Database version (%1) is newer than we currently support (%2). Please upgrade qTox.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoveChatDialog</name>

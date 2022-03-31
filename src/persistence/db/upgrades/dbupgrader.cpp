@@ -22,9 +22,11 @@
 #include "src/core/toxpk.h"
 #include "src/persistence/db/rawdatabase.h"
 #include "src/persistence/db/upgrades/dbto11.h"
+#include "src/widget/tool/imessageboxmanager.h"
 
 #include <QDebug>
 #include <QString>
+#include <QTranslator>
 
 namespace {
 constexpr int SCHEMA_VERSION = 11;
@@ -219,7 +221,7 @@ void addForeignKeyToBrokenMessages(QVector<RawDatabase::Query>& queries)
  * @note On future alterations of the database all you have to do is bump the SCHEMA_VERSION
  * variable and add another case to the switch statement below. Make sure to fall through on each case.
  */
-bool DbUpgrader::dbSchemaUpgrade(std::shared_ptr<RawDatabase>& db)
+bool DbUpgrader::dbSchemaUpgrade(std::shared_ptr<RawDatabase>& db, IMessageBoxManager& messageBoxManager)
 {
     // If we're a new dB we can just make a new one and call it a day
     bool success = false;
@@ -250,6 +252,9 @@ bool DbUpgrader::dbSchemaUpgrade(std::shared_ptr<RawDatabase>& db)
     }
 
     if (databaseSchemaVersion > SCHEMA_VERSION) {
+        messageBoxManager.showError(QObject::tr("Failed to load chat history"),
+            QObject::tr("Database version (%1) is newer than we currently support (%2). Please upgrade qTox.")
+            .arg(databaseSchemaVersion).arg(SCHEMA_VERSION));
         qWarning().nospace() << "Database version (" << databaseSchemaVersion
                              << ") is newer than we currently support (" << SCHEMA_VERSION
                              << "). Please upgrade qTox";

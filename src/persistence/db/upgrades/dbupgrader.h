@@ -22,9 +22,10 @@
 #include <memory>
 
 class RawDatabase;
+class IMessageBoxManager;
 namespace DbUpgrader
 {
-    bool dbSchemaUpgrade(std::shared_ptr<RawDatabase>& db);
+    bool dbSchemaUpgrade(std::shared_ptr<RawDatabase>& db, IMessageBoxManager& messageBoxManager);
 
     bool createCurrentSchema(RawDatabase& db);
     bool isNewDb(std::shared_ptr<RawDatabase>& db, bool& success);
