@@ -315,8 +315,9 @@ void History::removeChatHistory(const ChatId& chatId)
 
     queryString += QStringLiteral("; "
                                 "DELETE FROM aliases WHERE id NOT IN ( "
-                                "   SELECT DISTINCT sender_alias FROM "
-                                "   text_messages JOIN file_transfers);");
+                                "   SELECT DISTINCT sender_alias FROM text_messages "
+                                "   UNION "
+                                "   SELECT DISTINCT sender_alias FROM file_transfers);");
 
     queryString += QStringLiteral(
                                 "DELETE FROM authors WHERE id NOT IN ( "
