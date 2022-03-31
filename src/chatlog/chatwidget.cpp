@@ -1440,7 +1440,7 @@ void ChatWidget::renderItem(const ChatLogItem& item, bool hideName, bool coloriz
 
         auto chatMessageType = getChatMessageType(systemMessage);
         chatMessage = ChatMessage::createChatInfoMessage(systemMessage.toString(),
-            chatMessageType, QDateTime::currentDateTime(), documentCache, settings,
+            chatMessageType, systemMessage.timestamp, documentCache, settings,
             style);
         // Ignore caller's decision to hide the name. We show the icon in the
         // slot of the sender's name so we always want it visible

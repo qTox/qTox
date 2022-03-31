@@ -613,6 +613,7 @@ QList<History::HistMessage> History::getMessagesForChat(const ChatId& chatId, si
             assert(!it->isNull());
             SystemMessage systemMessage;
             systemMessage.messageType = static_cast<SystemMessageType>((*it++).toLongLong());
+            systemMessage.timestamp = timestamp;
 
             auto argEnd = std::next(it, systemMessage.args.size());
             std::transform(it, argEnd, systemMessage.args.begin(), [](const QVariant& arg) {
