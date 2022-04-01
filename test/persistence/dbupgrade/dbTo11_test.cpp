@@ -71,11 +71,9 @@ void appendVerifyChatsQueries(QVector<RawDatabase::Query>& verifyQueries)
         }});
 
     struct Functor {
-        int index = 0;
         const std::vector<QByteArray> chatIds{aPk.getByteArray(), bPk.getByteArray(), cPk.getByteArray()};
         void operator()(const QVector<QVariant>& row) {
-            QVERIFY(row[0].toByteArray() == chatIds[index]);
-            ++index;
+            QVERIFY(std::find(chatIds.begin(), chatIds.end(), row[0].toByteArray()) != chatIds.end());
         }
     };
 
@@ -93,11 +91,9 @@ void appendVerifyAuthorsQueries(QVector<RawDatabase::Query>& verifyQueries)
         }});
 
     struct Functor {
-        int index = 0;
-        const std::vector<QByteArray> chatIds{selfPk.getByteArray(), aPk.getByteArray(), bPk.getByteArray()};
+        const std::vector<QByteArray> authorIds{selfPk.getByteArray(), aPk.getByteArray(), bPk.getByteArray()};
         void operator()(const QVector<QVariant>& row) {
-            QVERIFY(row[0].toByteArray() == chatIds[index]);
-            ++index;
+            QVERIFY(std::find(authorIds.begin(), authorIds.end(), row[0].toByteArray()) != authorIds.end());
         }
     };
 
@@ -128,11 +124,9 @@ void appendVerifyAliasesQueries(QVector<RawDatabase::Query>& verifyQueries)
         }});
 
     struct Functor {
-        int index = 0;
         const std::vector<QByteArray> names{selfName.toUtf8(), aName.toUtf8(), bName.toUtf8()};
         void operator()(const QVector<QVariant>& row) {
-            QVERIFY(row[0].toByteArray() == names[index]);
-            ++index;
+            QVERIFY(std::find(names.begin(), names.end(), row[0].toByteArray()) != names.end());
         }
     };
 
