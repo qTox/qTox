@@ -3055,11 +3055,4 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation>上一个对话</translation>
     </message>
 </context>
-<context>
-    <name></name>
-    <message>
-        <source>Ready to import %n contact, click send to confirm</source>
-        <translation>准备好导入 %n 位联系人，点击“发送”以确认</translation>
-    </message>
-</context>
 </TS>

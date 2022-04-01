@@ -438,7 +438,6 @@ bu da video görüşmelerinde sorunlara yol açabilir.</translation>
         <source>Ready to import %n contact(s), click send to confirm</source>
         <translation>
             <numerusform>%n kişiyi içe aktarmaya hazır, onaylamak için göndere tıklayın</numerusform>
-            <numerusform>%n kişiyi içe aktarmaya hazır, onaylamak için göndere tıklayın</numerusform>
         </translation>
     </message>
     <message>
@@ -1224,7 +1223,6 @@ tamamen kapanmak yerine tepsiye kapanacak.</translation>
         <comment>Number of users in chat</comment>
         <translation>
             <numerusform>%n kullanıcı sohbette</numerusform>
-            <numerusform>%n kullanıcı sohbette</numerusform>
         </translation>
     </message>
     <message>
@@ -1289,7 +1287,6 @@ tamamen kapanmak yerine tepsiye kapanacak.</translation>
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
         <translation>
-            <numerusform>%n kullanıcı sohbette</numerusform>
             <numerusform>%n kullanıcı sohbette</numerusform>
         </translation>
     </message>
@@ -1803,7 +1800,6 @@ Lütfen aynı parolayı iki kez girdiğinizden emin olun.</translation>
         <source>Unread message(s)</source>
         <translation>
             <numerusform>Okunmamış mesaj</numerusform>
-            <numerusform>Okunmamış mesajlar</numerusform>
         </translation>
     </message>
 </context>
@@ -3025,13 +3021,11 @@ Bu kimlik NoSpam kodunu (mavi) ve sağlama toplamını (gri) içerir.</translati
         <source>%n new friend request(s)</source>
         <translation>
             <numerusform>%n yeni arkadaşlık isteği</numerusform>
-            <numerusform>%n yeni arkadaşlık isteği</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n new group invite(s)</source>
         <translation>
-            <numerusform>%n yeni grup daveti</numerusform>
             <numerusform>%n yeni grup daveti</numerusform>
         </translation>
     </message>

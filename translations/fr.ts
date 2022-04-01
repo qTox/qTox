@@ -797,7 +797,7 @@ afin que vous puissiez enregistrer le fichier sur windows.</translation>
     </message>
     <message>
         <source>Multipart Messages: </source>
-        <translation>Messages en plusieurs parties : </translation>
+        <translation>Messages en plusieurs parties&#x202f;: </translation>
     </message>
 </context>
 <context>
@@ -1124,7 +1124,7 @@ afin que vous puissiez enregistrer le fichier sur windows.</translation>
     </message>
     <message>
         <source>Max autoaccept file size (0 to disable):</source>
-        <translation>Taille maximale du fichier pour autoaccepter (0 pour désactiver) :</translation>
+        <translation>Taille maximale du fichier pour autoaccepter (0 pour désactiver)&#x202f;:</translation>
     </message>
     <message>
         <source> MB</source>
@@ -2153,7 +2153,7 @@ Cet identifiant comprend le code NoSpam (en bleu) et la somme de contrôle (en g
     <message>
         <source>Warning: You have chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
-        <translation>Attention : vous avez choisi un fichier de sauvegarde non-Tox ; ignoré.</translation>
+        <translation>Attention&#x202f;: vous avez choisi un fichier de sauvegarde non-Tox&#x202f;; ignoré.</translation>
     </message>
     <message>
         <source>Profile already exists</source>

@@ -635,7 +635,7 @@ which may lead to problems with video calls.</source>
         <translation>Името на файла съдържа недействителни символи</translation>
     </message>
     <message>
-        <source>Illegal characters have been changed to _
+        <source>Illegal characters have been changed to _ 
 so you can save the file on Windows.</source>
         <translation>Невалидните знаци бяха преобразувани в _
 за да запазите файла в Уиндоус.</translation>
@@ -2516,18 +2516,6 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Remove all chat history with the friend if set</source>
         <translation type="unfinished">Премахнете цялата история на чатовете с приятел, ако е зададено</translation>
-    </message>
-    <message>
-        <source>Also remove chat history</source>
-        <translation type="unfinished">Също да се премахне хронологията на разговора</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation type="unfinished">Сигурни ли сте, че искате да премахнете %1 от вашия лист с контакти?</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="unfinished">Премахни</translation>
     </message>
 </context>
 <context>
