@@ -20,10 +20,52 @@
 #include "dbto11.h"
 
 #include "src/core/toxpk.h"
+#include "src/persistence/db/upgrades/dbupgrader.h"
 
 #include <QDebug>
 
 bool DbTo11::dbSchema10to11(RawDatabase& db)
+{
+    QVector<RawDatabase::Query> upgradeQueries;
+    if (!appendDeduplicatePeersQueries(db, upgradeQueries)) {
+        return false;
+    }
+    if (!db.execNow(upgradeQueries)) {
+        return false;
+    }
+    upgradeQueries.clear();
+
+    if (!appendSplitPeersQueries(db, upgradeQueries)) {
+        return false;
+    }
+    upgradeQueries += RawDatabase::Query(QStringLiteral("PRAGMA user_version = 11;"));
+    bool transactionPass = db.execNow(upgradeQueries);
+    if (transactionPass) {
+        return db.execNow("VACUUM");
+    }
+    return transactionPass;
+}
+
+bool DbTo11::appendDeduplicatePeersQueries(RawDatabase& db, QVector<RawDatabase::Query>& upgradeQueries)
+{
+    std::vector<DbUpgrader::BadEntry> badPeers;
+    if (!getInvalidPeers(db, badPeers)) {
+        return false;
+    }
+    DbUpgrader::mergeDuplicatePeers(upgradeQueries, db, badPeers);
+    return true;
+}
+
+bool DbTo11::getInvalidPeers(RawDatabase& db, std::vector<DbUpgrader::BadEntry>& badPeers)
+{
+    return db.execNow(
+        RawDatabase::Query("SELECT id, public_key FROM peers WHERE CAST(public_key AS BLOB) != CAST(UPPER(public_key) AS BLOB)",
+                           [&](const QVector<QVariant>& row) {
+                               badPeers.emplace_back(DbUpgrader::BadEntry{row[0].toInt(), row[1].toString()});
+                           }));
+}
+
+bool DbTo11::appendSplitPeersQueries(RawDatabase& db, QVector<RawDatabase::Query>& upgradeQueries)
 {
     // splitting peers table into separate chat and authors table.
     // peers had a dual-meaning of each friend having their own chat, but also each peer
@@ -32,7 +74,6 @@ bool DbTo11::dbSchema10to11(RawDatabase& db)
     // since each group is a chat so is in peers, but authors no messages, and each group
     // member is an author so is in peers, but has no chat.
     // Splitting peers makes the relation much clearer and the tables have a single meaning.
-    QVector<RawDatabase::Query> upgradeQueries;
     if (!PeersToAuthors::appendPeersToAuthorsQueries(db, upgradeQueries)) {
         return false;
     }
@@ -40,12 +81,7 @@ bool DbTo11::dbSchema10to11(RawDatabase& db)
         return false;
     }
     appendDropPeersQueries(upgradeQueries);
-    upgradeQueries += RawDatabase::Query(QStringLiteral("PRAGMA user_version = 11;"));
-    bool transactionPass = db.execNow(upgradeQueries);
-    if (transactionPass) {
-        return db.execNow("VACUUM");
-    }
-    return transactionPass;
+    return true;
 }
 
 bool DbTo11::PeersToAuthors::appendPeersToAuthorsQueries(RawDatabase& db, QVector<RawDatabase::Query>& upgradeQueries)
