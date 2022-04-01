@@ -20,6 +20,7 @@
 #pragma once
 
 #include "src/persistence/db/rawdatabase.h"
+#include "src/persistence/db/upgrades/dbupgrader.h"
 
 #include <QVector>
 
@@ -28,6 +29,11 @@ class ToxPk;
 namespace DbTo11
 {
     bool dbSchema10to11(RawDatabase& db);
+    bool appendDeduplicatePeersQueries(RawDatabase& db, QVector<RawDatabase::Query>& upgradeQueries);
+    bool getInvalidPeers(RawDatabase& db, std::vector<DbUpgrader::BadEntry>& badPeers);
+    bool appendSplitPeersQueries(RawDatabase& db, QVector<RawDatabase::Query>& upgradeQueries);
+
+
 namespace PeersToAuthors
 {
     bool appendPeersToAuthorsQueries(RawDatabase& db, QVector<RawDatabase::Query>& upgradeQueries);
