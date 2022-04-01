@@ -56,8 +56,12 @@ RowId getValidPeerRow(RawDatabase& db, const ChatId& chatId)
 {
     bool validPeerExists{false};
     RowId validPeerRow;
-    db.execNow(RawDatabase::Query(QStringLiteral("SELECT id FROM peers WHERE public_key='%1';")
-                                      .arg(chatId.toString()),
+    db.execNow(RawDatabase::Query(QStringLiteral("SELECT id FROM peers WHERE CAST(public_key AS BLOB)=?;"),
+        // Note: The conversion to stirng then back to binary is intentional to
+        // ensure we're using the binary presentation of the upper case ascii
+        // representation of the binary key, since we want to find the uppercase
+        // entry or insert it ourselves. This is needed for the dbTo11 upgrade.
+                                    {chatId.toString().toUtf8()},
                                   [&](const QVector<QVariant>& row) {
                                       validPeerRow = RowId{row[0].toLongLong()};
                                       validPeerExists = true;
