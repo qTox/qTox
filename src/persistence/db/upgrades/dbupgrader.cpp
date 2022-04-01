@@ -31,23 +31,13 @@
 namespace {
 constexpr int SCHEMA_VERSION = 11;
 
-struct BadEntry
+std::vector<DbUpgrader::BadEntry> getInvalidPeers(RawDatabase& db)
 {
-    BadEntry(int64_t row_, QString toxId_)
-        : row{row_}
-        , toxId{toxId_}
-    {}
-    RowId row;
-    QString toxId;
-};
-
-std::vector<BadEntry> getInvalidPeers(RawDatabase& db)
-{
-    std::vector<BadEntry> badPeerIds;
+    std::vector<DbUpgrader::BadEntry> badPeerIds;
     db.execNow(
         RawDatabase::Query("SELECT id, public_key FROM peers WHERE LENGTH(public_key) != 64",
                            [&](const QVector<QVariant>& row) {
-                               badPeerIds.emplace_back(BadEntry{row[0].toInt(), row[1].toString()});
+                               badPeerIds.emplace_back(DbUpgrader::BadEntry{row[0].toInt(), row[1].toString()});
                            }));
     return badPeerIds;
 }
@@ -145,17 +135,6 @@ void mergeAndDeletePeer(QVector<RawDatabase::Query>& upgradeQueries, RowId goodP
                                .arg(badPeerId.get()));
     upgradeQueries +=
         RawDatabase::Query(QStringLiteral("DELETE FROM peers WHERE id = %1").arg(badPeerId.get()));
-}
-
-void mergeDuplicatePeers(QVector<RawDatabase::Query>& upgradeQueries, RawDatabase& db,
-                         std::vector<BadEntry> badPeers)
-{
-    for (const auto& badPeer : badPeers) {
-        const RowId goodPeerId = getValidPeerRow(db, ToxPk{badPeer.toxId.left(64)});
-        const auto aliasDuplicates = getDuplicateAliasRows(db, goodPeerId, badPeer.row);
-        mergeAndDeleteAlias(upgradeQueries, aliasDuplicates.goodAliasRow, aliasDuplicates.badAliasRows);
-        mergeAndDeletePeer(upgradeQueries, goodPeerId, badPeer.row);
-    }
 }
 
 void addForeignKeyToAlias(QVector<RawDatabase::Query>& queries)
@@ -637,4 +616,15 @@ bool DbUpgrader::dbSchema9to10(RawDatabase& db)
         {dummyResumeId});
     upgradeQueries += RawDatabase::Query(QStringLiteral("PRAGMA user_version = 10;"));
     return db.execNow(upgradeQueries);
+}
+
+void DbUpgrader::mergeDuplicatePeers(QVector<RawDatabase::Query>& upgradeQueries, RawDatabase& db,
+                         std::vector<BadEntry> badPeers)
+{
+    for (const auto& badPeer : badPeers) {
+        const RowId goodPeerId = getValidPeerRow(db, ToxPk{badPeer.toxId.left(64)});
+        const auto aliasDuplicates = getDuplicateAliasRows(db, goodPeerId, badPeer.row);
+        mergeAndDeleteAlias(upgradeQueries, aliasDuplicates.goodAliasRow, aliasDuplicates.badAliasRows);
+        mergeAndDeletePeer(upgradeQueries, goodPeerId, badPeer.row);
+    }
 }
