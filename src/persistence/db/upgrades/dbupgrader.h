@@ -21,6 +21,8 @@
 
 #include <memory>
 
+#include "src/persistence/db/rawdatabase.h"
+
 class RawDatabase;
 class IMessageBoxManager;
 namespace DbUpgrader
@@ -40,4 +42,16 @@ namespace DbUpgrader
     bool dbSchema8to9(RawDatabase& db);
     bool dbSchema9to10(RawDatabase& db);
     // 10to11 from DbTo11::dbSchema10to11
+
+    struct BadEntry
+    {
+        BadEntry(int64_t row_, QString toxId_)
+            : row{row_}
+            , toxId{toxId_}
+        {}
+        RowId row;
+        QString toxId;
+    };
+    void mergeDuplicatePeers(QVector<RawDatabase::Query>& upgradeQueries, RawDatabase& db,
+                         std::vector<BadEntry> badPeers);
 }
