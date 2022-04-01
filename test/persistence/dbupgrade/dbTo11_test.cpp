@@ -30,7 +30,7 @@
 namespace
 {
 const auto selfPk = ToxPk{QByteArray(32, 0)};
-const auto aPk = ToxPk{QByteArray(32, 1)};
+const auto aPk = ToxPk{QByteArray(32, '=')};
 const auto bPk = ToxPk{QByteArray(32, 2)};
 const auto cPk = ToxPk{QByteArray(32, 3)};
 const auto selfName = QStringLiteral("Self");
@@ -38,13 +38,15 @@ const auto aName = QStringLiteral("Alice");
 const auto bName = QStringLiteral("Bob");
 const auto selfAliasId = 1;
 const auto aPeerId = 2;
-const auto aChatId = 1;
+const auto aPeerDuplicateId = 5;
+const auto aChatId = 3;
 const auto aAliasId = 2;
+const auto aAliasDuplicateId = 4;
 const auto bPeerId = 3;
-const auto bChatId = 2;
+const auto bChatId = 1;
 const auto bAliasId = 3;
 const auto cPeerId = 4;
-const auto cChatId = 3;
+const auto cChatId = 2;
 
 void appendAddPeersQueries(QVector<RawDatabase::Query>& setupQueries)
 {
@@ -60,6 +62,9 @@ void appendAddPeersQueries(QVector<RawDatabase::Query>& setupQueries)
     setupQueries.append(RawDatabase::Query{QStringLiteral(
         "INSERT INTO peers (id, public_key) VALUES (4, ?)"),
         {cPk.toString().toUtf8()}});
+    setupQueries.append(RawDatabase::Query{QStringLiteral(
+        "INSERT INTO peers (id, public_key) VALUES (5, ?)"),
+        {aPk.toString().toLower().toUtf8()}});
 }
 
 void appendVerifyChatsQueries(QVector<RawDatabase::Query>& verifyQueries)
@@ -113,6 +118,9 @@ void appendAddAliasesQueries(QVector<RawDatabase::Query>& setupQueries)
     setupQueries.append(RawDatabase::Query{QStringLiteral(
         "INSERT INTO aliases (id, owner, display_name) VALUES (3, 3, ?)"),
         {bName.toUtf8()}});
+    setupQueries.append(RawDatabase::Query{QStringLiteral(
+        "INSERT INTO aliases (id, owner, display_name) VALUES (4, 5, ?)"),
+        {aName.toUtf8()}});
 }
 
 void appendVerifyAliasesQueries(QVector<RawDatabase::Query>& verifyQueries)
@@ -146,11 +154,11 @@ void appendAddAChatMessagesQueries(QVector<RawDatabase::Query>& setupQueries)
     setupQueries.append(RawDatabase::Query{QStringLiteral(
         "INSERT INTO history (id, message_type, timestamp, chat_id) VALUES (2, 'T', 0, '%1')").arg(aPeerId)});
     setupQueries.append(RawDatabase::Query{QStringLiteral(
-        "INSERT INTO text_messages (id, message_type, sender_alias, message) VALUES (2, 'T', '%1', ?)").arg(aAliasId),
+        "INSERT INTO text_messages (id, message_type, sender_alias, message) VALUES (2, 'T', '%1', ?)").arg(aAliasDuplicateId),
         {QStringLiteral("Message 2 from A to Self").toUtf8()}});
 
     setupQueries.append(RawDatabase::Query{QStringLiteral(
-        "INSERT INTO history (id, message_type, timestamp, chat_id) VALUES (10, 'F', 0, '%1')").arg(aPeerId)});
+        "INSERT INTO history (id, message_type, timestamp, chat_id) VALUES (10, 'F', 0, '%1')").arg(aPeerDuplicateId)});
     setupQueries.append(RawDatabase::Query{QStringLiteral(
         "INSERT INTO file_transfers (id, message_type, sender_alias, file_restart_id, "
         "file_name, file_path, file_hash, file_size, direction, file_state) "
