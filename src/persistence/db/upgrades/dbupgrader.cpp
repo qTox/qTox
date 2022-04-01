@@ -56,8 +56,8 @@ RowId getValidPeerRow(RawDatabase& db, const ChatId& chatId)
 {
     bool validPeerExists{false};
     RowId validPeerRow;
-    db.execNow(RawDatabase::Query(QStringLiteral("SELECT id FROM peers WHERE public_key='%1';")
-                                      .arg(chatId.toString()),
+    db.execNow(RawDatabase::Query(QStringLiteral("SELECT id FROM peers WHERE CAST(public_key AS BLOB)=?;"),
+                                    {chatId.toString().toUtf8()},
                                   [&](const QVector<QVariant>& row) {
                                       validPeerRow = RowId{row[0].toLongLong()};
                                       validPeerExists = true;
