@@ -38,6 +38,7 @@ public:
     bool needHideCircles() const;
     // If the contact positions have changed, need to redraw view
     bool getPositionsChanged() const;
+    bool getGroupsOnTop() const;
 
     void addFriendListItem(IFriendListItem* item);
     void removeFriendListItem(IFriendListItem* item);
@@ -69,11 +70,11 @@ private:
 
     bool byName = true;
     bool hideCircles = false;
-    bool groupsOnTop;
-    bool positionsChanged;
-    bool needSort;
+    bool groupsOnTop = true;
+    bool positionsChanged = false;
+    bool needSort = false;
     QVector<IFriendListItemPtr> items;
     // At startup, while the size of items is less than countContacts, the view will not be processed to improve performance
-    int countContacts;
+    int countContacts = 0;
 
 };

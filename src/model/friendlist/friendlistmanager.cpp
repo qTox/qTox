@@ -40,6 +40,11 @@ bool FriendListManager::getPositionsChanged() const
     return positionsChanged;
 }
 
+bool FriendListManager::getGroupsOnTop() const
+{
+    return groupsOnTop;
+}
+
 void FriendListManager::addFriendListItem(IFriendListItem *item)
 {
     if (item->isGroup() && item->getWidget() != nullptr) {
