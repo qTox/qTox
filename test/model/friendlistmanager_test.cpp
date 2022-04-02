@@ -148,6 +148,11 @@ public:
         return this;
     }
 
+    bool getGroupsOnTop()
+    {
+        return groupsOnTop;
+    }
+
     /**
      * @brief buildUnsorted Creates items to init the FriendListManager.
      * FriendListManager will own and manage these items
@@ -341,6 +346,7 @@ void TestFriendListManager::testSortByName()
     QCOMPARE(success, true);
     QCOMPARE(manager->getPositionsChanged(), false);
     QCOMPARE(manager->getItems().size(), sortedVec.size());
+    QCOMPARE(manager->getGroupsOnTop(),  listBuilder.getGroupsOnTop());
 
     for (int i = 0; i < sortedVec.size(); ++i) {
         IFriendListItem* fromManager = manager->getItems().at(i).get();
