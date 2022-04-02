@@ -73,6 +73,7 @@ private:
     MockCoreIdHandler idHandler;
     std::unique_ptr<SessionChatLog> chatLog;
     std::unique_ptr<FriendList> friendList;
+    std::unique_ptr<GroupList> groupList;
 };
 
 /**
@@ -81,7 +82,9 @@ private:
 void TestSessionChatLog::init()
 {
     friendList = std::unique_ptr<FriendList>(new FriendList());
-    chatLog = std::unique_ptr<SessionChatLog>(new SessionChatLog(idHandler, *friendList));
+    groupList = std::unique_ptr<GroupList>(new GroupList());
+    chatLog = std::unique_ptr<SessionChatLog>(new SessionChatLog(idHandler, *friendList,
+                                                                 *groupList));
 }
 
 /**

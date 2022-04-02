@@ -55,7 +55,7 @@ const QSize defaultSize(720, 400);
 
 ContentDialog::ContentDialog(const Core &core, Settings& settings_,
     Style& style_, IMessageBoxManager& messageBoxManager_, FriendList& friendList_,
-    Profile& profile_, QWidget* parent)
+    GroupList& groupList_, Profile& profile_, QWidget* parent)
     : ActivateDialog(style_, parent, Qt::Window)
     , splitter{new QSplitter(this)}
     , friendLayout{new FriendListLayout(this)}
@@ -66,6 +66,7 @@ ContentDialog::ContentDialog(const Core &core, Settings& settings_,
     , style{style_}
     , messageBoxManager{messageBoxManager_}
     , friendList{friendList_}
+    , groupList{groupList_}
     , profile{profile_}
 {
     friendLayout->setMargin(0);
@@ -499,7 +500,7 @@ void ContentDialog::dragEnterEvent(QDragEnterEvent* event)
     } else if (group) {
         assert(event->mimeData()->hasFormat("groupId"));
         GroupId groupId = GroupId{event->mimeData()->data("groupId")};
-        Group* contact = GroupList::findGroup(groupId);
+        Group* contact = groupList.findGroup(groupId);
         if (!contact) {
             return;
         }
@@ -528,7 +529,7 @@ void ContentDialog::dropEvent(QDropEvent* event)
     } else if (group) {
         assert(event->mimeData()->hasFormat("groupId"));
         const GroupId groupId(event->mimeData()->data("groupId"));
-        Group* contact = GroupList::findGroup(groupId);
+        Group* contact = groupList.findGroup(groupId);
         if (!contact) {
             return;
         }

@@ -49,6 +49,7 @@ class Settings;
 class Style;
 class IMessageBoxManager;
 class FriendList;
+class GroupList;
 class Profile;
 
 class ContentDialog : public ActivateDialog, public IDialogs
@@ -57,7 +58,7 @@ class ContentDialog : public ActivateDialog, public IDialogs
 public:
     ContentDialog(const Core& core, Settings& settings, Style& style,
         IMessageBoxManager& messageBoxManager, FriendList& friendList,
-        Profile& profile, QWidget* parent = nullptr);
+        GroupList& groupList, Profile& profile, QWidget* parent = nullptr);
     ~ContentDialog() override;
 
     FriendWidget* addFriend(std::shared_ptr<FriendChatroom> chatroom, GenericChatForm* form);
@@ -146,5 +147,6 @@ private:
     Style& style;
     IMessageBoxManager& messageBoxManager;
     FriendList& friendList;
+    GroupList& groupList;
     Profile& profile;
 };

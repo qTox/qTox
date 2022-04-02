@@ -101,7 +101,7 @@ QString GenericChatForm::resolveToxPk(const ToxPk& pk)
         return f->getDisplayedName();
     }
 
-    for (Group* it : GroupList::getAllGroups()) {
+    for (Group* it : groupList.getAllGroups()) {
         QString res = it->resolveToxPk(pk);
         if (!res.isEmpty()) {
             return res;
@@ -140,7 +140,7 @@ GenericChatForm::GenericChatForm(const Core& core_, const Chat* chat, IChatLog& 
                                  IMessageDispatcher& messageDispatcher_, DocumentCache& documentCache,
                                  SmileyPack& smileyPack_, Settings& settings_, Style& style_,
                                  IMessageBoxManager& messageBoxManager, FriendList& friendList_,
-                                 QWidget* parent_)
+                                 GroupList& groupList_, QWidget* parent_)
     : QWidget(parent_, Qt::Window)
     , core{core_}
     , audioInputFlag(false)
@@ -151,6 +151,7 @@ GenericChatForm::GenericChatForm(const Core& core_, const Chat* chat, IChatLog& 
     , settings{settings_}
     , style{style_}
     , friendList{friendList_}
+    , groupList{groupList_}
 {
     curRow = 0;
     headWidget = new ChatFormHeader(settings, style);

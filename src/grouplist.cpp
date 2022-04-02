@@ -23,8 +23,6 @@
 #include <QDebug>
 #include <QHash>
 
-QHash<const GroupId, Group*> GroupList::groupList;
-QHash<uint32_t, GroupId> GroupList::id2key;
 Group* GroupList::addGroup(Core& core, int groupNum, const GroupId& groupId, const QString& name, bool isAvGroupchat,
                            const QString& selfName, FriendList& friendList)
 {

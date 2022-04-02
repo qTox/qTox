@@ -37,7 +37,6 @@
 #include "src/core/toxpk.h"
 #include "src/model/friendmessagedispatcher.h"
 #include "src/model/groupmessagedispatcher.h"
-#include "src/friendlist.h"
 #if DESKTOP_NOTIFICATIONS
 #include "src/model/notificationgenerator.h"
 #include "src/platform/desktop_notifications/desktopnotify.h"
@@ -89,6 +88,8 @@ class CameraSource;
 class Style;
 class IMessageBoxManager;
 class ContentDialogManager;
+class FriendList;
+class GroupList;
 
 class Widget final : public QMainWindow
 {
@@ -394,6 +395,7 @@ private:
     Style& style;
     IMessageBoxManager* messageBoxManager = nullptr; // freed by Qt on destruction
     std::unique_ptr<FriendList> friendList;
+    std::unique_ptr<GroupList> groupList;
     std::unique_ptr<ContentDialogManager> contentDialogManager;
 };
 
