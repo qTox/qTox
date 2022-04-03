@@ -690,7 +690,7 @@ QString ChatWidget::getSelectedText() const
             QString msg = line->content[1]->getText();
 
             out +=
-                QString(out.isEmpty() ? "[%2] %1: %3" : "\n[%2] %1: %3").arg(author, timestamp, msg);
+                QString(out.isEmpty() ? QStringLiteral("[%2] %1: %3") : QStringLiteral("\n[%2] %1: %3")).arg(author, timestamp, msg);
         });
 
         return out;

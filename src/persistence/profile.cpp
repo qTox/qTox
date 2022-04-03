@@ -553,7 +553,7 @@ QString Profile::avatarPath(const ToxPk& owner, bool forceUnencrypted)
     QByteArray hash(hashSize, 0);
     crypto_generichash(reinterpret_cast<uint8_t*>(hash.data()), hashSize, reinterpret_cast<uint8_t*>(idData.data()), idData.size(),
                        reinterpret_cast<uint8_t*>(pubkeyData.data()), pubkeyData.size());
-    return paths.getSettingsDirPath() + "avatars/" + hash.toHex().toUpper() + ".png";
+    return paths.getSettingsDirPath() + "avatars/" + QString::fromUtf8(hash.toHex()).toUpper() + ".png";
 }
 
 /**

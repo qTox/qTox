@@ -36,7 +36,7 @@ bool ToxSave::toxSaveEventHandler(const QByteArray& eventData, void* userData)
         return false;
     }
 
-    toxSave->handleToxSave(eventData);
+    toxSave->handleToxSave(QString::fromUtf8(eventData));
     return true;
 }
 

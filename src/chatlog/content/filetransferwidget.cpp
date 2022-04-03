@@ -328,7 +328,7 @@ void FileTransferWidget::updateFileProgress(ToxFile const& file)
         if (speed > 0) {
             // ETA
             QTime toGo = QTime(0, 0).addSecs(remainingTime);
-            QString format = toGo.hour() > 0 ? "hh:mm:ss" : "mm:ss";
+            QString format = toGo.hour() > 0 ? QStringLiteral("hh:mm:ss") : QStringLiteral("mm:ss");
             ui->etaLabel->setText(toGo.toString(format));
         } else {
             ui->etaLabel->setText("");

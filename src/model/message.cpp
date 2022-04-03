@@ -47,11 +47,11 @@ namespace {
                 }
                 --splitPos;
             }
-            splittedMsgs.append(QString{ba_message.left(splitPos + 1)});
+            splittedMsgs.append(QString::fromUtf8(ba_message.left(splitPos + 1)));
             ba_message = ba_message.mid(splitPos + 1);
         }
 
-        splittedMsgs.append(QString{ba_message});
+        splittedMsgs.append(QString::fromUtf8(ba_message));
         return splittedMsgs;
     }
 }

@@ -99,7 +99,7 @@ QVector<QPair<QString, QString>> DirectShow::getDeviceList()
             goto fail;
         devHumanName = wcharToUtf8(var.bstrVal);
 
-        devices += {QString("video=") + devIdString, devHumanName};
+        devices += {QString("video=") + QString::fromUtf8(devIdString), QString::fromUtf8(devHumanName)};
 
     fail:
         if (olestr && coMalloc)
@@ -156,7 +156,7 @@ static IBaseFilter* getDevFilter(QString devName)
             if (devIdString[i] == ':')
                 devIdString[i] = '_';
 
-        if (devName != devIdString)
+        if (devName.toUtf8().constData() != devIdString)
             goto fail;
 
         if (m->BindToObject(nullptr, nullptr, IID_IBaseFilter, reinterpret_cast<void**>(&devFilter)) != S_OK)

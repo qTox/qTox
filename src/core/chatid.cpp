@@ -77,7 +77,7 @@ bool ChatId::operator<(const ChatId& other) const
  */
 QString ChatId::toString() const
 {
-    return id.toHex().toUpper();
+    return QString::fromUtf8(id.toHex()).toUpper();
 }
 
 /**

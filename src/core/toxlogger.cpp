@@ -33,7 +33,7 @@ QByteArray cleanPath(const char *file)
 {
     // for privacy, make the path relative to the c-toxcore source directory
     const QRegularExpression pathCleaner(QLatin1String{"[\\s|\\S]*c-toxcore."});
-    QByteArray cleanedPath = QString{file}.remove(pathCleaner).toUtf8();
+    QByteArray cleanedPath = QString::fromUtf8(file).remove(pathCleaner).toUtf8();
     cleanedPath.append('\0');
     return cleanedPath;
 }

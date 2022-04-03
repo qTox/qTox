@@ -233,7 +233,7 @@ const QString Style::resolve(const QString& filename, Settings& settings, const 
 
     QFile file{fullPath};
     if (file.open(QFile::ReadOnly | QFile::Text)) {
-        qss = file.readAll();
+        qss = QString::fromUtf8(file.readAll());
     } else {
         qWarning() << "Failed to open file:" << fullPath;
 
@@ -241,7 +241,7 @@ const QString Style::resolve(const QString& filename, Settings& settings, const 
         QFile defaultFile{fullPath};
 
         if (defaultFile.open(QFile::ReadOnly | QFile::Text)) {
-            qss = defaultFile.readAll();
+            qss = QString::fromUtf8(defaultFile.readAll());
         } else {
             qWarning() << "Failed to open default file:" << fullPath;
             return {};

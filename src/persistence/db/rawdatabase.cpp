@@ -696,7 +696,7 @@ QString RawDatabase::deriveKey(const QString& password)
     const std::unique_ptr<Tox_Pass_Key, PassKeyDeleter> key(tox_pass_key_derive_with_salt(
         reinterpret_cast<const uint8_t*>(passData.data()),
         static_cast<std::size_t>(passData.size()), expandConstant, nullptr));
-    return QByteArray(reinterpret_cast<char*>(key.get()) + 32, 32).toHex();
+    return QString::fromUtf8(QByteArray(reinterpret_cast<char*>(key.get()) + 32, 32).toHex());
 }
 
 /**
@@ -724,7 +724,7 @@ QString RawDatabase::deriveKey(const QString& password, const QByteArray& salt)
         reinterpret_cast<const uint8_t*>(passData.data()),
         static_cast<std::size_t>(passData.size()),
         reinterpret_cast<const uint8_t*>(salt.constData()), nullptr));
-    return QByteArray(reinterpret_cast<char*>(key.get()) + 32, 32).toHex();
+    return QString::fromUtf8(QByteArray(reinterpret_cast<char*>(key.get()) + 32, 32).toHex());
 }
 
 /**
@@ -876,7 +876,7 @@ void RawDatabase::process()
  */
 QString RawDatabase::anonymizeQuery(const QByteArray& query)
 {
-    QString queryString(query);
+    QString queryString = QString::fromUtf8(query);
     queryString.replace(QRegularExpression("chat.public_key='[A-F0-9]{64}'"),
                         "char.public_key='<HERE IS PUBLIC KEY>'");
     queryString.replace(QRegularExpression("timestamp BETWEEN \\d{5,} AND \\d{5,}"),
@@ -935,8 +935,8 @@ void RawDatabase::regexp(sqlite3_context* ctx, int argc, sqlite3_value** argv, c
 {
     std::ignore = argc;
     QRegularExpression regex;
-    const QString str1(reinterpret_cast<const char*>(sqlite3_value_text(argv[0])));
-    const QString str2(reinterpret_cast<const char*>(sqlite3_value_text(argv[1])));
+    const QString str1 = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_value_text(argv[0])));
+    const QString str2 = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_value_text(argv[1])));
 
     regex.setPattern(str1);
     regex.setPatternOptions(cs);

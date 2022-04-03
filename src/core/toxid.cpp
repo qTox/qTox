@@ -114,7 +114,7 @@ ToxId::ToxId(const uint8_t* rawId, int len)
 
 void ToxId::constructToxId(const QByteArray& rawId)
 {
-    if (rawId.length() == ToxId::size && isToxId(rawId.toHex().toUpper())) {
+    if (rawId.length() == ToxId::size && isToxId(QString::fromUtf8(rawId.toHex()).toUpper())) {
         toxId = QByteArray(rawId); // construct from full toxid
     } else {
         assert(!"ToxId constructed with invalid input");
@@ -149,7 +149,7 @@ bool ToxId::operator!=(const ToxId& other) const
  */
 QString ToxId::toString() const
 {
-    return toxId.toHex().toUpper();
+    return QString::fromUtf8(toxId.toHex()).toUpper();
 }
 
 /**
@@ -194,7 +194,7 @@ ToxPk ToxId::getPublicKey() const
 QString ToxId::getNoSpamString() const
 {
     if (toxId.length() == ToxId::size) {
-        return toxId.mid(ToxPk::size, ToxId::nospamSize).toHex().toUpper();
+        return QString::fromUtf8(toxId.mid(ToxPk::size, ToxId::nospamSize).toHex()).toUpper();
     }
 
     return {};

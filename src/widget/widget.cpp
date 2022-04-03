@@ -556,7 +556,7 @@ void Widget::updateIcons()
 
     const QString assetSuffix = Status::getAssetSuffix(static_cast<Status::Status>(
                                     ui->statusButton->property("status").toInt()))
-                                + (eventIcon ? "_event" : "");
+                                + (eventIcon ? QStringLiteral("_event") : QString());
 
     // Some builds of Qt appear to have a bug in icon loading:
     // QIcon::hasThemeIcon is sometimes unaware that the icon returned
@@ -588,7 +588,7 @@ void Widget::updateIcons()
     if (!hasThemeIconBug && QIcon::hasThemeIcon("qtox-" + assetSuffix)) {
         ico = QIcon::fromTheme("qtox-" + assetSuffix);
     } else {
-        QString color = settings.getLightTrayIcon() ? "light" : "dark";
+        QString color = settings.getLightTrayIcon() ? QStringLiteral("light") : QStringLiteral("dark");
         QString path = ":/img/taskbar/" + color + "/taskbar_" + assetSuffix + ".svg";
         QSvgRenderer renderer(path);
 
@@ -2484,9 +2484,9 @@ inline QIcon Widget::prepareIcon(QString path, int w, int h)
 {
 #ifdef Q_OS_LINUX
 
-    QString desktop = getenv("XDG_CURRENT_DESKTOP");
+    QString desktop = QString::fromUtf8(getenv("XDG_CURRENT_DESKTOP"));
     if (desktop.isEmpty()) {
-        desktop = getenv("DESKTOP_SESSION");
+        desktop = QString::fromUtf8(getenv("DESKTOP_SESSION"));
     }
 
     desktop = desktop.toLower();

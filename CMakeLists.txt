@@ -104,6 +104,7 @@ endif()
 
 add_definitions(-DQT_NO_CAST_FROM_BYTEARRAY)
 add_definitions(-DQT_NO_CAST_TO_ASCII)
+add_definitions(-DQT_RESTRICTED_CAST_FROM_ASCII)
 
 include(CheckAtomic)
 

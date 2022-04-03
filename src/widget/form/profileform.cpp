@@ -302,7 +302,7 @@ QString ProfileForm::getSupportedImageFilter()
 {
     QString res;
     for (auto type : QImageReader::supportedImageFormats()) {
-        res += QString("*.%1 ").arg(QString(type));
+        res += QString("*.%1 ").arg(QString::fromUtf8(type));
     }
 
     return tr("Images (%1)", "filetype filter").arg(res.left(res.size() - 1));

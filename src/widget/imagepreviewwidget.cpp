@@ -98,7 +98,7 @@ QString getToolTipDisplayingImage(const QPixmap& image)
     previewImage.save(&buffer, "PNG");
     buffer.close();
 
-    return "<img src=data:image/png;base64," + imageData.toBase64() + "/>";
+    return "<img src=data:image/png;base64," + QString::fromUtf8(imageData.toBase64()) + "/>";
 }
 
 } // namespace

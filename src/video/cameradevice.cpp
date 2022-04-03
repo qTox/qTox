@@ -195,7 +195,7 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
         devName += QString("+%1,%2").arg(QString().setNum(mode.x), QString().setNum(mode.y));
 
         av_dict_set(&options, "framerate", framerate.c_str(), 0);
-    } else if (iformat->name == QString("video4linux2,v4l2") && mode) {
+    } else if (QString::fromUtf8(iformat->name) == QString("video4linux2,v4l2") && mode) {
         av_dict_set(&options, "video_size", videoSize.c_str(), 0);
         av_dict_set(&options, "framerate", framerate.c_str(), 0);
         const std::string pixelFormatStr = v4l2::getPixelFormatString(mode.pixel_format).toStdString();
@@ -215,13 +215,13 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
         av_dict_set(&options, "offset_x", offsetX.c_str(), 0);
         av_dict_set(&options, "offset_y", offsetY.c_str(), 0);
         av_dict_set(&options, "video_size", videoSize.c_str(), 0);
-    } else if (iformat->name == QString("dshow") && mode) {
+    } else if (QString::fromUtf8(iformat->name) == QString("dshow") && mode) {
         av_dict_set(&options, "video_size", videoSize.c_str(), 0);
         av_dict_set(&options, "framerate", framerate.c_str(), 0);
     }
 #endif
 #ifdef Q_OS_OSX
-    else if (iformat->name == QString("avfoundation")) {
+    else if (QString::fromUtf8(iformat->name) == QString("avfoundation")) {
         if (mode) {
             av_dict_set(&options, "video_size", videoSize.c_str(), 0);
             av_dict_set(&options, "framerate", framerate.c_str(), 0);
@@ -330,8 +330,8 @@ QVector<QPair<QString, QString>> CameraDevice::getRawDeviceListGeneric()
     devices.resize(devlist->nb_devices);
     for (int i = 0; i < devlist->nb_devices; ++i) {
         AVDeviceInfo* dev = devlist->devices[i];
-        devices[i].first = dev->device_name;
-        devices[i].second = dev->device_description;
+        devices[i].first = QString::fromUtf8(dev->device_name);
+        devices[i].second = QString::fromUtf8(dev->device_description);
     }
     avdevice_free_list_devices(&devlist);
     return devices;
@@ -354,34 +354,34 @@ QVector<QPair<QString, QString>> CameraDevice::getDeviceList()
     if (!iformat)
         ;
 #ifdef Q_OS_WIN
-    else if (iformat->name == QString("dshow"))
+    else if (QString::fromUtf8(iformat->name) == QString("dshow"))
         devices += DirectShow::getDeviceList();
 #endif
 #if USING_V4L
-    else if (iformat->name == QString("video4linux2,v4l2"))
+    else if (QString::fromUtf8(iformat->name) == QString("video4linux2,v4l2"))
         devices += v4l2::getDeviceList();
 #endif
 #ifdef Q_OS_OSX
-    else if (iformat->name == QString("avfoundation"))
+    else if (QString::fromUtf8(iformat->name) == QString("avfoundation"))
         devices += avfoundation::getDeviceList();
 #endif
     else
         devices += getRawDeviceListGeneric();
 
     if (idesktopFormat) {
-        if (idesktopFormat->name == QString("x11grab")) {
+        if (QString::fromUtf8(idesktopFormat->name) == QString("x11grab")) {
             QString dev = "x11grab#";
             QByteArray display = qgetenv("DISPLAY");
 
             if (display.isNull())
                 dev += ":0";
             else
-                dev += display.constData();
+                dev += QString::fromUtf8(display.constData());
 
             devices.push_back(QPair<QString, QString>{
                 dev, QObject::tr("Desktop", "Desktop as a camera input for screen sharing")});
         }
-        if (idesktopFormat->name == QString("gdigrab"))
+        if (QString::fromUtf8(idesktopFormat->name) == QString("gdigrab"))
             devices.push_back(QPair<QString, QString>{
                 "gdigrab#desktop",
                 QObject::tr("Desktop", "Desktop as a camera input for screen sharing")});
@@ -459,15 +459,15 @@ QVector<VideoMode> CameraDevice::getVideoModes(QString devName)
     else if (isScreen(devName))
         return getScreenModes();
 #ifdef Q_OS_WIN
-    else if (iformat->name == QString("dshow"))
+    else if (QString::fromUtf8(iformat->name) == QString("dshow"))
         return DirectShow::getDeviceModes(devName);
 #endif
 #if USING_V4L
-    else if (iformat->name == QString("video4linux2,v4l2"))
+    else if (QString::fromUtf8(iformat->name) == QString("video4linux2,v4l2"))
         return v4l2::getDeviceModes(devName);
 #endif
 #ifdef Q_OS_OSX
-    else if (iformat->name == QString("avfoundation"))
+    else if (QString::fromUtf8(iformat->name) == QString("avfoundation"))
         return avfoundation::getDeviceModes(devName);
 #endif
     else

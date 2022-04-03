@@ -44,7 +44,7 @@ QString dataToString(QByteArray data)
     data.remove(0, i);
     data.truncate(strlen);
 
-    return QString(data);
+    return QString::fromUtf8(data);
 }
 
 uint64_t dataToUint64(const QByteArray& data)

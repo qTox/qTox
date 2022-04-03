@@ -95,7 +95,7 @@ void cleanup()
 void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QString& msg)
 {
     // Silence qWarning spam due to bug in QTextBrowser (trying to open a file for base64 images)
-    if (ctxt.function == QString("virtual bool QFSFileEngine::open(QIODevice::OpenMode)")
+    if (QString::fromUtf8(ctxt.function) == QString("virtual bool QFSFileEngine::open(QIODevice::OpenMode)")
         && msg == QString("QFSFileEngine::open: No file name specified")) {
         return;
     }
@@ -119,7 +119,7 @@ void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QSt
         return;
     }
 
-    QString file = ctxt.file;
+    QString file = QString::fromUtf8(ctxt.file);
     // We're not using QT_MESSAGELOG_FILE here, because that can be 0, NULL, or
     // nullptr in release builds.
     QString path = QString(__FILE__);
@@ -199,7 +199,7 @@ bool toxURIEventHandler(const QByteArray& eventData, void* userData)
         return false;
     }
 
-    uriDialog->handleToxURI(eventData);
+    uriDialog->handleToxURI(QString::fromUtf8(eventData));
     return true;
 }
 
@@ -438,9 +438,9 @@ int main(int argc, char* argv[])
 
     // Event was not handled by already running instance therefore we handle it ourselves
     if (eventType == "uri") {
-        uriDialog->handleToxURI(firstParam.toUtf8());
+        uriDialog->handleToxURI(firstParam);
     } else if (eventType == "save") {
-        toxSave->handleToxSave(firstParam.toUtf8());
+        toxSave->handleToxSave(firstParam);
     }
 
     QObject::connect(a.get(), &QApplication::aboutToQuit, cleanup);

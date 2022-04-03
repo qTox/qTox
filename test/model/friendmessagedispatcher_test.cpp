@@ -400,7 +400,7 @@ void TestFriendMessageDispatcher::testActionMessagesSplitWithExtensions()
     auto reallyLongMessage = QString("a");
 
     for (uint64_t i = 0; i < testMaxExtendedMessageSize + 50; ++i) {
-        reallyLongMessage += i;
+        reallyLongMessage += QString().number(i);
     }
 
     friendMessageDispatcher->sendMessage(true, reallyLongMessage);

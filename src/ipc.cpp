@@ -52,7 +52,7 @@ namespace
             qWarning() << "Failed to get current username. Will use a global IPC.";
             user = "";
         }
-        return QString("qtox-" IPC_PROTOCOL_VERSION "-") + user;
+        return QString("qtox-" IPC_PROTOCOL_VERSION "-") + QString::fromUtf8(user);
     }
 } // namespace
 

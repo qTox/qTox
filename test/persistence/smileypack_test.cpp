@@ -116,7 +116,7 @@ void TestSmileyPack::testSmilifyAsciiEmoticon()
     auto result = smileyPack.smileyfied(":-)");
     QVERIFY(result == SmileyPack::getAsRichText(":-)"));
 
-    constexpr auto testMsg = "Some:-)Letters";
+    const auto testMsg = QStringLiteral("Some:-)Letters");
     result = smileyPack.smileyfied(testMsg);
 
     // Nothing has changed. Ascii smileys are only considered

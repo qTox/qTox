@@ -195,7 +195,7 @@ QVector<QPair<QString, QString>> v4l2::getDeviceList()
     dirent* e;
     while ((e = readdir(dir)))
         if (!strncmp(e->d_name, "video", 5) || !strncmp(e->d_name, "vbi", 3))
-            deviceFiles += QString("/dev/") + e->d_name;
+            deviceFiles += QString("/dev/") + QString::fromUtf8(e->d_name);
     closedir(dir);
 
     for (QString file : deviceFiles) {
@@ -210,7 +210,7 @@ QVector<QPair<QString, QString>> v4l2::getDeviceList()
         close(fd);
 
         if (caps.device_caps & V4L2_CAP_VIDEO_CAPTURE)
-            devices += {file, reinterpret_cast<const char*>(caps.card)};
+            devices += {file, QString::fromUtf8(reinterpret_cast<const char*>(caps.card))};
     }
     return devices;
 }

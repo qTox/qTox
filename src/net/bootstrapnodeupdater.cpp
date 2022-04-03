@@ -163,7 +163,7 @@ QList<DhtServer> loadNodesFile(QString file)
         return {};
     }
 
-    QString nodesJson = nodesFile.readAll();
+    QString nodesJson = QString::fromUtf8(nodesFile.readAll());
     nodesFile.close();
 
     auto jsonDoc = QJsonDocument::fromJson(nodesJson.toUtf8());
