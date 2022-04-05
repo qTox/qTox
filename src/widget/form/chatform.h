@@ -26,6 +26,7 @@
 
 #include "genericchatform.h"
 #include "src/core/core.h"
+#include "src/core/coreav.h"
 #include "src/model/ichatlog.h"
 #include "src/model/imessagedispatcher.h"
 #include "src/model/status.h"
@@ -78,7 +79,7 @@ signals:
     void updateFriendActivity(Friend& frnd);
 
 public slots:
-    void onAvInvite(uint32_t friendId, bool video);
+    void onAvInvite(uint32_t friendId, bool video, std::shared_ptr<ToxFriendCall> callInvite);
     void onAvStart(uint32_t friendId, bool video);
     void onAvEnd(uint32_t friendId, bool error);
     void onAvatarChanged(const ToxPk& friendPk, const QPixmap& pic);
@@ -152,4 +153,5 @@ private:
     Settings& settings;
     Style& style;
     ContentDialogManager& contentDialogManager;
+    CoreAV::ToxFriendCallPtr call;
 };

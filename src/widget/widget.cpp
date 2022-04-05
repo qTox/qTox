@@ -1144,12 +1144,6 @@ void Widget::dispatchFileSendFailed(uint32_t friendId, const QString& fileName)
                                            SystemMessageType::fileSendFailed, {fileName});
 }
 
-void Widget::onRejectCall(uint32_t friendId)
-{
-    CoreAV* const av = core->getAv();
-    av->cancelCall(friendId);
-}
-
 void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
 {
     assert(core != nullptr);
@@ -1210,7 +1204,6 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     connect(friendForm, &ChatForm::outgoingNotification, this, &Widget::outgoingNotification);
     connect(friendForm, &ChatForm::stopNotification, this, &Widget::onStopNotification);
     connect(friendForm, &ChatForm::endCallNotification, this, &Widget::onCallEnd);
-    connect(friendForm, &ChatForm::rejectCall, this, &Widget::onRejectCall);
 
     connect(widget, &FriendWidget::newWindowOpened, this, &Widget::openNewDialog);
     connect(widget, &FriendWidget::chatroomWidgetClicked, this, &Widget::onChatroomWidgetClicked);
@@ -2118,13 +2111,6 @@ Group* Widget::createGroup(uint32_t groupnumber, const GroupId& groupId)
             *friendList);
     assert(newgroup);
 
-    if (enabled) {
-        connect(newgroup, &Group::userLeft, [=](const ToxPk& user){
-            CoreAV *av = core->getAv();
-            assert(av);
-            av->invalidateGroupCallPeerSource(*newgroup, user);
-        });
-    }
     auto rawChatroom = new GroupChatroom(newgroup, contentDialogManager.get(), *core,
         *friendList);
     std::shared_ptr<GroupChatroom> chatroom(rawChatroom);
