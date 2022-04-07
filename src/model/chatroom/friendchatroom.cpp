@@ -115,6 +115,20 @@ bool FriendChatroom::autoAcceptEnabled() const
     return getAutoAcceptDir().isEmpty();
 }
 
+bool FriendChatroom::getBlocked() const
+{
+    return frnd->getStatus() == Status::Status::Blocked;
+}
+
+void FriendChatroom::setBlocked(bool blocked)
+{
+    if (blocked) {
+        frnd->block();
+    } else {
+        frnd->unblock();
+    }
+}
+
 void FriendChatroom::inviteFriend(const Group* group)
 {
     const auto friendId = frnd->getId();
