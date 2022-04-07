@@ -72,6 +72,10 @@ public:
     virtual QDateTime getFriendActivity(const ToxPk& pk) const = 0;
     virtual void setFriendActivity(const ToxPk& pk, const QDateTime& date) = 0;
 
+    virtual bool getFriendBlocked(const ToxPk& id) const = 0;
+    virtual void setFriendBlocked(const ToxPk& id, const bool blocked) = 0;
+    virtual QList<ToxPk> getBlockedFriends() const = 0;
+
     virtual void saveFriendSettings(const ToxPk& pk) = 0;
     virtual void removeFriendSettings(const ToxPk& pk) = 0;
 

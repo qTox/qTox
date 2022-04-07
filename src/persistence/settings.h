@@ -510,6 +510,11 @@ public:
     QDateTime getFriendActivity(const ToxPk& id) const override;
     void setFriendActivity(const ToxPk& id, const QDateTime& activity) override;
 
+    bool getFriendBlocked(const ToxPk& id) const override;
+    void setFriendBlocked(const ToxPk& id, bool blocked) override;
+
+    QList<ToxPk> getBlockedFriends() const override;
+
     void saveFriendSettings(const ToxPk& id) override;
     void removeFriendSettings(const ToxPk& id) override;
 
@@ -704,6 +709,7 @@ private:
         QDateTime activity;
         AutoAcceptCallFlags autoAcceptCall;
         bool autoGroupInvite = false;
+        bool blocked = false;
     };
 
     struct circleProp
