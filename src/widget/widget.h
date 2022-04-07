@@ -169,7 +169,8 @@ public slots:
     void onSelfAvatarLoaded(const QPixmap& pic);
     void setUsername(const QString& username);
     void setStatusMessage(const QString& statusMessage);
-    void addFriend(uint32_t friendId, const ToxPk& friendPk);
+    void addBlockedFriend(const ToxPk& friendPk);
+    void addCoreFriend(uint32_t friendId, const ToxPk& friendPk);
     void addFriendFailed(const ToxPk& userId, const QString& errorInfo = QString());
     void onCoreFriendStatusChanged(int friendId, Status::Status status);
     void onFriendStatusChanged(const ToxPk& friendPk, Status::Status status);
@@ -288,6 +289,10 @@ private:
     void acceptFileTransfer(const ToxFile &file, const QString &path);
     void formatWindowTitle(const QString& content);
     void removeChatHistory(Chat& chat);
+    void setFriendName(const ToxPk& friendPk, const QString& username);
+    void loadBlockedFriendInfo(const ToxPk& friendPk);
+    void setFriendStatusMessage(const ToxPk& friendPk, const QString& message);
+    void addFriend(Friend* newFriend);
 
 private:
     Profile& profile;

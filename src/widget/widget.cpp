@@ -717,7 +717,7 @@ void Widget::onCoreChanged(Core& core_)
     connect(core, &Core::statusSet, this, &Widget::onStatusSet);
     connect(core, &Core::usernameSet, this, &Widget::setUsername);
     connect(core, &Core::statusMessageSet, this, &Widget::setStatusMessage);
-    connect(core, &Core::friendAdded, this, &Widget::addFriend);
+    connect(core, &Core::friendAdded, this, &Widget::addCoreFriend);
     connect(core, &Core::failedToAddFriend, this, &Widget::addFriendFailed);
     connect(core, &Core::friendUsernameChanged, this, &Widget::onFriendUsernameChanged);
     connect(core, &Core::friendStatusChanged, this, &Widget::onCoreFriendStatusChanged);
@@ -1151,13 +1151,13 @@ void Widget::onRejectCall(uint32_t friendId)
     av->cancelCall(friendId);
 }
 
-void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
+void Widget::addFriend(Friend* newFriend)
 {
+    auto friendPk = newFriend->getPublicKey();
     assert(core != nullptr);
     settings.updateFriendAddress(friendPk.toString());
 
-    Friend* newfriend = friendList->addCoreFriend(friendId, friendPk, settings);
-    auto rawChatroom = new FriendChatroom(newfriend, contentDialogManager.get(), *core, settings, *groupList);
+    auto rawChatroom = new FriendChatroom(newFriend, contentDialogManager.get(), *core, settings, *groupList);
     std::shared_ptr<FriendChatroom> chatroom(rawChatroom);
     const auto compact = settings.getCompactLayout();
     auto widget = new FriendWidget(chatroom, compact, settings, style, *messageBoxManager, profile);
@@ -1166,15 +1166,15 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
 
     auto messageProcessor = MessageProcessor(*sharedMessageProcessorParams);
     auto friendMessageDispatcher =
-        std::make_shared<FriendMessageDispatcher>(*newfriend, std::move(messageProcessor), *core, *core->getExt());
+        std::make_shared<FriendMessageDispatcher>(*newFriend, std::move(messageProcessor), *core, *core->getExt());
 
     // Note: We do not have to connect the message dispatcher signals since
     // ChatHistory hooks them up in a very specific order
     auto chatHistory =
-        std::make_shared<ChatHistory>(*newfriend, history, *core, settings,
+        std::make_shared<ChatHistory>(*newFriend, history, *core, settings,
                                       *friendMessageDispatcher, *friendList,
                                       *groupList);
-    auto friendForm = new ChatForm(profile, newfriend, *chatHistory,
+    auto friendForm = new ChatForm(profile, newFriend, *chatHistory,
         *friendMessageDispatcher, *documentCache, *smileyPack, cameraSource,
         settings, style, *messageBoxManager, *contentDialogManager, *friendList,
         *groupList);
@@ -1205,9 +1205,9 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
                 notifyReceivedCallback);
 
     friendAlertConnections.insert(friendPk, notifyReceivedConnection);
-    connect(newfriend, &Friend::aliasChanged, this, &Widget::onFriendAliasChanged);
-    connect(newfriend, &Friend::displayedNameChanged, this, &Widget::onFriendDisplayedNameChanged);
-    connect(newfriend, &Friend::statusChanged, this, &Widget::onFriendStatusChanged);
+    connect(newFriend, &Friend::aliasChanged, this, &Widget::onFriendAliasChanged);
+    connect(newFriend, &Friend::displayedNameChanged, this, &Widget::onFriendDisplayedNameChanged);
+    connect(newFriend, &Friend::statusChanged, this, &Widget::onFriendStatusChanged);
 
     connect(friendForm, &ChatForm::incomingNotification, this, &Widget::incomingNotification);
     connect(friendForm, &ChatForm::outgoingNotification, this, &Widget::outgoingNotification);
@@ -1231,6 +1231,25 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     if (!avatar.isNull()) {
         friendForm->onAvatarChanged(friendPk, avatar);
         widget->onAvatarSet(friendPk, avatar);
+    }
+}
+
+void Widget::addBlockedFriend(const ToxPk& friendPk)
+{
+    Friend* newFriend = friendList->addBlockedFriend(friendPk, settings);
+    addFriend(newFriend);
+    loadBlockedFriendInfo(friendPk);
+}
+
+void Widget::addCoreFriend(uint32_t friendId, const ToxPk& friendPk)
+{
+    auto contact = friendList->findFriend(friendPk);
+    if (contact) {
+        contact->setCoreId(friendId);
+        friendList->makeFriendUnblocked(friendPk, friendId);
+    } else {
+        contact = friendList->addCoreFriend(friendId, friendPk, settings);
+        addFriend(contact);
     }
 }
 
@@ -1290,9 +1309,8 @@ void Widget::onFriendStatusChanged(const ToxPk& friendPk, Status::Status status)
     contentDialogManager->updateFriendStatus(friendPk);
 }
 
-void Widget::onFriendStatusMessageChanged(int friendId, const QString& message)
+void Widget::setFriendStatusMessage(const ToxPk& friendPk, const QString& message)
 {
-    const auto& friendPk = friendList->id2Key(friendId);
     Friend* f = friendList->findFriend(friendPk);
     if (!f) {
         return;
@@ -1301,9 +1319,15 @@ void Widget::onFriendStatusMessageChanged(int friendId, const QString& message)
     QString str = message;
     str.replace('\n', ' ').remove('\r').remove(QChar('\0'));
     f->setStatusMessage(str);
-
+    settings.setFriendStatusMessage(friendPk, str);
     friendWidgets[friendPk]->setStatusMsg(str);
     chatForms[friendPk]->setStatusMessage(str);
+}
+
+void Widget::onFriendStatusMessageChanged(int friendId, const QString& message)
+{
+    const auto& friendPk = friendList->id2Key(friendId);
+    setFriendStatusMessage(friendPk, message);
 }
 
 void Widget::onFriendDisplayedNameChanged(const QString& displayed)
@@ -1324,9 +1348,8 @@ void Widget::onFriendDisplayedNameChanged(const QString& displayed)
     chatListWidget->itemsChanged();
 }
 
-void Widget::onFriendUsernameChanged(int friendId, const QString& username)
+void Widget::setFriendName(const ToxPk& friendPk, const QString& username)
 {
-    const auto& friendPk = friendList->id2Key(friendId);
     Friend* f = friendList->findFriend(friendPk);
     if (!f) {
         return;
@@ -1336,6 +1359,23 @@ void Widget::onFriendUsernameChanged(int friendId, const QString& username)
     str.replace('\n', ' ').remove('\r').remove(QChar('\0'));
     f->setName(str);
 }
+
+void Widget::loadBlockedFriendInfo(const ToxPk& friendPk)
+{
+    const auto name = settings.getFriendName(friendPk);
+    setFriendName(friendPk, name);
+    const auto statusMessage = settings.getFriendStatusMessage(friendPk);
+    setFriendStatusMessage(friendPk, statusMessage);
+}
+
+void Widget::onFriendUsernameChanged(int friendId, const QString& username)
+{
+    const auto& friendPk = friendList->id2Key(friendId);
+    settings.setFriendName(friendPk, username);
+    settings.savePersonal();
+    setFriendName(friendPk, username);
+}
+
 
 void Widget::onFriendAliasChanged(const ToxPk& friendId, const QString& alias)
 {
