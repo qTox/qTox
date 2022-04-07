@@ -688,12 +688,12 @@ private:
         friendProp(QString addr_)
             : addr(addr_)
         {}
-        QString alias = "";
-        QString addr = "";
-        QString autoAcceptDir = "";
-        QString note = "";
+        QString alias;
+        QString addr;
+        QString autoAcceptDir;
+        QString note;
         int circleID = -1;
-        QDateTime activity = QDateTime();
+        QDateTime activity;
         AutoAcceptCallFlags autoAcceptCall;
         bool autoGroupInvite = false;
     };
