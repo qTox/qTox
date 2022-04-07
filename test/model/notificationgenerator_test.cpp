@@ -170,10 +170,10 @@ void TestNotificationGenerator::testMultipleGroupMessages()
 
 void TestNotificationGenerator::testMultipleFriendSourceMessages()
 {
-    Friend f(0, ToxPk());
+    Friend f(std::unique_ptr<uint32_t>(new uint32_t(0)), ToxPk());
     f.setName("friend1");
 
-    Friend f2(1, ToxPk());
+    Friend f2(std::unique_ptr<uint32_t>(new uint32_t(1)), ToxPk());
     f2.setName("friend2");
 
     notificationGenerator->friendMessageNotification(&f, "test1");

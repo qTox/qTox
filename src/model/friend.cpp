@@ -28,13 +28,13 @@
 #include <memory>
 #include <cassert>
 
-Friend::Friend(uint32_t friendId_, const ToxPk& friendPk_, const QString& userAlias_, const QString& userName_)
+Friend::Friend(std::unique_ptr<uint32_t> friendId_, const ToxPk& friendPk_, const QString& userAlias_, const QString& userName_)
     : userName{userName_}
     , userAlias{userAlias_}
     , friendPk{friendPk_}
-    , friendId{friendId_}
+    , friendId{std::move(friendId_)}
     , hasNewEvents{false}
-    , friendStatus{Status::Status::Offline}
+    , friendStatus{friendId ? Status::Status::Blocked : Status::Status::Offline}
     , isNegotiating{false}
 {
     if (userName_.isEmpty()) {
@@ -144,7 +144,9 @@ const ToxPk& Friend::getPublicKey() const
 
 uint32_t Friend::getId() const
 {
-    return friendId;
+    assert(friendStatus != Status::Status::Blocked);
+    assert(friendId);
+    return *friendId;
 }
 
 const ChatId& Friend::getPersistentId() const
@@ -177,7 +179,8 @@ void Friend::setStatus(Status::Status s)
     const auto startNegotating = friendStatus == Status::Status::Offline;
 
     if (startNegotating) {
-        qDebug() << "Starting negotiation with friend " << friendId;
+        assert(friendId);
+        qDebug() << "Starting negotiation with friend " << *friendId;
         isNegotiating = true;
     }
 
@@ -222,7 +225,8 @@ void Friend::onNegotiationComplete() {
         return;
     }
 
-    qDebug() << "Negotiation complete for friend " << friendId;
+    assert(friendId);
+    qDebug() << "Negotiation complete for friend " << *friendId;
 
     isNegotiating = false;
     emit statusChanged(friendPk, friendStatus);
@@ -230,4 +234,23 @@ void Friend::onNegotiationComplete() {
     if (Status::isOnline(getStatus())) {
         emit onlineOfflineChanged(friendPk, true);
     }
+}
+
+void Friend::block()
+{
+    setStatus(Status::Status::Blocked);
+    friendId.reset();
+    emit blocked();
+}
+
+void Friend::unblock()
+{
+    setStatus(Status::Status::Offline);
+    emit unblocked();
+}
+
+void Friend::setCoreId(uint32_t coreId)
+{
+    assert(!friendId);
+    friendId = std::unique_ptr<uint32_t>(new uint32_t(coreId));
 }

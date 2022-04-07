@@ -34,7 +34,7 @@ Friend* FriendList::addFriend(uint32_t friendId, const ToxPk& friendPk, Settings
     }
 
     QString alias = settings.getFriendAlias(friendPk);
-    Friend* newfriend = new Friend(friendId, friendPk, alias);
+    Friend* newfriend = new Friend(std::unique_ptr<uint32_t>(new uint32_t(friendId)), friendPk, alias);
     friendList[friendPk] = newfriend;
     id2key[friendId] = friendPk;
 
