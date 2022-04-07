@@ -210,6 +210,11 @@ bool GroupWidget::isOnline() const
     return true;
 }
 
+bool GroupWidget::isBlocked() const
+{
+    return false;
+}
+
 bool GroupWidget::widgetIsVisible() const
 {
     return isVisible();

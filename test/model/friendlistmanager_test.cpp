@@ -41,6 +41,7 @@ public:
     bool isGroup() const override { return false; }
     bool isOnline() const override { return online; }
     bool widgetIsVisible() const override { return visible; }
+    bool isBlocked() const override {return false; }
 
     QString getNameItem() const override { return name; }
     QDateTime getLastActivity() const override { return lastActivity; }
@@ -72,6 +73,7 @@ public:
     bool isFriend() const override { return false; }
     bool isGroup() const override { return true; }
     bool isOnline() const override { return true; }
+    bool isBlocked() const override { return false; }
     bool widgetIsVisible() const override { return visible; }
 
     QString getNameItem() const override { return name; }

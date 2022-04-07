@@ -54,6 +54,7 @@ public:
     bool isFriend() const final;
     bool isGroup() const final;
     bool isOnline() const final;
+    bool isBlocked() const final;
     bool widgetIsVisible() const final;
     QString getNameItem() const final;
     QDateTime getLastActivity() const final;
@@ -63,11 +64,13 @@ public:
 
 signals:
     void friendWidgetClicked(FriendWidget* widget);
-    void removeFriend(const ToxPk& friendPk);
+    void removeFriend(const ToxPk& friendPk, bool fake);
     void copyFriendIdToClipboard(const ToxPk& friendPk);
     void contextMenuCalled(QContextMenuEvent* event);
     void friendHistoryRemoved();
     void updateFriendActivity(Friend& frnd);
+    void blockFriend(const ToxPk& friendPk);
+    void unblockFriend(const ToxPk& friendPk);
 
 public slots:
     void onAvatarSet(const ToxPk& friendPk, const QPixmap& pic);
@@ -85,6 +88,7 @@ private slots:
     void moveToNewCircle();
     void removeFromCircle();
     void moveToCircle(int circleId);
+    void setBlocked(bool blocked);
     void changeAutoAccept(bool enable);
     void showDetails();
 
