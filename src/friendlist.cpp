@@ -26,7 +26,8 @@
 #include <QHash>
 #include <QMenu>
 
-Friend* FriendList::addFriend(uint32_t friendId, const ToxPk& friendPk, Settings& settings)
+
+Friend* FriendList::addFriend(std::unique_ptr<uint32_t> friendId, const ToxPk& friendPk, Settings& settings)
 {
     auto friendChecker = friendList.find(friendPk);
     if (friendChecker != friendList.end()) {
@@ -34,11 +35,24 @@ Friend* FriendList::addFriend(uint32_t friendId, const ToxPk& friendPk, Settings
     }
 
     QString alias = settings.getFriendAlias(friendPk);
-    Friend* newfriend = new Friend(std::unique_ptr<uint32_t>(new uint32_t(friendId)), friendPk, alias);
+    uint32_t* coreId = friendId.get();
+    Friend* newfriend = new Friend(std::move(friendId), friendPk, alias);
     friendList[friendPk] = newfriend;
-    id2key[friendId] = friendPk;
+    if (coreId) {
+        id2key[*coreId] = friendPk;
+    }
 
     return newfriend;
+}
+
+Friend* FriendList::addCoreFriend(uint32_t friendId, const ToxPk& friendPk, Settings& settings)
+{
+    return addFriend(std::unique_ptr<uint32_t>(new uint32_t(friendId)), friendPk, settings);
+}
+
+Friend* FriendList::addBlockedFriend(const ToxPk& friendPk, Settings& settings)
+{
+    return addFriend({}, friendPk, settings);
 }
 
 Friend* FriendList::findFriend(const ToxPk& friendPk)
@@ -88,4 +102,14 @@ QString FriendList::decideNickname(const ToxPk& friendPk, const QString& origNam
     } else {
         return friendPk.toString();
     }
+}
+
+void FriendList::makeFriendBlocked(uint32_t oldFriendId)
+{
+    id2key.remove(oldFriendId);
+}
+
+void FriendList::makeFriendUnblocked(const ToxPk& friendPk, uint32_t coreId)
+{
+    id2key[coreId] = friendPk;
 }

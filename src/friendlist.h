@@ -23,6 +23,8 @@
 
 #include <QHash>
 
+#include <memory>
+
 template <class T>
 class QList;
 class Friend;
@@ -34,15 +36,20 @@ class Settings;
 class FriendList
 {
 public:
-    Friend* addFriend(uint32_t friendId, const ToxPk& friendPk, Settings& settings);
+    Friend* addCoreFriend(uint32_t friendId, const ToxPk& friendPk, Settings& settings);
+    Friend* addBlockedFriend(const ToxPk& friendPk, Settings& settings);
     Friend* findFriend(const ToxPk& friendPk);
     const ToxPk& id2Key(uint32_t friendId);
     QList<Friend*> getAllFriends();
     void removeFriend(const ToxPk& friendPk, Settings& settings, bool fake = false);
     void clear();
     QString decideNickname(const ToxPk& friendPk, const QString& origName);
+    void makeFriendBlocked(uint32_t oldFriendId);
+    void makeFriendUnblocked(const ToxPk& friendPk, uint32_t coreId);
 
 private:
+    Friend* addFriend(std::unique_ptr<uint32_t> friendId, const ToxPk& friendPk, Settings& settings);
+
     QHash<ToxPk, Friend*> friendList;
     QHash<uint32_t, ToxPk> id2key;
 };
