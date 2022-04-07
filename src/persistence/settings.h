@@ -495,8 +495,14 @@ public:
 
     void updateFriendAddress(const QString& newAddr);
 
+    QString getFriendName(const ToxPk& id) const override;
+    void setFriendName(const ToxPk& id, const QString& name) override;
+
     QString getFriendAlias(const ToxPk& id) const override;
     void setFriendAlias(const ToxPk& id, const QString& alias) override;
+
+    QString getFriendStatusMessage(const ToxPk& id) const override;
+    void setFriendStatusMessage(const ToxPk& id, const QString& message) override;
 
     int getFriendCircleID(const ToxPk& id) const override;
     void setFriendCircleID(const ToxPk& id, int circleID) override;
@@ -688,7 +694,9 @@ private:
         friendProp(QString addr_)
             : addr(addr_)
         {}
+        QString name;
         QString alias;
+        QString statusMessage;
         QString addr;
         QString autoAcceptDir;
         QString note;

@@ -57,8 +57,14 @@ public:
     virtual bool getAutoGroupInvite(const ToxPk& pk) const = 0;
     virtual void setAutoGroupInvite(const ToxPk& pk, bool accept) = 0;
 
+    virtual QString getFriendName(const ToxPk& id) const = 0;
+    virtual void setFriendName(const ToxPk& id, const QString& name) = 0;
+
     virtual QString getFriendAlias(const ToxPk& pk) const = 0;
     virtual void setFriendAlias(const ToxPk& pk, const QString& alias) = 0;
+
+    virtual QString getFriendStatusMessage(const ToxPk& pk) const = 0;
+    virtual void setFriendStatusMessage(const ToxPk& pk, const QString& message) = 0;
 
     virtual int getFriendCircleID(const ToxPk& pk) const = 0;
     virtual void setFriendCircleID(const ToxPk& pk, int circleID) = 0;

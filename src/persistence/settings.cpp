@@ -520,7 +520,9 @@ void Settings::loadPersonal(const Profile& profile, bool newProfile)
         for (int i = 0; i < size; i++) {
             ps.setArrayIndex(i);
             friendProp fp{ps.value("addr").toString()};
+            fp.name = ps.value("name").toString();
             fp.alias = ps.value("alias").toString();
+            fp.statusMessage = ps.value("statusMessage").toString();
             fp.note = ps.value("note").toString();
             fp.autoAcceptDir = ps.value("autoAcceptDir").toString();
 
@@ -777,7 +779,9 @@ void Settings::savePersonal(QString profileName, const ToxEncrypt* passkey)
         for (auto& frnd : friendLst) {
             ps.setArrayIndex(index);
             ps.setValue("addr", frnd.addr);
+            ps.setValue("name", frnd.name);
             ps.setValue("alias", frnd.alias);
+            ps.setValue("statusMessage", frnd.statusMessage);
             ps.setValue("note", frnd.note);
             ps.setValue("autoAcceptDir", frnd.autoAcceptDir);
             ps.setValue("autoAcceptCall", static_cast<int>(frnd.autoAcceptCall));
@@ -1893,6 +1897,23 @@ void Settings::updateFriendAddress(const QString& newAddr)
     frnd.addr = newAddr;
 }
 
+QString Settings::getFriendName(const ToxPk& id) const
+{
+    QMutexLocker locker{&bigLock};
+    auto it = friendLst.find(id.getByteArray());
+    if (it != friendLst.end())
+        return it->name;
+
+    return QString();
+}
+
+void Settings::setFriendName(const ToxPk& id, const QString& name)
+{
+    QMutexLocker locker{&bigLock};
+    auto& frnd = getOrInsertFriendPropRef(id);
+    frnd.name = name;
+}
+
 QString Settings::getFriendAlias(const ToxPk& id) const
 {
     QMutexLocker locker{&bigLock};
@@ -1908,6 +1929,23 @@ void Settings::setFriendAlias(const ToxPk& id, const QString& alias)
     QMutexLocker locker{&bigLock};
     auto& frnd = getOrInsertFriendPropRef(id);
     frnd.alias = alias;
+}
+
+QString Settings::getFriendStatusMessage(const ToxPk& id) const
+{
+    QMutexLocker locker{&bigLock};
+    auto it = friendLst.find(id.getByteArray());
+    if (it != friendLst.end())
+        return it->statusMessage;
+
+    return QString();
+}
+
+void Settings::setFriendStatusMessage(const ToxPk& id, const QString& message)
+{
+    QMutexLocker locker{&bigLock};
+    auto& frnd = getOrInsertFriendPropRef(id);
+    frnd.statusMessage = message;
 }
 
 int Settings::getFriendCircleID(const ToxPk& id) const
