@@ -387,12 +387,12 @@ void TestFriendListManager::testSetFilter()
                 listBuilder.addOfflineFriends()->addOnlineFriends()->addGroups()->buildUnsorted());
     QSignalSpy spy(manager.get(), &FriendListManager::itemsChanged);
 
-    manager->setFilter("", false, false, false);
+    manager->setFilter("", false, false, false, false);
 
     QCOMPARE(spy.count(), 0);
 
-    manager->setFilter("Test", true, false, false);
-    manager->setFilter("Test", true, false, false);
+    manager->setFilter("Test", true, false, false, false);
+    manager->setFilter("Test", true, false, false, false);
 
     QCOMPARE(spy.count(), 1);
 }
@@ -406,7 +406,7 @@ void TestFriendListManager::testApplyFilterSearchString()
     QString testNameA = "NOITEMSWITHTHISNAME";
     QString testNameB = "Test Name B";
     manager->sortByName();
-    manager->setFilter(testNameA, false, false, false);
+    manager->setFilter(testNameA, false, false, false, false);
     manager->applyFilter();
 
     resultVec = manager->getItems();
@@ -435,7 +435,7 @@ void TestFriendListManager::testApplyFilterSearchString()
         }
     }
 
-    manager->setFilter("", false, false, false);
+    manager->setFilter("", false, false, false, false);
     manager->applyFilter();
 
     resultVec = manager->getItems();
@@ -454,7 +454,7 @@ void TestFriendListManager::testApplyFilterByStatus()
     auto groupItems = listBuilder.addGroups()->buildSortedByName();
     manager->sortByName();
 
-    manager->setFilter("", true /*hideOnline*/, false /*hideOffline*/, false /*hideGroups*/);
+    manager->setFilter("", true /*hideOnline*/, false /*hideOffline*/, false /*hideBlocked*/, false /*hideGroups*/);
     manager->applyFilter();
 
     for (auto item : manager->getItems()) {
@@ -465,7 +465,7 @@ void TestFriendListManager::testApplyFilterByStatus()
         }
     }
 
-    manager->setFilter("", false /*hideOnline*/, true /*hideOffline*/, false /*hideGroups*/);
+    manager->setFilter("", false /*hideOnline*/, true /*hideOffline*/, false /*hideBlocked*/, false /*hideGroups*/);
     manager->applyFilter();
 
     for (auto item : manager->getItems()) {
@@ -476,7 +476,7 @@ void TestFriendListManager::testApplyFilterByStatus()
         }
     }
 
-    manager->setFilter("", false /*hideOnline*/, false /*hideOffline*/, true /*hideGroups*/);
+    manager->setFilter("", false /*hideOnline*/, false /*hideOffline*/, false /*hideBlocked*/, true /*hideGroups*/);
     manager->applyFilter();
 
     for (auto item : manager->getItems()) {
@@ -487,14 +487,14 @@ void TestFriendListManager::testApplyFilterByStatus()
         }
     }
 
-    manager->setFilter("", true /*hideOnline*/, true /*hideOffline*/, true /*hideGroups*/);
+    manager->setFilter("", true /*hideOnline*/, true /*hideOffline*/, false /*hideBlocked*/, true /*hideGroups*/);
     manager->applyFilter();
 
     for (auto item : manager->getItems()) {
         QCOMPARE(item->widgetIsVisible(), false);
     }
 
-    manager->setFilter("", false /*hideOnline*/, false /*hideOffline*/, false /*hideGroups*/);
+    manager->setFilter("", false /*hideOnline*/, false /*hideOffline*/, false /*hideBlocked*/, false /*hideGroups*/);
     manager->applyFilter();
 
     for (auto item : manager->getItems()) {

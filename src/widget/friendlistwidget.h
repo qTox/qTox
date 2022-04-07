@@ -65,7 +65,8 @@ public:
     void addCircleWidget(FriendWidget* widget = nullptr);
     void removeCircleWidget(CircleWidget* widget);
     void searchChatrooms(const QString& searchString, bool hideOnline = false,
-                         bool hideOffline = false, bool hideGroups = false);
+                         bool hideOffline = false, bool hideBlocked = false,
+                         bool hideGroups = false);
 
     void cycleChats(GenericChatroomWidget* activeChatroomWidget, bool forward);
 

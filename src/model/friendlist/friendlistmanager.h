@@ -46,7 +46,7 @@ public:
     void sortByActivity();
     void resetParents();
     void setFilter(const QString& searchString, bool hideOnline,
-                   bool hideOffline, bool hideGroups);
+                   bool hideOffline, bool hideBlocked, bool hideGroups);
     void applyFilter();
     void updatePositions();
     void setSortRequired();
@@ -61,6 +61,7 @@ private:
         QString searchString = "";
         bool hideOnline = false;
         bool hideOffline = false;
+        bool hideBlocked = false;
         bool hideGroups = false;
     } filterParams;
 
