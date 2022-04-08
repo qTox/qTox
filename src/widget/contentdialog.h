@@ -85,6 +85,9 @@ public:
 
     void setStatusMessage(const ToxPk& friendPk, const QString& message);
 
+    void setValid(bool val);
+    bool isValid() const;
+
 signals:
     void friendDialogShown(const Friend* f);
     void groupDialogShown(Group* g);
@@ -149,4 +152,6 @@ private:
     FriendList& friendList;
     GroupList& groupList;
     Profile& profile;
+
+    bool valid = true;
 };

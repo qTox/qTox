@@ -38,6 +38,8 @@ void removeDialog(ContentDialog* dialog, QHash<const ChatId&, ContentDialog*>& d
             ++it;
         }
     }
+
+    dialog->setValid(false);
 }
 } // namespace
 
@@ -184,6 +186,9 @@ void ContentDialogManager::addContentDialog(ContentDialog& dialog)
 void ContentDialogManager::onDialogActivate()
 {
     ContentDialog* dialog = qobject_cast<ContentDialog*>(sender());
+    if (!dialog->isValid()) {
+        return;
+    }
     currentDialog = dialog;
 }
 
