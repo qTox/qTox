@@ -746,6 +746,7 @@ void Widget::onCoreChanged(Core& core_)
     connect(this, &Widget::statusSet, core, &Core::setStatus);
     connect(this, &Widget::friendRequested, core, &Core::requestFriendship);
     connect(this, &Widget::friendRequestAccepted, core, &Core::acceptFriendRequest);
+    connect(this, &Widget::unblockFriend, core, &Core::acceptFriendRequest);
     connect(this, &Widget::changeGroupTitle, core, &Core::changeGroupTitle);
 
     sharedMessageProcessorParams->setPublicKey(core->getSelfPublicKey().toString());
@@ -1221,7 +1222,9 @@ void Widget::addFriend(Friend* newFriend)
     connect(widget, &FriendWidget::friendHistoryRemoved, friendForm, &ChatForm::clearChatArea);
     connect(widget, &FriendWidget::copyFriendIdToClipboard, this, &Widget::copyFriendIdToClipboard);
     connect(widget, &FriendWidget::contextMenuCalled, widget, &FriendWidget::onContextMenuCalled);
-    connect(widget, SIGNAL(removeFriend(const ToxPk&)), this, SLOT(removeFriend(const ToxPk&)));
+    connect(widget, &FriendWidget::removeFriend, this, &Widget::removeFriendByPk);
+    connect(widget, &FriendWidget::blockFriend, this, &Widget::blockFriend);
+    connect(widget, &FriendWidget::unblockFriend, this, &Widget::onUnblockFriend);
 
     connect(&profile, &Profile::friendAvatarSet, widget, &FriendWidget::onAvatarSet);
     connect(&profile, &Profile::friendAvatarRemoved, widget, &FriendWidget::onAvatarRemoved);
@@ -1514,9 +1517,9 @@ void Widget::addFriendDialog(const Friend* frnd, ContentDialog* dialog)
     friendWidget->setStatusMsg(widget->getStatusMsg());
 
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 7, 0))
-    auto widgetRemoveFriend = QOverload<const ToxPk&>::of(&Widget::removeFriend);
+    auto widgetRemoveFriend = QOverload<const ToxPk&, bool>::of(&Widget::removeFriendByPk);
 #else
-    auto widgetRemoveFriend = static_cast<void (Widget::*)(const ToxPk&)>(&Widget::removeFriend);
+    auto widgetRemoveFriend = static_cast<void (Widget::*)(const ToxPk&, bool)>(&Widget::removeFriend);
 #endif
     connect(friendWidget, &FriendWidget::removeFriend, this, widgetRemoveFriend);
     connect(friendWidget, &FriendWidget::middleMouseClicked, dialog,
@@ -1830,9 +1833,29 @@ void Widget::removeFriend(Friend* f, bool fake)
     }
 }
 
-void Widget::removeFriend(const ToxPk& friendId)
+void Widget::removeFriendByPk(const ToxPk& friendId, bool fake)
 {
-    removeFriend(friendList->findFriend(friendId), false);
+    removeFriend(friendList->findFriend(friendId), fake);
+}
+
+void Widget::blockFriend(const ToxPk& friendPk)
+{
+    auto contact = friendList->findFriend(friendPk);
+    assert(contact);
+    auto oldId = contact->getId();
+    settings.setFriendBlocked(friendPk, true);
+    core->removeFriend(oldId);
+    friendList->makeFriendBlocked(oldId);
+    contact->block();
+}
+
+void Widget::onUnblockFriend(const ToxPk& friendPk)
+{
+    auto contact = friendList->findFriend(friendPk);
+    assert(contact);
+    contact->unblock();
+    emit unblockFriend(friendPk);
+    settings.setFriendBlocked(friendPk, false);
 }
 
 void Widget::onDialogShown(GenericChatroomWidget* widget)

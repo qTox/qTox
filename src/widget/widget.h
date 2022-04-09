@@ -216,6 +216,7 @@ signals:
     void statusMessageChanged(const QString& statusMessage);
     void resized();
     void windowStateChanged(Qt::WindowStates states);
+    void unblockFriend(const ToxPk& friendPk);
 
 private slots:
     void onAddClicked();
@@ -225,7 +226,9 @@ private slots:
     void openNewDialog(GenericChatroomWidget* widget);
     void onChatroomWidgetClicked(GenericChatroomWidget* widget);
     void onStatusMessageChanged(const QString& newStatusMessage);
-    void removeFriend(const ToxPk& friendId);
+    void removeFriendByPk(const ToxPk& friendId, bool fake);
+    void blockFriend(const ToxPk& friendPk);
+    void onUnblockFriend(const ToxPk& friendPk);
     void copyFriendIdToClipboard(const ToxPk& friendId);
     void removeGroup(const GroupId& groupId);
     void setStatusOnline();
