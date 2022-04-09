@@ -94,6 +94,7 @@ signals:
     void failedToStart();
     void badProxy();
     void coreChanged(Core& core);
+    void blockedFriendLoaded(const ToxPk& friendPk);
 
 public slots:
     void onRequestSent(const ToxPk& friendPk, const QString& message);

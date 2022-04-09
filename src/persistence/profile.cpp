@@ -464,6 +464,12 @@ void Profile::startCore()
     // reason: Core::getInstance() returns nullptr, because it's not yet initialized
     // solution: kill Core::getInstance
     setAvatar(data);
+
+    // not actually dependent on Core, but dependent on Profile signals all being hooked up.
+    auto blockedFriends = settings.getBlockedFriends();
+    for (auto& blockedFriend : blockedFriends) {
+        emit blockedFriendLoaded(blockedFriend);
+    }
 }
 
 /**
