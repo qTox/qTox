@@ -84,21 +84,6 @@
             ]
         },
         {
-            "name": "msgpack",
-            "buildsystem": "cmake-ninja",
-            "config-opts": [
-                "-DCMAKE_BUILD_TYPE=Release",
-                "-DMSGPACK_BUILD_EXAMPLES=OFF",
-                "-DMSGPACK_BUILD_TESTS=OFF"
-            ],
-            "sources": [
-                {
-                    "type": "dir",
-                    "path": "/src/msgpack"
-                }
-            ]
-        },
-        {
             "name": "c-toxcore",
             "buildsystem": "cmake-ninja",
             "config-opts": [

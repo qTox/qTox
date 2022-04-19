@@ -37,7 +37,6 @@ RUN dnf --nodocs -y install dnf-plugins-core && \
 		ffmpeg-devel \
 		libexif-devel \
 		qrencode-devel \
-		msgpack-devel \
 		openal-soft-devel \
 		kf5-sonnet-devel \
 		libXScrnSaver-devel \

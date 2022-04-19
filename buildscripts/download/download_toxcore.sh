@@ -17,11 +17,11 @@
 
 set -euo pipefail
 
-TOXCORE_VERSION=0.2.17
-TOXCORE_HASH=d9cdf5d690fe8e217dcaba5b988fb943bbe7bda919a2fde6d9506df047e5f4cb
+TOXCORE_VERSION=0.2.18
+TOXCORE_HASH=f2940537998863593e28bc6a6b5f56f09675f6cd8a28326b7bc31b4836c08942
 
 source "$(dirname "$(realpath "$0")")/common.sh"
 
 download_verify_extract_tarball \
-    https://github.com/TokTok/c-toxcore/archive/v$TOXCORE_VERSION.tar.gz \
+    https://github.com/TokTok/c-toxcore/releases/download/v$TOXCORE_VERSION/c-toxcore-$TOXCORE_VERSION.tar.gz \
     "$TOXCORE_HASH"

@@ -39,11 +39,6 @@ RUN mkdir -p /src/libsodium && \
     cd /src/libsodium && \
     /build/download/download_sodium.sh
 
-COPY download/download_msgpack_c.sh /build/download/download_msgpack_c.sh
-RUN mkdir -p /src/msgpack && \
-    cd /src/msgpack && \
-    /build/download/download_msgpack_c.sh
-
 COPY download/download_sqlcipher.sh /build/download/download_sqlcipher.sh
 RUN mkdir -p /src/sqlcipher && \
     cd /src/sqlcipher && \

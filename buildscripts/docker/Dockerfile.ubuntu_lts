@@ -58,7 +58,6 @@ RUN apt-get update && \
         libinotifytools0-dev \
         liblz4-dev \
         libcairo-dev \
-        libmsgpack-dev \
         desktop-file-utils \
         wget \
         xxd \

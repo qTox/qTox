@@ -42,7 +42,6 @@ RUN apt-get update && \
     libkf5sonnet-dev \
     pkg-config \
     libqrencode-dev \
-    libmsgpack-dev \
     qt5-default \
     qttools5-dev && \
     apt-get clean && \
