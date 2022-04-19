@@ -645,22 +645,6 @@ void ContentDialog::setStatusMessage(const ToxPk& friendPk, const QString& messa
 }
 
 /**
- * @brief Sets flag that means destructor will be called soon
- */
-void ContentDialog::setValid(bool val)
-{
-    valid = val;
-}
-
-/**
- * @brief Flag means destructor will be called soon
- */
-bool ContentDialog::isValid() const
-{
-    return valid;
-}
-
-/**
  * @brief Update friend widget name and position.
  * @param friendId Friend Id.
  * @param alias Alias to display on widget.
