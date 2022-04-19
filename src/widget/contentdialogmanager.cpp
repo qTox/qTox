@@ -31,8 +31,6 @@
 namespace {
 void removeDialog(ContentDialog* dialog, QHash<const ChatId&, ContentDialog*>& dialogs)
 {
-    dialog->setValid(false);
-    
     for (auto it = dialogs.begin(); it != dialogs.end();) {
         if (*it == dialog) {
             it = dialogs.erase(it);
@@ -40,6 +38,8 @@ void removeDialog(ContentDialog* dialog, QHash<const ChatId&, ContentDialog*>& d
             ++it;
         }
     }
+
+    dialog->setValid(false);
 }
 } // namespace
 
