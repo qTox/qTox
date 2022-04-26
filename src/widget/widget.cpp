@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2019 by The qTox Project Contributors
+    Copyright © 2014-2022 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -1746,7 +1746,16 @@ void Widget::removeFriend(Friend* f, bool fake)
 {
     assert(f);
     if (!fake) {
-        removeChatHistory(*f);
+        RemoveChatDialog ask(this, *f);
+        ask.exec();
+
+        if (!ask.accepted()) {
+            return;
+        }
+
+        if (ask.removeHistory()) {
+            profile.getHistory()->removeChatHistory(f->getPersistentId());
+        }
     }
 
     const ToxPk friendPk = f->getPublicKey();
@@ -2054,7 +2063,16 @@ void Widget::removeGroup(Group* g, bool fake)
 {
     assert(g);
     if (!fake) {
-        removeChatHistory(*g);
+        RemoveChatDialog ask(this, *g);
+        ask.exec();
+
+        if (!ask.accepted()) {
+            return;
+        }
+
+        if (ask.removeHistory()) {
+            profile.getHistory()->removeChatHistory(g->getPersistentId());
+        }
     }
 
     const auto& groupId = g->getPersistentId();
@@ -2735,19 +2753,5 @@ void Widget::formatWindowTitle(const QString& content)
         setWindowTitle("qTox");
     } else {
         setWindowTitle(content + " - qTox");
-    }
-}
-
-void Widget::removeChatHistory(Chat& chat)
-{
-    RemoveChatDialog ask(this, chat);
-    ask.exec();
-
-    if (!ask.accepted()) {
-        return;
-    }
-
-    if (ask.removeHistory()) {
-        profile.getHistory()->removeChatHistory(chat.getPersistentId());
     }
 }
