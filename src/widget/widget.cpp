@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2019 by The qTox Project Contributors
+    Copyright © 2014-2022 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -1747,7 +1747,9 @@ void Widget::removeFriend(Friend* f, bool fake)
 {
     assert(f);
     if (!fake) {
-        removeChatHistory(*f);
+        if (!isNeedRemoveChat(*f)) {
+            return;
+        }
     }
 
     const ToxPk friendPk = f->getPublicKey();
@@ -2055,7 +2057,9 @@ void Widget::removeGroup(Group* g, bool fake)
 {
     assert(g);
     if (!fake) {
-        removeChatHistory(*g);
+        if (!isNeedRemoveChat(*g)) {
+            return;
+        }
     }
 
     const auto& groupId = g->getPersistentId();
@@ -2739,16 +2743,18 @@ void Widget::formatWindowTitle(const QString& content)
     }
 }
 
-void Widget::removeChatHistory(Chat& chat)
+bool Widget::isNeedRemoveChat(Chat& chat)
 {
     RemoveChatDialog ask(this, chat);
     ask.exec();
 
     if (!ask.accepted()) {
-        return;
+        return false;
     }
 
     if (ask.removeHistory()) {
         profile.getHistory()->removeChatHistory(chat.getPersistentId());
     }
+
+    return true;
 }

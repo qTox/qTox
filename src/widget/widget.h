@@ -287,7 +287,7 @@ private:
     void cleanupNotificationSound();
     void acceptFileTransfer(const ToxFile &file, const QString &path);
     void formatWindowTitle(const QString& content);
-    void removeChatHistory(Chat& chat);
+    bool isNeedRemoveChat(Chat& chat);
 
 private:
     Profile& profile;
