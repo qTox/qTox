@@ -2493,6 +2493,14 @@ Cet identifiant comprend le code NoSpam (en bleu) et la somme de contrôle (en g
         <source>You have left the group</source>
         <translation>Vous avez quitté le groupe</translation>
     </message>
+    <message>
+        <source>Failed to load chat history</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Database version (%1) is newer than we currently support (%2). Please upgrade qTox.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoveChatDialog</name>

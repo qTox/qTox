@@ -180,7 +180,7 @@ FileDbInsertionData::FileDbInsertionData()
  * @brief Prepares the database to work with the history.
  * @param db This database will be prepared for use with the history.
  */
-History::History(std::shared_ptr<RawDatabase> db_, Settings& settings_)
+History::History(std::shared_ptr<RawDatabase> db_, Settings& settings_, IMessageBoxManager& messageBoxManager)
     : db(db_)
     , settings(settings_)
 {
@@ -194,7 +194,7 @@ History::History(std::shared_ptr<RawDatabase> db_, Settings& settings_)
     db->execNow(
         "PRAGMA foreign_keys = ON;");
 
-    const auto upgradeSucceeded = DbUpgrader::dbSchemaUpgrade(db);
+    const auto upgradeSucceeded = DbUpgrader::dbSchemaUpgrade(db, messageBoxManager);
 
     // dbSchemaUpgrade may have put us in an invalid state
     if (!upgradeSucceeded) {

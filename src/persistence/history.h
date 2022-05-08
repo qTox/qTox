@@ -40,6 +40,7 @@ class Profile;
 class HistoryKeeper;
 class Settings;
 class ChatId;
+class IMessageBoxManager;
 
 enum class HistMessageContentType
 {
@@ -211,7 +212,7 @@ public:
     };
 
 public:
-    History(std::shared_ptr<RawDatabase> db, Settings& settings);
+    History(std::shared_ptr<RawDatabase> db, Settings& settings, IMessageBoxManager& messageBoxManager);
     ~History();
 
     bool isValid();

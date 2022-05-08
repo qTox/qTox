@@ -641,7 +641,7 @@ void Profile::loadDatabase(QString password, IMessageBoxManager& messageBoxManag
     database = std::make_shared<RawDatabase>(getDbPath(name, settings.getPaths()),
         password, salt);
     if (database && database->isOpen()) {
-        history.reset(new History(database, settings));
+        history.reset(new History(database, settings, messageBoxManager));
     } else {
         qWarning() << "Failed to open database for profile" << name;
         messageBoxManager.showError(QObject::tr("Error"),
