@@ -22,6 +22,7 @@
 #include "src/core/toxfile.h"
 
 #include "dbutility/dbutility.h"
+#include "src/widget/tool/imessageboxmanager.h"
 
 #include <QString>
 #include <QTemporaryFile>
@@ -70,6 +71,51 @@ bool insertFileId(RawDatabase& db, int row, bool valid)
         , {resumeId});
     return db.execNow(upgradeQueries);
 }
+
+class MockMessageBoxManager : public IMessageBoxManager
+{
+public:
+    ~MockMessageBoxManager() override = default;
+    void showInfo(const QString& title, const QString& msg) override {
+        std::ignore = title;
+        std::ignore = msg;
+    }
+    void showWarning(const QString& title, const QString& msg) override {
+        std::ignore = title;
+        std::ignore = msg;
+    }
+    void showError(const QString& title, const QString& msg) override {
+        std::ignore = title;
+        std::ignore = msg;
+        ++errorsShown;
+    }
+    bool askQuestion(const QString& title, const QString& msg, bool defaultAns = false,
+            bool warning = true, bool yesno = true) override {
+        std::ignore = title;
+        std::ignore = msg;
+        std::ignore = warning;
+        std::ignore = yesno;
+        return defaultAns;
+    }
+    bool askQuestion(const QString& title, const QString& msg, const QString& button1,
+            const QString& button2, bool defaultAns = false, bool warning = true) override {
+        std::ignore = title;
+        std::ignore = msg;
+        std::ignore = button1;
+        std::ignore = button2;
+        std::ignore = warning;
+        return defaultAns;
+    }
+    void confirmExecutableOpen(const QFileInfo& file) override {
+        std::ignore = file;
+    }
+    int getErrorsShown() {
+        return errorsShown;
+    }
+private:
+    int errorsShown = 0;
+};
+
 } // namespace
 
 class TestDbSchema : public QObject
@@ -80,6 +126,7 @@ private slots:
     void cleanup();
     void testCreation();
     void testIsNewDb();
+    void testNewerDb();
     void test0to1();
     void test1to2();
     void test2to3();
@@ -131,6 +178,19 @@ void TestDbSchema::testIsNewDb()
     newDb = DbUpgrader::isNewDb(db, success);
     QVERIFY(success);
     QVERIFY(newDb == false);
+}
+
+void TestDbSchema::testNewerDb()
+{
+    auto db = std::shared_ptr<RawDatabase>{new RawDatabase{testDatabaseFile->fileName(), {}, {}}};
+    createSchemaAtVersion(db, DbUtility::schema0);
+    int futureSchemaVersion = 1000000;
+    db->execNow(
+        RawDatabase::Query(QStringLiteral("PRAGMA user_version = %1").arg(futureSchemaVersion)));
+    MockMessageBoxManager messageBoxManager;
+    bool success = DbUpgrader::dbSchemaUpgrade(db, messageBoxManager);
+    QVERIFY(success == false);
+    QVERIFY(messageBoxManager.getErrorsShown() == 1);
 }
 
 void TestDbSchema::test0to1()
