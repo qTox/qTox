@@ -49,7 +49,7 @@ public:
     bool cycleChats(bool forward);
     bool cycleChats(FriendWidget* activeChatroomWidget, bool forward);
     void search(const QString& searchString, bool updateAll = false, bool hideOnline = false,
-                bool hideOffline = false);
+                bool hideOffline = false, bool hideBlocked = false);
 
 public slots:
     void onCompactChanged(bool compact);
@@ -63,6 +63,7 @@ protected:
     void setContainerAttribute(Qt::WidgetAttribute attribute, bool enabled);
     QLayout* friendOnlineLayout() const;
     QLayout* friendOfflineLayout() const;
+    QLayout* friendBlockedLayout() const;
     void emitChatroomWidget(QLayout* layout, int index);
 
 private:

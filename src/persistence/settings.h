@@ -495,14 +495,25 @@ public:
 
     void updateFriendAddress(const QString& newAddr);
 
+    QString getFriendName(const ToxPk& id) const override;
+    void setFriendName(const ToxPk& id, const QString& name) override;
+
     QString getFriendAlias(const ToxPk& id) const override;
     void setFriendAlias(const ToxPk& id, const QString& alias) override;
+
+    QString getFriendStatusMessage(const ToxPk& id) const override;
+    void setFriendStatusMessage(const ToxPk& id, const QString& message) override;
 
     int getFriendCircleID(const ToxPk& id) const override;
     void setFriendCircleID(const ToxPk& id, int circleID) override;
 
     QDateTime getFriendActivity(const ToxPk& id) const override;
     void setFriendActivity(const ToxPk& id, const QDateTime& activity) override;
+
+    bool getFriendBlocked(const ToxPk& id) const override;
+    void setFriendBlocked(const ToxPk& id, bool blocked) override;
+
+    QList<ToxPk> getBlockedFriends() const override;
 
     void saveFriendSettings(const ToxPk& id) override;
     void removeFriendSettings(const ToxPk& id) override;
@@ -688,14 +699,17 @@ private:
         friendProp(QString addr_)
             : addr(addr_)
         {}
-        QString alias = "";
-        QString addr = "";
-        QString autoAcceptDir = "";
-        QString note = "";
+        QString name;
+        QString alias;
+        QString statusMessage;
+        QString addr;
+        QString autoAcceptDir;
+        QString note;
         int circleID = -1;
-        QDateTime activity = QDateTime();
+        QDateTime activity;
         AutoAcceptCallFlags autoAcceptCall;
         bool autoGroupInvite = false;
+        bool blocked = false;
     };
 
     struct circleProp

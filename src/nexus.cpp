@@ -255,6 +255,7 @@ void Nexus::showMainGUI()
             Qt::BlockingQueuedConnection);
 
     connect(profile, &Profile::badProxy, widget, &Widget::onBadProxyCore, Qt::BlockingQueuedConnection);
+    connect(profile, &Profile::blockedFriendLoaded, widget, &Widget::addBlockedFriend);
 
     profile->startCore();
 

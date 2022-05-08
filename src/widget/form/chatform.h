@@ -86,6 +86,8 @@ public slots:
     void onAvatarChanged(const ToxPk& friendPk, const QPixmap& pic);
     void onFileNameChanged(const ToxPk& friendPk);
     void onExtensionSupportChanged(ExtensionSet extensions);
+    void onBlock();
+    void onUnblock();
     void clearChatArea();
     void onShowMessagesClicked();
     void onSplitterMoved(int pos, int index);
@@ -120,6 +122,7 @@ private slots:
 private:
     void updateMuteMicButton();
     void updateMuteVolButton();
+    void updateFileButtons();
     void retranslateUi();
     void showOutgoingCall(bool video);
     void startCounter();

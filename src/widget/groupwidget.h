@@ -51,6 +51,7 @@ public:
     bool isGroup() const final;
     QString getNameItem() const final;
     bool isOnline() const final;
+    bool isBlocked() const final;
     bool widgetIsVisible() const final;
     QDateTime getLastActivity() const final;
     QWidget* getWidget() final;

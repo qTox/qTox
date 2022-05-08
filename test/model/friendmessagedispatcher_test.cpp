@@ -180,7 +180,7 @@ TestFriendMessageDispatcher::TestFriendMessageDispatcher() {}
  */
 void TestFriendMessageDispatcher::init()
 {
-    f = std::unique_ptr<Friend>(new Friend(0, ToxPk()));
+    f = std::unique_ptr<Friend>(new Friend(std::unique_ptr<uint32_t>(new uint32_t(0)), ToxPk()));
     f->setStatus(Status::Status::Online);
     f->onNegotiationComplete();
     messageSender = std::unique_ptr<MockFriendMessageSender>(new MockFriendMessageSender());

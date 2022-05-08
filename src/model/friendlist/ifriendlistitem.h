@@ -36,6 +36,7 @@ public:
     virtual bool isFriend() const = 0;
     virtual bool isGroup() const = 0;
     virtual bool isOnline() const = 0;
+    virtual bool isBlocked() const = 0;
     virtual bool widgetIsVisible() const = 0;
     virtual QString getNameItem() const = 0;
     virtual QDateTime getLastActivity() const = 0;

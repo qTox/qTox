@@ -119,6 +119,7 @@ private:
         All = 0,
         Online,
         Offline,
+        Blocked,
         Friends,
         Groups
     };
@@ -169,7 +170,8 @@ public slots:
     void onSelfAvatarLoaded(const QPixmap& pic);
     void setUsername(const QString& username);
     void setStatusMessage(const QString& statusMessage);
-    void addFriend(uint32_t friendId, const ToxPk& friendPk);
+    void addBlockedFriend(const ToxPk& friendPk);
+    void addCoreFriend(uint32_t friendId, const ToxPk& friendPk);
     void addFriendFailed(const ToxPk& userId, const QString& errorInfo = QString());
     void onCoreFriendStatusChanged(int friendId, Status::Status status);
     void onFriendStatusChanged(const ToxPk& friendPk, Status::Status status);
@@ -215,6 +217,7 @@ signals:
     void statusMessageChanged(const QString& statusMessage);
     void resized();
     void windowStateChanged(Qt::WindowStates states);
+    void unblockFriend(const ToxPk& friendPk);
 
 private slots:
     void onAddClicked();
@@ -224,7 +227,9 @@ private slots:
     void openNewDialog(GenericChatroomWidget* widget);
     void onChatroomWidgetClicked(GenericChatroomWidget* widget);
     void onStatusMessageChanged(const QString& newStatusMessage);
-    void removeFriend(const ToxPk& friendId);
+    void removeFriendByPk(const ToxPk& friendId, bool fake);
+    void blockFriend(const ToxPk& friendPk);
+    void onUnblockFriend(const ToxPk& friendPk);
     void copyFriendIdToClipboard(const ToxPk& friendId);
     void removeGroup(const GroupId& groupId);
     void setStatusOnline();
@@ -280,6 +285,7 @@ private:
     static bool filterGroups(FilterCriteria index);
     static bool filterOnline(FilterCriteria index);
     static bool filterOffline(FilterCriteria index);
+    static bool filterBlocked(FilterCriteria index);
     void retranslateUi();
     void focusChatInput();
     void openDialog(GenericChatroomWidget* widget, bool newWindow);
@@ -288,6 +294,10 @@ private:
     void acceptFileTransfer(const ToxFile &file, const QString &path);
     void formatWindowTitle(const QString& content);
     void removeChatHistory(Chat& chat);
+    void setFriendName(const ToxPk& friendPk, const QString& username);
+    void loadBlockedFriendInfo(const ToxPk& friendPk);
+    void setFriendStatusMessage(const ToxPk& friendPk, const QString& message);
+    void addFriend(Friend* newFriend);
 
 private:
     Profile& profile;
@@ -306,6 +316,7 @@ private:
     QAction* filterAllAction;
     QAction* filterOnlineAction;
     QAction* filterOfflineAction;
+    QAction* filterBlockedAction;
     QAction* filterFriendsAction;
     QAction* filterGroupsAction;
 

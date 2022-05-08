@@ -215,6 +215,8 @@ ChatForm::ChatForm(Profile& profile_, Friend* chatFriend, IChatLog& chatLog_,
     connect(bodySplitter, &QSplitter::splitterMoved, this, &ChatForm::onSplitterMoved);
 
     connect(f, &Friend::extensionSupportChanged, this, &ChatForm::onExtensionSupportChanged);
+    connect(f, &Friend::blocked, this, &ChatForm::onBlock);
+    connect(f, &Friend::unblocked, this, &ChatForm::onUnblock);
 
     updateCallButtons();
 
@@ -264,8 +266,21 @@ void ChatForm::onExtensionSupportChanged(ExtensionSet extensions)
     headWidget->updateExtensionSupport(extensions);
 }
 
+void ChatForm::onBlock()
+{
+    updateCallButtons();
+}
+
+void ChatForm::onUnblock()
+{
+    updateCallButtons();
+}
+
 void ChatForm::onTextEditChanged()
 {
+    if (f->getStatus() == Status::Status::Blocked) {
+        return;
+    }
     if (!settings.getTypingNotification()) {
         if (isTyping) {
             isTyping = false;
@@ -442,13 +457,18 @@ void ChatForm::onVideoCallTriggered()
 
 void ChatForm::updateCallButtons()
 {
-    CoreAV* av = core.getAv();
-    const bool audio = av->isCallActive(f);
-    const bool video = av->isCallVideoEnabled(f);
     const bool online = Status::isOnline(f->getStatus());
-    headWidget->updateCallButtons(online, audio, video);
+    if (online) {
+        CoreAV* av = core.getAv();
+        const bool audio = av->isCallActive(f);
+        const bool video = av->isCallVideoEnabled(f);
+        headWidget->updateCallButtonsOnline(audio, video);
+    } else {
+        headWidget->updateCallButtonsOffline();
+    }
     updateMuteMicButton();
     updateMuteVolButton();
+    updateFileButtons();
 }
 
 void ChatForm::onMicMuteToggle()
@@ -659,9 +679,14 @@ void ChatForm::onCopyStatusMessage()
 
 void ChatForm::updateMuteMicButton()
 {
-    const CoreAV* av = core.getAv();
-    bool active = av->isCallActive(f);
-    bool inputMuted = av->isCallInputMuted(f);
+    const bool online = Status::isOnline(f->getStatus());
+    bool active = false;
+    bool inputMuted = false;
+    if (online) {
+        const CoreAV* av = core.getAv();
+        active = av->isCallActive(f);
+        inputMuted = av->isCallInputMuted(f);
+    }
     headWidget->updateMuteMicButton(active, inputMuted);
     if (netcam) {
         netcam->updateMuteMicButton(inputMuted);
@@ -670,13 +695,24 @@ void ChatForm::updateMuteMicButton()
 
 void ChatForm::updateMuteVolButton()
 {
-    const CoreAV* av = core.getAv();
-    bool active = av->isCallActive(f);
-    bool outputMuted = av->isCallOutputMuted(f);
+    const bool online = Status::isOnline(f->getStatus());
+    bool active = false;
+    bool outputMuted = false;
+    if (online) {
+        const CoreAV* av = core.getAv();
+        active = av->isCallActive(f);
+        outputMuted = av->isCallOutputMuted(f);
+    }
     headWidget->updateMuteVolButton(active, outputMuted);
     if (netcam) {
         netcam->updateMuteVolButton(outputMuted);
     }
+}
+
+void ChatForm::updateFileButtons()
+{
+    const bool online = Status::isOnline(f->getStatus());
+    fileButton->setEnabled(online);
 }
 
 void ChatForm::startCounter()
@@ -748,6 +784,7 @@ void ChatForm::retranslateUi()
 
     updateMuteMicButton();
     updateMuteVolButton();
+    updateFileButtons();
 
     if (netcam) {
         netcam->setShowMessages(chatWidget->isVisible());

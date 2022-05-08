@@ -252,6 +252,10 @@ void Widget::init()
     filterOfflineAction->setCheckable(true);
     filterGroup->addAction(filterOfflineAction);
     filterMenu->addAction(filterOfflineAction);
+    filterBlockedAction = new QAction(this);
+    filterBlockedAction->setCheckable(true);
+    filterGroup->addAction(filterBlockedAction);
+    filterMenu->addAction(filterBlockedAction);
     filterFriendsAction = new QAction(this);
     filterFriendsAction->setCheckable(true);
     filterGroup->addAction(filterFriendsAction);
@@ -717,7 +721,7 @@ void Widget::onCoreChanged(Core& core_)
     connect(core, &Core::statusSet, this, &Widget::onStatusSet);
     connect(core, &Core::usernameSet, this, &Widget::setUsername);
     connect(core, &Core::statusMessageSet, this, &Widget::setStatusMessage);
-    connect(core, &Core::friendAdded, this, &Widget::addFriend);
+    connect(core, &Core::friendAdded, this, &Widget::addCoreFriend);
     connect(core, &Core::failedToAddFriend, this, &Widget::addFriendFailed);
     connect(core, &Core::friendUsernameChanged, this, &Widget::onFriendUsernameChanged);
     connect(core, &Core::friendStatusChanged, this, &Widget::onCoreFriendStatusChanged);
@@ -746,6 +750,7 @@ void Widget::onCoreChanged(Core& core_)
     connect(this, &Widget::statusSet, core, &Core::setStatus);
     connect(this, &Widget::friendRequested, core, &Core::requestFriendship);
     connect(this, &Widget::friendRequestAccepted, core, &Core::acceptFriendRequest);
+    connect(this, &Widget::unblockFriend, core, &Core::acceptFriendRequest);
     connect(this, &Widget::changeGroupTitle, core, &Core::changeGroupTitle);
 
     sharedMessageProcessorParams->setPublicKey(core->getSelfPublicKey().toString());
@@ -1151,13 +1156,13 @@ void Widget::onRejectCall(uint32_t friendId)
     av->cancelCall(friendId);
 }
 
-void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
+void Widget::addFriend(Friend* newFriend)
 {
+    auto friendPk = newFriend->getPublicKey();
     assert(core != nullptr);
     settings.updateFriendAddress(friendPk.toString());
 
-    Friend* newfriend = friendList->addFriend(friendId, friendPk, settings);
-    auto rawChatroom = new FriendChatroom(newfriend, contentDialogManager.get(), *core, settings, *groupList);
+    auto rawChatroom = new FriendChatroom(newFriend, contentDialogManager.get(), *core, settings, *groupList);
     std::shared_ptr<FriendChatroom> chatroom(rawChatroom);
     const auto compact = settings.getCompactLayout();
     auto widget = new FriendWidget(chatroom, compact, settings, style, *messageBoxManager, profile);
@@ -1166,15 +1171,15 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
 
     auto messageProcessor = MessageProcessor(*sharedMessageProcessorParams);
     auto friendMessageDispatcher =
-        std::make_shared<FriendMessageDispatcher>(*newfriend, std::move(messageProcessor), *core, *core->getExt());
+        std::make_shared<FriendMessageDispatcher>(*newFriend, std::move(messageProcessor), *core, *core->getExt());
 
     // Note: We do not have to connect the message dispatcher signals since
     // ChatHistory hooks them up in a very specific order
     auto chatHistory =
-        std::make_shared<ChatHistory>(*newfriend, history, *core, settings,
+        std::make_shared<ChatHistory>(*newFriend, history, *core, settings,
                                       *friendMessageDispatcher, *friendList,
                                       *groupList);
-    auto friendForm = new ChatForm(profile, newfriend, *chatHistory,
+    auto friendForm = new ChatForm(profile, newFriend, *chatHistory,
         *friendMessageDispatcher, *documentCache, *smileyPack, cameraSource,
         settings, style, *messageBoxManager, *contentDialogManager, *friendList,
         *groupList);
@@ -1194,7 +1199,6 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
 
     chatListWidget->addFriendWidget(widget);
 
-
     auto notifyReceivedCallback = [this, friendPk](const ToxPk& author, const Message& message) {
         std::ignore = author;
         newFriendMessageAlert(friendPk, message.content);
@@ -1205,9 +1209,9 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
                 notifyReceivedCallback);
 
     friendAlertConnections.insert(friendPk, notifyReceivedConnection);
-    connect(newfriend, &Friend::aliasChanged, this, &Widget::onFriendAliasChanged);
-    connect(newfriend, &Friend::displayedNameChanged, this, &Widget::onFriendDisplayedNameChanged);
-    connect(newfriend, &Friend::statusChanged, this, &Widget::onFriendStatusChanged);
+    connect(newFriend, &Friend::aliasChanged, this, &Widget::onFriendAliasChanged);
+    connect(newFriend, &Friend::displayedNameChanged, this, &Widget::onFriendDisplayedNameChanged);
+    connect(newFriend, &Friend::statusChanged, this, &Widget::onFriendStatusChanged);
 
     connect(friendForm, &ChatForm::incomingNotification, this, &Widget::incomingNotification);
     connect(friendForm, &ChatForm::outgoingNotification, this, &Widget::outgoingNotification);
@@ -1221,7 +1225,9 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     connect(widget, &FriendWidget::friendHistoryRemoved, friendForm, &ChatForm::clearChatArea);
     connect(widget, &FriendWidget::copyFriendIdToClipboard, this, &Widget::copyFriendIdToClipboard);
     connect(widget, &FriendWidget::contextMenuCalled, widget, &FriendWidget::onContextMenuCalled);
-    connect(widget, SIGNAL(removeFriend(const ToxPk&)), this, SLOT(removeFriend(const ToxPk&)));
+    connect(widget, &FriendWidget::removeFriend, this, &Widget::removeFriendByPk);
+    connect(widget, &FriendWidget::blockFriend, this, &Widget::blockFriend);
+    connect(widget, &FriendWidget::unblockFriend, this, &Widget::onUnblockFriend);
 
     connect(&profile, &Profile::friendAvatarSet, widget, &FriendWidget::onAvatarSet);
     connect(&profile, &Profile::friendAvatarRemoved, widget, &FriendWidget::onAvatarRemoved);
@@ -1231,6 +1237,25 @@ void Widget::addFriend(uint32_t friendId, const ToxPk& friendPk)
     if (!avatar.isNull()) {
         friendForm->onAvatarChanged(friendPk, avatar);
         widget->onAvatarSet(friendPk, avatar);
+    }
+}
+
+void Widget::addBlockedFriend(const ToxPk& friendPk)
+{
+    Friend* newFriend = friendList->addBlockedFriend(friendPk, settings);
+    addFriend(newFriend);
+    loadBlockedFriendInfo(friendPk);
+}
+
+void Widget::addCoreFriend(uint32_t friendId, const ToxPk& friendPk)
+{
+    auto contact = friendList->findFriend(friendPk);
+    if (contact) {
+        contact->setCoreId(friendId);
+        friendList->makeFriendUnblocked(friendPk, friendId);
+    } else {
+        contact = friendList->addCoreFriend(friendId, friendPk, settings);
+        addFriend(contact);
     }
 }
 
@@ -1290,9 +1315,8 @@ void Widget::onFriendStatusChanged(const ToxPk& friendPk, Status::Status status)
     contentDialogManager->updateFriendStatus(friendPk);
 }
 
-void Widget::onFriendStatusMessageChanged(int friendId, const QString& message)
+void Widget::setFriendStatusMessage(const ToxPk& friendPk, const QString& message)
 {
-    const auto& friendPk = friendList->id2Key(friendId);
     Friend* f = friendList->findFriend(friendPk);
     if (!f) {
         return;
@@ -1301,9 +1325,15 @@ void Widget::onFriendStatusMessageChanged(int friendId, const QString& message)
     QString str = message;
     str.replace('\n', ' ').remove('\r').remove(QChar('\0'));
     f->setStatusMessage(str);
-
+    settings.setFriendStatusMessage(friendPk, str);
     friendWidgets[friendPk]->setStatusMsg(str);
     chatForms[friendPk]->setStatusMessage(str);
+}
+
+void Widget::onFriendStatusMessageChanged(int friendId, const QString& message)
+{
+    const auto& friendPk = friendList->id2Key(friendId);
+    setFriendStatusMessage(friendPk, message);
 }
 
 void Widget::onFriendDisplayedNameChanged(const QString& displayed)
@@ -1324,9 +1354,8 @@ void Widget::onFriendDisplayedNameChanged(const QString& displayed)
     chatListWidget->itemsChanged();
 }
 
-void Widget::onFriendUsernameChanged(int friendId, const QString& username)
+void Widget::setFriendName(const ToxPk& friendPk, const QString& username)
 {
-    const auto& friendPk = friendList->id2Key(friendId);
     Friend* f = friendList->findFriend(friendPk);
     if (!f) {
         return;
@@ -1335,6 +1364,22 @@ void Widget::onFriendUsernameChanged(int friendId, const QString& username)
     QString str = username;
     str.replace('\n', ' ').remove('\r').remove(QChar('\0'));
     f->setName(str);
+}
+
+void Widget::loadBlockedFriendInfo(const ToxPk& friendPk)
+{
+    const auto name = settings.getFriendName(friendPk);
+    setFriendName(friendPk, name);
+    const auto statusMessage = settings.getFriendStatusMessage(friendPk);
+    setFriendStatusMessage(friendPk, statusMessage);
+}
+
+void Widget::onFriendUsernameChanged(int friendId, const QString& username)
+{
+    const auto& friendPk = friendList->id2Key(friendId);
+    settings.setFriendName(friendPk, username);
+    settings.savePersonal();
+    setFriendName(friendPk, username);
 }
 
 void Widget::onFriendAliasChanged(const ToxPk& friendId, const QString& alias)
@@ -1472,12 +1517,7 @@ void Widget::addFriendDialog(const Friend* frnd, ContentDialog* dialog)
 
     friendWidget->setStatusMsg(widget->getStatusMsg());
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 7, 0))
-    auto widgetRemoveFriend = QOverload<const ToxPk&>::of(&Widget::removeFriend);
-#else
-    auto widgetRemoveFriend = static_cast<void (Widget::*)(const ToxPk&)>(&Widget::removeFriend);
-#endif
-    connect(friendWidget, &FriendWidget::removeFriend, this, widgetRemoveFriend);
+    connect(friendWidget, &FriendWidget::removeFriend, this, &Widget::removeFriendByPk);
     connect(friendWidget, &FriendWidget::middleMouseClicked, dialog,
             [=]() { dialog->removeFriend(friendPk); });
     connect(friendWidget, &FriendWidget::copyFriendIdToClipboard, this,
@@ -1789,9 +1829,29 @@ void Widget::removeFriend(Friend* f, bool fake)
     }
 }
 
-void Widget::removeFriend(const ToxPk& friendId)
+void Widget::removeFriendByPk(const ToxPk& friendId, bool fake)
 {
-    removeFriend(friendList->findFriend(friendId), false);
+    removeFriend(friendList->findFriend(friendId), fake);
+}
+
+void Widget::blockFriend(const ToxPk& friendPk)
+{
+    auto contact = friendList->findFriend(friendPk);
+    assert(contact);
+    auto oldId = contact->getId();
+    settings.setFriendBlocked(friendPk, true);
+    core->removeFriend(oldId);
+    friendList->makeFriendBlocked(oldId);
+    contact->block();
+}
+
+void Widget::onUnblockFriend(const ToxPk& friendPk)
+{
+    auto contact = friendList->findFriend(friendPk);
+    assert(contact);
+    contact->unblock();
+    emit unblockFriend(friendPk);
+    settings.setFriendBlocked(friendPk, false);
 }
 
 void Widget::onDialogShown(GenericChatroomWidget* widget)
@@ -2413,6 +2473,7 @@ bool Widget::filterGroups(FilterCriteria index)
     switch (index) {
     case FilterCriteria::Offline:
     case FilterCriteria::Friends:
+    case FilterCriteria::Blocked:
         return true;
     default:
         return false;
@@ -2424,6 +2485,7 @@ bool Widget::filterOffline(FilterCriteria index)
     switch (index) {
     case FilterCriteria::Online:
     case FilterCriteria::Groups:
+    case FilterCriteria::Blocked:
         return true;
     default:
         return false;
@@ -2433,6 +2495,19 @@ bool Widget::filterOffline(FilterCriteria index)
 bool Widget::filterOnline(FilterCriteria index)
 {
     switch (index) {
+    case FilterCriteria::Offline:
+    case FilterCriteria::Groups:
+    case FilterCriteria::Blocked:
+        return true;
+    default:
+        return false;
+    }
+}
+
+bool Widget::filterBlocked(FilterCriteria index)
+{
+    switch (index) {
+    case FilterCriteria::Online:
     case FilterCriteria::Offline:
     case FilterCriteria::Groups:
         return true;
@@ -2514,7 +2589,7 @@ void Widget::searchChats()
     FilterCriteria filter = getFilterCriteria();
 
     chatListWidget->searchChatrooms(searchString, filterOnline(filter), filterOffline(filter),
-                                       filterGroups(filter));
+                                       filterBlocked(filter), filterGroups(filter));
 
     updateFilterText();
 }
@@ -2551,6 +2626,8 @@ Widget::FilterCriteria Widget::getFilterCriteria() const
         return FilterCriteria::Online;
     else if (checked == filterOfflineAction)
         return FilterCriteria::Offline;
+    else if (checked == filterBlockedAction)
+        return FilterCriteria::Blocked;
     else if (checked == filterFriendsAction)
         return FilterCriteria::Friends;
     else if (checked == filterGroupsAction)
@@ -2658,6 +2735,7 @@ void Widget::retranslateUi()
     filterAllAction->setText(tr("All"));
     filterOnlineAction->setText(tr("Online"));
     filterOfflineAction->setText(tr("Offline"));
+    filterBlockedAction->setText(tr("Blocked"));
     filterFriendsAction->setText(tr("Friends"));
     filterGroupsAction->setText(tr("Groups"));
     ui->searchContactText->setPlaceholderText(tr("Search Contacts"));

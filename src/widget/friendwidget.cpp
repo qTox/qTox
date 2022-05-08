@@ -68,10 +68,14 @@ FriendWidget::FriendWidget(std::shared_ptr<FriendChatroom> chatroom_, bool compa
     , profile{profile_}
 {
     avatar->setPixmap(QPixmap(":/img/contact.svg"));
-    statusPic.setPixmap(QPixmap(Status::getIconPath(Status::Status::Offline)));
+    auto frnd = chatroom->getFriend();
+    if (frnd->getStatus() == Status::Status::Blocked) {
+        statusPic.setPixmap(QPixmap(Status::getIconPath(Status::Status::Blocked)));
+    } else {
+        statusPic.setPixmap(QPixmap(Status::getIconPath(Status::Status::Offline)));
+    }
     statusPic.setMargin(3);
 
-    auto frnd = chatroom->getFriend();
     nameLabel->setText(frnd->getDisplayedName());
     // update alias when edited
     connect(nameLabel, &CroppingLabel::editFinished, frnd, &Friend::setAlias);
@@ -157,6 +161,13 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
     const auto setAlias = menu.addAction(tr("Set alias..."));
     connect(setAlias, &QAction::triggered, nameLabel, &CroppingLabel::editBegin);
 
+    auto blockButton =
+        menu.addAction(tr("Blocked", "context menu entry"));
+    blockButton->setCheckable(true);
+    blockButton->setChecked(chatroom->getBlocked());
+    connect(blockButton, &QAction::triggered, this, &FriendWidget::setBlocked);
+    connect(blockButton, &QAction::triggered, chatroom.get(), &FriendChatroom::setBlocked);
+
     menu.addSeparator();
     auto autoAccept =
         menu.addAction(tr("Auto accept files from this friend", "context menu entry"));
@@ -169,7 +180,7 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
         const auto friendPk = chatroom->getFriend()->getPublicKey();
         const auto removeAction =
             menu.addAction(tr("Remove friend", "Menu to remove the friend from the friend list"));
-        connect(removeAction, &QAction::triggered, this, [=]() { emit removeFriend(friendPk); },
+        connect(removeAction, &QAction::triggered, this, [=]() { emit removeFriend(friendPk, false); },
                 Qt::QueuedConnection);
     }
 
@@ -270,6 +281,17 @@ void FriendWidget::moveToCircle(int newCircleId)
     }
 }
 
+void FriendWidget::setBlocked(bool block)
+{
+    const auto frnd = chatroom->getFriend();
+    const auto pk = frnd->getPublicKey();
+    if (block) {
+        emit blockFriend(pk);
+    } else {
+        emit unblockFriend(pk);
+    }
+}
+
 void FriendWidget::changeAutoAccept(bool enable)
 {
     if (enable) {
@@ -283,6 +305,7 @@ void FriendWidget::changeAutoAccept(bool enable)
         chatroom->disableAutoAccept();
     }
 }
+
 void FriendWidget::showDetails()
 {
     const auto frnd = chatroom->getFriend();
@@ -376,6 +399,12 @@ bool FriendWidget::isOnline() const
 {
     const auto frnd = getFriend();
     return Status::isOnline(frnd->getStatus());
+}
+
+bool FriendWidget::isBlocked() const
+{
+    const auto frnd = getFriend();
+    return frnd->getStatus() == Status::Status::Blocked;
 }
 
 bool FriendWidget::widgetIsVisible() const

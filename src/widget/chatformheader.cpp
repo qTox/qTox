@@ -241,10 +241,10 @@ void ChatFormHeader::updateExtensionSupport(ExtensionSet extensions)
     extensionStatus->onExtensionSetUpdate(extensions);
 }
 
-void ChatFormHeader::updateCallButtons(bool online, bool audio, bool video)
+void ChatFormHeader::updateCallButtonsOnline(bool audio, bool video)
 {
-    const bool audioAvaliable = online && (mode & Mode::Audio);
-    const bool videoAvaliable = online && (mode & Mode::Video);
+    const bool audioAvaliable = mode & Mode::Audio;
+    const bool videoAvaliable = mode & Mode::Video;
     if (!audioAvaliable) {
         callState = CallButtonState::Disabled;
     } else if (video) {
@@ -265,6 +265,13 @@ void ChatFormHeader::updateCallButtons(bool online, bool audio, bool video)
         videoState = CallButtonState::Avaliable;
     }
 
+    updateButtonsView();
+}
+
+void ChatFormHeader::updateCallButtonsOffline()
+{
+    callState = CallButtonState::Disabled;
+    videoState = CallButtonState::Disabled;
     updateButtonsView();
 }
 

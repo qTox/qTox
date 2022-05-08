@@ -32,7 +32,7 @@ class Friend : public Chat
 {
     Q_OBJECT
 public:
-    Friend(uint32_t friendId_, const ToxPk& friendPk_, const QString& userAlias_ = {}, const QString& userName_ = {});
+    Friend(std::unique_ptr<uint32_t> friendId, const ToxPk& friendPk_, const QString& userAlias_ = {}, const QString& userName_ = {});
     Friend(const Friend& other) = delete;
     Friend& operator=(const Friend& other) = delete;
 
@@ -59,6 +59,10 @@ public:
     void setExtendedMessageSupport(bool supported);
     ExtensionSet getSupportedExtensions() const;
 
+    void block();
+    void unblock();
+    void setCoreId(uint32_t coreId);
+
 signals:
     void nameChanged(const ToxPk& friendId, const QString& name);
     void aliasChanged(const ToxPk& friendId, QString alias);
@@ -67,6 +71,8 @@ signals:
     void statusMessageChanged(const ToxPk& friendId, const QString& message);
     void extensionSupportChanged(ExtensionSet extensions);
     void loadChatHistory();
+    void blocked();
+    void unblocked();
 
 public slots:
     void onNegotiationComplete();
@@ -75,7 +81,7 @@ private:
     QString userAlias;
     QString statusMessage;
     ToxPk friendPk;
-    uint32_t friendId;
+    std::unique_ptr<uint32_t> friendId;
     bool hasNewEvents;
     Status::Status friendStatus;
     bool isNegotiating;
