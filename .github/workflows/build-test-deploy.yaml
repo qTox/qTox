@@ -512,8 +512,6 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v3
-      - name: Remove keg-only git install
-        run: brew remove git@2.35.1
       - name: Homebrew dependencies to build dependencies
         run: brew update && brew upgrade && brew bundle --file ./osx/Brewfile-DepBuildDeps
       - name: Build dependencies
@@ -558,8 +556,6 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Remove keg-only git install
-        run: brew remove git@2.35.1
       - name: Homebrew
         run: brew update && brew upgrade && brew bundle --file ./osx/Brewfile
       - name: Install toxcore and toxext
