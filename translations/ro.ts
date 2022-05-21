@@ -595,43 +595,43 @@ ceea ce poate duce la probleme cu apelurile video.</translation>
     <name>AppManager</name>
     <message>
         <source>Tox URI to parse</source>
-        <translation type="unfinished">Tox URI pentru analiză</translation>
+        <translation>Tox URI pentru analiză</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
-        <translation type="unfinished">Porniți o instanță nouă și încărcați profilul specificat.</translation>
+        <translation>Porniți o instanță nouă și încărcați profilul specificat.</translation>
     </message>
     <message>
         <source>profile</source>
-        <translation type="unfinished">profil</translation>
+        <translation>profil</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation type="unfinished">Pornește o nouă instanță și deschide ecranul de conectare.</translation>
+        <translation>Pornește o nouă instanță și deschide ecranul de conectare.</translation>
     </message>
     <message>
         <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation type="unfinished">Setați IPv6 &lt;pornit&gt;/&lt;oprit&gt;. Implicit este PORNIT.</translation>
+        <translation>Setați IPv6 &lt;pornit&gt;/&lt;oprit&gt;. Implicit este PORNIT.</translation>
     </message>
     <message>
         <source>on/off</source>
-        <translation type="unfinished">pornit/oprit</translation>
+        <translation>pornit/oprit</translation>
     </message>
     <message>
         <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation type="unfinished">Setați UDP &lt;pornit&gt;/&lt;oprit&gt;. Implicit este PORNIT.</translation>
+        <translation>Setați UDP &lt;pornit&gt;/&lt;oprit&gt;. Implicit este PORNIT.</translation>
     </message>
     <message>
         <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
-        <translation type="unfinished">Setați descoperire LAN &lt;pornit&gt;/&lt;oprit&gt;. UDP suprascriere oprita. Implicit este PORNIT.</translation>
+        <translation>Setați descoperire LAN &lt;pornit&gt;/&lt;oprit&gt;. UDP suprascriere oprita. Implicit este PORNIT.</translation>
     </message>
     <message>
         <source>Sets proxy settings. Default is NONE.</source>
-        <translation type="unfinished">Setează setările proxy. Valoarea implicită este NIMIC.</translation>
+        <translation>Setează setările proxy. Valoarea implicită este NIMIC.</translation>
     </message>
     <message>
         <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
-        <translation type="unfinished">(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</translation>
+        <translation>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</translation>
     </message>
     <message>
         <source>Error</source>
@@ -639,7 +639,7 @@ ceea ce poate duce la probleme cu apelurile video.</translation>
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished">Nu s-a putut încărca automat profilul.</translation>
+        <translation>Nu s-a putut încărca automat profilul.</translation>
     </message>
 </context>
 <context>

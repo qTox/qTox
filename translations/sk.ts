@@ -595,43 +595,43 @@ Rýchlosť vášho pripojenia nemusí byť vždy dostačujúca pre vyššiu kval
     <name>AppManager</name>
     <message>
         <source>Tox URI to parse</source>
-        <translation type="unfinished">Tox URI na preskúmanie</translation>
+        <translation>Tox URI na preskúmanie</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
-        <translation type="unfinished">Spustí novú inštanciu a načíta zadaný profil.</translation>
+        <translation>Spustí novú inštanciu a načíta zadaný profil.</translation>
     </message>
     <message>
         <source>profile</source>
-        <translation type="unfinished">profil</translation>
+        <translation>profil</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation type="unfinished">Spustí novú inštanciu a otvorí prihlasovacie okno.</translation>
+        <translation>Spustí novú inštanciu a otvorí prihlasovacie okno.</translation>
     </message>
     <message>
         <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation type="unfinished">Nastaví IPv6 na &lt;zapnuté&gt;/&lt;vypnuté&gt;. Predvolená hodnota je zapnuté.</translation>
+        <translation>Nastaví IPv6 na &lt;zapnuté&gt;/&lt;vypnuté&gt;. Predvolená hodnota je zapnuté.</translation>
     </message>
     <message>
         <source>on/off</source>
-        <translation type="unfinished">zapnuté/vypnuté</translation>
+        <translation>zapnuté/vypnuté</translation>
     </message>
     <message>
         <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation type="unfinished">Nastaví UDP na &lt;zapnuté&gt;/&lt;vypnuté&gt;. Predvolená hodnota je zapnuté.</translation>
+        <translation>Nastaví UDP na &lt;zapnuté&gt;/&lt;vypnuté&gt;. Predvolená hodnota je zapnuté.</translation>
     </message>
     <message>
         <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
-        <translation type="unfinished">Nastaví zisťovanie cez LAN na &lt;zapnuté&gt;/&lt;vypnuté&gt;. Vypnuté UDP má prednosť. Predvolená hodnota je zapnuté.</translation>
+        <translation>Nastaví zisťovanie cez LAN na &lt;zapnuté&gt;/&lt;vypnuté&gt;. Vypnuté UDP má prednosť. Predvolená hodnota je zapnuté.</translation>
     </message>
     <message>
         <source>Sets proxy settings. Default is NONE.</source>
-        <translation type="unfinished">Nastaví nastavenia proxy. Predvolená hodnota je žiadne.</translation>
+        <translation>Nastaví nastavenia proxy. Predvolená hodnota je žiadne.</translation>
     </message>
     <message>
         <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
-        <translation type="unfinished">(SOCKS5/HTTP/ŽIADNE):(ADRESA):(PORT)</translation>
+        <translation>(SOCKS5/HTTP/ŽIADNE):(ADRESA):(PORT)</translation>
     </message>
     <message>
         <source>Error</source>
@@ -639,7 +639,7 @@ Rýchlosť vášho pripojenia nemusí byť vždy dostačujúca pre vyššiu kval
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished">Automatické načítanie profilu zlyhalo.</translation>
+        <translation>Automatické načítanie profilu zlyhalo.</translation>
     </message>
 </context>
 <context>

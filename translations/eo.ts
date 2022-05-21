@@ -594,7 +594,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>profile</source>
-        <translation type="unfinished">profilo</translation>
+        <translation>profilo</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>

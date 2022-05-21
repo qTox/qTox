@@ -595,19 +595,19 @@ noe som kan forårsake problemer i videosamtaler.</translation>
     <name>AppManager</name>
     <message>
         <source>Tox URI to parse</source>
-        <translation type="unfinished">Tox-URI som skal analyseres</translation>
+        <translation>Tox-URI som skal analyseres</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
-        <translation type="unfinished">Starter en ny instanse og laster valgt profil.</translation>
+        <translation>Starter en ny instanse og laster valgt profil.</translation>
     </message>
     <message>
         <source>profile</source>
-        <translation type="unfinished">profil</translation>
+        <translation>profil</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation type="unfinished">Starter ny instans og åpner innloggingsskjermen.</translation>
+        <translation>Starter ny instans og åpner innloggingsskjermen.</translation>
     </message>
     <message>
         <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
@@ -615,7 +615,7 @@ noe som kan forårsake problemer i videosamtaler.</translation>
     </message>
     <message>
         <source>on/off</source>
-        <translation type="unfinished">av/på</translation>
+        <translation>av/på</translation>
     </message>
     <message>
         <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
@@ -623,15 +623,15 @@ noe som kan forårsake problemer i videosamtaler.</translation>
     </message>
     <message>
         <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
-        <translation type="unfinished">Setter LAN-oppdagelse &lt;på&gt;/&lt;av&gt;. UDP «av» overstyrer. Forvalget er PÅ.</translation>
+        <translation>Setter LAN-oppdagelse &lt;på&gt;/&lt;av&gt;. UDP «av» overstyrer. Forvalget er PÅ.</translation>
     </message>
     <message>
         <source>Sets proxy settings. Default is NONE.</source>
-        <translation type="unfinished">Setter mellomtjenerinnstillinger. Forvalget er INGEN.</translation>
+        <translation>Setter mellomtjenerinnstillinger. Forvalget er INGEN.</translation>
     </message>
     <message>
         <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
-        <translation type="unfinished">(SOCKS5/HTTP/INGEN):(ADRESSE):(PORT)</translation>
+        <translation>(SOCKS5/HTTP/INGEN):(ADRESSE):(PORT)</translation>
     </message>
     <message>
         <source>Error</source>
@@ -639,7 +639,7 @@ noe som kan forårsake problemer i videosamtaler.</translation>
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished">Klarte ikke å laste inn profil automatisk.</translation>
+        <translation>Klarte ikke å laste inn profil automatisk.</translation>
     </message>
 </context>
 <context>

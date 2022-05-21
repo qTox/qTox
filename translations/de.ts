@@ -594,43 +594,43 @@ dadurch kann es zu Problemen bei Videoanrufen kommen.</translation>
     <name>AppManager</name>
     <message>
         <source>Tox URI to parse</source>
-        <translation type="unfinished">Zu parsende Tox-URI</translation>
+        <translation>Zu parsende Tox-URI</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
-        <translation type="unfinished">Startet eine neue Instanz und lädt das angegebene Profil.</translation>
+        <translation>Startet eine neue Instanz und lädt das angegebene Profil.</translation>
     </message>
     <message>
         <source>profile</source>
-        <translation type="unfinished">Profil</translation>
+        <translation>Profil</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation type="unfinished">Startet eine neue Instanz und öffnet den Anmeldebildschirm.</translation>
+        <translation>Startet eine neue Instanz und öffnet den Anmeldebildschirm.</translation>
     </message>
     <message>
         <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation type="unfinished">Stellt IPv6 &lt;on&gt;/&lt;off&gt;. Standardmäßig auf ON.</translation>
+        <translation>Stellt IPv6 &lt;on&gt;/&lt;off&gt;. Standardmäßig auf ON.</translation>
     </message>
     <message>
         <source>on/off</source>
-        <translation type="unfinished">ein/aus</translation>
+        <translation>ein/aus</translation>
     </message>
     <message>
         <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation type="unfinished">Legt UDP-&lt;on&gt;/&lt;off&gt; fest. Der Standardwert ist ON.</translation>
+        <translation>Legt UDP-&lt;on&gt;/&lt;off&gt; fest. Der Standardwert ist ON.</translation>
     </message>
     <message>
         <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
-        <translation type="unfinished">Legt die LAN-Erkennungs-&lt;on&gt;/&lt;off&gt; fest. UDP deaktivierte Außerkraftsetzungen. Der Standardwert ist ON.</translation>
+        <translation>Legt die LAN-Erkennungs-&lt;on&gt;/&lt;off&gt; fest. UDP deaktivierte Außerkraftsetzungen. Der Standardwert ist ON.</translation>
     </message>
     <message>
         <source>Sets proxy settings. Default is NONE.</source>
-        <translation type="unfinished">Legt Proxy-Einstellungen fest. Der Standardwert ist KEINE.</translation>
+        <translation>Legt Proxy-Einstellungen fest. Der Standardwert ist KEINE.</translation>
     </message>
     <message>
         <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
-        <translation type="unfinished">(SOCKS5/HTTP/KEINE):(ADRESSE):(PORT)</translation>
+        <translation>(SOCKS5/HTTP/KEINE):(ADRESSE):(PORT)</translation>
     </message>
     <message>
         <source>Error</source>
@@ -638,7 +638,7 @@ dadurch kann es zu Problemen bei Videoanrufen kommen.</translation>
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished">Das automatische Laden des Profils ist fehlgeschlagen.</translation>
+        <translation>Das automatische Laden des Profils ist fehlgeschlagen.</translation>
     </message>
 </context>
 <context>

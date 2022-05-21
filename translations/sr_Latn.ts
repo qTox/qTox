@@ -591,19 +591,19 @@ which may lead to problems with video calls.</source>
     <name>AppManager</name>
     <message>
         <source>Tox URI to parse</source>
-        <translation type="unfinished">Tox URI za raščlaniti</translation>
+        <translation>Tox URI za raščlaniti</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
-        <translation type="unfinished">Pokreće novi primerak i učitava navedeni profil.</translation>
+        <translation>Pokreće novi primerak i učitava navedeni profil.</translation>
     </message>
     <message>
         <source>profile</source>
-        <translation type="unfinished">profil</translation>
+        <translation>profil</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation type="unfinished">Pokreće novi primerak i otvara ekran za prijavu.</translation>
+        <translation>Pokreće novi primerak i otvara ekran za prijavu.</translation>
     </message>
     <message>
         <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>

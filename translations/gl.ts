@@ -590,19 +590,19 @@ which may lead to problems with video calls.</source>
     <name>AppManager</name>
     <message>
         <source>Tox URI to parse</source>
-        <translation type="unfinished">Tox URI para analizar</translation>
+        <translation>Tox URI para analizar</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
-        <translation type="unfinished">Inicia unha nova instancia e carga o perfil especificado.</translation>
+        <translation>Inicia unha nova instancia e carga o perfil especificado.</translation>
     </message>
     <message>
         <source>profile</source>
-        <translation type="unfinished">perfil</translation>
+        <translation>perfil</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation type="unfinished">Inicia unha nova instancia e abre a pantalla de inicio de sesión.</translation>
+        <translation>Inicia unha nova instancia e abre a pantalla de inicio de sesión.</translation>
     </message>
     <message>
         <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
@@ -634,7 +634,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished">Erro ao cargar o perfil automaticamente.</translation>
+        <translation>Erro ao cargar o perfil automaticamente.</translation>
     </message>
 </context>
 <context>

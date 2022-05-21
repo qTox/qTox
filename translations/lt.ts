@@ -595,43 +595,43 @@ dėl to gali kilti vaizdo skambučių problemų.</translation>
     <name>AppManager</name>
     <message>
         <source>Tox URI to parse</source>
-        <translation type="unfinished">analizuoti Tox URI</translation>
+        <translation>analizuoti Tox URI</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
-        <translation type="unfinished">Atidaro naują langą ir aktyvuoja nurodytą profilį.</translation>
+        <translation>Atidaro naują langą ir aktyvuoja nurodytą profilį.</translation>
     </message>
     <message>
         <source>profile</source>
-        <translation type="unfinished">profilis</translation>
+        <translation>profilis</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation type="unfinished">Paleidžia naują egzempliorių ir atveria prisijungimo ekraną.</translation>
+        <translation>Paleidžia naują egzempliorių ir atveria prisijungimo ekraną.</translation>
     </message>
     <message>
         <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation type="unfinished">Nustato IPv6 &lt;įjungta&gt;/&lt;išjungta&gt;. Numatytoji reikšmė yra ĮJUNGTA.</translation>
+        <translation>Nustato IPv6 &lt;įjungta&gt;/&lt;išjungta&gt;. Numatytoji reikšmė yra ĮJUNGTA.</translation>
     </message>
     <message>
         <source>on/off</source>
-        <translation type="unfinished">įjungta/išjungta</translation>
+        <translation>įjungta/išjungta</translation>
     </message>
     <message>
         <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation type="unfinished">Nustato UDP &lt;įjungta&gt;/&lt;išjungta&gt;. Numatytoji reikšmė yra ĮJUNGTA.</translation>
+        <translation>Nustato UDP &lt;įjungta&gt;/&lt;išjungta&gt;. Numatytoji reikšmė yra ĮJUNGTA.</translation>
     </message>
     <message>
         <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
-        <translation type="unfinished">Nustato LAN aptikimą &lt;įjungta&gt;/&lt;išjungta&gt;. UDP išjungimas turi viršenybę. Numatytasis yra ĮJUNGTA.</translation>
+        <translation>Nustato LAN aptikimą &lt;įjungta&gt;/&lt;išjungta&gt;. UDP išjungimas turi viršenybę. Numatytasis yra ĮJUNGTA.</translation>
     </message>
     <message>
         <source>Sets proxy settings. Default is NONE.</source>
-        <translation type="unfinished">Nustato įgaliotojo serverio nustatymus. Numatytoji reikšmė yra NĖRA.</translation>
+        <translation>Nustato įgaliotojo serverio nustatymus. Numatytoji reikšmė yra NĖRA.</translation>
     </message>
     <message>
         <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
-        <translation type="unfinished">(SOCKS5/HTTP/NĖRA):(ADRESAS):(PRIEVADAS)</translation>
+        <translation>(SOCKS5/HTTP/NĖRA):(ADRESAS):(PRIEVADAS)</translation>
     </message>
     <message>
         <source>Error</source>
@@ -639,7 +639,7 @@ dėl to gali kilti vaizdo skambučių problemų.</translation>
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished">Nepavyko automatiškai įkelti profilio.</translation>
+        <translation>Nepavyko automatiškai įkelti profilio.</translation>
     </message>
 </context>
 <context>

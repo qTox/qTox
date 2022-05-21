@@ -595,19 +595,19 @@ kas var radīt video zvanu problēmas.</translation>
     <name>AppManager</name>
     <message>
         <source>Tox URI to parse</source>
-        <translation type="unfinished">Tox URI apstrādei</translation>
+        <translation>Tox URI apstrādei</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
-        <translation type="unfinished">Uzsāk jaunu instanci un ielādē norādīto profilu.</translation>
+        <translation>Uzsāk jaunu instanci un ielādē norādīto profilu.</translation>
     </message>
     <message>
         <source>profile</source>
-        <translation type="unfinished">profils</translation>
+        <translation>profils</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation type="unfinished">Uzsāk jaunu instanci un atver pieteikšanās logu.</translation>
+        <translation>Uzsāk jaunu instanci un atver pieteikšanās logu.</translation>
     </message>
     <message>
         <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>

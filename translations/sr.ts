@@ -591,19 +591,19 @@ which may lead to problems with video calls.</source>
     <name>AppManager</name>
     <message>
         <source>Tox URI to parse</source>
-        <translation type="unfinished">Токс путања заобраду</translation>
+        <translation>Токс путања заобраду</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
-        <translation type="unfinished">Покрените нови примерак и учитајте наведени профил.</translation>
+        <translation>Покрените нови примерак и учитајте наведени профил.</translation>
     </message>
     <message>
         <source>profile</source>
-        <translation type="unfinished">профил</translation>
+        <translation>профил</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation type="unfinished">Покрените нови примерак и отворите екран за пријаву.</translation>
+        <translation>Покрените нови примерак и отворите екран за пријаву.</translation>
     </message>
     <message>
         <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
@@ -635,7 +635,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished">Нисам успео да сам учитам профил.</translation>
+        <translation>Нисам успео да сам учитам профил.</translation>
     </message>
 </context>
 <context>

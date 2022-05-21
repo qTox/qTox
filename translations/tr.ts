@@ -596,43 +596,43 @@ bu da video görüşmelerinde sorunlara yol açabilir.</translation>
     <name>AppManager</name>
     <message>
         <source>Tox URI to parse</source>
-        <translation type="unfinished">İşlenecek Tox URI&apos;si</translation>
+        <translation>İşlenecek Tox URI&apos;si</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
-        <translation type="unfinished">Yeni örnek başlatır ve belirtilen profili yükler.</translation>
+        <translation>Yeni örnek başlatır ve belirtilen profili yükler.</translation>
     </message>
     <message>
         <source>profile</source>
-        <translation type="unfinished">profil</translation>
+        <translation>profil</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation type="unfinished">Yeni örnek başlatır ve giriş ekranını açar.</translation>
+        <translation>Yeni örnek başlatır ve giriş ekranını açar.</translation>
     </message>
     <message>
         <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation type="unfinished">IPv6&apos;yı &lt;açık&gt;/&lt;kapalı&gt; olarak ayarlar. Öntanımlı olarak AÇIK&apos;tır.</translation>
+        <translation>IPv6&apos;yı &lt;açık&gt;/&lt;kapalı&gt; olarak ayarlar. Öntanımlı olarak AÇIK&apos;tır.</translation>
     </message>
     <message>
         <source>on/off</source>
-        <translation type="unfinished">açık/kapalı</translation>
+        <translation>açık/kapalı</translation>
     </message>
     <message>
         <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation type="unfinished">UDP&apos;yi &lt;açık&gt;/&lt;kapalı&gt; olarak ayarlar. Öntanımlı olarak AÇIK&apos;tır.</translation>
+        <translation>UDP&apos;yi &lt;açık&gt;/&lt;kapalı&gt; olarak ayarlar. Öntanımlı olarak AÇIK&apos;tır.</translation>
     </message>
     <message>
         <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
-        <translation type="unfinished">LAN keşfini &lt;açık&gt;/&lt;kapalı&gt; olarak ayarlar. UDP&apos;yi kapatmak geçersiz kılar. Öntanımlı olarak AÇIK&apos;tır.</translation>
+        <translation>LAN keşfini &lt;açık&gt;/&lt;kapalı&gt; olarak ayarlar. UDP&apos;yi kapatmak geçersiz kılar. Öntanımlı olarak AÇIK&apos;tır.</translation>
     </message>
     <message>
         <source>Sets proxy settings. Default is NONE.</source>
-        <translation type="unfinished">Vekil ayarlarını belirler. Öntanımlı olarak YOK&apos;tur.</translation>
+        <translation>Vekil ayarlarını belirler. Öntanımlı olarak YOK&apos;tur.</translation>
     </message>
     <message>
         <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
-        <translation type="unfinished">(SOCKS5/HTTP/YOK):(ADRES):(BAĞLANTI NOKTASI)</translation>
+        <translation>(SOCKS5/HTTP/YOK):(ADRES):(BAĞLANTI NOKTASI)</translation>
     </message>
     <message>
         <source>Error</source>
@@ -640,7 +640,7 @@ bu da video görüşmelerinde sorunlara yol açabilir.</translation>
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished">Profil otomatik olarak yüklenemedi.</translation>
+        <translation>Profil otomatik olarak yüklenemedi.</translation>
     </message>
 </context>
 <context>

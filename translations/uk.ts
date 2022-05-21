@@ -591,15 +591,15 @@ which may lead to problems with video calls.</source>
     <name>AppManager</name>
     <message>
         <source>Tox URI to parse</source>
-        <translation type="unfinished">Tox URI для розбору</translation>
+        <translation>Tox URI для розбору</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
-        <translation type="unfinished">Запускає новий екземпляр і завантажує вказаний профіль.</translation>
+        <translation>Запускає новий екземпляр і завантажує вказаний профіль.</translation>
     </message>
     <message>
         <source>profile</source>
-        <translation type="unfinished">профіль</translation>
+        <translation>профіль</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>

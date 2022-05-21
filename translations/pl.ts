@@ -601,19 +601,19 @@ co może powodować problemy z rozmowami wideo.</translation>
     <name>AppManager</name>
     <message>
         <source>Tox URI to parse</source>
-        <translation type="unfinished">Adres URI Tox do sprawdzenia</translation>
+        <translation>Adres URI Tox do sprawdzenia</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
-        <translation type="unfinished">Uruchamia nową instancję i ładuje wybrany profil.</translation>
+        <translation>Uruchamia nową instancję i ładuje wybrany profil.</translation>
     </message>
     <message>
         <source>profile</source>
-        <translation type="unfinished">profil</translation>
+        <translation>profil</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation type="unfinished">Otwiera nowe okno z ekranem logowania.</translation>
+        <translation>Otwiera nowe okno z ekranem logowania.</translation>
     </message>
     <message>
         <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>

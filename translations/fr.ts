@@ -594,43 +594,43 @@ ce qui peut entraîner des problèmes lors des appels vidéo.</translation>
     <name>AppManager</name>
     <message>
         <source>Tox URI to parse</source>
-        <translation type="unfinished">URI Tox à analyser</translation>
+        <translation>URI Tox à analyser</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
-        <translation type="unfinished">Démarrer une nouvelle instance et charger le profil spécifié.</translation>
+        <translation>Démarrer une nouvelle instance et charger le profil spécifié.</translation>
     </message>
     <message>
         <source>profile</source>
-        <translation type="unfinished">profil</translation>
+        <translation>profil</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation type="unfinished">Démarre une nouvelle instance et ouvre l&apos;écran de connexion.</translation>
+        <translation>Démarre une nouvelle instance et ouvre l&apos;écran de connexion.</translation>
     </message>
     <message>
         <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation type="unfinished">Définit IPv6 &lt;on&gt;/&lt;off&gt;. La valeur par défaut est ON.</translation>
+        <translation>Définit IPv6 &lt;on&gt;/&lt;off&gt;. La valeur par défaut est ON.</translation>
     </message>
     <message>
         <source>on/off</source>
-        <translation type="unfinished">marche/arrêt</translation>
+        <translation>marche/arrêt</translation>
     </message>
     <message>
         <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation type="unfinished">Définit UDP &lt;on&gt;/&lt;off&gt;. La valeur par défaut est ON.</translation>
+        <translation>Définit UDP &lt;on&gt;/&lt;off&gt;. La valeur par défaut est ON.</translation>
     </message>
     <message>
         <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
-        <translation type="unfinished">Définit la découverte LAN &lt;on&gt;/&lt;off&gt;. UDP &quot;off&quot; élimine cette option. La valeur par défaut est ON.</translation>
+        <translation>Définit la découverte LAN &lt;on&gt;/&lt;off&gt;. UDP &quot;off&quot; élimine cette option. La valeur par défaut est ON.</translation>
     </message>
     <message>
         <source>Sets proxy settings. Default is NONE.</source>
-        <translation type="unfinished">Définit les paramètres du proxy. La valeur par défaut est AUCUN.</translation>
+        <translation>Définit les paramètres du proxy. La valeur par défaut est AUCUN.</translation>
     </message>
     <message>
         <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
-        <translation type="unfinished">(SOCKS5/HTTP/NONE):(ADRESSE):(PORT)</translation>
+        <translation>(SOCKS5/HTTP/NONE):(ADRESSE):(PORT)</translation>
     </message>
     <message>
         <source>Error</source>
@@ -638,7 +638,7 @@ ce qui peut entraîner des problèmes lors des appels vidéo.</translation>
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished">Impossible de charger le profil automatiquement.</translation>
+        <translation>Impossible de charger le profil automatiquement.</translation>
     </message>
 </context>
 <context>

@@ -589,19 +589,19 @@ which may lead to problems with video calls.</source>
     <name>AppManager</name>
     <message>
         <source>Tox URI to parse</source>
-        <translation type="unfinished">آدرس (URI ) Tox به جهت پردازش</translation>
+        <translation>آدرس (URI ) Tox به جهت پردازش</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
-        <translation type="unfinished">یک اجرای جدید از برنامه را ضمن بارگذاری پروفایل انتخاب شده ایجاد خواهد کرد.</translation>
+        <translation>یک اجرای جدید از برنامه را ضمن بارگذاری پروفایل انتخاب شده ایجاد خواهد کرد.</translation>
     </message>
     <message>
         <source>profile</source>
-        <translation type="unfinished">پروفایل</translation>
+        <translation>پروفایل</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation type="unfinished">یک اجرای جدید را آغاز خواهد کرد و صفحه ورود را نشان خواهد داد.</translation>
+        <translation>یک اجرای جدید را آغاز خواهد کرد و صفحه ورود را نشان خواهد داد.</translation>
     </message>
     <message>
         <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
@@ -633,7 +633,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished">بارگذاری خودکار نمایه موفق نبود.</translation>
+        <translation>بارگذاری خودکار نمایه موفق نبود.</translation>
     </message>
 </context>
 <context>

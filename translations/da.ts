@@ -1364,7 +1364,7 @@ instead of closing entirely.</source>
     </message>
     <message>
         <source>Profile</source>
-        <translation type="unfinished">Profil</translation>
+        <translation>Profil</translation>
     </message>
     <message>
         <source>Rename profile.</source>

@@ -596,43 +596,43 @@ which may lead to problems with video calls.</source>
     <name>AppManager</name>
     <message>
         <source>Tox URI to parse</source>
-        <translation type="unfinished">Tox URI для обработки</translation>
+        <translation>Tox URI для обработки</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
-        <translation type="unfinished">Запускает новый экземпляр и загружает указанный профиль.</translation>
+        <translation>Запускает новый экземпляр и загружает указанный профиль.</translation>
     </message>
     <message>
         <source>profile</source>
-        <translation type="unfinished">профиль</translation>
+        <translation>профиль</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation type="unfinished">Запускает новый экземпляр и открывает экран входа.</translation>
+        <translation>Запускает новый экземпляр и открывает экран входа.</translation>
     </message>
     <message>
         <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation type="unfinished">Устанавливает IPv6 &lt;включённым&gt;/&lt;выключенным&gt;. По стандарту он ВКЛЮЧЁН.</translation>
+        <translation>Устанавливает IPv6 &lt;включённым&gt;/&lt;выключенным&gt;. По стандарту он ВКЛЮЧЁН.</translation>
     </message>
     <message>
         <source>on/off</source>
-        <translation type="unfinished">включить/выключить</translation>
+        <translation>включить/выключить</translation>
     </message>
     <message>
         <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation type="unfinished">Устанавливает UDP &lt;включённым&gt;/&lt;выключенным&gt;. По стандарту он ВКЛЮЧЁН.</translation>
+        <translation>Устанавливает UDP &lt;включённым&gt;/&lt;выключенным&gt;. По стандарту он ВКЛЮЧЁН.</translation>
     </message>
     <message>
         <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
-        <translation type="unfinished">Устанавливает обнаружение LAN &lt;включённым&gt;/&lt;выключенным&gt;. Перезаписывает отключённый UDP. По стандарту оно ВКЛЮЧЕНО.</translation>
+        <translation>Устанавливает обнаружение LAN &lt;включённым&gt;/&lt;выключенным&gt;. Перезаписывает отключённый UDP. По стандарту оно ВКЛЮЧЕНО.</translation>
     </message>
     <message>
         <source>Sets proxy settings. Default is NONE.</source>
-        <translation type="unfinished">Устанавливает настройки прокси. По стандарту они ОТСУТСТВУЮТ.</translation>
+        <translation>Устанавливает настройки прокси. По стандарту они ОТСУТСТВУЮТ.</translation>
     </message>
     <message>
         <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
-        <translation type="unfinished">(SOCKS5/HTTP/ОТСУТСТВУЕТ):(АДРЕС):(ПОРТ)</translation>
+        <translation>(SOCKS5/HTTP/ОТСУТСТВУЕТ):(АДРЕС):(ПОРТ)</translation>
     </message>
     <message>
         <source>Error</source>
@@ -640,7 +640,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished">Не удалось загрузить профиль автоматически.</translation>
+        <translation>Не удалось загрузить профиль автоматически.</translation>
     </message>
 </context>
 <context>

@@ -595,43 +595,43 @@ může dojít během video hovoru k výpadkům či jiným problémům.</translat
     <name>AppManager</name>
     <message>
         <source>Tox URI to parse</source>
-        <translation type="unfinished">Tox URI pro zpracování</translation>
+        <translation>Tox URI pro zpracování</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
-        <translation type="unfinished">Spustit novou instanci a nahrát profil.</translation>
+        <translation>Spustit novou instanci a nahrát profil.</translation>
     </message>
     <message>
         <source>profile</source>
-        <translation type="unfinished">profil</translation>
+        <translation>profil</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation type="unfinished">Spustí novou instanci a otevře přihlašovací obrazovku.</translation>
+        <translation>Spustí novou instanci a otevře přihlašovací obrazovku.</translation>
     </message>
     <message>
         <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation type="unfinished">Nastavuje IPv6 &lt;povoleno&gt;/&lt;zakázáno&gt;. Výchozí je POVOLENO.</translation>
+        <translation>Nastavuje IPv6 &lt;povoleno&gt;/&lt;zakázáno&gt;. Výchozí je POVOLENO.</translation>
     </message>
     <message>
         <source>on/off</source>
-        <translation type="unfinished">povoleno/zakázáno</translation>
+        <translation>povoleno/zakázáno</translation>
     </message>
     <message>
         <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation type="unfinished">Nastavuje UDP &lt;povoleno&gt;/&lt;zakázáno&gt;. Výchozí je POVOLENO.</translation>
+        <translation>Nastavuje UDP &lt;povoleno&gt;/&lt;zakázáno&gt;. Výchozí je POVOLENO.</translation>
     </message>
     <message>
         <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
-        <translation type="unfinished">Nastavuje vyhledávání v Místní síti (LAN discovery) &lt;povoleno&gt;/&lt;zakázáno&gt;. Přepíše UDP zakázáno. Výchozí je POVOLENO.</translation>
+        <translation>Nastavuje vyhledávání v Místní síti (LAN discovery) &lt;povoleno&gt;/&lt;zakázáno&gt;. Přepíše UDP zakázáno. Výchozí je POVOLENO.</translation>
     </message>
     <message>
         <source>Sets proxy settings. Default is NONE.</source>
-        <translation type="unfinished">Nastavení proxy serveru. Výchozí je NONE (žádný).</translation>
+        <translation>Nastavení proxy serveru. Výchozí je NONE (žádný).</translation>
     </message>
     <message>
         <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
-        <translation type="unfinished">(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</translation>
+        <translation>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</translation>
     </message>
     <message>
         <source>Error</source>
@@ -639,7 +639,7 @@ může dojít během video hovoru k výpadkům či jiným problémům.</translat
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished">Nepodařilo se automaticky načíst profil.</translation>
+        <translation>Nepodařilo se automaticky načíst profil.</translation>
     </message>
 </context>
 <context>

@@ -594,43 +594,43 @@ o que pode levar a problemas com as videochamadas.</translation>
     <name>AppManager</name>
     <message>
         <source>Tox URI to parse</source>
-        <translation type="unfinished">UTI Tox para interpretar</translation>
+        <translation>UTI Tox para interpretar</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
-        <translation type="unfinished">Inicia uma nova instância e carrega o perfil especificado.</translation>
+        <translation>Inicia uma nova instância e carrega o perfil especificado.</translation>
     </message>
     <message>
         <source>profile</source>
-        <translation type="unfinished">perfil</translation>
+        <translation>perfil</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation type="unfinished">Inicia nova instância e abre a tela de login.</translation>
+        <translation>Inicia nova instância e abre a tela de login.</translation>
     </message>
     <message>
         <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation type="unfinished">Define IPv6 &lt;ativado&gt;/&lt;desativado&gt;. O padrão é ATIVADO.</translation>
+        <translation>Define IPv6 &lt;ativado&gt;/&lt;desativado&gt;. O padrão é ATIVADO.</translation>
     </message>
     <message>
         <source>on/off</source>
-        <translation type="unfinished">ligado/desligado</translation>
+        <translation>ligado/desligado</translation>
     </message>
     <message>
         <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation type="unfinished">Define UDP &lt;ativado&gt;/&lt;desativado&gt;. O padrão é ATIVADO.</translation>
+        <translation>Define UDP &lt;ativado&gt;/&lt;desativado&gt;. O padrão é ATIVADO.</translation>
     </message>
     <message>
         <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
-        <translation type="unfinished">Define a descoberta da LAN &lt;ativada&gt;/&lt;desativada&gt;. O UDP desativado elimina esta opção. O padrão é ATIVADA.</translation>
+        <translation>Define a descoberta da LAN &lt;ativada&gt;/&lt;desativada&gt;. O UDP desativado elimina esta opção. O padrão é ATIVADA.</translation>
     </message>
     <message>
         <source>Sets proxy settings. Default is NONE.</source>
-        <translation type="unfinished">Define as configurações de proxy. O padrão é NENHUM.</translation>
+        <translation>Define as configurações de proxy. O padrão é NENHUM.</translation>
     </message>
     <message>
         <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
-        <translation type="unfinished">(SOCKS5/HTTP/NENHUM):(ENDEREÇO):(PORTA)</translation>
+        <translation>(SOCKS5/HTTP/NENHUM):(ENDEREÇO):(PORTA)</translation>
     </message>
     <message>
         <source>Error</source>
@@ -638,7 +638,7 @@ o que pode levar a problemas com as videochamadas.</translation>
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished">Falha ao carregar o perfil automaticamente.</translation>
+        <translation>Falha ao carregar o perfil automaticamente.</translation>
     </message>
 </context>
 <context>

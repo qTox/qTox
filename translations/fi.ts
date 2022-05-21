@@ -594,43 +594,43 @@ mikä voi johtaa ongelmiin videopuheluissa.</translation>
     <name>AppManager</name>
     <message>
         <source>Tox URI to parse</source>
-        <translation type="unfinished">Tox URI:t järjestettäväksi</translation>
+        <translation>Tox URI:t järjestettäväksi</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
-        <translation type="unfinished">Käynnistää uuden instanssin ja lataa määritetyn profiilin.</translation>
+        <translation>Käynnistää uuden instanssin ja lataa määritetyn profiilin.</translation>
     </message>
     <message>
         <source>profile</source>
-        <translation type="unfinished">Profiili</translation>
+        <translation>Profiili</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation type="unfinished">Aloittaa uuden istunnon ja avaa kirjautumisikkunan.</translation>
+        <translation>Aloittaa uuden istunnon ja avaa kirjautumisikkunan.</translation>
     </message>
     <message>
         <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation type="unfinished">Kytke IPv6 &lt;päälle&gt;/&lt;pois&gt;. IPv6 on oletuksenä PÄÄLLÄ.</translation>
+        <translation>Kytke IPv6 &lt;päälle&gt;/&lt;pois&gt;. IPv6 on oletuksenä PÄÄLLÄ.</translation>
     </message>
     <message>
         <source>on/off</source>
-        <translation type="unfinished">päällä/pois</translation>
+        <translation>päällä/pois</translation>
     </message>
     <message>
         <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation type="unfinished">Kytke UDP &lt;päällä&gt;/&lt;pois&gt;. Oletukena PÄÄLLÄ.</translation>
+        <translation>Kytke UDP &lt;päällä&gt;/&lt;pois&gt;. Oletukena PÄÄLLÄ.</translation>
     </message>
     <message>
         <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
-        <translation type="unfinished">Asettaa lähiverkon etsinnän &lt;päälle&gt;/&lt;pois&gt;. Ei toimi jos UDP ei ole käytössä. Oletksena asetus on PÄÄLLÄ.</translation>
+        <translation>Asettaa lähiverkon etsinnän &lt;päälle&gt;/&lt;pois&gt;. Ei toimi jos UDP ei ole käytössä. Oletksena asetus on PÄÄLLÄ.</translation>
     </message>
     <message>
         <source>Sets proxy settings. Default is NONE.</source>
-        <translation type="unfinished">Aseta proxy-asetukset. Oletaksena proxy ei ole käytössä.</translation>
+        <translation>Aseta proxy-asetukset. Oletaksena proxy ei ole käytössä.</translation>
     </message>
     <message>
         <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
-        <translation type="unfinished">(SOCKS5/HTTP/NONE:(osoite):(portti)</translation>
+        <translation>(SOCKS5/HTTP/NONE:(osoite):(portti)</translation>
     </message>
     <message>
         <source>Error</source>
@@ -638,7 +638,7 @@ mikä voi johtaa ongelmiin videopuheluissa.</translation>
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished">Profiilin automaattinen lataaminen epäonnistui.</translation>
+        <translation>Profiilin automaattinen lataaminen epäonnistui.</translation>
     </message>
 </context>
 <context>

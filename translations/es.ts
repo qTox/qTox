@@ -595,43 +595,43 @@ lo que puede provocar problemas en las videollamadas.</translation>
     <name>AppManager</name>
     <message>
         <source>Tox URI to parse</source>
-        <translation type="unfinished">URI Tox a utilizar</translation>
+        <translation>URI Tox a utilizar</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
-        <translation type="unfinished">Inicia una nueva instancia de qTox y carga el perfil especificado.</translation>
+        <translation>Inicia una nueva instancia de qTox y carga el perfil especificado.</translation>
     </message>
     <message>
         <source>profile</source>
-        <translation type="unfinished">perfil</translation>
+        <translation>perfil</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation type="unfinished">Inicia una nueva instancia y abre la pantalla de inicio de sesión.</translation>
+        <translation>Inicia una nueva instancia y abre la pantalla de inicio de sesión.</translation>
     </message>
     <message>
         <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation type="unfinished">Establece IPv6 &lt;on&gt;/&lt;off&gt;. El valor predeterminado es ON.</translation>
+        <translation>Establece IPv6 &lt;on&gt;/&lt;off&gt;. El valor predeterminado es ON.</translation>
     </message>
     <message>
         <source>on/off</source>
-        <translation type="unfinished">encendido/apagado</translation>
+        <translation>encendido/apagado</translation>
     </message>
     <message>
         <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation type="unfinished">Establece UDP &lt;on&gt;/&lt;off&gt;. Por defecto es ON.</translation>
+        <translation>Establece UDP &lt;on&gt;/&lt;off&gt;. Por defecto es ON.</translation>
     </message>
     <message>
         <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
-        <translation type="unfinished">Establece el descubrimiento de LAN &lt;activado&gt;/&lt;desactivado&gt;. UDP deshabilitado elimina esta opción. El valor predeterminado es ACTIVADO.</translation>
+        <translation>Establece el descubrimiento de LAN &lt;activado&gt;/&lt;desactivado&gt;. UDP deshabilitado elimina esta opción. El valor predeterminado es ACTIVADO.</translation>
     </message>
     <message>
         <source>Sets proxy settings. Default is NONE.</source>
-        <translation type="unfinished">Establece la configuración del proxy. Por defecto es NINGUNO.</translation>
+        <translation>Establece la configuración del proxy. Por defecto es NINGUNO.</translation>
     </message>
     <message>
         <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
-        <translation type="unfinished">(SOCKS5/HTTP/ NINGUNO):(DIRECCIÓN):(PUERTA)</translation>
+        <translation>(SOCKS5/HTTP/ NINGUNO):(DIRECCIÓN):(PUERTA)</translation>
     </message>
     <message>
         <source>Error</source>
@@ -639,7 +639,7 @@ lo que puede provocar problemas en las videollamadas.</translation>
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished">No se pudo cargar el perfil automáticamente.</translation>
+        <translation>No se pudo cargar el perfil automáticamente.</translation>
     </message>
 </context>
 <context>

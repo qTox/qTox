@@ -589,19 +589,19 @@ which may lead to problems with video calls.</source>
     <name>AppManager</name>
     <message>
         <source>Tox URI to parse</source>
-        <translation type="unfinished">Tox URI elemzés</translation>
+        <translation>Tox URI elemzés</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
-        <translation type="unfinished">Új folyamatot indít, és betölt egy megadott profilt.</translation>
+        <translation>Új folyamatot indít, és betölt egy megadott profilt.</translation>
     </message>
     <message>
         <source>profile</source>
-        <translation type="unfinished">profil</translation>
+        <translation>profil</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation type="unfinished">Új folyamat indítása, és a bejelentkezési képernyő megnyitása.</translation>
+        <translation>Új folyamat indítása, és a bejelentkezési képernyő megnyitása.</translation>
     </message>
     <message>
         <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
@@ -633,7 +633,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished">Profil automatikus betöltése sikertelen.</translation>
+        <translation>Profil automatikus betöltése sikertelen.</translation>
     </message>
 </context>
 <context>

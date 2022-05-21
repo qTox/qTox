@@ -594,35 +594,35 @@ vilket kan leda till problem med videosamtal.</translation>
     <name>AppManager</name>
     <message>
         <source>Tox URI to parse</source>
-        <translation type="unfinished">Tox-URI för att tolka</translation>
+        <translation>Tox-URI för att tolka</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
-        <translation type="unfinished">Startar ny instans och läser in angiven profil.</translation>
+        <translation>Startar ny instans och läser in angiven profil.</translation>
     </message>
     <message>
         <source>profile</source>
-        <translation type="unfinished">profil</translation>
+        <translation>profil</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation type="unfinished">Startar ny instans och öppnar loginskärmen.</translation>
+        <translation>Startar ny instans och öppnar loginskärmen.</translation>
     </message>
     <message>
         <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation type="unfinished">Ställer in IPv6 &lt;på&gt;/&lt;av&gt;. Standardvärdet är PÅ.</translation>
+        <translation>Ställer in IPv6 &lt;på&gt;/&lt;av&gt;. Standardvärdet är PÅ.</translation>
     </message>
     <message>
         <source>on/off</source>
-        <translation type="unfinished">på/av</translation>
+        <translation>på/av</translation>
     </message>
     <message>
         <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation type="unfinished">Ställer in UDP &lt;på&gt;/&lt;av&gt;. Standardvärdet är PÅ.</translation>
+        <translation>Ställer in UDP &lt;på&gt;/&lt;av&gt;. Standardvärdet är PÅ.</translation>
     </message>
     <message>
         <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
-        <translation type="unfinished">Ställer in LAN-upptäckt &lt;på&gt;/&lt;av&gt;. UDP av har prioritet. Standardvärdet är PÅ.</translation>
+        <translation>Ställer in LAN-upptäckt &lt;på&gt;/&lt;av&gt;. UDP av har prioritet. Standardvärdet är PÅ.</translation>
     </message>
     <message>
         <source>Sets proxy settings. Default is NONE.</source>
@@ -638,7 +638,7 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished">Det gick inte att läsa in profilen automatiskt.</translation>
+        <translation>Det gick inte att läsa in profilen automatiskt.</translation>
     </message>
 </context>
 <context>

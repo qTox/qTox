@@ -594,15 +594,15 @@ which may lead to problems with video calls.</source>
     <name>AppManager</name>
     <message>
         <source>Tox URI to parse</source>
-        <translation type="unfinished">تحليل عنوان URI للتوكس</translation>
+        <translation>تحليل عنوان URI للتوكس</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
-        <translation type="unfinished">بدء تشغيل حالة جديدة ثم يقوم بتحميل الحساب الشخصي المحدد.</translation>
+        <translation>بدء تشغيل حالة جديدة ثم يقوم بتحميل الحساب الشخصي المحدد.</translation>
     </message>
     <message>
         <source>profile</source>
-        <translation type="unfinished">ملف شخصي</translation>
+        <translation>ملف شخصي</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>

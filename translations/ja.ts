@@ -589,19 +589,19 @@ which may lead to problems with video calls.</source>
     <name>AppManager</name>
     <message>
         <source>Tox URI to parse</source>
-        <translation type="unfinished">解析用の Tox URI</translation>
+        <translation>解析用の Tox URI</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
-        <translation type="unfinished">新しいインスタンスを起動して、指定されたプロファイルを読み込みます。</translation>
+        <translation>新しいインスタンスを起動して、指定されたプロファイルを読み込みます。</translation>
     </message>
     <message>
         <source>profile</source>
-        <translation type="unfinished">プロファイル</translation>
+        <translation>プロファイル</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation type="unfinished">新しいインスタンスを開始して、ログイン画面を開いてください。</translation>
+        <translation>新しいインスタンスを開始して、ログイン画面を開いてください。</translation>
     </message>
     <message>
         <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>

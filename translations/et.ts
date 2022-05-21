@@ -594,43 +594,43 @@ mis võib põhjustada probleeme videokõnedega.</translation>
     <name>AppManager</name>
     <message>
         <source>Tox URI to parse</source>
-        <translation type="unfinished">Toxi URI, mida kasutada</translation>
+        <translation>Toxi URI, mida kasutada</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
-        <translation type="unfinished">Käivitab uue üksuse ja laeb määratud profiili.</translation>
+        <translation>Käivitab uue üksuse ja laeb määratud profiili.</translation>
     </message>
     <message>
         <source>profile</source>
-        <translation type="unfinished">profiil</translation>
+        <translation>profiil</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation type="unfinished">Käivitab uue koopia ja avab sisselogimise ekraani.</translation>
+        <translation>Käivitab uue koopia ja avab sisselogimise ekraani.</translation>
     </message>
     <message>
         <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation type="unfinished">Saad IPv6 võrguprotokolli kasutamise &lt;sisse&gt;/&lt;välja&gt; lülitada. Vaikimisi on ta kasutusel.</translation>
+        <translation>Saad IPv6 võrguprotokolli kasutamise &lt;sisse&gt;/&lt;välja&gt; lülitada. Vaikimisi on ta kasutusel.</translation>
     </message>
     <message>
         <source>on/off</source>
-        <translation type="unfinished">sisse/välja</translation>
+        <translation>sisse/välja</translation>
     </message>
     <message>
         <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation type="unfinished">Saad UPD võrguprotokolli kasutamise &lt;sisse&gt;/&lt;välja&gt; lülitada. Vaikimisi on ta kasutusel.</translation>
+        <translation>Saad UPD võrguprotokolli kasutamise &lt;sisse&gt;/&lt;välja&gt; lülitada. Vaikimisi on ta kasutusel.</translation>
     </message>
     <message>
         <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
-        <translation type="unfinished">Saad seadmete tuvastamise kohtvõrgus &lt;sisse&gt;/&lt;välja&gt; lülitada. Vaikimisi on ta kasutusel.</translation>
+        <translation>Saad seadmete tuvastamise kohtvõrgus &lt;sisse&gt;/&lt;välja&gt; lülitada. Vaikimisi on ta kasutusel.</translation>
     </message>
     <message>
         <source>Sets proxy settings. Default is NONE.</source>
-        <translation type="unfinished">Saad seadistada puhverserveri kasutamise. Vaikimisi on puhverserver seadistamata.</translation>
+        <translation>Saad seadistada puhverserveri kasutamise. Vaikimisi on puhverserver seadistamata.</translation>
     </message>
     <message>
         <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
-        <translation type="unfinished">(SOCKS5/HTTP/NONE):(aadress):(port)</translation>
+        <translation>(SOCKS5/HTTP/NONE):(aadress):(port)</translation>
     </message>
     <message>
         <source>Error</source>
@@ -638,7 +638,7 @@ mis võib põhjustada probleeme videokõnedega.</translation>
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished">Profiili automaatne laadimine ebaõnnestus.</translation>
+        <translation>Profiili automaatne laadimine ebaõnnestus.</translation>
     </message>
 </context>
 <context>

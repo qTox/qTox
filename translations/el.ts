@@ -590,19 +590,19 @@ which may lead to problems with video calls.</source>
     <name>AppManager</name>
     <message>
         <source>Tox URI to parse</source>
-        <translation type="unfinished">Tox URI για ανάλυση</translation>
+        <translation>Tox URI για ανάλυση</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
-        <translation type="unfinished">Ξεκινά νέο συμβάν και φορτώνει το επιλεγμένο προφίλ.</translation>
+        <translation>Ξεκινά νέο συμβάν και φορτώνει το επιλεγμένο προφίλ.</translation>
     </message>
     <message>
         <source>profile</source>
-        <translation type="unfinished">προφίλ</translation>
+        <translation>προφίλ</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation type="unfinished">Εκκινεί μία νέα συνεδρία και ανοίγει το παράθυρο διαλόγου σύνδεσης.</translation>
+        <translation>Εκκινεί μία νέα συνεδρία και ανοίγει το παράθυρο διαλόγου σύνδεσης.</translation>
     </message>
     <message>
         <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>

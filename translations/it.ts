@@ -594,19 +594,19 @@ il che può portare a problemi con le videochiamate.</translation>
     <name>AppManager</name>
     <message>
         <source>Tox URI to parse</source>
-        <translation type="unfinished">URI Tox da interpretare</translation>
+        <translation>URI Tox da interpretare</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
-        <translation type="unfinished">Avvia una nuova istanza caricando il profilo selezionato.</translation>
+        <translation>Avvia una nuova istanza caricando il profilo selezionato.</translation>
     </message>
     <message>
         <source>profile</source>
-        <translation type="unfinished">profilo</translation>
+        <translation>profilo</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation type="unfinished">Apre una nuova istanza con la finestra d&apos;accesso.</translation>
+        <translation>Apre una nuova istanza con la finestra d&apos;accesso.</translation>
     </message>
     <message>
         <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
@@ -638,7 +638,7 @@ il che può portare a problemi con le videochiamate.</translation>
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished">Impossibile caricare automaticamente il profilo.</translation>
+        <translation>Impossibile caricare automaticamente il profilo.</translation>
     </message>
 </context>
 <context>

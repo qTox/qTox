@@ -593,43 +593,43 @@ which may lead to problems with video calls.</source>
     <name>AppManager</name>
     <message>
         <source>Tox URI to parse</source>
-        <translation type="unfinished">Tox URI 解析</translation>
+        <translation>Tox URI 解析</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
-        <translation type="unfinished">开始一个新的实例并加载指定的配置文件。</translation>
+        <translation>开始一个新的实例并加载指定的配置文件。</translation>
     </message>
     <message>
         <source>profile</source>
-        <translation type="unfinished">用户配置文件</translation>
+        <translation>用户配置文件</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation type="unfinished">开启一个新进程并打开登录界面。</translation>
+        <translation>开启一个新进程并打开登录界面。</translation>
     </message>
     <message>
         <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation type="unfinished">设置 IPv6 &lt;开&gt;/&lt;关&gt;。 默认为开。</translation>
+        <translation>设置 IPv6 &lt;开&gt;/&lt;关&gt;。 默认为开。</translation>
     </message>
     <message>
         <source>on/off</source>
-        <translation type="unfinished">开/关</translation>
+        <translation>开/关</translation>
     </message>
     <message>
         <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation type="unfinished">设置 UDP &lt;开&gt;/&lt;关&gt;。 默认为开。</translation>
+        <translation>设置 UDP &lt;开&gt;/&lt;关&gt;。 默认为开。</translation>
     </message>
     <message>
         <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
-        <translation type="unfinished">设置局域网发现 &lt;开&gt;/&lt;关&gt;。 UDP 关 重写。 默认为开。</translation>
+        <translation>设置局域网发现 &lt;开&gt;/&lt;关&gt;。 UDP 关 重写。 默认为开。</translation>
     </message>
     <message>
         <source>Sets proxy settings. Default is NONE.</source>
-        <translation type="unfinished">设置代理设置。默认值为 NONE。</translation>
+        <translation>设置代理设置。默认值为 NONE。</translation>
     </message>
     <message>
         <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
-        <translation type="unfinished">(SOCKS5/HTTP/NONE):(地址):(端口)</translation>
+        <translation>(SOCKS5/HTTP/NONE):(地址):(端口)</translation>
     </message>
     <message>
         <source>Error</source>
@@ -637,7 +637,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation type="unfinished">无法自动加载配置文件。</translation>
+        <translation>无法自动加载配置文件。</translation>
     </message>
 </context>
 <context>
