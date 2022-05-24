@@ -279,11 +279,11 @@ co może powodować problemy z rozmowami wideo.</translation>
     </message>
     <message>
         <source>Auto-accept for this contact is disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatyczne akceptowanie jest wyłączone dla tego kontaktu</translation>
     </message>
     <message>
         <source>Auto-accept call:</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatyczne odbieranie połączeń:</translation>
     </message>
     <message>
         <source>Auto-accept group invites</source>
