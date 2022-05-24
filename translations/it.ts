@@ -718,19 +718,19 @@ in modo da poter salvare il file su Windows.</translation>
     <name>ChatWidget</name>
     <message>
         <source>pending</source>
-        <translation type="unfinished">in attesa</translation>
+        <translation>in attesa</translation>
     </message>
     <message>
         <source>%1 is typing</source>
-        <translation type="unfinished">%1 sta scrivendo</translation>
+        <translation>%1 sta scrivendo</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Copia</translation>
+        <translation>Copia</translation>
     </message>
     <message>
         <source>Select all</source>
-        <translation type="unfinished">Seleziona tutto</translation>
+        <translation>Seleziona tutto</translation>
     </message>
 </context>
 <context>
@@ -1151,7 +1151,7 @@ invece di chiudersi completamente.</translation>
     </message>
     <message>
         <source>Add a chat message when a user joins or leaves a group</source>
-        <translation type="unfinished"></translation>
+        <translation>Aggiungi un messaggio quando un utente si unisce o esce da un gruppo</translation>
     </message>
 </context>
 <context>
@@ -1455,11 +1455,11 @@ Condividilo con i tuoi amici per iniziare a chattare.</translation>
     <name>LoadHistoryDialog</name>
     <message>
         <source>Load history dialog</source>
-        <translation>Finestra di caricamento della cronologia</translation>
+        <translation>Caricamento della finestra della cronologia</translation>
     </message>
     <message>
         <source>Load history from:</source>
-        <translation type="unfinished"></translation>
+        <translation>Carica cronologia da:</translation>
     </message>
 </context>
 <context>
@@ -1603,8 +1603,8 @@ You may want to create one.</source>
     <message>
         <source>The passwords you&apos;ve entered are different.
 Please make sure to enter the same password twice.</source>
-        <translation>Le password inserite sono differenti.
-Per favore assicurati di inserire la stessa password due volte.</translation>
+        <translation>Le password che hai inserito sono diverse.
+Assicurati di inserire la stessa password due volte.</translation>
     </message>
 </context>
 <context>
@@ -1715,12 +1715,12 @@ Per favore assicurati di inserire la stessa password due volte.</translation>
     <message>
         <source>Executable file</source>
         <comment>popup title</comment>
-        <translation type="unfinished">File eseguibile</translation>
+        <translation>File eseguibile</translation>
     </message>
     <message>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
-        <translation type="unfinished">Hai chiesto a qTox di aprire un file eseguibile. I file eseguibili possono danneggiare il tuo computer. Sei sicuro di voler aprire questo file?</translation>
+        <translation>Hai chiesto a qTox di aprire un file eseguibile. I file eseguibili possono danneggiare il tuo computer. Sei sicuro di voler aprire questo file?</translation>
     </message>
 </context>
 <context>
@@ -1747,7 +1747,7 @@ Per favore assicurati di inserire la stessa password due volte.</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation type="unfinished">Termina videochiamata</translation>
+        <translation>Termina videochiamata</translation>
     </message>
     <message>
         <source>Exit full screen</source>
@@ -1755,11 +1755,11 @@ Per favore assicurati di inserire la stessa password due volte.</translation>
     </message>
     <message>
         <source>Hide messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Nascondi i messaggi</translation>
     </message>
     <message>
         <source>Show messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostra i messaggi</translation>
     </message>
 </context>
 <context>
@@ -1820,7 +1820,7 @@ Per favore assicurati di inserire la stessa password due volte.</translation>
     <message>
         <source>%1 - file transfer</source>
         <extracomment>e.g. Bob - file transfer</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 - trasferimento file</translation>
     </message>
     <message>
         <source>Group invite received</source>
@@ -1828,7 +1828,7 @@ Per favore assicurati di inserire la stessa password due volte.</translation>
     </message>
     <message>
         <source>%1 invites you to join a group.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 ti invita a unirti a un gruppo.</translation>
     </message>
     <message>
         <source>Friend request received</source>
@@ -1836,7 +1836,7 @@ Per favore assicurati di inserire la stessa password due volte.</translation>
     </message>
     <message>
         <source>Friend request received from %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Richiesta di amicizia ricevuta da %1</translation>
     </message>
 </context>
 <context>
@@ -1916,7 +1916,7 @@ Se ricevi molte richieste di amicizia indesiderate cambia questo valore.</transl
     </message>
     <message>
         <source>Filter group messages by group members&apos; public keys. Put public keys here, one per line.</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtra i messaggi di gruppo dalle chiavi pubbliche dei membri. Inserisci qui le chiavi pubbliche, una per linea.</translation>
     </message>
 </context>
 <context>
@@ -1931,7 +1931,7 @@ Se ricevi molte richieste di amicizia indesiderate cambia questo valore.</transl
     </message>
     <message>
         <source>Couldn&apos;t change database password, it may be corrupted or use the old password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile cambiare la password del database, potrebbe essere danneggiato o usa la vecchia password.</translation>
     </message>
 </context>
 <context>
@@ -2085,32 +2085,32 @@ Per favore scegli un&apos;immagine più piccola.</translation>
     <message>
         <source>You do not have permission to write to that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
-        <translation type="unfinished"></translation>
+        <translation>Non hai i permessi per scrivere qui. Scegli un&apos;altra posizione, o smetti di salvare.</translation>
     </message>
     <message>
         <source>Failed to save file</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile salvare il file</translation>
     </message>
     <message>
         <source>The file you chose could not be saved.</source>
-        <translation type="unfinished"></translation>
+        <translation>Il file che hai scelto non può essere salvato.</translation>
     </message>
     <message>
         <source>Empty path is unavaliable.</source>
-        <translation type="unfinished"></translation>
+        <translation>Percorso vuoto non disponibile.</translation>
     </message>
     <message>
         <source>Couldn&apos;t change database password, it may be corrupted or use the old password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile cambiare la password del database, potrebbe essere danneggiato o usare una password precedente.</translation>
     </message>
     <message>
         <source>Tox user names cannot exceed %1 characters.</source>
-        <translation type="unfinished"></translation>
+        <translation>Gli username di Tox non possono superare i %1 caratteri.</translation>
     </message>
     <message>
         <source>Delete profile</source>
         <comment>deletion confirmation title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Elimina profilo</translation>
     </message>
     <message>
         <source>Remove password</source>
@@ -2120,14 +2120,17 @@ Per favore scegli un&apos;immagine più piccola.</translation>
     <message>
         <source>Are you sure you want to remove your password?</source>
         <extracomment>deletion confirmation text</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sei sicuro di voler cancellare la tua password?</translation>
     </message>
     <message>
         <source>This ID allows other Tox users to add and contact you.
 Share it with your friends to begin chatting.
 
 This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
-        <translation type="unfinished"></translation>
+        <translation>Questo ID permette ad altri utenti Tox di contattarti.
+Condividilo con i tuoi amici per iniziare a chattare con loro.
+
+Questo ID include una sezione NoSpam (in colore blu) e il controllo checksum (in grigio).</translation>
     </message>
 </context>
 <context>
@@ -2216,7 +2219,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>%1 is not a valid Tox address.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 non è un indirizzo Tox valido.</translation>
     </message>
 </context>
 <context>
@@ -2336,159 +2339,159 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>Reformatting text...</source>
         <comment>Waiting for text to be reformatted</comment>
-        <translation type="unfinished"></translation>
+        <translation>Riformattando il testo...</translation>
     </message>
     <message>
         <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation type="unfinished"></translation>
+        <translation>Imposta IPv6 &lt;on&gt;/&lt;off&gt;. Default su ON.</translation>
     </message>
     <message>
         <source>on/off</source>
-        <translation type="unfinished"></translation>
+        <translation>acceso/spento</translation>
     </message>
     <message>
         <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation type="unfinished"></translation>
+        <translation>Imposta UDP &lt;on&gt;/&lt;off&gt;. Default su ON.</translation>
     </message>
     <message>
         <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
-        <translation type="unfinished"></translation>
+        <translation>Imposta il LAN Discovery &lt;on&gt;/&lt;off&gt;. Disabilita automaticamente UDP. Default su ON.</translation>
     </message>
     <message>
         <source>Sets proxy settings. Default is NONE.</source>
-        <translation type="unfinished"></translation>
+        <translation>Imposta il proxy. Di default non attivo.</translation>
     </message>
     <message>
         <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
-        <translation type="unfinished"></translation>
+        <translation>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</translation>
     </message>
     <message>
         <source>%1 message(s) from %2 chats</source>
         <extracomment>e.g. 3 messages from 2 chats</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 messaggi da %2 chat</translation>
     </message>
     <message>
         <source>%1 message(s) from %2</source>
         <extracomment>e.g. 2 messages from Bob</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 messaggi da %2</translation>
     </message>
     <message>
         <source>negotitating</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>negoziando</translation>
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation type="unfinished">Impossibile inviare il file &quot;%1&quot;</translation>
+        <translation>Impossibile inviare il file &quot;%1&quot;</translation>
     </message>
     <message>
         <source>%1 has joined the group</source>
-        <translation type="unfinished">%1 ha aderito al gruppo</translation>
+        <translation>%1 è entrato nel gruppo</translation>
     </message>
     <message>
         <source>%1 has left the group</source>
-        <translation type="unfinished">%1 ha lasciato il gruppo</translation>
+        <translation>%1 ha lasciato il gruppo</translation>
     </message>
     <message>
         <source>%1 is now known as %2</source>
-        <translation type="unfinished">% 1 è ora noto come %2</translation>
+        <translation>%1 è diventato %2</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
-        <translation type="unfinished">%1 ha impostato il titolo a %2</translation>
+        <translation>%1 ha impostato il titolo %2</translation>
     </message>
     <message>
         <source>Cleared</source>
-        <translation type="unfinished">Pulito</translation>
+        <translation>Pulito</translation>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
-        <translation type="unfinished">La chiamata con %1 è terminata inaspettatamente. %2</translation>
+        <translation>La chiamata con %1 è terminata inaspettatamente. %2</translation>
     </message>
     <message>
         <source>Call with %1 ended. %2</source>
-        <translation type="unfinished">Chiamata con %1 terminata. %2</translation>
+        <translation>Chiamata con %1 terminata. %2</translation>
     </message>
     <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation type="unfinished">%1 è %2 adesso</translation>
+        <translation>%1 è %2</translation>
     </message>
     <message>
         <source>Calling %1</source>
-        <translation type="unfinished">Stai chiamando %1</translation>
+        <translation>Chiamo %1</translation>
     </message>
     <message>
         <source>%1 calling</source>
-        <translation type="unfinished">%1 ti sta chiamando</translation>
+        <translation>%1 sta chiamando</translation>
     </message>
     <message>
         <source>Message failed to send</source>
-        <translation type="unfinished">Impossibile inviare il messaggio</translation>
+        <translation>Impossibile inviare il messaggio</translation>
     </message>
     <message>
         <source>Initializing</source>
-        <translation type="unfinished"></translation>
+        <translation>Inizializzando</translation>
     </message>
     <message>
         <source>Transmitting</source>
-        <translation type="unfinished"></translation>
+        <translation>Trasmettendo</translation>
     </message>
     <message>
         <source>Finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Finito</translation>
     </message>
     <message>
         <source>Broken</source>
-        <translation type="unfinished"></translation>
+        <translation>Danneggiato</translation>
     </message>
     <message>
         <source>Canceled</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancellato</translation>
     </message>
     <message>
         <source>Paused</source>
-        <translation type="unfinished">In pausa</translation>
+        <translation>In pausa</translation>
     </message>
     <message>
         <source>Remote paused</source>
-        <translation type="unfinished">Remoto in pausa</translation>
+        <translation>Remoto in pausa</translation>
     </message>
     <message>
         <source>File Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome file</translation>
     </message>
     <message>
         <source>Contact</source>
-        <translation type="unfinished"></translation>
+        <translation>Contatto</translation>
     </message>
     <message>
         <source>Progress</source>
-        <translation type="unfinished"></translation>
+        <translation>Progresso</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Dimensione</translation>
     </message>
     <message>
         <source>Speed</source>
-        <translation type="unfinished"></translation>
+        <translation>Velocità</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished">Stato</translation>
+        <translation>Stato</translation>
     </message>
     <message>
         <source>Control</source>
-        <translation type="unfinished"></translation>
+        <translation>Controllo</translation>
     </message>
     <message>
         <source>You have joined the group</source>
-        <translation type="unfinished"></translation>
+        <translation>Sei entrato nel gruppo</translation>
     </message>
     <message>
         <source>You have left the group</source>
-        <translation type="unfinished"></translation>
+        <translation>Hai lasciato il gruppo</translation>
     </message>
     <message>
         <source>Failed to load chat history</source>
@@ -2503,23 +2506,23 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <name>RemoveChatDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation type="unfinished">Rimuovere l&apos;amico</translation>
+        <translation>Rimuovi amico</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation type="unfinished">Rimuove tutta la cronologia della chat con l&apos;amico se impostata</translation>
+        <translation>Rimuovi tutta la cronologia chat con l&apos;amico se impostato</translation>
     </message>
     <message>
         <source>Also remove chat history</source>
-        <translation type="unfinished">Rimuovi anche la cronologia chat</translation>
+        <translation>Rimuovi anche la cronologia chat</translation>
     </message>
     <message>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation type="unfinished">Sei sicuro di voler rimuovere %1 dalla tua lista contatti?</translation>
+        <translation>Sei sicuro di voler rimuovere %1 dalla tua lista contatti?</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Rimuovi</translation>
+        <translation>Rimuovi</translation>
     </message>
 </context>
 <context>
@@ -2605,11 +2608,11 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Select Date Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleziona data</translation>
     </message>
     <message>
         <source>Select a date</source>
-        <translation type="unfinished">Seleziona una data</translation>
+        <translation>Seleziona una data</translation>
     </message>
 </context>
 <context>
@@ -2652,7 +2655,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>The password is too short.</source>
-        <translation type="unfinished"></translation>
+        <translation>La password è troppo corta.</translation>
     </message>
 </context>
 <context>
@@ -2663,15 +2666,15 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Failed to load personal settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile caricare le impostazioni personali</translation>
     </message>
     <message>
         <source>Unable to upgrade settings from version %1 to version %2. Cannot start qTox.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nono sono in grado di aggiornare le impostazioni dalla versione %1 alla versione %2. Impossibile avviare qTox.</translation>
     </message>
     <message>
         <source>Failed to load global settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile caricare le impostazioni globali</translation>
     </message>
 </context>
 <context>
@@ -2866,27 +2869,27 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Use colored nicknames in group chats</source>
-        <translation type="unfinished"></translation>
+        <translation>Usa nickname colorato nelle chat di gruppo</translation>
     </message>
     <message>
         <source>Only notify about new messages in group chats when mentioned.</source>
         <comment>toolTip for Group chats only notify when mentioned</comment>
-        <translation type="unfinished"></translation>
+        <translation>Notificami dei nuovi messaggi nel gruppo solo quando vengo menzionato.</translation>
     </message>
     <message>
         <source>If checked, group chats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
         <comment>toolTip for groupchat positioning</comment>
-        <translation type="unfinished"></translation>
+        <translation>Se selezionato, le chat di gruppo saranno posizionate in cima alla lista amici. Altrimenti, saranno posizionate sotto gli amici online.</translation>
     </message>
     <message>
         <source>If enabled, every contact without an avatar will have a generated icon based on their Tox ID instead of the default picture. Requires restart to apply.</source>
         <comment>toolTip for show identicons</comment>
-        <translation type="unfinished"></translation>
+        <translation>Se attivato, ogni contatto senza un avatar avrà una immagine di profilo basata sul proprio Tox ID invece della foto di profilo predefinita. Richiede il riavvio per funzionare.</translation>
     </message>
     <message>
         <source>Smiley pack:</source>
         <extracomment>Text on smiley pack label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Pacchetto smiley:</translation>
     </message>
 </context>
 <context>
@@ -3011,29 +3014,29 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Toxcore failed to start, the application will terminate after you close this message.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile avviare il core Tox, l&apos;applicazione si terminerà appena verrà chiuso questo messaggio.</translation>
     </message>
     <message>
         <source>Toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Toxcore non è riuscito ad aprirsi con le attuali impostazioni proxy. qTox non può essere avviato; per favore modificare le impostazioni e riavviare l&apos;applicazione.</translation>
     </message>
     <message>
         <source>Couldn&apos;t send friend request</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile inviare la richiesta d&apos;amicizia</translation>
     </message>
     <message numerus="yes">
         <source>%n new friend request(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n nuova richiesta d&apos;amicizia</numerusform>
+            <numerusform>%n nuove richieste d&apos;amicizia</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n new group invite(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n nuovo invito in un gruppo</numerusform>
+            <numerusform>%n nuovi inviti in un gruppo</numerusform>
         </translation>
     </message>
     <message>
@@ -3043,11 +3046,11 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Change status</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambia stato</translation>
     </message>
     <message>
         <source>Edit profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifica profilo</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -3055,15 +3058,15 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Add contact...</source>
-        <translation type="unfinished"></translation>
+        <translation>Aggiungi contatto...</translation>
     </message>
     <message>
         <source>Next conversation</source>
-        <translation type="unfinished"></translation>
+        <translation>Prossima conversazione</translation>
     </message>
     <message>
         <source>Previous conversation</source>
-        <translation type="unfinished"></translation>
+        <translation>Conversazione precedente</translation>
     </message>
 </context>
 </TS>
