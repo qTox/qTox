@@ -269,7 +269,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Auto-accept files</source>
-        <translation type="unfinished"></translation>
+        <translation>Αυτόματη αποδοχή αρχείων</translation>
     </message>
     <message>
         <source>Auto-accept for this contact is disabled</source>
@@ -1115,7 +1115,7 @@ so you can save the file on Windows.</source>
     </message>
     <message>
         <source>Spell checking</source>
-        <translation type="unfinished"></translation>
+        <translation>Έλεγχος ορθρογραφίας</translation>
     </message>
     <message>
         <source>Max autoaccept file size (0 to disable):</source>
@@ -1218,11 +1218,11 @@ instead of closing entirely.</source>
     </message>
     <message>
         <source>mute</source>
-        <translation type="unfinished"></translation>
+        <translation>σίγαση</translation>
     </message>
     <message>
         <source>unmute</source>
-        <translation type="unfinished"></translation>
+        <translation>Άρση σίγασης</translation>
     </message>
 </context>
 <context>
@@ -1284,7 +1284,7 @@ instead of closing entirely.</source>
     </message>
     <message>
         <source>New Message</source>
-        <translation type="unfinished"></translation>
+        <translation>Νέο μήνυμα</translation>
     </message>
     <message>
         <source>Online</source>
@@ -3038,7 +3038,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Edit profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Επεξεργασία προφίλ</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -3046,15 +3046,15 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Add contact...</source>
-        <translation type="unfinished"></translation>
+        <translation>Προσθήκη επαφής...</translation>
     </message>
     <message>
         <source>Next conversation</source>
-        <translation type="unfinished"></translation>
+        <translation>Επόμενη συνομιλία</translation>
     </message>
     <message>
         <source>Previous conversation</source>
-        <translation type="unfinished"></translation>
+        <translation>Προηγούμενη συνομιλία</translation>
     </message>
 </context>
 </TS>
