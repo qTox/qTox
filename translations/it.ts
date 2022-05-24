@@ -2495,11 +2495,11 @@ Questo ID include una sezione NoSpam (in colore blu) e il controllo checksum (in
     </message>
     <message>
         <source>Failed to load chat history</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile caricare la cronologia chat</translation>
     </message>
     <message>
         <source>Database version (%1) is newer than we currently support (%2). Please upgrade qTox.</source>
-        <translation type="unfinished"></translation>
+        <translation>La versione del database (%1) è più recente di quella attualmente supportata (%2). Si prega di aggiornare qTox.</translation>
     </message>
 </context>
 <context>

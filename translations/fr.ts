@@ -797,7 +797,7 @@ afin que vous puissiez enregistrer le fichier sur windows.</translation>
     </message>
     <message>
         <source>Multipart Messages: </source>
-        <translation>Messages en plusieurs parties&#x202f;: </translation>
+        <translation>Messages en plusieurs parties : </translation>
     </message>
 </context>
 <context>
@@ -1124,7 +1124,7 @@ afin que vous puissiez enregistrer le fichier sur windows.</translation>
     </message>
     <message>
         <source>Max autoaccept file size (0 to disable):</source>
-        <translation>Taille maximale du fichier pour autoaccepter (0 pour désactiver)&#x202f;:</translation>
+        <translation>Taille maximale du fichier pour autoaccepter (0 pour désactiver) :</translation>
     </message>
     <message>
         <source> MB</source>
@@ -2153,7 +2153,7 @@ Cet identifiant comprend le code NoSpam (en bleu) et la somme de contrôle (en g
     <message>
         <source>Warning: You have chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
-        <translation>Attention&#x202f;: vous avez choisi un fichier de sauvegarde non-Tox&#x202f;; ignoré.</translation>
+        <translation>Attention : vous avez choisi un fichier de sauvegarde non-Tox ; ignoré.</translation>
     </message>
     <message>
         <source>Profile already exists</source>
@@ -2495,34 +2495,34 @@ Cet identifiant comprend le code NoSpam (en bleu) et la somme de contrôle (en g
     </message>
     <message>
         <source>Failed to load chat history</source>
-        <translation type="unfinished"></translation>
+        <translation>Échec du chargement de l&apos;historique des discussions</translation>
     </message>
     <message>
         <source>Database version (%1) is newer than we currently support (%2). Please upgrade qTox.</source>
-        <translation type="unfinished"></translation>
+        <translation>La version de la base de données (%1) est plus récente que celle que nous supportons actuellement (%2). Veuillez mettre à jour qTox.</translation>
     </message>
 </context>
 <context>
     <name>RemoveChatDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation type="unfinished">Supprimer ce contact</translation>
+        <translation>Supprimer ce contact</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation type="unfinished">Si activé, efface tout l&apos;historique de discussions avec ce contact</translation>
+        <translation>Si activé, efface tout l&apos;historique de discussions avec ce contact</translation>
     </message>
     <message>
         <source>Also remove chat history</source>
-        <translation type="unfinished">Supprimer également l&apos;historique de discussions</translation>
+        <translation>Supprimer également l&apos;historique de discussions</translation>
     </message>
     <message>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation type="unfinished">Êtes-vous sûr(e) de vouloir supprimer %1 de votre liste de contacts ?</translation>
+        <translation>Êtes-vous sûr(e) de vouloir supprimer %1 de votre liste de contacts ?</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Supprimer</translation>
+        <translation>Supprimer</translation>
     </message>
 </context>
 <context>
