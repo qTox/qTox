@@ -432,6 +432,7 @@ which may lead to problems with video calls.</source>
         <source>Ready to import %n contact(s), click send to confirm</source>
         <translation>
             <numerusform>Készen állok %n ismerős importálására, kattints a küldésre a megerősítéshez</numerusform>
+            <numerusform>Készen állok %n ismerős importálására, kattints a küldésre a megerősítéshez</numerusform>
         </translation>
     </message>
     <message>
@@ -1787,6 +1788,7 @@ Please make sure to enter the same password twice.</source>
         <source>Unread message(s)</source>
         <translation>
             <numerusform>Olvasatlan üzenet</numerusform>
+            <numerusform>Olvasatlan üzenetek</numerusform>
         </translation>
     </message>
 </context>
