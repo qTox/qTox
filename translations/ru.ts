@@ -105,7 +105,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to reduce bandwidth usage.</source>
-        <translation>Качество передающегося звука. Понизьте эту настройку, если у вас низкая пропускная способность интернета, или вы хотите снизить нагрузку на нее.</translation>
+        <translation>Качество передающегося звука. Понизьте эту настройку, если у вас низкая пропускная способность интернета, или вы хотите снизить нагрузку на неё.</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -181,7 +181,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all known…`</comment>
-        <translation>Написание полезных отчетов об ошибках</translation>
+        <translation>Написание полезных отчётов об ошибках</translation>
     </message>
     <message>
         <source>contributors</source>
@@ -273,11 +273,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Auto-accept files</source>
-        <translation>Автоматический прием файлов</translation>
+        <translation>Автоматический приём файлов</translation>
     </message>
     <message>
         <source>Auto-accept for this contact is disabled</source>
-        <translation>Автоматический прием файлов для этого контакта отключен</translation>
+        <translation>Автоматический приём файлов для этого контакта отключён</translation>
     </message>
     <message>
         <source>Auto-accept call:</source>
@@ -294,7 +294,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Choose an auto-accept directory</source>
         <extracomment>popup title</extracomment>
-        <translation>Выберите папку для автоматического приема файлов</translation>
+        <translation>Выберите папку для автоматического приёма файлов</translation>
     </message>
 </context>
 <context>
@@ -1138,14 +1138,14 @@ so you can save the file on Windows.</source>
         <source>After pressing minimize (_) qTox will minimize to tray,
 instead of system taskbar.</source>
         <comment>toolTip for minimize to tray setting</comment>
-        <translation>После нажатия свернуть (_) qTox будет свернут в трей,
+        <translation>После нажатия свернуть (_) qTox будет свёрнут в трей,
 вместо системной панели задач.</translation>
     </message>
     <message>
         <source>After pressing close (X) qTox will close to tray,
 instead of closing entirely.</source>
         <comment>toolTip for close to tray setting</comment>
-        <translation>После нажатия закрыть (X) qTox свернется в трей,
+        <translation>После нажатия закрыть (X) qTox свернётся в трей,
 вместо того, чтобы закрыться совсем.</translation>
     </message>
     <message>
@@ -1155,7 +1155,7 @@ instead of closing entirely.</source>
     </message>
     <message>
         <source>Add a chat message when a user joins or leaves a group</source>
-        <translation>Отправлять сообщение в чат, когда пользователь вступает в группу, или покидает ее</translation>
+        <translation>Отправлять сообщение в чат, когда пользователь вступает в группу, или покидает её</translation>
     </message>
 </context>
 <context>
@@ -1256,7 +1256,7 @@ instead of closing entirely.</source>
     <name>GroupInviteWidget</name>
     <message>
         <source>Invited by %1 on %2 at %3.</source>
-        <translation>Приглашен %1 %2 в %3.</translation>
+        <translation>Приглашён %1 %2 в %3.</translation>
     </message>
     <message>
         <source>Join</source>
@@ -1609,7 +1609,7 @@ You may want to create one.</source>
     <message>
         <source>The passwords you&apos;ve entered are different.
 Please make sure to enter the same password twice.</source>
-        <translation>Введеные вами пароли отличаются друг от друга.
+        <translation>Введёные вами пароли отличаются друг от друга.
 Пожалуйста, убедитесь что вы ввели одинаковый пароль дважды.</translation>
     </message>
 </context>
@@ -2100,7 +2100,7 @@ Please use another image.</source>
     </message>
     <message>
         <source>The file you chose could not be saved.</source>
-        <translation>Файл, который вы выбрали не может быть сохранен.</translation>
+        <translation>Файл, который вы выбрали не может быть сохранён.</translation>
     </message>
     <message>
         <source>Empty path is unavaliable.</source>
@@ -2108,7 +2108,7 @@ Please use another image.</source>
     </message>
     <message>
         <source>Couldn&apos;t change database password, it may be corrupted or use the old password.</source>
-        <translation>Не удалось изменить пароль базы данных, он может быть поврежден или был использован старый пароль.</translation>
+        <translation>Не удалось изменить пароль базы данных, он может быть повреждён или был использован старый пароль.</translation>
     </message>
     <message>
         <source>Tox user names cannot exceed %1 characters.</source>
@@ -2353,7 +2353,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation>Устанавливает IPv6 &lt;включенным&gt;/&lt;выключенным&gt;. По стандарту он ВКЛЮЧЁН.</translation>
+        <translation>Устанавливает IPv6 &lt;включённым&gt;/&lt;выключенным&gt;. По стандарту он ВКЛЮЧЁН.</translation>
     </message>
     <message>
         <source>on/off</source>
@@ -2361,11 +2361,11 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation>Устанавливает UDP &lt;включенным&gt;/&lt;выключенным&gt;. По стандарту он ВКЛЮЧЁН.</translation>
+        <translation>Устанавливает UDP &lt;включённым&gt;/&lt;выключенным&gt;. По стандарту он ВКЛЮЧЁН.</translation>
     </message>
     <message>
         <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
-        <translation>Устанавливает обнаружение LAN &lt;включенным&gt;/&lt;выключенным&gt;. Перезаписывает отключенный UDP. По стандарту оно ВКЛЮЧЕНО.</translation>
+        <translation>Устанавливает обнаружение LAN &lt;включённым&gt;/&lt;выключенным&gt;. Перезаписывает отключённый UDP. По стандарту оно ВКЛЮЧЕНО.</translation>
     </message>
     <message>
         <source>Sets proxy settings. Default is NONE.</source>
