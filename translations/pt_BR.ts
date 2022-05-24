@@ -2514,7 +2514,7 @@ Este ID inclui o código NoSpam (em azul) e o checkum (em cinza).</translation>
     <name>RemoveChatDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation type="unfinished">Remover contato</translation>
+        <translation>Remover amigo</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
@@ -2526,7 +2526,7 @@ Este ID inclui o código NoSpam (em azul) e o checkum (em cinza).</translation>
     </message>
     <message>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation type="unfinished">Tem certeza de que deseja remover %1 da sua lista de contatos?</translation>
+        <translation>Tem certeza que deseja remover %1 da sua lista de contatos?</translation>
     </message>
     <message>
         <source>Remove</source>
