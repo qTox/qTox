@@ -718,19 +718,19 @@ de forma que possa guardar o ficheiro no Windows.</translation>
     <name>ChatWidget</name>
     <message>
         <source>pending</source>
-        <translation type="unfinished">pendente</translation>
+        <translation>pendente</translation>
     </message>
     <message>
         <source>%1 is typing</source>
-        <translation type="unfinished">%1 está a escrever</translation>
+        <translation>%1 está a escrever</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Copiar</translation>
+        <translation>Copiar</translation>
     </message>
     <message>
         <source>Select all</source>
-        <translation type="unfinished">Selecionar tudo</translation>
+        <translation>Selecionar tudo</translation>
     </message>
 </context>
 <context>
