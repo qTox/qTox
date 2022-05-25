@@ -878,25 +878,6 @@ ToxPk Core::getSelfPublicKey() const
     return ToxPk(selfPk);
 }
 
-/**
- * @brief Returns our public and private keys
- */
-QPair<QByteArray, QByteArray> Core::getKeypair() const
-{
-    QMutexLocker ml{&coreLoopLock};
-
-    QPair<QByteArray, QByteArray> keypair;
-    assert(tox != nullptr);
-
-    QByteArray pk(TOX_PUBLIC_KEY_SIZE, 0x00);
-    QByteArray sk(TOX_SECRET_KEY_SIZE, 0x00);
-    tox_self_get_public_key(tox.get(), reinterpret_cast<uint8_t*>(pk.data()));
-    tox_self_get_secret_key(tox.get(), reinterpret_cast<uint8_t*>(sk.data()));
-    keypair.first = pk;
-    keypair.second = sk;
-    return keypair;
-}
-
 QByteArray Core::getSelfDhtId() const
 {
     QMutexLocker ml{&coreLoopLock};

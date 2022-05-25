@@ -109,7 +109,6 @@ public:
     QString getStatusMessage() const;
     ToxId getSelfId() const override;
     ToxPk getSelfPublicKey() const override;
-    QPair<QByteArray, QByteArray> getKeypair() const;
 
     QByteArray getSelfDhtId() const;
     int getSelfUdpPort() const;
