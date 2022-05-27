@@ -2510,34 +2510,34 @@ Este ID inclui o código NoSpam (em azul) e o checkum (em cinza).</translation>
     </message>
     <message>
         <source>Failed to load chat history</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha em carregar o histórico de bate-papos</translation>
     </message>
     <message>
         <source>Database version (%1) is newer than we currently support (%2). Please upgrade qTox.</source>
-        <translation type="unfinished"></translation>
+        <translation>A versão do banco de dados (%1) é mais recente do que a que suportamos atualmente (%2). Favor atualizar o qTox.</translation>
     </message>
 </context>
 <context>
     <name>RemoveChatDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation type="unfinished">Remover contato</translation>
+        <translation>Remover amigo</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation type="unfinished">Se marcado, remove todo o histórico de bate-papo com o amigo</translation>
+        <translation>Se marcado, remove todo o histórico de bate-papo com o amigo</translation>
     </message>
     <message>
         <source>Also remove chat history</source>
-        <translation type="unfinished">Também remover histórico de bate-papo</translation>
+        <translation>Também remover histórico de bate-papo</translation>
     </message>
     <message>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation type="unfinished">Tem certeza de que deseja remover %1 da sua lista de contatos?</translation>
+        <translation>Tem certeza que deseja remover %1 da sua lista de contatos?</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Remover</translation>
+        <translation>Remover</translation>
     </message>
 </context>
 <context>

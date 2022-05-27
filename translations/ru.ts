@@ -2509,34 +2509,34 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Failed to load chat history</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось загрузить историю чата</translation>
     </message>
     <message>
         <source>Database version (%1) is newer than we currently support (%2). Please upgrade qTox.</source>
-        <translation type="unfinished"></translation>
+        <translation>Версия базы данных (%1) новее, чем поддерживаемая нами в настоящее время (%2). Пожалуйста, обновите qTox.</translation>
     </message>
 </context>
 <context>
     <name>RemoveChatDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation type="unfinished">Удалить друга</translation>
+        <translation>Удалить друга</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation type="unfinished">Удаляет всю историю переписки с другом если установлен</translation>
+        <translation>Удалять всю историю переписки с другом если это включено</translation>
     </message>
     <message>
         <source>Also remove chat history</source>
-        <translation type="unfinished">Также удалить историю переписки</translation>
+        <translation>Также удалить историю переписки</translation>
     </message>
     <message>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation type="unfinished">Вы уверены, что хотите удалить %1 из вашего списка контактов?</translation>
+        <translation>Вы уверены, что хотите удалить %1 из вашего списка контактов?</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Удалить</translation>
+        <translation>Удалить</translation>
     </message>
 </context>
 <context>

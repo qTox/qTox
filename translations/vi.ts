@@ -1,55 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="pt_BR">
+<TS version="2.1" language="vi" sourcelanguage="en_US">
 <context>
     <name>AVForm</name>
     <message>
         <source>Audio/Video</source>
-        <translation>Áudio / vídeo</translation>
+        <translation>Âm thanh/Video</translation>
     </message>
     <message>
         <source>Default resolution</source>
-        <translation>Resolução padrão</translation>
+        <translation>Độ phân giải mặc định</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation>Desativado</translation>
+        <translation>Tắt</translation>
     </message>
     <message>
         <source>Select region</source>
-        <translation>Selecionar região</translation>
+        <translation>Chọn vùng</translation>
     </message>
     <message>
         <source>Screen %1</source>
-        <translation>Ecrã %1</translation>
+        <translation>Màn hình %1</translation>
     </message>
     <message>
         <source>Audio Settings</source>
-        <translation>Configurações de áudio</translation>
+        <translation>Cài đặt âm thanh</translation>
     </message>
     <message>
         <source>Gain</source>
-        <translation>Ganho</translation>
+        <translation>Tăng âm lượng</translation>
     </message>
     <message>
         <source>Playback device</source>
-        <translation>Aparelho de reprodução</translation>
+        <translation>Thiết bị phát</translation>
     </message>
     <message>
         <source>Capture device</source>
-        <translation>Aparelho de captura</translation>
+        <translation>Thiết bị thu âm</translation>
     </message>
     <message>
         <source>Volume</source>
-        <translation>Volume</translation>
+        <translation>Âm lượng</translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation>Configurações de vídeo</translation>
+        <translation>Cài đặt Video</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation>Aparelho de vídeo</translation>
+        <translation>CAMERA</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -57,55 +57,55 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation>Define a resolução da sua câmara.
-Quanto maior o valor, maior a qualidade do vídeo que os seus contactos poderão ter de si.
-No entanto note que uma qualidade de vídeo maior exige uma conexão mais rápida com a Internet.
-Mesmo assim, a sua conexão por vezes pode não ser suficiente boa para lidar com uma qualidade maior de vídeo,
-o que pode levar a problemas nas chamadas de vídeo.</translation>
+        <translation>Đặt độ phân giải của máy ảnh của bạn.
+Giá trị cao hơn, chất lượng video tốt hơn mà bạn bè của bạn có thể nhận được.
+Lưu ý rằng với chất lượng video tốt hơn thì cần có kết nối internet tốt hơn.
+Đôi khi kết nối của bạn có thể không đủ tốt để xử lý chất lượng video cao hơn,
+có thể dẫn đến sự cố với cuộc gọi điện video.</translation>
     </message>
     <message>
         <source>Resolution</source>
-        <translation>Resolução</translation>
+        <translation>Độ phân giải</translation>
     </message>
     <message>
         <source>Rescan devices</source>
-        <translation>Tornar a detetar aparelhos</translation>
+        <translation>Quét lại thiết bị</translation>
     </message>
     <message>
         <source>Test Sound</source>
-        <translation>Testar som</translation>
+        <translation>Thử âm</translation>
     </message>
     <message>
         <source>Audio quality</source>
-        <translation>Qualidade de áudio</translation>
+        <translation>Chất lượng âm thanh</translation>
     </message>
     <message>
         <source>High (64 kbps)</source>
-        <translation>Alta (64 kbps)</translation>
+        <translation>Cao (64 kbps)</translation>
     </message>
     <message>
         <source>Medium (32 kbps)</source>
-        <translation>Média (32 kbps)</translation>
+        <translation>Trung bình (32 kbps)</translation>
     </message>
     <message>
         <source>Low (16 kbps)</source>
-        <translation>Baixa (16 kbps)</translation>
+        <translation>Thấp (16 kbps)</translation>
     </message>
     <message>
         <source>Very low (8 kbps)</source>
-        <translation>Muito baixa (8 kbps)</translation>
+        <translation>Rất thấp (8 kbps)</translation>
     </message>
     <message>
         <source>Threshold</source>
-        <translation>Limite</translation>
+        <translation>Ngưỡng âm</translation>
     </message>
     <message>
         <source>Use slider to set the volume of your speakers.</source>
-        <translation>Deslize para ajustar o volume dos altifalantes.</translation>
+        <translation>Sử dụng thanh trượt để đặt âm lượng.</translation>
     </message>
     <message>
         <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to reduce bandwidth usage.</source>
-        <translation>Qualidade de áudio transmitido. Baixe esta configuração se a sua largura de banda não for alta o suficiente ou se quiser reduzir o uso da largura de banda.</translation>
+        <translation>Chất lượng âm thanh truyền đi. Giảm cài đặt này xuống nếu băng thông của bạn không đủ cao hoặc nếu bạn muốn giảm mức sử dụng băng thông.</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -113,400 +113,399 @@ The higher values, the better video quality your friends may get.
 Note that with better video quality, you use more bandwidth.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation>Defina a resolução da sua câmara.
-Quanto mais altos forem os valores, melhor qualidade de vídeo os seus amigos poderão obter.
-Note que com uma melhor qualidade de vídeo, usa mais largura de banda.
-Às vezes, a sua conexão pode não ser boa o suficiente para lidar com uma melhor qualidade de vídeo,
-o que pode levar a problemas com as vídeo-chamadas.</translation>
+        <translation>Đặt độ phân giải của máy ảnh của bạn.
+Giá trị cao hơn, chất lượng video tốt hơn mà bạn bè của bạn có thể nhận được.
+Lưu ý rằng với chất lượng video tốt hơn thì cần có kết nối internet tốt hơn.
+Đôi khi kết nối của bạn có thể không đủ tốt để xử lý chất lượng video cao hơn,
+có thể dẫn đến sự cố với cuộc gọi điện video.</translation>
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
-        <translation>Reproduz um som de teste enquanto altera o volume de saída.</translation>
+        <translation>Phát một âm thanh để kiểm tra trong khi thay đổi âm lượng đầu ra.</translation>
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation>Use o controle deslizante para definir o ganho do seu aparelho de entrada a variar de %1dB a %2dB.</translation>
+        <translation>Sử dụng thanh trượt để đặt mức tăng của thiết bị đầu vào trong khoảng từ %1dB đến %2dB.</translation>
     </message>
     <message>
         <source>Use slider to set the activation volume for your input device.</source>
-        <translation>Use o controle deslizante para definir o volume de ativação para o seu aparelho de entrada.</translation>
+        <translation>Sử dụng thanh trượt để đặt ngưỡng kích hoạt âm lượng cho thiết bị đầu vào của bạn.</translation>
     </message>
 </context>
 <context>
     <name>AboutForm</name>
     <message>
         <source>About</source>
-        <translation>Sobre</translation>
+        <translation>Thông tin</translation>
     </message>
     <message>
         <source>Original author: %1</source>
-        <translation>Autor original: %1</translation>
+        <translation>Tác giả: %1</translation>
     </message>
     <message>
         <source>You are using qTox version %1.</source>
-        <translation>Está a usar a versão %1 do qTox.</translation>
+        <translation>Bạn đang dùng qTox phiên bản %1.</translation>
     </message>
     <message>
         <source>Commit hash: %1</source>
-        <translation>Confirmação de hash: %1</translation>
+        <translation>Commit hash: %1</translation>
     </message>
     <message>
         <source>toxcore version: %1</source>
-        <translation>Versão do toxcore: %1</translation>
+        <translation>Phiên bản toxcore: %1</translation>
     </message>
     <message>
         <source>Qt version: %1</source>
-        <translation>Versão do Qt: %1</translation>
+        <translation>Phiên bản Qt: %1</translation>
     </message>
     <message>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
         <comment>`%1` is replaced by translation of `bug tracker`
 `%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
-        <translation>Pode encontrar uma lista de todos os problemas conhecidos no nosso % 1 no Github. Se descobrir um erro ou vulnerabilidade de segurança no qTox, informe-nos de acordo com as diretrizes da nossa página wiki % 2.</translation>
+        <translation>Bạn có thể tìm thấy danh sách tất cả các vấn đề đã biết tại %1 của chúng tôi tại Github. Nếu bạn phát hiện ra lỗi hoặc lỗ hổng bảo mật trong qTox, vui lòng báo cáo lỗi đó theo hướng dẫn trong bài viết %2 wiki của chúng tôi.</translation>
     </message>
     <message>
         <source>Click here to report a bug.</source>
-        <translation>Clique aqui para reportar um erro.</translation>
+        <translation>Bấm vào đây để báo cáo lỗi.</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
         <comment>`%1` is replaced with translation of word `contributors`</comment>
-        <translation>Veja a lista completa de %1 no Github</translation>
+        <translation>Xem danh sách %1 đầy đủ trên Github</translation>
     </message>
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all known…`</comment>
-        <translation>bug tracker</translation>
+        <translation>theo dõi lỗi</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all known…`</comment>
-        <translation>Escrever relatórios de erros úteis</translation>
+        <translation>Viết báo cáo lỗi</translation>
     </message>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list of…`</comment>
-        <translation>contribuidores</translation>
+        <translation>đóng góp</translation>
     </message>
 </context>
 <context>
     <name>AboutFriendForm</name>
     <message>
         <source>Dialog</source>
-        <translation>Diálogo</translation>
+        <translation>Hộp thoại</translation>
     </message>
     <message>
         <source>username</source>
-        <translation>nome de utilizador</translation>
+        <translation>tên tài khoản</translation>
     </message>
     <message>
         <source>status message</source>
-        <translation>mensagem de estado</translation>
+        <translation>dòng trạng thái</translation>
     </message>
     <message>
         <source>Used aliases:</source>
-        <translation>Pseudónimos usados:</translation>
+        <translation>Bí danh đã sử dụng:</translation>
     </message>
     <message>
         <source>HISTORY OF ALIASES</source>
-        <translation>HISTÓRICO DE PSEUDÓNIMOS</translation>
+        <translation>LỊCH SỬ BÍ DANH</translation>
     </message>
     <message>
         <source>Automatically accept files from contact if set</source>
-        <translation>Se ativado, aceita automaticamente ficheiros do contacto</translation>
+        <translation>Tự động chấp nhận các tệp từ người khác nếu được đặt</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation>Pasta padrão para guardar ficheiros:</translation>
+        <translation>Thư mục mặc định để lưu tệp:</translation>
     </message>
     <message>
         <source>Manual</source>
-        <translation>Manual</translation>
+        <translation>Thủ công</translation>
     </message>
     <message>
         <source>Audio</source>
-        <translation>Áudio</translation>
+        <translation>Âm thanh</translation>
     </message>
     <message>
         <source>Audio + Video</source>
-        <translation>Áudio e vídeo</translation>
+        <translation>Âm thanh + Video</translation>
     </message>
     <message>
         <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation>Se ativado, aceita automaticamente os convites de conversação em grupo desse contacto.</translation>
+        <translation>Tự động chấp nhận lời mời trò chuyện nhóm từ liên hệ này nếu được đặt.</translation>
     </message>
     <message>
         <source>Remove history (operation can not be undone!)</source>
-        <translation>Eliminar histórico (operação irreversível!)</translation>
+        <translation>Xóa lịch sử (không thể hoàn tác!)</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Notas</translation>
+        <translation>Ghi chú</translation>
     </message>
     <message>
         <source>Input field for notes about the contact</source>
-        <translation>Campo para introduzir notas sobre o contacto</translation>
+        <translation>Nhập ghi chú về liên hệ này</translation>
     </message>
     <message>
         <source>History removed</source>
-        <translation>Histórico eliminado</translation>
+        <translation>Lịch sử đã bị xóa</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the public key of your friend, use it to verify their identity via another channel. You can not send this to other people so they can add this contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Isto é a chave pública do seu amigo. Use-a para verificar a identidade dele através de outro meio. Não pode enviar isto para outras pessoas para que elas possam adicionar este contacto.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Đây là khóa công khai của bạn bè bạn, hãy sử dụng nó để xác minh danh tính của họ qua một kênh khác. Bạn không thể gửi thông tin này cho người khác để họ có thể thêm liên hệ này.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Public key (not ToxID):</source>
-        <translation>Chave pública (não é o ToxID):</translation>
+        <translation>Khóa công khai (không phải ToxID):</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation>Confirmação</translation>
+        <translation>Xác thực</translation>
     </message>
     <message>
         <source>Are you sure to remove %1 chat history?</source>
-        <translation>Tem a certeza que quer remover o histórico de conversas com %1?</translation>
+        <translation>Bạn có chắc sẽ xóa %1 lịch sử chat?</translation>
     </message>
     <message>
         <source>Failed to remove chat history with %1!</source>
-        <translation>Não foi possível remover o histórico de conversas com %1!</translation>
+        <translation>Không xóa được lịch sử trò chuyện với %1!</translation>
     </message>
     <message>
         <source>Auto-accept files</source>
-        <translation>Aceitar ficheiros automaticamente</translation>
+        <translation>Tự động chấp nhận tệp</translation>
     </message>
     <message>
         <source>Auto-accept for this contact is disabled</source>
-        <translation>A aceitação automática para este contacto está desativada</translation>
+        <translation>Tự động chấp nhận cho liên hệ này bị tắt</translation>
     </message>
     <message>
         <source>Auto-accept call:</source>
-        <translation>Aceitar chamada automaticamente:</translation>
+        <translation>Tự động chấp nhận cuộc gọi:</translation>
     </message>
     <message>
         <source>Auto-accept group invites</source>
-        <translation>Aceitar automaticamente convites de grupos</translation>
+        <translation>Tự động chấp nhận lời mời nhóm</translation>
     </message>
     <message>
         <source>You can save comments about this contact here.</source>
-        <translation>Pode guardar comentários sobre esse contacto aqui.</translation>
+        <translation>Bạn có thể lưu ý kiến về liên hệ này tại đây.</translation>
     </message>
     <message>
         <source>Choose an auto-accept directory</source>
         <extracomment>popup title</extracomment>
-        <translation>Escolha um diretório para aceitar ficheiros automaticamente</translation>
+        <translation>Chọn một thư mục tự động chấp nhận</translation>
     </message>
 </context>
 <context>
     <name>AboutSettings</name>
     <message>
         <source>Version</source>
-        <translation>Versão</translation>
+        <translation>Phiên bản</translation>
     </message>
     <message>
         <source>License</source>
-        <translation>Licença</translation>
+        <translation>Giấy phép</translation>
     </message>
     <message>
         <source>Authors</source>
-        <translation>Autores</translation>
+        <translation>Tác giả</translation>
     </message>
     <message>
         <source>Known Issues</source>
-        <translation>Problemas conhecidos</translation>
+        <translation>Các vấn đề đã biết</translation>
     </message>
     <message>
         <source>Open update download link</source>
-        <translation>Abrir a hiperligação da atualização</translation>
+        <translation>Mở liên kết tải xuống bản cập nhật</translation>
     </message>
     <message>
         <source>Update available</source>
-        <translation>Atualização disponível</translation>
+        <translation>Có phiên bản mới</translation>
     </message>
     <message>
         <source>qTox is up to date ✓</source>
-        <translation>O qTox está atualizado ✓</translation>
+        <translation>qTox đang ở bản mới nhất ✓</translation>
     </message>
     <message>
         <source>Currently running an untested/unstable version of qTox</source>
-        <translation>Atualmente a executar uma versão não testada/instável do qTox</translation>
+        <translation>Hiện đang chạy phiên bản qTox chưa được kiểm tra/không ổn định</translation>
     </message>
 </context>
 <context>
     <name>AddFriendForm</name>
     <message>
         <source>Add Friends</source>
-        <translation>Adicionar contactos</translation>
-    </message>
-    <message>
-        <source>Send friend request</source>
-        <translation>Enviar pedido de amizade</translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t add friend</source>
-        <translation>Não foi possível adicionar o contacto</translation>
+        <translation>Thêm bạn</translation>
     </message>
     <message>
         <source>Invalid Tox ID format</source>
-        <translation>Formato inválido da Referência do Tox</translation>
+        <translation>Định dạng Tox ID không hợp lệ</translation>
+    </message>
+    <message>
+        <source>Send friend request</source>
+        <translation>Gửi lời mời kết bạn</translation>
     </message>
     <message>
         <source>Add a friend</source>
-        <translation>Adicionar um contacto</translation>
+        <translation>Thêm bạn</translation>
     </message>
     <message>
         <source>Friend requests</source>
-        <translation>Solicitações de amizade</translation>
+        <translation>Lời mời kết bạn</translation>
     </message>
     <message>
         <source>Accept</source>
-        <translation>Aceitar</translation>
+        <translation>Chấp nhận</translation>
     </message>
     <message>
         <source>Reject</source>
-        <translation>Rejeitar</translation>
+        <translation>Từ chối</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t add friend</source>
+        <translation>Không thể thêm bạn</translation>
     </message>
     <message>
         <source>Type in Tox ID of your friend</source>
-        <translation>Introduza a Referência do Tox do seu contacto</translation>
+        <translation>Nhập Tox ID của bạn bè của bạn</translation>
     </message>
     <message>
         <source>Friend request message</source>
-        <translation>Mensagem de solicitação de amizade</translation>
+        <translation>Nội dung lời mời kết bạn</translation>
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
-        <translation>Introduza a mensagem a enviar com a solicitação de amizade ou deixe vazio para enviar uma mensagem padrão</translation>
+        <translation>Nhập tin nhắn để gửi cùng với yêu cầu kết bạn hoặc để trống để gửi tin nhắn mặc định</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <extracomment>When trying to add your own Tox ID as friend</extracomment>
-        <translation>Não pode adicionar-se como seu contacto!</translation>
+        <translation>Bạn không thể thêm chính mình!</translation>
     </message>
     <message>
         <source>Open contact list</source>
-        <translation>Abrir lista de contactos</translation>
+        <translation>Mở danh sách liên lạc</translation>
     </message>
     <message>
         <source>Couldn&apos;t open file</source>
-        <translation>Não foi possível abrir o ficheiro</translation>
+        <translation>Không thể mở tệp</translation>
     </message>
     <message>
         <source>Couldn&apos;t open the contact file</source>
         <extracomment>Error message when trying to open a contact list file to import</extracomment>
-        <translation>Não foi possível abrir o ficheiro de contactos</translation>
+        <translation>Không thể mở tệp liên lạc</translation>
     </message>
     <message>
         <source>Invalid file</source>
-        <translation>Ficheiro inválido</translation>
+        <translation>Tệp không hợp lệ</translation>
     </message>
     <message>
         <source>We couldn&apos;t find any contacts to import in this file!</source>
-        <translation>Não foi possível encontrar neste ficheiro nenhum contacto para importar!</translation>
+        <translation>Chúng tôi không thể tìm thấy bất kỳ địa chỉ liên hệ nào để tải lên từ tệp này!</translation>
     </message>
     <message>
         <source>Tox ID</source>
         <extracomment>Tox ID of the person you&apos;re sending a friend request to</extracomment>
-        <translation>Referência do Tox</translation>
+        <translation>Tox ID</translation>
     </message>
     <message>
         <source>Message</source>
         <extracomment>The message you send in friend requests</extracomment>
-        <translation>Mensagem</translation>
+        <translation>Tin nhắn</translation>
     </message>
     <message>
         <source>Open</source>
         <extracomment>Button to choose a file with a list of contacts to import</extracomment>
-        <translation>Abrir</translation>
+        <translation>Mở</translation>
     </message>
     <message>
         <source>Send friend requests</source>
-        <translation>Enviar pedidos de amizade</translation>
+        <translation>Gửi lời mời kết bạn</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <extracomment>Default message in friend requests if the field is left blank. Write something appropriate!</extracomment>
-        <translation>Olá, sou %1 ! Queres adicionar-me ao Tox?</translation>
+        <translation>%1 đây! Có thể Tox cho tôi?</translation>
     </message>
     <message>
         <source>Import a list of contacts, one Tox ID per line</source>
-        <translation>Importar uma lista de contactos, uma Referência do Tox por linha</translation>
+        <translation>Tải lên danh sách các địa chỉ liên hệ, một Tox ID trên mỗi dòng</translation>
     </message>
     <message numerus="yes">
         <source>Ready to import %n contact(s), click send to confirm</source>
         <translation>
-            <numerusform>Pronto para importar %n contacto, clique em enviar para confirmar</numerusform>
-            <numerusform>Pronto para importar %n contactos, clique em enviar para confirmar</numerusform>
+            <numerusform>Sẵn sàng tải lên %n địa chỉ liên hệ, nhấp vào gửi để xác nhận</numerusform>
         </translation>
     </message>
     <message>
         <source>Import contacts</source>
-        <translation>Importar contactos</translation>
+        <translation>Tải lên liên hệ</translation>
     </message>
     <message>
         <source>Tox ID, 76 hexadecimal characters</source>
-        <translation>Tox ID, 76 caracteres hexadecimais</translation>
+        <translation>Tox ID, 76 ký tự thập lục phân (HEX)</translation>
     </message>
     <message>
         <source>%1 Tox ID is invalid</source>
         <comment>Tox address error</comment>
-        <translation>Tox ID %1 é inválido</translation>
+        <translation>%1 Tox ID không hợp lệ</translation>
     </message>
     <message>
         <source>76 hexadecimal characters</source>
         <extracomment>Tox ID format description</extracomment>
-        <translation>76 caracteres hexadecimais</translation>
+        <translation>76 ký tự thập lục phân (HEX)</translation>
     </message>
 </context>
 <context>
     <name>AdvancedForm</name>
     <message>
         <source>Advanced</source>
-        <translation>Avançado</translation>
+        <translation>Nâng cao</translation>
     </message>
     <message>
         <source>really</source>
-        <translation>realmente</translation>
+        <translation>thực sự</translation>
     </message>
     <message>
         <source>not</source>
-        <translation>não</translation>
+        <translation>đừng</translation>
     </message>
     <message>
         <source>IMPORTANT NOTE</source>
-        <translation>NOTA IMPORTANTE</translation>
+        <translation>GHI CHÚ QUAN TRỌNG</translation>
     </message>
     <message>
         <source>Reset settings</source>
-        <translation>Repor configurações</translation>
+        <translation>Đặt lại thiết lập</translation>
     </message>
     <message>
         <source>All settings will be reset to default. Are you sure?</source>
-        <translation>Todas configurações serão repostas nos valores de origem. Quer continuar?</translation>
+        <translation>Tất cả thiết lập sẽ được đưa về mặc định. Bạn chắc chứ?</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation>Sim</translation>
+        <translation>Có</translation>
     </message>
     <message>
         <source>No</source>
-        <translation>Não</translation>
+        <translation>Không</translation>
     </message>
     <message>
         <source>Logs (*.log)</source>
-        <translation>Registos (*.log)</translation>
+        <translation>Nhật ký (*.log)</translation>
     </message>
     <message>
         <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.%3</source>
-        <translation>A não ser que %1 saiba o que está a fazer, por favor %2 faça alterações aqui. As alterações podem levar a problemas com o qTox e até perda dos seus dados, como o histórico.%3</translation>
+        <translation>Trừ khi bạn %1 biết bạn đang làm gì, hãy %2 thay đổi bất kỳ điều gì ở đây. Những thay đổi được thực hiện ở đây có thể dẫn đến sự cố với qTox và thậm chí làm mất dữ liệu của bạn, ví dụ: lịch sử.%3</translation>
     </message>
     <message>
         <source>Changes here are applied only after restarting qTox.</source>
-        <translation>As alterações aqui só são aplicadas após reiniciar o qTox.</translation>
+        <translation>Các thay đổi ở đây chỉ được áp dụng sau khi khởi động lại qTox.</translation>
     </message>
     <message>
         <source>Save file</source>
-        <translation>Guardar ficheiro</translation>
+        <translation>Lưu tệp</translation>
     </message>
 </context>
 <context>
@@ -514,51 +513,51 @@ o que pode levar a problemas com as vídeo-chamadas.</translation>
     <message>
         <source>Save settings to the working directory instead of the usual conf dir</source>
         <extracomment>describes makeToxPortable checkbox</extracomment>
-        <translation>Guardar as configurações na pasta atual em vez da pasta padrão</translation>
+        <translation>Lưu cài đặt vào thư mục cá nhân thay vì lưu trữ thông thường (conf dir)</translation>
     </message>
     <message>
         <source>Make Tox portable</source>
-        <translation>Tornar o Tox portável</translation>
+        <translation>Làm Tox portable</translation>
     </message>
     <message>
         <source>Reset to default settings</source>
-        <translation>Repor as configurações de origem</translation>
+        <translation>Đặt lại về cài đặt mặc định</translation>
     </message>
     <message>
         <source>Portable</source>
-        <translation>Portável</translation>
+        <translation>Portable</translation>
     </message>
     <message>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
-        <translation>Ativar IPv6 (recomendado)</translation>
+        <translation>Bật IPv6 (khuyên dùng)</translation>
     </message>
     <message>
         <source>Enable UDP (recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation>Ativar UDP (recomendado)</translation>
+        <translation>Bật UDP (khuyên dùng)</translation>
     </message>
     <message>
         <source>Proxy type:</source>
-        <translation>Tipo de proxy:</translation>
+        <translation>Loại Proxy:</translation>
     </message>
     <message>
         <source>Address:</source>
         <extracomment>Text on proxy addr label</extracomment>
-        <translation>Endereço:</translation>
+        <translation>Địa chỉ:</translation>
     </message>
     <message>
         <source>Port:</source>
         <extracomment>Text on proxy port label</extracomment>
-        <translation>Porta:</translation>
+        <translation>Cổng:</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>Nenhum</translation>
+        <translation>Không</translation>
     </message>
     <message>
         <source>SOCKS5</source>
-        <translation>SOCKS5</translation>
+        <translation>Giao thức SOCKS5</translation>
     </message>
     <message>
         <source>HTTP</source>
@@ -566,222 +565,223 @@ o que pode levar a problemas com as vídeo-chamadas.</translation>
     </message>
     <message>
         <source>Debug</source>
-        <translation>Depurar</translation>
+        <translation>Gỡ lỗi</translation>
     </message>
     <message>
         <source>Export Debug Log</source>
-        <translation>Exportar registo de depuração</translation>
+        <translation>Xuất ra nhật ký gỡ lỗi</translation>
     </message>
     <message>
         <source>Copy Debug Log</source>
-        <translation>Copiar registo de depuração</translation>
+        <translation>Sao chép nhật ký gỡ lỗi</translation>
     </message>
     <message>
         <source>Enable LAN discovery</source>
-        <translation>Ativar descoberta de LAN</translation>
+        <translation>Bật LAN discovery</translation>
     </message>
     <message>
         <source>Connection settings</source>
-        <translation>Configurações de conexão</translation>
+        <translation>Cài đặt kết nối</translation>
     </message>
     <message>
         <source>Disabling this allows, e.g., Tox over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation>Desativar esta opção permite, por exemplo, utilizar a rede Tor. Isso no entanto sobrecarrega mais a rede Tor; por isso desmarque apenas se necessário.</translation>
+        <translation>Vô hiệu hóa quyền này, ví dụ: Tox qua Tor. Tuy nhiên, nó sẽ tải lên vào mạng Tox, vì vậy chỉ bỏ chọn khi cần thiết.</translation>
     </message>
 </context>
 <context>
     <name>AppManager</name>
     <message>
         <source>Tox URI to parse</source>
-        <translation>URI do Tox para processar</translation>
+        <translation>Tox URI để phân tích cú pháp</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
-        <translation>Inicia uma nova instância e carrega o perfil especificado.</translation>
+        <translation>Chạy mới và tải hồ sơ đã chọn.</translation>
     </message>
     <message>
         <source>profile</source>
-        <translation>perfil</translation>
+        <translation>hồ sơ</translation>
     </message>
     <message>
         <source>Starts new instance and opens the login screen.</source>
-        <translation>Inicia uma nova instância e abre o ecrã de início de sessão.</translation>
+        <translation>Chạy mới và vào màn hình đăng nhập.</translation>
     </message>
     <message>
         <source>Sets IPv6 &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation>Define IPv6 &lt;ativado&gt;/&lt;desativado&gt;. O padrão é ATIVADO.</translation>
+        <translation>Đặt IPv6 &lt;bật&gt; / &lt;tắt&gt;. Mặc định là BẬT.</translation>
     </message>
     <message>
         <source>on/off</source>
-        <translation>ligado/desligado</translation>
+        <translation>bật/tắt</translation>
     </message>
     <message>
         <source>Sets UDP &lt;on&gt;/&lt;off&gt;. Default is ON.</source>
-        <translation>Define UDP &lt;ativado&gt;/&lt;desativado&gt;. O padrão é ATIVADO.</translation>
+        <translation>Đặt UDP &lt;bật&gt; / &lt;tắt&gt;. Mặc định là BẬT.</translation>
     </message>
     <message>
         <source>Sets LAN discovery &lt;on&gt;/&lt;off&gt;. UDP off overrides. Default is ON.</source>
-        <translation>Define a descoberta da LAN &lt;ativada&gt;/&lt;desativada&gt;. O UDP desativado elimina esta opção. O padrão é ATIVADA.</translation>
+        <translation>Đặt LAN discovery &lt;bật&gt; / &lt;tắt&gt;. Ghi đè tắt UDP. Mặc định là BẬT.</translation>
     </message>
     <message>
         <source>Sets proxy settings. Default is NONE.</source>
-        <translation>Define as configurações de proxy. O padrão é NENHUM.</translation>
+        <translation>Đặt cài đặt proxy. Mặc định là KHÔNG.</translation>
     </message>
     <message>
         <source>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</source>
-        <translation>(SOCKS5/HTTP/NENHUM):(ENDEREÇO):(PORTA)</translation>
+        <translation>(SOCKS5/HTTP/NONE):(ADDRESS):(PORT)</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Erro</translation>
+        <translation>Lỗi</translation>
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
-        <translation>Falha ao carregar o perfil automaticamente.</translation>
+        <translation>Không thể tải hồ sơ tự động.</translation>
     </message>
 </context>
 <context>
     <name>ChatForm</name>
     <message>
         <source>Send a file</source>
-        <translation>Enviar um ficheiro</translation>
+        <translation>Gửi một tệp</translation>
     </message>
     <message>
         <source>qTox wasn&apos;t able to open %1</source>
-        <translation>O qTox não conseguiu abrir %1</translation>
+        <translation>qTox không thể mở %1</translation>
+    </message>
+    <message>
+        <source>Unable to open</source>
+        <translation>Không thể mở</translation>
+    </message>
+    <message>
+        <source>Bad idea</source>
+        <translation>Không nên</translation>
     </message>
     <message>
         <source>Failed to open temporary file</source>
         <comment>Temporary file for screenshot</comment>
-        <translation>Não foi possível abrir o ficheiro temporário</translation>
+        <translation>Không mở được tệp tạm thời</translation>
     </message>
     <message>
         <source>qTox wasn&apos;t able to save the screenshot</source>
-        <translation>O qTox não conseguiu guardar a captura de ecrã</translation>
+        <translatorcomment>laut Duden ist Screenshot schon deutsch</translatorcomment>
+        <translation>qTox không thể lưu ảnh chụp màn hình</translation>
     </message>
     <message>
         <source>Call duration: </source>
-        <translation>Duração da chamada: </translation>
-    </message>
-    <message>
-        <source>Unable to open</source>
-        <translation>Impossível abrir</translation>
-    </message>
-    <message>
-        <source>Bad idea</source>
-        <translation>Má ideia</translation>
+        <translation>Thời lượng cuộc gọi: </translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Copiar</translation>
+        <translation>Sao chép</translation>
     </message>
     <message>
         <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
-        <translation>Está a tentar enviar um ficheiro sequencial, mais isso não vai funcionar!</translation>
+        <translation>Bạn đang cố gắng gửi một tệp tuần tự, tệp này sẽ không hoạt động!</translation>
     </message>
     <message>
         <source>Filename contained illegal characters</source>
-        <translation>O nome do ficheiro contém caracteres não permitidos</translation>
+        <translation>Tên tệp chứa các ký tự không hợp lệ</translation>
     </message>
     <message>
         <source>Illegal characters have been changed to _ 
 so you can save the file on Windows.</source>
-        <translation>Os caracteres ilegais foram alterados para _
-de forma que possa guardar o ficheiro no Windows.</translation>
+        <translation>Các ký tự không hợp lệ đã được đổi thành _ 
+để bạn có thể lưu tệp trên Windows.</translation>
     </message>
 </context>
 <context>
     <name>ChatFormHeader</name>
     <message>
         <source>Can&apos;t start audio call</source>
-        <translation>Não foi possível iniciar a chamada de áudio</translation>
+        <translation>Không thể bắt đầu cuộc gọi</translation>
     </message>
     <message>
         <source>Start audio call</source>
-        <translation>Iniciar chamada de áudio</translation>
+        <translation>Bắt đầu cuộc gọi</translation>
     </message>
     <message>
         <source>End audio call</source>
-        <translation>Terminar chamada de áudio</translation>
+        <translation>Kết thúc cuộc gọi</translation>
     </message>
     <message>
         <source>Cancel audio call</source>
-        <translation>Cancelar chamada de áudio</translation>
+        <translation>Dừng cuộc gọi</translation>
     </message>
     <message>
         <source>Accept audio call</source>
-        <translation>Aceitar chamada de áudio</translation>
+        <translation>Chấp nhận cuộc gọi</translation>
     </message>
     <message>
         <source>Can&apos;t start video call</source>
-        <translation>Não foi possível iniciar a chamada de vídeo</translation>
+        <translation>Không thể bắt đầu cuộc gọi</translation>
     </message>
     <message>
         <source>Start video call</source>
-        <translation>Iniciar chamada de vídeo</translation>
+        <translation>Bắt đầu gọi video</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation>Terminar chamada de vídeo</translation>
+        <translation>Kết thúc gọi video</translation>
     </message>
     <message>
         <source>Cancel video call</source>
-        <translation>Cancelar chamada de vídeo</translation>
+        <translation>Dừng gọi video</translation>
     </message>
     <message>
         <source>Accept video call</source>
-        <translation>Aceitar chamada de vídeo</translation>
+        <translation>Chấp nhận cuộc gọi video</translation>
     </message>
     <message>
         <source>Sound can be disabled only during a call</source>
-        <translation>O som só pode ser desativado durante uma chamada</translation>
+        <translation>Chỉ có thể tắt âm thanh trong khi gọi</translation>
     </message>
     <message>
         <source>Unmute call</source>
-        <translation>Ativar áudio da chamada</translation>
+        <translation>Bật tiếng cuộc gọi</translation>
     </message>
     <message>
         <source>Mute call</source>
-        <translation>Desativar áudio da chamada</translation>
+        <translation>Tắt tiếng cuộc gọi</translation>
     </message>
     <message>
         <source>Microphone can be muted only during a call</source>
-        <translation>O microfone só pode ser desativado durante uma chamada</translation>
+        <translation>Chỉ có thể tắt tiếng micrô trong khi gọi</translation>
     </message>
     <message>
         <source>Unmute microphone</source>
-        <translation>Ativar microfone</translation>
+        <translation>Bật tiếng micrô</translation>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation>Desativar microfone</translation>
+        <translation>Bật tiếng micrô</translation>
     </message>
 </context>
 <context>
     <name>ChatTextEdit</name>
     <message>
         <source>Type your message here...</source>
-        <translation>Escreva a sua mensagem aqui...</translation>
+        <translation>Gõ tin nhắn của bạn ở đây...</translation>
     </message>
 </context>
 <context>
     <name>ChatWidget</name>
     <message>
         <source>pending</source>
-        <translation>pendente</translation>
+        <translation>đang chờ</translation>
     </message>
     <message>
         <source>%1 is typing</source>
-        <translation>%1 está a escrever</translation>
+        <translation>%1 đang nhập</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Copiar</translation>
+        <translation>Sao chép</translation>
     </message>
     <message>
         <source>Select all</source>
-        <translation>Selecionar tudo</translation>
+        <translation>Chọn tất cả</translation>
     </message>
 </context>
 <context>
@@ -789,196 +789,201 @@ de forma que possa guardar o ficheiro no Windows.</translation>
     <message>
         <source>Rename circle</source>
         <comment>Menu for renaming a circle</comment>
-        <translation>Alterar nome do círculo</translation>
+        <translation>Đổi tên kết nối</translation>
     </message>
     <message>
         <source>Remove circle</source>
         <comment>Menu for removing a circle</comment>
-        <translation>Remover círculo</translation>
+        <translation>Gỡ kết nối</translation>
     </message>
     <message>
         <source>Open all in new window</source>
-        <translation>Abrir tudo numa janela nova</translation>
+        <translation>Mở tất cả ở cửa sổ mới</translation>
     </message>
 </context>
 <context>
     <name>Core</name>
     <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
-        <translation>/me oferece amizade, &quot;%1&quot;</translation>
+        <translation>/tôi yêu cầu bạn bè, &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Groupchat %1</source>
-        <translation>Conversa no grupo %1</translation>
+        <translation>Nhómchat %1</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
         <comment>Error while sending friend request</comment>
-        <translation>Tox ID inválido</translation>
+        <translation>Tox ID không hợp lệ</translation>
     </message>
     <message>
         <source>You need to write a message with your request</source>
         <comment>Error while sending friend request</comment>
-        <translation>Tem de escrever uma mensagem junto ao seu pedido</translation>
+        <translation>Bạn cần viết một tin nhắn với yêu cầu của bạn</translation>
     </message>
     <message>
         <source>Your message is too long!</source>
         <comment>Error while sending friend request</comment>
-        <translation>A sua mensagem é muito longa!</translation>
+        <translation>Tin nhắn quá dài!</translation>
     </message>
     <message>
         <source>Friend is already added</source>
         <comment>Error while sending friend request</comment>
-        <translation>Amigo já adicionado</translation>
+        <translation>Bạn bè đã được thêm rồi</translation>
     </message>
 </context>
 <context>
     <name>ExtensionStatus</name>
     <message>
         <source>All extensions supported</source>
-        <translation>Todas as extensões são suportadas</translation>
+        <translation>Tất cả các tiện ích mở rộng được hỗ trợ</translation>
     </message>
     <message>
         <source>No extensions supported</source>
-        <translation>Nenhuma extensão suportada</translation>
+        <translation>Không có tiện ích mở rộng nào được hỗ trợ</translation>
     </message>
     <message>
         <source>Not all extensions supported</source>
-        <translation>Nem todas as extensões são suportadas</translation>
+        <translation>Không phải tất cả các tiện ích mở rộng đều được hỗ trợ</translation>
     </message>
     <message>
         <source>Multipart Messages: </source>
-        <translation>Mensagens multipartes: </translation>
+        <translation>Tin nhắn dài: </translation>
     </message>
 </context>
 <context>
     <name>FileTransferWidget</name>
     <message>
         <source>Form</source>
-        <translation>Formulário</translation>
+        <translatorcomment>Ausgelassen</translatorcomment>
+        <translation>Biểu mẫu</translation>
     </message>
     <message>
         <source>10Mb</source>
-        <translation>10Mb</translation>
+        <translatorcomment>Ausgelassen</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <source>0kb/s</source>
-        <translation>0kb/s</translation>
+        <translatorcomment>Ausgelassen</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <source>ETA:10:10</source>
-        <translation>Tempo estimado:10:10</translation>
+        <translatorcomment>Ausgelassen</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <source>Filename</source>
-        <translation>Nome do ficheiro</translation>
+        <translatorcomment>Ausgelassen</translatorcomment>
+        <translation>Tên tệp</translation>
     </message>
     <message>
         <source>Waiting to send...</source>
         <comment>file transfer widget</comment>
-        <translation>A esperar para enviar...</translation>
+        <translation>Đang gửi...</translation>
     </message>
     <message>
         <source>Accept to receive this file</source>
         <comment>file transfer widget</comment>
-        <translation>Aceite para poder receber este ficheiro</translation>
+        <translation>Chấp nhận tệp tin đến</translation>
     </message>
     <message>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
-        <translation>Localização sem permissão de escrita</translation>
+        <translation>Vị trí không thể ghi</translation>
     </message>
     <message>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
-        <translation>Não tem permissão de escrita aqui. Escolha outro local ou cancele a operação.</translation>
+        <translation>Bạn không được phép ghi đè vào vị trí đó. Chọn cái khác hoặc hủy hộp thoại lưu.</translation>
     </message>
     <message>
         <source>Resuming...</source>
         <comment>file transfer widget</comment>
-        <translation>A continuar...</translation>
+        <translation>Đang tiếp tục...</translation>
     </message>
     <message>
         <source>Cancel transfer</source>
-        <translation>Cancelar transferência</translation>
+        <translation>Hủy gửi</translation>
     </message>
     <message>
         <source>Pause transfer</source>
-        <translation>Pausar transferência</translation>
-    </message>
-    <message>
-        <source>Resume transfer</source>
-        <translation>Continuar transferência</translation>
-    </message>
-    <message>
-        <source>Accept transfer</source>
-        <translation>Aceitar transferência</translation>
-    </message>
-    <message>
-        <source>Save a file</source>
-        <comment>Title of the file saving dialog</comment>
-        <translation>Gravar um ficheiro</translation>
+        <translation>Dừng gửi</translation>
     </message>
     <message>
         <source>Paused</source>
         <comment>file transfer widget</comment>
-        <translation>Pausado</translation>
+        <translation>Đã dừng</translation>
     </message>
     <message>
         <source>Open file</source>
-        <translation>Abrir o ficheiro</translation>
+        <translation>Mở tệp</translation>
     </message>
     <message>
         <source>Open file directory</source>
-        <translation>Abrir pasta do ficheiro</translation>
+        <translation>Mở thư mục</translation>
+    </message>
+    <message>
+        <source>Resume transfer</source>
+        <translation>Tiếp tục gửi đi</translation>
+    </message>
+    <message>
+        <source>Accept transfer</source>
+        <translation>Chấp nhận gửi</translation>
+    </message>
+    <message>
+        <source>Save a file</source>
+        <comment>Title of the file saving dialog</comment>
+        <translation>Lưu một tệp</translation>
     </message>
     <message>
         <source>Remote paused</source>
         <comment>file transfer widget</comment>
-        <translation>Pausa no remoto</translation>
+        <translation>Tạm dừng remote</translation>
     </message>
 </context>
 <context>
     <name>FilesForm</name>
     <message>
         <source>Downloads</source>
-        <translation>Recebidos</translation>
+        <translation>Tải về</translation>
     </message>
     <message>
         <source>Uploads</source>
-        <translation>Enviados</translation>
+        <translation>Tải lên</translation>
     </message>
     <message>
         <source>Transferred files</source>
         <comment>&quot;Headline&quot; of the window</comment>
-        <translation>Transferências de ficheiros</translation>
+        <translation>Tệp đã gửi</translation>
     </message>
 </context>
 <context>
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <translation>Hoje</translation>
+        <translation>Hôm nay</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <translation>Ontem</translation>
+        <translation>Hôm qua</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <translation>Últimos 7 dias</translation>
+        <translation>7 ngày trước</translation>
     </message>
     <message>
         <source>This month</source>
-        <translation>Este mês</translation>
+        <translation>Tháng này</translation>
     </message>
     <message>
         <source>Never</source>
-        <translation>Nunca</translation>
+        <translation>Không bao giờ</translation>
     </message>
     <message>
         <source>Older than 6 months</source>
-        <translation>Mais de 6 meses</translation>
+        <translation>6 tháng trước</translation>
     </message>
 </context>
 <context>
@@ -986,196 +991,197 @@ de forma que possa guardar o ficheiro no Windows.</translation>
     <message>
         <source>Invite to group</source>
         <comment>Menu to invite a friend to a groupchat</comment>
-        <translation>Convidar para grupo</translation>
+        <translation>Mời vào nhóm</translation>
     </message>
     <message>
         <source>Move to circle...</source>
         <comment>Menu to move a friend into a different circle</comment>
-        <translation>Mover para círculo...</translation>
+        <translation>Đưa đến kết nối...</translation>
     </message>
     <message>
         <source>To new circle</source>
-        <translation>Para um novo círculo</translation>
+        <translation>Đến kết nối mới</translation>
     </message>
     <message>
         <source>Remove from circle &apos;%1&apos;</source>
-        <translation>Remover do círculo &quot;%1&quot;</translation>
+        <translation>Xóa khỏi kết nối &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Open chat in new window</source>
+        <translation>Mở trò chuyện trong cửa sổ mới</translation>
+    </message>
+    <message>
+        <source>Remove chat from this window</source>
+        <translation>Xóa trò chuyện khỏi cửa sổ này</translation>
+    </message>
+    <message>
+        <source>To new group</source>
+        <translation>Đến nhóm mới</translation>
+    </message>
+    <message>
+        <source>Invite to group &apos;%1&apos;</source>
+        <translation>Mời vào nhóm &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Set alias...</source>
-        <translation>Definir o apelido...</translation>
+        <translation>Đặt bí danh...</translation>
     </message>
     <message>
         <source>Auto accept files from this friend</source>
         <comment>context menu entry</comment>
-        <translation>Aceitar ficheiros deste contacto automaticamente</translation>
+        <translation>Tự động chấp nhận tệp từ người bạn này</translation>
+    </message>
+    <message>
+        <source>Show details</source>
+        <translation>Hiện chi tiết</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation>Escolher uma pasta para onde aceitar ficheiros automaticamente</translation>
+        <translation>Chọn một thư mục tự động chấp nhận</translation>
     </message>
     <message>
         <source>New message</source>
-        <translation>Nova mensagem</translation>
+        <translation>Tin nhắn mới</translation>
     </message>
     <message>
         <source>Online</source>
-        <translation>Conectado</translation>
+        <translation>Trực tuyến</translation>
     </message>
     <message>
         <source>Away</source>
-        <translation>Ausente</translation>
+        <translation>Vắng</translation>
     </message>
     <message>
         <source>Busy</source>
-        <translation>Ocupado</translation>
+        <translation>Bận</translation>
     </message>
     <message>
         <source>Offline</source>
-        <translation>Desconectado</translation>
-    </message>
-    <message>
-        <source>Open chat in new window</source>
-        <translation>Abrir conversa numa janela nova</translation>
-    </message>
-    <message>
-        <source>Remove chat from this window</source>
-        <translation>Retirar conversa desta janela</translation>
-    </message>
-    <message>
-        <source>To new group</source>
-        <translation>Para um novo grupo</translation>
-    </message>
-    <message>
-        <source>Invite to group &apos;%1&apos;</source>
-        <translation>Convidar para o grupo &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Show details</source>
-        <translation>Mostrar detalhes</translation>
+        <translatorcomment>Ausgelassen</translatorcomment>
+        <translation>Ngoại tuyến</translation>
     </message>
     <message>
         <source>Move to circle &quot;%1&quot;</source>
-        <translation>Mover para o círculo &quot;%1&quot;</translation>
+        <translation>Di chuyển đến kết nối &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Remove friend</source>
         <comment>Menu to remove the friend from the friend list</comment>
-        <translation>Remover contacto</translation>
+        <translation>Gỡ bỏ bạn bè</translation>
     </message>
     <message>
         <source>Blocked</source>
-        <translation>Bloqueado</translation>
+        <translation>Đã chặn</translation>
     </message>
     <message>
         <source>Negotiating</source>
-        <translation>A negociar</translation>
+        <translation>Thương lượng</translation>
     </message>
 </context>
 <context>
     <name>GeneralForm</name>
     <message>
         <source>General</source>
-        <translation>Geral</translation>
+        <translation>Chung</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation>Escolher uma pasta para onde aceitar ficheiros automaticamente</translation>
+        <translation>Chọn một thư mục tự động chấp nhận</translation>
     </message>
 </context>
 <context>
     <name>GeneralSettings</name>
     <message>
         <source>General Settings</source>
-        <translation>Configurações gerais</translation>
+        <translation>Cài đặt chung</translation>
     </message>
     <message>
         <source>The translation may not load until qTox restarts.</source>
-        <translation>A tradução só pode ser atualizada após reiniciar o qTox.</translation>
+        <translation>Bản dịch có thể không tải cho đến khi qTox khởi động lại.</translation>
+    </message>
+    <message>
+        <source>Language:</source>
+        <translation>Ngôn ngữ:</translation>
     </message>
     <message>
         <source>Show system tray icon</source>
-        <translation>Mostrar ícone na barra de tarefas</translation>
+        <translation>Hiển thị biểu tượng ở khay hệ thống</translation>
     </message>
     <message>
         <source>Enable light tray icon.</source>
         <comment>toolTip for light icon setting</comment>
-        <translation>Ativar ícone claro da barra de tarefas.</translation>
+        <translation>Bật biểu tượng đèn.</translation>
+    </message>
+    <message>
+        <source>Light icon</source>
+        <translation>Biểu tượng nhỏ</translation>
     </message>
     <message>
         <source>qTox will start minimized in tray.</source>
         <comment>toolTip for Start in tray setting</comment>
-        <translation>O qTox vai iniciar minimizado na barra de tarefas.</translation>
+        <translation>qTox sẽ bắt đầu thu nhỏ trong khay.</translation>
     </message>
     <message>
         <source>Start in tray</source>
-        <translation>Inicializar na barra de tarefas</translation>
+        <translation>Khởi động trong khay</translation>
     </message>
     <message>
         <source>Close to tray</source>
-        <translation>Fechar para a barra de tarefas</translation>
+        <translation>Đóng vào khay hệ thống</translation>
     </message>
     <message>
         <source>Minimize to tray</source>
-        <translation>Minimizar para a barra de tarefas</translation>
-    </message>
-    <message>
-        <source>Light icon</source>
-        <translation>Ícone claro</translation>
-    </message>
-    <message>
-        <source>Language:</source>
-        <translation>Idioma:</translation>
-    </message>
-    <message>
-        <source>Set where files will be saved.</source>
-        <translation>Definir onde os ficheiros serão guardados.</translation>
-    </message>
-    <message>
-        <source>Your status is changed to Away after set period of inactivity.</source>
-        <translation>O seu estado é alterado para Ausente após o período determinado de inatividade.</translation>
-    </message>
-    <message>
-        <source>Auto away after (0 to disable):</source>
-        <translation>Ausente após (0 para desativar):</translation>
-    </message>
-    <message>
-        <source>Show contacts&apos; status changes</source>
-        <translation>Mostrar alterações de estado dos contactos</translation>
-    </message>
-    <message>
-        <source>Set to 0 to disable</source>
-        <translation>Utilizar 0 para desativar</translation>
-    </message>
-    <message>
-        <source>Autoaccept files</source>
-        <translation>Aceitar ficheiros automaticamente</translation>
+        <translation>Thu nhỏ vào khay hệ thống</translation>
     </message>
     <message>
         <source>Autostart</source>
-        <translation>Iniciar automaticamente</translation>
+        <translation>Tự động khởi động</translation>
+    </message>
+    <message>
+        <source>Set where files will be saved.</source>
+        <translation>Chọn nơi các tệp sẽ được lưu.</translation>
+    </message>
+    <message>
+        <source>Autoaccept files</source>
+        <translation>Tự động chấp thuận tệp tin</translation>
+    </message>
+    <message>
+        <source>Set to 0 to disable</source>
+        <translation>Đặt 0 để tắt</translation>
+    </message>
+    <message>
+        <source>Your status is changed to Away after set period of inactivity.</source>
+        <translation>Trạng thái của bạn được thay đổi thành Vắng mặt sau một khoảng thời gian không hoạt động đã đặt.</translation>
+    </message>
+    <message>
+        <source>Auto away after (0 to disable):</source>
+        <translation>Tự động vắng sau (0 để tắt):</translation>
+    </message>
+    <message>
+        <source>Show contacts&apos; status changes</source>
+        <translation>Hiển thị các thay đổi trạng thái của địa chỉ liên hệ</translation>
     </message>
     <message>
         <source>Start qTox on operating system startup (current profile).</source>
-        <translation>Iniciar o qTox ao iniciar o sistema operativo (perfil de utilizador atual).</translation>
+        <translation>Khởi động qTox cùng hệ điều hành (người dùng hiện tại).</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation>Pasta padrão para onde guardar ficheiros:</translation>
+        <translation>Thư mục mặc định để lưu tệp:</translation>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation>Verificar se existem atualizações</translation>
+        <translation>Kiểm tra cập nhật</translation>
     </message>
     <message>
         <source>Spell checking</source>
-        <translation>Verificação ortográfica</translation>
+        <translation>Kiểm tra chính tả</translation>
     </message>
     <message>
         <source>Max autoaccept file size (0 to disable):</source>
-        <translation>Tamanho máximo do ficheiro a aceitar automaticamente (0 para desativar):</translation>
+        <translation>Kích thước tệp tự động chấp nhận tối đa (0 để tắt):</translation>
     </message>
     <message>
         <source> MB</source>
@@ -1185,83 +1191,83 @@ de forma que possa guardar o ficheiro no Windows.</translation>
         <source>After pressing minimize (_) qTox will minimize to tray,
 instead of system taskbar.</source>
         <comment>toolTip for minimize to tray setting</comment>
-        <translation>Após clicar em minimizar (_) o qTox será minimizado para a bandeja,
-em vez da barra de tarefas.</translation>
+        <translation>Sau khi nhấn thu nhỏ (_) qTox sẽ thu nhỏ vào khay,
+thay vì thanh tác vụ hệ thống.</translation>
     </message>
     <message>
         <source>After pressing close (X) qTox will close to tray,
 instead of closing entirely.</source>
         <comment>toolTip for close to tray setting</comment>
-        <translation>Após clicar em fechar (X), o qTox será minimizado para a bandeja,
-em vez de fechar.</translation>
+        <translation>Sau khi nhấn đóng (X) qTox sẽ đóng vào khay,
+thay vì đóng hoàn toàn.</translation>
     </message>
     <message>
         <source>You can set this on a per-friend basis by right clicking individual friends.</source>
         <comment>autoaccept cb tooltip</comment>
-        <translation>Pode definir esta configuração para cada contacto clicando com o botão direito do rato sobre eles.</translation>
+        <translation>Bạn có thể đặt điều này trên từng người bạn bằng cách nhấp chuột phải vào từng người bạn.</translation>
     </message>
     <message>
         <source>Add a chat message when a user joins or leaves a group</source>
-        <translation type="unfinished"></translation>
+        <translation>Thêm tin nhắn trò chuyện khi người dùng tham gia hoặc rời khỏi nhóm</translation>
     </message>
 </context>
 <context>
     <name>GenericChatForm</name>
     <message>
         <source>Send message</source>
-        <translation>Enviar mensagem</translation>
+        <translation>Gửi tin nhắn</translation>
     </message>
     <message>
         <source>Smileys</source>
-        <translation>Emoticons</translation>
+        <translation>Biểu tượng</translation>
     </message>
     <message>
         <source>Send file(s)</source>
-        <translation>Enviar ficheiros</translation>
-    </message>
-    <message>
-        <source>Save chat log</source>
-        <translation>Guardar histórico da conversa</translation>
+        <translation>Gửi nhiều tệp</translation>
     </message>
     <message>
         <source>Send a screenshot</source>
-        <translation>Enviar captura de ecrã</translation>
+        <translation>Gửi ảnh chụp màn hình</translation>
+    </message>
+    <message>
+        <source>Save chat log</source>
+        <translation>Lưu nhật ký cuộc trò chuyện</translation>
     </message>
     <message>
         <source>Clear displayed messages</source>
-        <translation>Remover mensagens</translation>
+        <translation>Xóa các tin nhắn đã hiển thị</translation>
     </message>
     <message>
         <source>Quote selected text</source>
-        <translation>Citar texto selecionado</translation>
+        <translation>Trích dẫn văn bản đã chọn</translation>
     </message>
     <message>
         <source>Copy link address</source>
-        <translation>Copiar endereço do link</translation>
+        <translation>Sao chép địa chỉ liên kết</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation>Confirmação</translation>
+        <translation>Xác thực</translation>
     </message>
     <message>
         <source>Search in text</source>
-        <translation>Procurar no texto</translation>
+        <translation>Tìm kiếm trong văn bản</translation>
     </message>
     <message>
         <source>Go to current date</source>
-        <translation>Ir para a data atual</translation>
+        <translation>Đi đến hiện tại</translation>
     </message>
     <message>
         <source>Load chat history...</source>
-        <translation>Carregar histórico de conversas...</translation>
+        <translation>Tải lịch sử trò chuyện...</translation>
     </message>
     <message>
         <source>Export to file</source>
-        <translation>Exportar para ficheiro</translation>
+        <translation>Xuất sang tệp</translation>
     </message>
     <message>
         <source>Are you sure that you want to clear all displayed messages?</source>
-        <translation>Tem certeza de que deseja limpar todas as mensagens mostradas?</translation>
+        <translation>Bạn có chắc chắn muốn xóa tất cả các tin nhắn được hiển thị không?</translation>
     </message>
 </context>
 <context>
@@ -1270,495 +1276,494 @@ em vez de fechar.</translation>
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
         <translation>
-            <numerusform>%n utilizador na conversa</numerusform>
-            <numerusform>%n utilizadores na conversa</numerusform>
+            <numerusform>%n người dùng trong cuộc trò chuyện</numerusform>
         </translation>
     </message>
     <message>
         <source>mute</source>
-        <translation>sem som</translation>
+        <translation>tắt tiếng</translation>
     </message>
     <message>
         <source>unmute</source>
-        <translation>com som</translation>
+        <translation>bỏ tắt tiếng</translation>
     </message>
 </context>
 <context>
     <name>GroupInviteForm</name>
     <message>
         <source>Groups</source>
-        <translation>Grupos</translation>
+        <translation>Nhóm</translation>
     </message>
     <message>
         <source>Create new group</source>
-        <translation>Criar um novo grupo</translation>
+        <translation>Tạo nhóm mới</translation>
     </message>
     <message>
         <source>Group invites</source>
-        <translation>Convites a grupos</translation>
+        <translation>Lời mời nhóm</translation>
     </message>
 </context>
 <context>
     <name>GroupInviteWidget</name>
     <message>
         <source>Invited by %1 on %2 at %3.</source>
-        <translation>Convidado por %1 em %2 às %3.</translation>
+        <translation>Được %1 mời trên %2 tại %3.</translation>
     </message>
     <message>
         <source>Join</source>
-        <translation>Entrar na conversa</translation>
+        <translation>Tham gia</translation>
     </message>
     <message>
         <source>Decline</source>
-        <translation>Recusar</translation>
+        <translation>Từ chối</translation>
     </message>
 </context>
 <context>
     <name>GroupWidget</name>
     <message>
         <source>Set title...</source>
-        <translation>Definir o título...</translation>
+        <translation>Đặt tiêu đề...</translation>
+    </message>
+    <message>
+        <source>Open chat in new window</source>
+        <translation>Mở trò chuyện trong cửa sổ mới</translation>
+    </message>
+    <message>
+        <source>Remove chat from this window</source>
+        <translation>Xóa trò chuyện khỏi cửa sổ này</translation>
     </message>
     <message>
         <source>Quit group</source>
         <comment>Menu to quit a groupchat</comment>
-        <translation>Sair do grupo</translation>
-    </message>
-    <message>
-        <source>Open chat in new window</source>
-        <translation>Abrir conversa noutra janela</translation>
-    </message>
-    <message>
-        <source>Remove chat from this window</source>
-        <translation>Remover conversa desta janela</translation>
+        <translation>Rời nhóm</translation>
     </message>
     <message numerus="yes">
         <source>%n user(s) in chat</source>
         <comment>Number of users in chat</comment>
         <translation>
-            <numerusform>%n utilizador na conversa</numerusform>
-            <numerusform>%n utilizadores na conversa</numerusform>
+            <numerusform>%n người dùng trong cuộc trò chuyện</numerusform>
         </translation>
     </message>
     <message>
         <source>New Message</source>
-        <translation>Nova mensagem</translation>
+        <translation>Tin nhắn mới</translation>
     </message>
     <message>
         <source>Online</source>
-        <translation>Conectado</translation>
+        <translation>Trực tuyến</translation>
     </message>
 </context>
 <context>
     <name>IdentitySettings</name>
     <message>
         <source>Public Information</source>
-        <translation>Informação pública</translation>
+        <translation>Thông tin công khai</translation>
     </message>
     <message>
         <source>Tox ID</source>
-        <translation>Referência do Tox</translation>
+        <translation>Tox ID</translation>
     </message>
     <message>
         <source>Your Tox ID (click to copy)</source>
-        <translation>A sua Referência do Tox (clique para copiar)</translation>
-    </message>
-    <message>
-        <source>This QR code contains your Tox ID. You may share this with your friends as well.</source>
-        <translation>Este código QR contém a sua Referência do Tox. Pode partilhá-la com os seus amigos.</translation>
-    </message>
-    <message>
-        <source>Save image</source>
-        <translation>Guardar imagem</translation>
-    </message>
-    <message>
-        <source>Copy image</source>
-        <translation>Copiar imagem</translation>
+        <translation>Tox ID của bạn (kích đúp để sao chép)</translation>
     </message>
     <message>
         <source>Profile</source>
-        <translation>Perfil</translation>
+        <translation>Hồ sơ</translation>
     </message>
     <message>
         <source>Rename profile.</source>
         <comment>tooltip for renaming profile button</comment>
-        <translation>Alterar nome do perfil.</translation>
-    </message>
-    <message>
-        <source>Delete profile.</source>
-        <comment>delete profile button tooltip</comment>
-        <translation>Eliminar perfil.</translation>
+        <translation>Đổi tên hồ sơ.</translation>
     </message>
     <message>
         <source>Go back to the login screen</source>
         <comment>tooltip for logout button</comment>
-        <translation>Voltar para o ecrã de iniciar sessão</translation>
+        <translation>Quay về màn hình đăng nhập</translation>
     </message>
     <message>
         <source>Logout</source>
         <comment>import profile button</comment>
-        <translation>Encerrar sessão</translation>
+        <translation>Đăng xuất</translation>
     </message>
     <message>
         <source>Remove password</source>
-        <translation>Remover palavra-passe</translation>
+        <translation>Gỡ bỏ mật khẩu</translation>
     </message>
     <message>
         <source>Change password</source>
-        <translation>Mudar palavra-passe</translation>
+        <translation>Đổi mật khẩu</translation>
+    </message>
+    <message>
+        <source>This QR code contains your Tox ID. You may share this with your friends as well.</source>
+        <translation>Mã QR này chứa Tox ID của bạn. Bạn cũng có thể chia sẻ với bạn bè của bạn.</translation>
+    </message>
+    <message>
+        <source>Save image</source>
+        <translation>Lưu hình ảnh</translation>
+    </message>
+    <message>
+        <source>Copy image</source>
+        <translation>Sao chép ảnh</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <comment>rename profile button</comment>
+        <translation>Đổi tên</translation>
+    </message>
+    <message>
+        <source>Delete profile.</source>
+        <comment>delete profile button tooltip</comment>
+        <translation>Xóa hồ sơ.</translation>
     </message>
     <message>
         <source>Allows you to export your Tox profile to a file.
 Profile does not contain your history.</source>
         <comment>tooltip for profile exporting button</comment>
-        <translation>Permite exportar o seu perfil Tox para um ficheiro.
-O perfil não contém o seu histórico.</translation>
-    </message>
-    <message>
-        <source>Rename</source>
-        <comment>rename profile button</comment>
-        <translation>Renomear</translation>
+        <translation>Cho phép bạn xuất hồ sơ Tox của mình thành một tệp.
+Hồ sơ không bao gồm lịch sử của bạn.</translation>
     </message>
     <message>
         <source>Export</source>
         <comment>export profile button</comment>
-        <translation>Exportar</translation>
+        <translation>Xuất ra</translation>
     </message>
     <message>
         <source>Delete</source>
         <comment>delete profile button</comment>
-        <translation>Eliminar</translation>
+        <translation>Xóa</translation>
     </message>
     <message>
         <source>Remove your password and encryption from your profile.</source>
         <comment>Tooltip for the `Remove password` button.</comment>
-        <translation>Remover a sua palavra-passe e encriptação do seu perfil.</translation>
+        <translation>Xóa mật khẩu và mã hóa khỏi hồ sơ của bạn.</translation>
     </message>
     <message>
         <source>Name input</source>
-        <translation>Introduzir nome</translation>
+        <translation>Nhập tên</translation>
     </message>
     <message>
         <source>Name visible to contacts</source>
-        <translation>Nome visível para os contactos</translation>
+        <translation>Tên hiển thị với liên hệ</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation>Introduzir mensagem de estado</translation>
+        <translation>Nhập trạng thái</translation>
     </message>
     <message>
         <source>Status message visible to contacts</source>
-        <translation>Mensagem de estado visível para os contactos</translation>
+        <translation>Trạng thái hiển thị với liên hệ</translation>
     </message>
     <message>
         <source>Your Tox ID</source>
-        <translation>A sua Referência do Tox</translation>
+        <translation>Tox ID của bạn</translation>
     </message>
     <message>
         <source>Save QR image as file</source>
-        <translation>Guardar imagem QR num ficheiro</translation>
+        <translation>Lưu hình ảnh QR dưới dạng tệp</translation>
     </message>
     <message>
         <source>Copy QR image to clipboard</source>
-        <translation>Copiar imagem QR para a área de transferência</translation>
+        <translation>Sao chép hình ảnh QR vào khay nhớ tạm</translation>
     </message>
     <message>
         <source>Rename profile.</source>
-        <translation>Alterar nome do perfil.</translation>
+        <translation>Đổi tên hồ sơ.</translation>
     </message>
     <message>
         <source>Delete profile.</source>
-        <translation>Eliminar perfil.</translation>
+        <translation>Xóa hồ sơ.</translation>
     </message>
     <message>
         <source>Export profile</source>
-        <translation>Exportar perfil</translation>
+        <translation>Xuất hồ sơ</translation>
     </message>
     <message>
         <source>Remove password from profile</source>
-        <translation>Remover a palavra-passe do perfil</translation>
+        <translation>Xóa mật khẩu khỏi hồ sơ</translation>
     </message>
     <message>
         <source>Change profile password</source>
-        <translation>Alterar a palavra-passe do perfil</translation>
+        <translation>Đổi mật khẩu hồ sơ</translation>
     </message>
     <message>
         <source>My name:</source>
-        <translation>Meu nome:</translation>
+        <translation>Tên tôi:</translation>
     </message>
     <message>
         <source>My status:</source>
-        <translation>Meu estado:</translation>
+        <translation>Trạng thái của tôi:</translation>
     </message>
     <message>
         <source>My profile</source>
-        <translation>Meu perfil</translation>
+        <translation>Hồ sơ của tôi</translation>
     </message>
     <message>
         <source>This ID allows other Tox users to add and contact you.
 Share it with your friends to begin chatting.</source>
         <comment>Tox ID tooltip</comment>
-        <translation>Este ID permite que outros utilizadores do Tox adicionem e entrem em contacto consigo.
-Partilhe-o com os seus amigos para começar a conversar.</translation>
+        <translation>ID này cho phép những người dùng Tox khác thêm và liên hệ với bạn.
+Chia sẻ nó với bạn bè của bạn để bắt đầu trò chuyện.</translation>
     </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
     <message>
         <source>Load history dialog</source>
-        <translation>Caixa de diálogo &quot;carregar histórico&quot;</translation>
+        <translation>Tải lịch sử hộp thoại</translation>
     </message>
     <message>
         <source>Load history from:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tải lịch sử từ:</translation>
     </message>
 </context>
 <context>
     <name>LoginScreen</name>
     <message>
         <source>Username:</source>
-        <translation>Utilizador:</translation>
+        <translation>Tên tài khoản:</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Palavra-passe:</translation>
+        <translation>Mật khẩu:</translation>
     </message>
     <message>
         <source>Confirm:</source>
-        <translation>Confirmar:</translation>
+        <translation>Xác nhận:</translation>
     </message>
     <message>
         <source>Password strength: %p%</source>
-        <translation>Segurança da palavra-passe: %p%</translation>
-    </message>
-    <message>
-        <source>If the profile does not have a password, qTox can skip the login screen</source>
-        <translation>Se o perfil não tiver uma palavra-passe, o qTox não mostra o ecrã de iniciar sessão e autentica automaticamente</translation>
-    </message>
-    <message>
-        <source>New Profile</source>
-        <translation>Novo perfil</translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t create a new profile</source>
-        <translation>Não foi possível criar um novo perfil</translation>
-    </message>
-    <message>
-        <source>The username must not be empty.</source>
-        <translation>O nome de utilizador não pode estar vazio.</translation>
-    </message>
-    <message>
-        <source>The password must be at least 6 characters long.</source>
-        <translation>A palavra-passe deve ter pelo menos 6 caracteres.</translation>
-    </message>
-    <message>
-        <source>A profile with this name already exists.</source>
-        <translation>Já existe um perfil com este nome.</translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t load this profile</source>
-        <translation>Não foi possível carregar o perfil</translation>
-    </message>
-    <message>
-        <source>This profile is already in use.</source>
-        <translation>Este perfil já está a ser utilizado.</translation>
-    </message>
-    <message>
-        <source>Wrong password.</source>
-        <translation>Palavra-passe incorreta.</translation>
+        <translation>Độ mạnh mật khẩu: %p%</translation>
     </message>
     <message>
         <source>Create Profile</source>
-        <translation>Criar perfil</translation>
+        <translation>Tạo hồ sơ</translation>
+    </message>
+    <message>
+        <source>If the profile does not have a password, qTox can skip the login screen</source>
+        <translation>Nếu hồ sơ không có mật khẩu, qTox có thể bỏ qua màn hình đăng nhập</translation>
     </message>
     <message>
         <source>Load automatically</source>
-        <translation>Carregar automaticamente</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation>Importar</translation>
+        <translation>Tự động tải</translation>
     </message>
     <message>
         <source>Load</source>
-        <translation>Carregar</translation>
+        <translation>Tải</translation>
     </message>
     <message>
         <source>Load Profile</source>
-        <translation>Carregar perfil</translation>
+        <translation>Tải hồ sơ</translation>
+    </message>
+    <message>
+        <source>New Profile</source>
+        <translation>Hồ sơ mới</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t create a new profile</source>
+        <translation>Không thể tạo mới hồ sơ</translation>
+    </message>
+    <message>
+        <source>The username must not be empty.</source>
+        <translation>Tên tài khoản không được trống.</translation>
+    </message>
+    <message>
+        <source>The password must be at least 6 characters long.</source>
+        <translation>Mật khẩu phải dài ít nhất 6 ký tự.</translation>
+    </message>
+    <message>
+        <source>A profile with this name already exists.</source>
+        <translation>Hồ sơ có tên này đã tồn tại.</translation>
     </message>
     <message>
         <source>Password protected profiles can&apos;t be automatically loaded.</source>
-        <translation>Os perfis protegidos por palavra-passe não podem ser carregados automaticamente.</translation>
+        <translation>Không thể tự động tải hồ sơ được bảo vệ bằng mật khẩu.</translation>
     </message>
     <message>
         <source>Couldn&apos;t load profile</source>
-        <translation>Não foi possível carregar o perfil</translation>
+        <translation>Không thể tải hồ sơ</translation>
     </message>
     <message>
         <source>There is no selected profile.
 
 You may want to create one.</source>
-        <translation>Não está selecionado nenhum perfil.
+        <translation>Không có hồ sơ được chọn.
 
-Talvez queira criar um.</translation>
+Bạn có thể muốn tạo một cái.</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t load this profile</source>
+        <translation>Không thể tải hồ sơ này</translation>
+    </message>
+    <message>
+        <source>This profile is already in use.</source>
+        <translation>Hồ sơ này đã được sử dụng.</translation>
+    </message>
+    <message>
+        <source>Wrong password.</source>
+        <translation>Sai mật khẩu.</translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation>Tải lên</translation>
     </message>
     <message>
         <source>Username input field</source>
-        <translation>Campo para introduzir o nome de utilizador</translation>
+        <translation>Nhập tài khoản</translation>
     </message>
     <message>
         <source>Password input field, you can leave it empty (no password), or type at least 6 characters</source>
-        <translation>Campo de entrada da palavra-passe. Pode deixá-lo vazio (sem palavra-passe) ou digitar pelo menos 6 caracteres</translation>
+        <translation>Nhập mật khẩu, bạn có thể để trống (không có mật khẩu) hoặc nhập ít nhất 6 ký tự</translation>
     </message>
     <message>
         <source>Password confirmation field</source>
-        <translation>Campo de confirmação da palavra-passe</translation>
+        <translation>Xác nhận mật khẩu</translation>
     </message>
     <message>
         <source>Create a new profile button</source>
-        <translation>Botão de criar um novo perfil</translation>
+        <translation>Nút tạo hồ sơ mới</translation>
     </message>
     <message>
         <source>Profile list</source>
-        <translation>Lista de perfis</translation>
+        <translation>Danh sách hồ sơ</translation>
     </message>
     <message>
         <source>List of profiles</source>
-        <translation>Lista de perfis</translation>
+        <translation>Danh sách các hồ sơ</translation>
     </message>
     <message>
         <source>Password input</source>
-        <translation>Introduzir palavra-passe</translation>
+        <translation>Nhập mật khẩu</translation>
     </message>
     <message>
         <source>Load automatically checkbox</source>
-        <translation>Caixa de seleção para carregar automaticamente</translation>
+        <translation>Tải hộp kiểm tự động</translation>
     </message>
     <message>
         <source>Import profile</source>
-        <translation>Importar perfil</translation>
+        <translation>Tải lên hồ sơ</translation>
     </message>
     <message>
         <source>Load selected profile button</source>
-        <translation>Botão para carregar o perfil selecionado</translation>
+        <translation>Nút tải hồ sợ đã chọn</translation>
     </message>
     <message>
         <source>New profile creation page</source>
-        <translation>Página de criação de novo perfil</translation>
+        <translation>Trang tạo hồ sơ mới</translation>
     </message>
     <message>
         <source>Loading existing profile page</source>
-        <translation>Carregar página de perfil já existente</translation>
+        <translation>Đang tải trang hồ sơ hiện có</translation>
     </message>
     <message>
         <source>The passwords you&apos;ve entered are different.
 Please make sure to enter the same password twice.</source>
-        <translation>As palavra-passe digitadas diferem.
-Certifique-se de introduziu a mesma palavra-passe duas vezes.</translation>
+        <translation>Mật khẩu bạn đã nhập không giống nhau.
+Hãy đảm bảo nhập cùng một mật khẩu hai lần.</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>Your name</source>
-        <translation>O seu nome</translation>
+        <translation>Tên của bạn</translation>
     </message>
     <message>
         <source>Your status</source>
-        <translation>O seu estado</translation>
+        <translation>Trạng thái</translation>
     </message>
     <message>
         <source>...</source>
-        <translation>...</translation>
+        <translatorcomment>Ausgelassen</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <source>Add friends</source>
-        <translation>Adicionar contactos</translation>
+        <translation>Thêm bạn</translation>
     </message>
     <message>
         <source>Create a group chat</source>
-        <translation>Criar uma conversa em grupo</translation>
+        <translation>Tạo cuộc trò chuyện nhóm</translation>
     </message>
     <message>
         <source>View completed file transfers</source>
-        <translation>Ver transferências de ficheiros completadas</translation>
+        <translation>Xem các lần gửi tệp đã hoàn thành</translation>
     </message>
     <message>
         <source>Change your settings</source>
-        <translation>Alterar as configurações</translation>
+        <translation>Thay đổi các thiết lập</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Fechar</translation>
+        <translation>Đóng</translation>
     </message>
     <message>
         <source>Open profile</source>
-        <translation>Abrir perfil</translation>
+        <translation>Mở hồ sơ</translation>
     </message>
     <message>
         <source>Open profile page when clicked</source>
-        <translation>Abrir a página de perfil ao clicar</translation>
+        <translation>Mở trang hồ sơ khi được nhấp vào</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation>Introduzir mensagem de estado</translation>
+        <translation>Nhập trạng thái</translation>
     </message>
     <message>
         <source>Set your status message that will be shown to others</source>
-        <translation>Defina a sua mensagem de estado que será mostrada aos outros</translation>
+        <translation>Đặt thông báo trạng thái của bạn sẽ được hiển thị cho người khác</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation>Estado</translation>
+        <translation>Trạng thái</translation>
     </message>
     <message>
         <source>Set availability status</source>
-        <translation>Definir estado de disponibilidade</translation>
+        <translation>Đặt trạng thái</translation>
     </message>
     <message>
         <source>Contact search</source>
-        <translation>Procurar contacto</translation>
+        <translation>Tìm kiếm liên hệ</translation>
     </message>
     <message>
         <source>Contact search input for known friends</source>
-        <translation>Introduzir o contacto conhecido a procurar</translation>
+        <translation>Liên hệ đầu vào tìm kiếm cho những người bạn đã biết</translation>
     </message>
     <message>
         <source>Sorting and visibility</source>
-        <translation>Ordenação e visibilidade</translation>
+        <translation>Sắp xếp và hiển thị</translation>
     </message>
     <message>
         <source>Set friends sorting and visibility</source>
-        <translation>Definir ordem e visibilidade dos contactos</translation>
+        <translation>Đặt phân loại bạn bè và mức độ hiển thị</translation>
     </message>
     <message>
         <source>Open Add friends page</source>
-        <translation>Abrir página de adicionar contactos</translation>
+        <translation>Mở trang Thêm bạn bè</translation>
     </message>
     <message>
         <source>Groupchat</source>
-        <translation>Conversa em grupo</translation>
+        <translation>Trò chuyện nhóm</translation>
     </message>
     <message>
         <source>Open groupchat management page</source>
-        <translation>Abrir a página de gestão de conversa em grupo</translation>
+        <translation>Mở trang quản lý trò chuyện nhóm</translation>
     </message>
     <message>
         <source>File transfers history</source>
-        <translation>Histórico de transferências de ficheiros</translation>
+        <translation>Lịch sử gửi tệp</translation>
     </message>
     <message>
         <source>Open File transfers history</source>
-        <translation>Abrir histórico de transferências de ficheiros</translation>
+        <translation>Mở lịch sử gửi tệp</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation>Configurações</translation>
+        <translation>Cài đặt</translation>
     </message>
     <message>
         <source>Open Settings</source>
-        <translation>Abrir configurações</translation>
+        <translation>Mở cài đặt</translation>
     </message>
 </context>
 <context>
@@ -1766,51 +1771,51 @@ Certifique-se de introduziu a mesma palavra-passe duas vezes.</translation>
     <message>
         <source>Executable file</source>
         <comment>popup title</comment>
-        <translation type="unfinished">Ficheiro executável</translation>
+        <translation>Tệp thực thi</translation>
     </message>
     <message>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
-        <translation type="unfinished">Pediu ao qTox para abrir um ficheiro executável. Os executáveis podem potencialmente danificar o seu computador. Tem a certeza que quer abrir este ficheiro?</translation>
+        <translation>Bạn đã yêu cầu qTox mở một tệp thực thi. Các tệp thực thi có thể làm hỏng máy tính của bạn. Bạn có chắc chắn muốn mở tệp này không?</translation>
     </message>
 </context>
 <context>
     <name>NetCamView</name>
     <message>
         <source>Tox video</source>
-        <translation>Vídeo Tox</translation>
+        <translation>Tox video</translation>
     </message>
     <message>
         <source>Full Screen</source>
-        <translation>Ecrã cheio</translation>
+        <translation>Toàn màn hình</translation>
     </message>
     <message>
         <source>Toggle video preview</source>
-        <translation>Mostrar/ocultar visualização de vídeo</translation>
+        <translation>Chế độ xem trước video</translation>
     </message>
     <message>
         <source>Mute audio</source>
-        <translation>Silenciar áudio</translation>
+        <translation>Tắt âm thanh</translation>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation>Silenciar microfone</translation>
+        <translation>Tắt micrô</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation>Terminar chamada de vídeo</translation>
+        <translation>Kết thúc gọi video</translation>
     </message>
     <message>
         <source>Exit full screen</source>
-        <translation>Sair do ecrã cheio</translation>
+        <translation>Thoát toàn màn hình</translation>
     </message>
     <message>
         <source>Hide messages</source>
-        <translation>Ocultar mensagens</translation>
+        <translation>Ẩn tin nhắn</translation>
     </message>
     <message>
         <source>Show messages</source>
-        <translation>Mostrar mensagens</translation>
+        <translation>Hiện tin nhắn</translation>
     </message>
 </context>
 <context>
@@ -1818,30 +1823,30 @@ Certifique-se de introduziu a mesma palavra-passe duas vezes.</translation>
     <message>
         <source>View</source>
         <comment>OS X Menu bar</comment>
-        <translation>Visualizar</translation>
+        <translation>Hiện</translation>
     </message>
     <message>
         <source>Window</source>
         <comment>OS X Menu bar</comment>
-        <translation>Janela</translation>
+        <translation>Cửa sổ</translation>
     </message>
     <message>
         <source>Minimize</source>
         <comment>OS X Menu bar</comment>
-        <translation>Minimizar</translation>
+        <translation>Thu nhỏ</translation>
     </message>
     <message>
         <source>Bring All to Front</source>
         <comment>OS X Menu bar</comment>
-        <translation>Trazer tudo para a frente</translation>
+        <translation>Đưa tất cả lên đầu</translation>
     </message>
     <message>
         <source>Exit Fullscreen</source>
-        <translation>Sair do ecrã inteiro</translation>
+        <translation>Thoát toàn màn hình</translation>
     </message>
     <message>
         <source>Enter Fullscreen</source>
-        <translation>Mudar para ecrã inteiro</translation>
+        <translation>Chế độ toàn màn hình</translation>
     </message>
 </context>
 <context>
@@ -1849,8 +1854,7 @@ Certifique-se de introduziu a mesma palavra-passe duas vezes.</translation>
     <message numerus="yes">
         <source>Unread message(s)</source>
         <translation>
-            <numerusform>Mensagem não lida</numerusform>
-            <numerusform>Mensagens não lidas</numerusform>
+            <numerusform>Tin nhắn chưa đọc</numerusform>
         </translation>
     </message>
 </context>
@@ -1858,58 +1862,58 @@ Certifique-se de introduziu a mesma palavra-passe duas vezes.</translation>
     <name>NotificationGenerator</name>
     <message>
         <source>New message</source>
-        <translation>Nova mensagem</translation>
+        <translation>Tin nhắn mới</translation>
     </message>
     <message>
         <source>New group message</source>
-        <translation>Nova mensagem de grupo</translation>
+        <translation>Tin nhắn nhóm mới</translation>
     </message>
     <message>
         <source>Incoming file transfer</source>
-        <translation>A receber a transferência de ficheiro</translation>
+        <translation>Chuyển tệp đến</translation>
     </message>
     <message>
         <source>%1 - file transfer</source>
         <extracomment>e.g. Bob - file transfer</extracomment>
-        <translation>%1 - transferência de ficheiro</translation>
+        <translation>%1 - tệp đang gửi</translation>
     </message>
     <message>
         <source>Group invite received</source>
-        <translation>Convite para grupo recebido</translation>
+        <translation>Đã nhận được lời mời nhóm</translation>
     </message>
     <message>
         <source>%1 invites you to join a group.</source>
-        <translation>%1 convida-o a juntar-se a um grupo.</translation>
+        <translation>%1 mời bạn tham gia một nhóm.</translation>
     </message>
     <message>
         <source>Friend request received</source>
-        <translation>Pedido de amizade recebido</translation>
+        <translation>Đã nhận được yêu cầu kết bạn</translation>
     </message>
     <message>
         <source>Friend request received from %1</source>
-        <translation>Pedido de amizade recebido de %1</translation>
+        <translation>Đã nhận được yêu cầu kết bạn từ %1</translation>
     </message>
 </context>
 <context>
     <name>PasswordEdit</name>
     <message>
         <source>CAPS-LOCK ENABLED</source>
-        <translation>TECLA DE MAIÚSCULAS ATIVADA</translation>
+        <translation>CAPS-LOCK BẬT</translation>
     </message>
 </context>
 <context>
     <name>PrivacyForm</name>
     <message>
         <source>Privacy</source>
-        <translation>Privacidade</translation>
+        <translation>Bảo mật</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation>Confirmação</translation>
+        <translation>Xác thực</translation>
     </message>
     <message>
         <source>Do you want to permanently delete all chat history?</source>
-        <translation>Quer eliminar de forma permanente todo o histórico de conversas?</translation>
+        <translation>Bạn có muốn xóa vĩnh viễn tất cả lịch sử trò chuyện không?</translation>
     </message>
 </context>
 <context>
@@ -1917,271 +1921,271 @@ Certifique-se de introduziu a mesma palavra-passe duas vezes.</translation>
     <message>
         <source>Your friends will be able to see when you are typing.</source>
         <comment>tooltip for typing notifications setting</comment>
-        <translation>Os seus contactos poderão ver quando está a escrever.</translation>
+        <translation>Bạn bè của bạn sẽ có thể nhìn thấy khi bạn đang nhập.</translation>
     </message>
     <message>
         <source>Send typing notifications</source>
-        <translation>Enviar notificação de escrever</translation>
+        <translation>Gửi thông báo khi gõ</translation>
     </message>
     <message>
         <source>Keep chat history</source>
-        <translation>Guardar histórico de conversas</translation>
+        <translation>Giữ lịch sử cuộc trò chuyện</translation>
     </message>
     <message>
         <source>NoSpam is part of your Tox ID.
 If you are being spammed with friend requests, you should change your NoSpam.
 People will be unable to add you with your old ID, but you will keep your current friends.</source>
         <comment>toolTip for nospam</comment>
-        <translation>NoSpam faz parte da sua referência do Tox.
-Se estiver a receber muitas solicitações indesejadas, deve alterar a configuração do NoSpam.
-As outras pessoas não poderão adicioná-lo com a sua referência do Tox, mas poderá manter os seus contactos atuais.</translation>
+        <translation>NoSpam là một phần của Tox ID.
+Nếu đang bị spam với các yêu cầu kết bạn, bạn nên thay đổi NoSpam của mình.
+Mọi người sẽ không thể thêm bạn bằng ID cũ của bạn, nhưng bạn sẽ giữ lại những người bạn hiện tại của mình.</translation>
     </message>
     <message>
         <source>NoSpam</source>
-        <translation>NoSpam</translation>
+        <translation>Chống Spam (NoSpam)</translation>
     </message>
     <message>
         <source>NoSpam is a part of your ID that can be changed at will.
 If you are getting spammed with friend requests, change the NoSpam.</source>
-        <translation>NoSpam faz parte da sua referência do Tox e pode ser alterado.
-Se estiver a receber muitas solicitações indesejadas, altere o NoSpam.</translation>
+        <translation>NoSpam là một phần ID của bạn có thể thay đổi theo ý muốn.
+Nếu bạn nhận được thư rác với các yêu cầu kết bạn, hãy thay đổi NoSpam.</translation>
     </message>
     <message>
         <source>Generate random NoSpam</source>
-        <translation>Gerar NoSpam aleatório</translation>
+        <translation>Tạo NoSpam ngẫu nhiên</translation>
     </message>
     <message>
         <source>Chat history keeping is still in development.
 Save format changes are possible, which may result in data loss.</source>
         <comment>toolTip for Keep History setting</comment>
-        <translation>O histórico de conversas ainda está a ser desenvolvido.
-Por isso podem ocorrer alterações no formato do ficheiro guardado, o que pode levar a perda de dados.</translation>
+        <translation>Tính năng lưu giữ lịch sử trò chuyện vẫn đang được phát triển.
+Có thể thay đổi định dạng lưu, điều này có thể làm mất dữ liệu.</translation>
     </message>
     <message>
         <source>Privacy</source>
-        <translation>Privacidade</translation>
+        <translation>Bảo mật</translation>
     </message>
     <message>
         <source>BlackList</source>
-        <translation>Lista negra</translation>
+        <translation>Danh sách đen</translation>
     </message>
     <message>
         <source>Filter group messages by group members&apos; public keys. Put public keys here, one per line.</source>
-        <translation>Filtrar as mensagens de grupo por chaves públicas dos membros do grupo. Ponha aqui as chaves públicas, uma por linha.</translation>
+        <translation>Lọc tin nhắn nhóm theo khóa công khai của thành viên nhóm. Đặt các khóa công khai ở đây, một khóa trên mỗi dòng.</translation>
     </message>
 </context>
 <context>
     <name>Profile</name>
     <message>
         <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
-        <translation>Falha ao derivar a chave da palavra-passe, o perfil não utilizará a nova palavra-passe.</translation>
+        <translation>Không lấy được khóa từ mật khẩu, hồ sơ sẽ không sử dụng mật khẩu mới.</translation>
     </message>
     <message>
         <source>Toxing on qTox</source>
-        <translation>A toxear no qTox</translation>
+        <translation>Quẩy trên qTox</translation>
     </message>
     <message>
         <source>Couldn&apos;t change database password, it may be corrupted or use the old password.</source>
-        <translation>Não foi possível alterar a palavra-passe da base de dados, ela pode estar corrompida ou usar a palavra-passe antiga.</translation>
+        <translation>Không thể thay đổi mật khẩu cơ sở dữ liệu, nó có thể bị hỏng hoặc sử dụng mật khẩu cũ.</translation>
     </message>
 </context>
 <context>
     <name>ProfileForm</name>
     <message>
         <source>Choose a profile picture</source>
-        <translation>Escolha uma imagem para o perfil</translation>
+        <translation>Chọn một ảnh đại diện</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Erro</translation>
-    </message>
-    <message>
-        <source>Unable to open this file.</source>
-        <translation>Não foi possível abrir este ficheiro.</translation>
-    </message>
-    <message>
-        <source>Unable to read this image.</source>
-        <translation>Não foi possível ler esta imagem.</translation>
-    </message>
-    <message>
-        <source>The supplied image is too large.
-Please use another image.</source>
-        <translation>A imagem é muito grande.
-Por favor escolha outra.</translation>
+        <translation>Lỗi</translation>
     </message>
     <message>
         <source>Rename &quot;%1&quot;</source>
         <comment>renaming a profile</comment>
-        <translation>Alterar o nome de &quot;%1&quot;</translation>
+        <translation>Đổi tên &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <source>Unable to open this file.</source>
+        <translation>Không thể mở tệp này.</translation>
+    </message>
+    <message>
+        <source>Current profile: </source>
+        <translation>Hồ sơ hiện tại: </translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Gỡ bỏ</translation>
+    </message>
+    <message>
+        <source>Unable to read this image.</source>
+        <translation>Không thể đọc ảnh này.</translation>
+    </message>
+    <message>
+        <source>The supplied image is too large.
+Please use another image.</source>
+        <translation>Hình ảnh được cung cấp quá lớn.
+Vui lòng sử dụng hình ảnh khác.</translation>
     </message>
     <message>
         <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
-        <translation>Não foi possível alterar o nome do perfil para &quot;%1&quot;</translation>
+        <translation>Không thể đổi tên hồ sơ thành &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
-        <translation>Localização sem permissão de escrita</translation>
+        <translation>Vị trí không thể ghi</translation>
+    </message>
+    <message>
+        <source>Nothing to remove</source>
+        <translation>Không có gì để gỡ bỏ</translation>
+    </message>
+    <message>
+        <source>Your profile does not have a password!</source>
+        <translation>Hồ sơ của bạn không có mật khẩu!</translation>
+    </message>
+    <message>
+        <source>Please enter a new password.</source>
+        <translation>Nhập mật khẩu mới.</translation>
     </message>
     <message>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
-        <translation>Tem a certeza de que quer eliminar este perfil?</translation>
+        <translation>Bạn có chắc rằng muốn xóa hồ sơ này chứ?</translation>
     </message>
     <message>
         <source>Save</source>
         <comment>save qr image</comment>
-        <translation>Guardar</translation>
+        <translation>Lưu</translation>
     </message>
     <message>
         <source>Save QrCode (*.png)</source>
         <comment>save dialog filter</comment>
-        <translation>Guardar código QR (*.png)</translation>
-    </message>
-    <message>
-        <source>Nothing to remove</source>
-        <translation>Nada para remover</translation>
-    </message>
-    <message>
-        <source>Your profile does not have a password!</source>
-        <translation>O seu perfil não tem uma palavra-passe!</translation>
-    </message>
-    <message>
-        <source>Please enter a new password.</source>
-        <translation>Introduza uma nova palavra-passe.</translation>
-    </message>
-    <message>
-        <source>Current profile: </source>
-        <translation>Perfil atual: </translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Remover</translation>
+        <translation>Lưu mã QR (*.png)</translation>
     </message>
     <message>
         <source>Files could not be deleted!</source>
         <comment>deletion failed title</comment>
-        <translation>Não foi possível eliminar os ficheiros!</translation>
+        <translation>Không thể xóa tệp!</translation>
     </message>
     <message>
         <source>Change password</source>
         <comment>button text</comment>
-        <translation>Mudar a palavra-passe</translation>
+        <translation>Đổi mật khẩu</translation>
     </message>
     <message>
         <source>Set profile password</source>
         <comment>button text</comment>
-        <translation>Definir a palavra-passe do perfil</translation>
+        <translation>Đặt mật khẩu hồ sơ</translation>
     </message>
     <message>
         <source>Current profile location: %1</source>
-        <translation>Localização atual do perfil: %1</translation>
+        <translation>Vị trí hồ sơ hiện tại: %1</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password</source>
-        <translation>Não foi possível alterar a palavra-passe</translation>
+        <translation>Không thể thay đổi mật khẩu</translation>
     </message>
     <message>
         <source>Empty path is unavaliable</source>
-        <translation>O caminho vazio não está disponível</translation>
+        <translation>Không thể sử dụng đường dẫn trống</translation>
     </message>
     <message>
         <source>Failed to rename</source>
-        <translation>Não foi possível alterar o nome</translation>
+        <translation>Không thể đổi tên</translation>
     </message>
     <message>
         <source>Profile already exists</source>
-        <translation>O perfil já existe</translation>
+        <translation>Hồ sơ đã tồn tại</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists.</source>
-        <translation>Já existe um perfil com o nome &quot;%1&quot;.</translation>
+        <translation>Hồ sơ có tên &quot;%1&quot; đã tồn tại.</translation>
     </message>
     <message>
         <source>Empty name</source>
-        <translation>Nome vazio</translation>
+        <translation>Tên trống</translation>
     </message>
     <message>
         <source>Empty name is unavaliable</source>
-        <translation>Nome vazio não está disponível</translation>
+        <translation>Không được để tên trống</translation>
     </message>
     <message>
         <source>Empty path</source>
-        <translation>Caminho vazio</translation>
+        <translation>Đường dẫn trống</translation>
     </message>
     <message>
         <source>Export profile</source>
-        <translation>Exportar perfil</translation>
+        <translation>Xuất hồ sơ</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
         <extracomment>save dialog filter</extracomment>
-        <translation>Guardar ficheiro Tox (*.tox)</translation>
+        <translation>Lưu tệp Tox (*.tox)</translation>
     </message>
     <message>
         <source>The following files could not be deleted:</source>
         <extracomment>deletion failed text part 1</extracomment>
-        <translation>Não foi possível eliminar os seguintes ficheiros:</translation>
+        <translation>Không thể xóa các tệp sau:</translation>
     </message>
     <message>
         <source>Please manually remove them.</source>
         <extracomment>deletion failed text part 2</extracomment>
-        <translation>Por favor remova-os maunalmente.</translation>
+        <translation>Hãy xóa chúng thủ công.</translation>
     </message>
     <message>
         <source>Images (%1)</source>
         <comment>filetype filter</comment>
-        <translation>Imagens (%1)</translation>
+        <translation>Hình ảnh (%1)</translation>
     </message>
     <message>
         <source>You do not have permission to write to that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
-        <translation>Não possui permissão de escrita nesse diretório. Escolha outro ou cancele a operação.</translation>
+        <translation>Bạn không được phép ghi vào vị trí đó. Chọn khác hoặc hủy hộp thoại lưu.</translation>
     </message>
     <message>
         <source>Failed to save file</source>
-        <translation>Falha ao guardar o ficheiro</translation>
+        <translation>Không thể lưu tệp</translation>
     </message>
     <message>
         <source>The file you chose could not be saved.</source>
-        <translation>O ficheiro que escolheu não pode ser guardado.</translation>
+        <translation>Tệp bạn đã chọn không thể lưu.</translation>
     </message>
     <message>
         <source>Empty path is unavaliable.</source>
-        <translation>Não é possível usar diretórios em branco.</translation>
+        <translation>Không được để trống đường dẫn.</translation>
     </message>
     <message>
         <source>Couldn&apos;t change database password, it may be corrupted or use the old password.</source>
-        <translation>Não foi possível alterar a palavra-passe da base de dados, ela pode estar corrompida ou usar a palavra-passe antiga.</translation>
+        <translation>Không thể thay đổi mật khẩu cơ sở dữ liệu, nó có thể bị hỏng hoặc sử dụng mật khẩu cũ.</translation>
     </message>
     <message>
         <source>Tox user names cannot exceed %1 characters.</source>
-        <translation>Os nomes de utilizador Tox não podem exceder %1 caracteres.</translation>
+        <translation>Tên người dùng Tox không được vượt quá %1 ký tự.</translation>
     </message>
     <message>
         <source>Delete profile</source>
         <comment>deletion confirmation title</comment>
-        <translation>Eliminar perfil</translation>
+        <translation>Xóa hồ sơ</translation>
     </message>
     <message>
         <source>Remove password</source>
         <comment>deletion confirmation title</comment>
-        <translation>Remover palavra-passe</translation>
+        <translation>Gỡ bỏ mật khẩu</translation>
     </message>
     <message>
         <source>Are you sure you want to remove your password?</source>
         <extracomment>deletion confirmation text</extracomment>
-        <translation>Tem certeza de que deseja remover a sua palavra-passe?</translation>
+        <translation>Bạn có chắc chắn muốn xóa mật khẩu của mình không?</translation>
     </message>
     <message>
         <source>This ID allows other Tox users to add and contact you.
 Share it with your friends to begin chatting.
 
 This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
-        <translation>Este ID permite que outros utilizadores do Tox adicionem e entrem em contacto consigo.
-Partilhe-o com os seus amigos para começar a conversar.
+        <translation>ID này cho phép những người dùng Tox khác thêm và liên hệ với bạn.
+Chia sẻ nó với bạn bè của bạn để bắt đầu trò chuyện.
 
-Este ID inclui o código NoSpam (em azul) e o checkum (em cinzento).</translation>
+ID này bao gồm mã NoSpam (màu xanh lam) và checksum (màu xám).</translation>
     </message>
 </context>
 <context>
@@ -2189,316 +2193,316 @@ Este ID inclui o código NoSpam (em azul) e o checkum (em cinzento).</translatio
     <message>
         <source>Import profile</source>
         <comment>import dialog title</comment>
-        <translation>Importar perfil</translation>
+        <translation>Tải lên hồ sơ</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
         <comment>import dialog filter</comment>
-        <translation>Ficheiro no formato Tox (*.tox)</translation>
+        <translation>Lưu tệp Tox (*.tox)</translation>
     </message>
     <message>
         <source>Ignoring non-Tox file</source>
         <comment>popup title</comment>
-        <translation>A ignorar ficheiro não Tox</translation>
+        <translation>Bỏ qua tệp không phải Tox</translation>
     </message>
     <message>
         <source>Warning: You have chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
-        <translation>Aviso: escolheu um ficheiro que não é um ficheiro do formato Tox; a ignorar.</translation>
+        <translation>Cảnh báo: Bạn đã chọn một tệp không phải là tệp lưu Tox; bỏ qua.</translation>
     </message>
     <message>
         <source>Profile already exists</source>
         <comment>import confirm title</comment>
-        <translation>O perfil já existe</translation>
+        <translation>Hồ sơ đã tồn tại</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
-        <translation>Já existe um perfil com o nome &quot;%1&quot;. Quer eliminá-lo?</translation>
+        <translation>Hồ sơ có tên &quot;%1&quot; đã tồn tại. Bạn có muốn xóa nó?</translation>
     </message>
     <message>
         <source>File doesn&apos;t exist</source>
-        <translation>O ficheiro não existe</translation>
+        <translation>Tệp không tồn tại</translation>
     </message>
     <message>
         <source>Profile doesn&apos;t exist</source>
-        <translation>O perfil não existe</translation>
+        <translation>Hồ sơ không tồn tại</translation>
     </message>
     <message>
         <source>Profile imported</source>
-        <translation>Perfil importado</translation>
+        <translation>Đã tải lên hồ sơ</translation>
     </message>
     <message>
         <source>%1.tox was successfully imported</source>
-        <translation>%1.tox importado com sucesso</translation>
+        <translation>%1.tox đã tải lên thành công</translation>
     </message>
 </context>
 <context>
     <name>QApplication</name>
     <message>
         <source>Ok</source>
-        <translation>OK</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation>Hủy</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation>Sim</translation>
+        <translation>Có</translation>
     </message>
     <message>
         <source>No</source>
-        <translation>Não</translation>
+        <translation>Không</translation>
     </message>
     <message>
         <source>LTR</source>
         <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
-        <translation>Da esquerda para a direita</translation>
+        <translation>LTR</translation>
     </message>
 </context>
 <context>
     <name>QMessageBox</name>
     <message>
         <source>Couldn&apos;t add friend</source>
-        <translation>Não foi possível adicionar o contacto</translation>
+        <translation>Không thể thêm bạn</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
-        <translation>Não pode adicionar-se como seu contacto!</translation>
+        <translation>Không thể thêm bản thân là bạn bè!</translation>
     </message>
     <message>
         <source>%1 is not a valid Tox address.</source>
-        <translation>% 1 não é um endereço Tox válido.</translation>
+        <translation>%1 không phải là địa chỉ Tox hợp lệ.</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Default</source>
-        <translation>Padrão</translation>
+        <translation>Mặc định</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation>Azul</translation>
+        <translation>Xanh da trời</translation>
     </message>
     <message>
         <source>Olive</source>
-        <translation>Verde-oliva</translation>
+        <translation>Ôliu</translation>
     </message>
     <message>
         <source>Red</source>
-        <translation>Vermelho</translation>
+        <translation>Đỏ</translation>
     </message>
     <message>
         <source>Violet</source>
-        <translation>Violeta</translation>
+        <translation>Tím</translation>
     </message>
     <message>
         <source>Incoming call...</source>
-        <translation>A receber chamada...</translation>
+        <translation>Cuộc gọi đến...</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
-        <translation>Olá, sou %1 ! Queres adicionar-me ao Tox?</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation>Erro</translation>
-    </message>
-    <message>
-        <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
-        <translation>O qTox não consegui abrir os seus registos de conversas, por isso serão desativados.</translation>
+        <translation>%1 đây! Tox tôi nhỉ?</translation>
     </message>
     <message>
         <source>None</source>
         <comment>No camera device set</comment>
-        <translation>Nenhum</translation>
+        <translation>Không</translation>
     </message>
     <message>
         <source>Desktop</source>
         <comment>Desktop as a camera input for screen sharing</comment>
-        <translation>Área de trabalho</translation>
+        <translation>Desktop</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Lỗi</translation>
+    </message>
+    <message>
+        <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
+        <translation>qTox không thể mở nhật ký trò chuyện của bạn, chúng sẽ bị vô hiệu hóa.</translation>
     </message>
     <message>
         <source>Dark</source>
-        <translation>Escuro</translation>
+        <translation>Tối</translation>
     </message>
     <message>
         <source>Dark blue</source>
-        <translation>Escuro azulado</translation>
+        <translation>Xanh đậm</translation>
     </message>
     <message>
         <source>Dark olive</source>
-        <translation>Escuro oliva</translation>
+        <translation>Ô liu đậm</translation>
     </message>
     <message>
         <source>Dark red</source>
-        <translation>Escuro avermelhado</translation>
+        <translation>Đỏ đậm</translation>
     </message>
     <message>
         <source>Dark violet</source>
-        <translation>Escuro violeta</translation>
+        <translation>Tím đậm</translation>
     </message>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation>conectado</translation>
+        <translation>trực tuyến</translation>
     </message>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation>ausente</translation>
+        <translation>vắng</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation>ocupado</translation>
+        <translation>bận</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation>desconectado</translation>
+        <translation>ngoại tuyến</translation>
     </message>
     <message>
         <source>blocked</source>
         <comment>contact status</comment>
-        <translation>bloqueado</translation>
+        <translation>đã chặn</translation>
     </message>
     <message>
         <source>Reformatting text...</source>
         <comment>Waiting for text to be reformatted</comment>
-        <translation>Reformatando o texto...</translation>
+        <translation>Đang định dạng lại văn bản...</translation>
     </message>
     <message>
         <source>%1 message(s) from %2 chats</source>
         <extracomment>e.g. 3 messages from 2 chats</extracomment>
-        <translation>%1 mensagem(s) de %2 conversa(s)</translation>
+        <translation>%1 tin nhắn từ %2 cuộc trò chuyện</translation>
     </message>
     <message>
         <source>%1 message(s) from %2</source>
         <extracomment>e.g. 2 messages from Bob</extracomment>
-        <translation>%1 mensagem(s) de %2</translation>
+        <translation>%1 tin nhắn từ %2</translation>
     </message>
     <message>
         <source>negotitating</source>
         <comment>contact status</comment>
-        <translation>a negociar</translation>
+        <translation>thương lượng</translation>
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation type="unfinished">Falha ao enviar o ficheiro &quot;%1&quot;</translation>
+        <translation>Không gửi được tệp &quot;%1&quot;</translation>
     </message>
     <message>
         <source>%1 has joined the group</source>
-        <translation type="unfinished">%1 juntou-se ao grupo</translation>
+        <translation>%1 đã tham gia nhóm</translation>
     </message>
     <message>
         <source>%1 has left the group</source>
-        <translation type="unfinished">%1 saiu do grupo</translation>
+        <translation>%1 đã rời khỏi nhóm</translation>
     </message>
     <message>
         <source>%1 is now known as %2</source>
-        <translation type="unfinished">%1 é conhecido agora como %2</translation>
+        <translation>%1 hiện được gọi là %2</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
-        <translation type="unfinished">%1 definiu o título como %2</translation>
+        <translation>%1 đã đặt tiêu đề thành %2</translation>
     </message>
     <message>
         <source>Cleared</source>
-        <translation type="unfinished">Removidas</translation>
+        <translation>Đã xóa</translation>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
-        <translation type="unfinished">A chamada com %1 terminou inesperadamente. %2</translation>
+        <translation>Cuộc gọi với %1 đã đột ngột kết thúc. %2</translation>
     </message>
     <message>
         <source>Call with %1 ended. %2</source>
-        <translation type="unfinished">Chamada para %1 terminada. %2</translation>
+        <translation>Cuộc gọi với %1 đã kết thúc. %2</translation>
     </message>
     <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation type="unfinished">%1 agora é %2</translation>
+        <translation>%1 giờ là %2</translation>
     </message>
     <message>
         <source>Calling %1</source>
-        <translation type="unfinished">A chamar %1</translation>
+        <translation>Đang gọi %1</translation>
     </message>
     <message>
         <source>%1 calling</source>
-        <translation type="unfinished">%1 a chamar</translation>
+        <translation>%1 đang gọi</translation>
     </message>
     <message>
         <source>Message failed to send</source>
-        <translation type="unfinished">O envio da mensagem falhou</translation>
+        <translation>Không thể gửi tin nhắn</translation>
     </message>
     <message>
         <source>Initializing</source>
-        <translation type="unfinished"></translation>
+        <translation>Khởi tạo</translation>
     </message>
     <message>
         <source>Transmitting</source>
-        <translation type="unfinished"></translation>
+        <translation>Đang truyền</translation>
     </message>
     <message>
         <source>Finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Đã xong</translation>
     </message>
     <message>
         <source>Broken</source>
-        <translation type="unfinished"></translation>
+        <translation>Hỏng</translation>
     </message>
     <message>
         <source>Canceled</source>
-        <translation type="unfinished"></translation>
+        <translation>Đã hủy</translation>
     </message>
     <message>
         <source>Paused</source>
-        <translation type="unfinished">Pausado</translation>
+        <translation>Đã dừng</translation>
     </message>
     <message>
         <source>Remote paused</source>
-        <translation type="unfinished">Pausa no remoto</translation>
+        <translation>Đã dừng remote</translation>
     </message>
     <message>
         <source>File Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Tên tệp</translation>
     </message>
     <message>
         <source>Contact</source>
-        <translation type="unfinished"></translation>
+        <translation>Liên hệ</translation>
     </message>
     <message>
         <source>Progress</source>
-        <translation type="unfinished"></translation>
+        <translation>Quá trình</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Kích thước</translation>
     </message>
     <message>
         <source>Speed</source>
-        <translation type="unfinished"></translation>
+        <translation>Tốc độ</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished">Estado</translation>
+        <translation>Trạng thái</translation>
     </message>
     <message>
         <source>Control</source>
-        <translation type="unfinished"></translation>
+        <translation>Điều khiển</translation>
     </message>
     <message>
         <source>You have joined the group</source>
-        <translation type="unfinished"></translation>
+        <translation>Bạn đã tham gia nhóm</translation>
     </message>
     <message>
         <source>You have left the group</source>
-        <translation type="unfinished"></translation>
+        <translation>Bạn đã rời nhóm</translation>
     </message>
     <message>
         <source>Failed to load chat history</source>
@@ -2513,23 +2517,23 @@ Este ID inclui o código NoSpam (em azul) e o checkum (em cinzento).</translatio
     <name>RemoveChatDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation type="unfinished">Remover contacto</translation>
+        <translation>Xóa bạn bè</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation type="unfinished">Se definido, remove todo o histórico de conversas com o contacto</translation>
+        <translation>Xóa tất cả lịch sử trò chuyện với bạn bè nếu được đặt</translation>
     </message>
     <message>
         <source>Also remove chat history</source>
-        <translation type="unfinished">Remover também o histórico de conversas</translation>
+        <translation>Đồng thời xóa lịch sử trò chuyện</translation>
     </message>
     <message>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation type="unfinished">Tem a certeza que quer remover %1 da sua lista de contactos?</translation>
+        <translation>Bạn có chắc chắn muốn xóa %1 khỏi danh sách liên hệ của mình không?</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Remover</translation>
+        <translation>Xóa</translation>
     </message>
 </context>
 <context>
@@ -2537,22 +2541,22 @@ Este ID inclui o código NoSpam (em azul) e o checkum (em cinzento).</translatio
     <message>
         <source>Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.</source>
         <comment>Help text shown when no region has been selected yet</comment>
-        <translation>Clique e arraste para selecionar uma região. Pressione %1 para ocultar/mostrar a janela do qTox, ou %2 para cancelar.</translation>
+        <translation>Nhấp và kéo để chọn một vùng. Nhấn %1 để ẩn/hiện cửa sổ qTox hoặc %2 để hủy.</translation>
     </message>
     <message>
         <source>Space</source>
         <comment>[Space] key on the keyboard</comment>
-        <translation>Espaço</translation>
+        <translation>Dấu cách</translation>
     </message>
     <message>
         <source>Escape</source>
         <comment>[Escape] key on the keyboard</comment>
-        <translation>Esc</translation>
+        <translation>Escape</translation>
     </message>
     <message>
         <source>Press %1 to send a screenshot of the selection, %2 to hide/show qTox window, or %3 to cancel.</source>
         <comment>Help text shown when a region has been selected</comment>
-        <translation>Pressione %1 para enviar uma captura de ecrã da seleção, %2 para ocultar/mostrar a janela do qTox ou %3 para cancelar.</translation>
+        <translation>Nhấn %1 để gửi ảnh chụp màn hình trong lựa chọn, %2 để ẩn/hiện cửa sổ qTox hoặc %3 để hủy.</translation>
     </message>
     <message>
         <source>Enter</source>
@@ -2564,38 +2568,38 @@ Este ID inclui o código NoSpam (em azul) e o checkum (em cinzento).</translatio
     <name>SearchForm</name>
     <message>
         <source>The text could not be found.</source>
-        <translation>O texto não foi encontrado.</translation>
+        <translation>Không thể tìm thấy văn bản.</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>Iniciar</translation>
+        <translation>Bắt đầu</translation>
     </message>
 </context>
 <context>
     <name>SearchSettingsForm</name>
     <message>
         <source>Form</source>
-        <translation>Formulário</translation>
+        <translation>Biểu mẫu</translation>
     </message>
     <message>
         <source>Start search:</source>
-        <translation>Iniciar procura:</translation>
+        <translation>Bắt đầu tìm kiếm:</translation>
     </message>
     <message>
         <source>from the end</source>
-        <translation>do fim</translation>
+        <translation>từ cuối</translation>
     </message>
     <message>
         <source>from the beginning</source>
-        <translation>do início</translation>
+        <translation>từ đầu</translation>
     </message>
     <message>
         <source>after date</source>
-        <translation>após a data</translation>
+        <translation>sau ngày</translation>
     </message>
     <message>
         <source>before date</source>
-        <translation>antes da data</translation>
+        <translation>trước ngày</translation>
     </message>
     <message>
         <source>00.00.0000</source>
@@ -2603,85 +2607,85 @@ Este ID inclui o código NoSpam (em azul) e o checkum (em cinzento).</translatio
     </message>
     <message>
         <source>Case sensitive</source>
-        <translation>Sensível a maiúsculas</translation>
+        <translation>Phải nhập đúng kí tự viết hoa hay viết thường</translation>
     </message>
     <message>
         <source>Whole words only</source>
-        <translation>Apenas palavras completas</translation>
+        <translation>Toàn bộ chữ</translation>
     </message>
     <message>
         <source>Use regular expressions</source>
-        <translation>Usar expressões regulares</translation>
+        <translation>Sử dụng biểu thức chính quy (Regrex)</translation>
     </message>
     <message>
         <source>Select Date Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Chọn Hộp thoại ngày</translation>
     </message>
     <message>
         <source>Select a date</source>
-        <translation type="unfinished">Selecione uma data</translation>
+        <translation>Chọn một ngày</translation>
     </message>
 </context>
 <context>
     <name>SetPasswordDialog</name>
     <message>
         <source>Set your password</source>
-        <translation>Definir a sua palavra-passe</translation>
-    </message>
-    <message>
-        <source>The password doesn&apos;t match.</source>
-        <translation>As palavras-passe não são iguais.</translation>
+        <translation>Đặt mật khẩu</translation>
     </message>
     <message>
         <source>Confirm:</source>
-        <translation>Confirmar:</translation>
+        <translation>Xác nhận:</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Palavra-passe:</translation>
+        <translation>Mật khẩu:</translation>
     </message>
     <message>
         <source>Password strength: %p%</source>
-        <translation>Segurança da palavra-passe: %p%</translation>
+        <translation>Độ mạnh mật khẩu: %p%</translation>
+    </message>
+    <message>
+        <source>The password doesn&apos;t match.</source>
+        <translation>Mật khẩu không khớp.</translation>
     </message>
     <message>
         <source>Confirm password</source>
-        <translation>Confirmar palavra-passe</translation>
+        <translation>Xác nhận mật khẩu</translation>
     </message>
     <message>
         <source>Confirm password input</source>
-        <translation>Confirmar palavra-passe</translation>
+        <translation>Xác nhận nhập mật khẩu</translation>
     </message>
     <message>
         <source>Password input</source>
-        <translation>Introduzir palavra-passe</translation>
+        <translation>Nhập mật khẩu</translation>
     </message>
     <message>
         <source>Password input field, minimum 6 characters long</source>
-        <translation>Campo de entrada da palavra-passe, mínimo de 6 caracteres</translation>
+        <translation>Nhập mật khẩu, dài tối thiểu 6 ký tự</translation>
     </message>
     <message>
         <source>The password is too short.</source>
-        <translation>Palavra-passe muito curta.</translation>
+        <translation>Mật khẩu quá ngắn.</translation>
     </message>
 </context>
 <context>
     <name>Settings</name>
     <message>
         <source>Circle #%1</source>
-        <translation>Círculo #%1</translation>
+        <translation>Kết nối #%1</translation>
     </message>
     <message>
         <source>Failed to load personal settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Không tải được cài đặt cá nhân</translation>
     </message>
     <message>
         <source>Unable to upgrade settings from version %1 to version %2. Cannot start qTox.</source>
-        <translation type="unfinished"></translation>
+        <translation>Không thể nâng cấp cài đặt từ phiên bản %1 lên phiên bản %2. Không thể khởi động qTox.</translation>
     </message>
     <message>
         <source>Failed to load global settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Không tải được cài đặt chung</translation>
     </message>
 </context>
 <context>
@@ -2689,51 +2693,51 @@ Este ID inclui o código NoSpam (em azul) e o checkum (em cinzento).</translatio
     <message>
         <source>Add a friend</source>
         <comment>Title of the window to add a friend through Tox URI</comment>
-        <translation>Adicionar um contacto</translation>
+        <translation>Thêm bạn</translation>
     </message>
     <message>
         <source>Do you want to add %1 as a friend?</source>
-        <translation>Quer adicionar %1 aos seus contactos?</translation>
+        <translation>Bạn có muốn thêm %1 làm bạn không?</translation>
     </message>
     <message>
         <source>User ID:</source>
-        <translation>Referência do utilizador:</translation>
+        <translation>ID Người dùng:</translation>
     </message>
     <message>
         <source>Friend request message:</source>
-        <translation>Mensagem de pedido de amizade:</translation>
+        <translation>Tin nhắn yêu cầu kết bạn:</translation>
     </message>
     <message>
         <source>Send</source>
         <comment>Send a friend request</comment>
-        <translation>Enviar</translation>
+        <translation>Gửi</translation>
     </message>
     <message>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
-        <translation>Cancelar</translation>
+        <translation>Hủy</translation>
     </message>
 </context>
 <context>
     <name>UserInterfaceForm</name>
     <message>
         <source>None</source>
-        <translation>Nenhum</translation>
+        <translation>Không</translation>
     </message>
     <message>
         <source>User Interface</source>
-        <translation>Interface de utilizador</translation>
+        <translation>Giao diện người dùng</translation>
     </message>
 </context>
 <context>
     <name>UserInterfaceSettings</name>
     <message>
         <source>Chat</source>
-        <translation>Conversas</translation>
+        <translation>Trò chuyện</translation>
     </message>
     <message>
         <source>Base font:</source>
-        <translation>Fonte de base:</translation>
+        <translation>Phông chữ:</translation>
     </message>
     <message>
         <source>px</source>
@@ -2741,81 +2745,81 @@ Este ID inclui o código NoSpam (em azul) e o checkum (em cinzento).</translatio
     </message>
     <message>
         <source>Size: </source>
-        <translation>Tamanho: </translation>
+        <translation>Kích cỡ: </translation>
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
-        <translation>Pode ser necessário reiniciar o qTox para que a preferência do estilo de texto surta efeito.</translation>
+        <translation>Tùy chọn kiểu văn bản mới có thể không tải cho đến khi qTox khởi động lại.</translation>
     </message>
     <message>
         <source>Text Style format:</source>
-        <translation>Formato do estilo do texto:</translation>
+        <translation>Định dạng kiểu văn bản:</translation>
     </message>
     <message>
         <source>Select text styling preference.</source>
-        <translation>Selecione a preferência do estilo do texto.</translation>
+        <translation>Chọn tùy chọn kiểu văn bản.</translation>
     </message>
     <message>
         <source>Plaintext</source>
-        <translation>Texto sem formatação</translation>
+        <translation>Văn bản thuần túy</translation>
     </message>
     <message>
         <source>Show formatting characters</source>
-        <translation>Mostrar símbolos de formatação</translation>
+        <translation>Hiển thị các ký tự định dạng</translation>
     </message>
     <message>
         <source>Don&apos;t show formatting characters</source>
-        <translation>Não mostrar os símbolos de formatação</translation>
+        <translation>Không hiển thị các ký tự định dạng</translation>
     </message>
     <message>
         <source>New message</source>
-        <translation>Nova mensagem</translation>
+        <translation>Tin nhắn mới</translation>
     </message>
     <message>
         <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
         <comment>tooltip for Show window setting</comment>
-        <translation>Abre a janela do qTox quando receber uma nova mensagem caso não esteja nenhuma aberta.</translation>
+        <translation>Mở cửa sổ của qTox khi bạn nhận được tin nhắn mới và chưa có cửa sổ nào được mở.</translation>
     </message>
     <message>
         <source>Open window</source>
-        <translation>Abrir janela</translation>
+        <translation>Mở cửa sổ</translation>
     </message>
     <message>
         <source>Contact list</source>
-        <translation>Lista de contactos</translation>
+        <translation>Danh sách liên hệ</translation>
     </message>
     <message>
         <source>Place groupchats at top of friend list</source>
-        <translation>Colocar conversas de grupo no topo da lista de contactos</translation>
+        <translation>Đặt các trò chuyện nhóm ở đầu danh sách bạn bè</translation>
     </message>
     <message>
         <source>Your contact list will be shown in compact mode.</source>
         <comment>toolTip for compact layout setting</comment>
-        <translation>A sua lista de contactos será mostrada no modo compacto.</translation>
+        <translation>Danh sách liên hệ của bạn sẽ được hiển thị ở chế độ nhỏ gọn.</translation>
     </message>
     <message>
         <source>Compact contact list</source>
-        <translation>Lista de contactos compacta</translation>
+        <translation>Danh sách liên hệ nhỏ gọn</translation>
     </message>
     <message>
         <source>Multiple windows mode</source>
-        <translation>Modo de janelas múltiplas</translation>
+        <translation>Chế độ nhiều cửa sổ</translation>
     </message>
     <message>
         <source>Open each chat in an individual window</source>
-        <translation>Abre cada uma das conversas numa janela individual</translation>
+        <translation>Mở từng cuộc trò chuyện trong một cửa sổ riêng lẻ</translation>
     </message>
     <message>
         <source>Emoticons</source>
-        <translation>Emoticons</translation>
+        <translation>Biểu tượng cảm xúc</translation>
     </message>
     <message>
         <source>Use emoticons</source>
-        <translation>Usar emoticons</translation>
+        <translation>Sử dụng biểu tượng cảm xúc</translation>
     </message>
     <message>
         <source>Emoticon size:</source>
-        <translation>Tamanho dos emoticons:</translation>
+        <translation>Kích thước biểu tượng:</translation>
     </message>
     <message>
         <source> px</source>
@@ -2823,257 +2827,256 @@ Este ID inclui o código NoSpam (em azul) e o checkum (em cinzento).</translatio
     </message>
     <message>
         <source>Theme</source>
-        <translation>Tema</translation>
+        <translation>Chủ đề</translation>
     </message>
     <message>
         <source>Style:</source>
-        <translation>Estilo:</translation>
+        <translation>Kiểu:</translation>
     </message>
     <message>
         <source>Theme color:</source>
-        <translation>Cor do tema:</translation>
+        <translation>Màu chủ đề:</translation>
     </message>
     <message>
         <source>Timestamp format:</source>
-        <translation>Formato de hora:</translation>
+        <translation>Định dạng thời gian:</translation>
     </message>
     <message>
         <source>Date format:</source>
-        <translation>Formato de data:</translation>
+        <translation>Định dạng ngày tháng:</translation>
     </message>
     <message>
         <source>Use identicons instead of empty avatars</source>
-        <translation>Usar identicons em vez de avatares em branco</translation>
+        <translation>Sử dụng hình đại diện mẫu thay vì hình đại diện trống</translation>
     </message>
     <message>
         <source>Show a notification when you receive a new message and the window is not selected.</source>
         <comment>tooltip for Notify setting</comment>
-        <translation>Mostrar uma notificação quando recebe uma mensagem nova e a janela não está selecionada.</translation>
+        <translation>Hiển thị thông báo khi bạn nhận được tin nhắn mới và cửa sổ không được chọn.</translation>
     </message>
     <message>
         <source>Notify</source>
-        <translation>Notificar</translation>
+        <translation>Thông báo</translation>
     </message>
     <message>
         <source>Group chats only notify when mentioned</source>
-        <translation>Apenas notificar quando for mencionado em conversas de grupo</translation>
+        <translation>Trò chuyện nhóm chỉ thông báo khi được nhắc đến</translation>
     </message>
     <message>
         <source>Play sound</source>
-        <translation>Tocar som</translation>
+        <translation>Phát tiếng</translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation>Reproduzir som quando estiver no estado &quot;ocupado&quot;</translation>
+        <translation>Phát tiếng khi Bận</translation>
     </message>
     <message>
         <source>Notify via desktop notifications</source>
-        <translation>Notificar através de notificações da área de trabalho</translation>
+        <translation>Thông báo qua thông báo trên màn hình desktop</translation>
     </message>
     <message>
         <source>Hide message sender and contents</source>
-        <translation>Ocultar remetente e conteúdo da mensagem</translation>
+        <translation>Ẩn người gửi tin nhắn và nội dung</translation>
     </message>
     <message>
         <source>Use colored nicknames in group chats</source>
-        <translation>Usar apelidos coloridos em conversas de grupo</translation>
+        <translation>Sử dụng biệt hiệu màu trong các cuộc trò chuyện nhóm</translation>
     </message>
     <message>
         <source>Only notify about new messages in group chats when mentioned.</source>
         <comment>toolTip for Group chats only notify when mentioned</comment>
-        <translation>Apenas notificar novas mensagens em conversas de grupo quando for mencionado.</translation>
+        <translation>Chỉ thông báo về tin nhắn mới trong cuộc trò chuyện nhóm khi được nhắc đến.</translation>
     </message>
     <message>
         <source>If checked, group chats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
         <comment>toolTip for groupchat positioning</comment>
-        <translation>Se marcada, as conversas de grupo serão colocadas no topo da sua lista de amigos. Caso contrário, estarão colocadas abaixo dos amigos conectados.</translation>
+        <translation>Nếu được chọn, các cuộc trò chuyện nhóm sẽ được đặt ở đầu danh sách bạn bè, nếu không, chúng sẽ được đặt bên dưới bạn bè trực tuyến.</translation>
     </message>
     <message>
         <source>If enabled, every contact without an avatar will have a generated icon based on their Tox ID instead of the default picture. Requires restart to apply.</source>
         <comment>toolTip for show identicons</comment>
-        <translation>Se ativado, cada contacto sem um avatar terá um ícone gerado com base no seu Tox ID em vez da imagem padrão. É necessário reiniciar para aplicar as alterações.</translation>
+        <translation>Nếu được bật, mọi liên hệ không có hình đại diện sẽ có biểu tượng được tạo dựa trên Tox ID của họ thay vì hình ảnh mặc định. Yêu cầu khởi động lại để áp dụng.</translation>
     </message>
     <message>
         <source>Smiley pack:</source>
         <extracomment>Text on smiley pack label</extracomment>
-        <translation>Pacote de emoticons:</translation>
+        <translation>Gói biểu tượng:</translation>
     </message>
 </context>
 <context>
     <name>Widget</name>
     <message>
         <source>Online</source>
-        <translation>Conectados</translation>
-    </message>
-    <message>
-        <source>Add new circle...</source>
-        <translation>Adicionar círculo novo...</translation>
-    </message>
-    <message>
-        <source>By Name</source>
-        <translation>Por nome</translation>
-    </message>
-    <message>
-        <source>By Activity</source>
-        <translation>Por atividade</translation>
-    </message>
-    <message>
-        <source>All</source>
-        <translation>Todos</translation>
-    </message>
-    <message>
-        <source>Offline</source>
-        <translation>Desconectados</translation>
-    </message>
-    <message>
-        <source>Friends</source>
-        <translation>Amigos</translation>
-    </message>
-    <message>
-        <source>Groups</source>
-        <translation>Grupos</translation>
-    </message>
-    <message>
-        <source>Search Contacts</source>
-        <translation>Procurar contactos</translation>
-    </message>
-    <message>
-        <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
-        <translation>Conectado</translation>
+        <translation>Trực tuyến</translation>
     </message>
     <message>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
-        <translation>Ausente</translation>
+        <translation>Vắng</translation>
     </message>
     <message>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
-        <translation>Ocupado</translation>
+        <translation>Bận</translation>
     </message>
     <message>
         <source>File</source>
-        <translation>Ficheiro</translation>
+        <translation>Tệp</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Editar</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation>Filtrar...</translation>
-    </message>
-    <message>
-        <source>Contacts</source>
-        <translation>Contactos</translation>
-    </message>
-    <message>
-        <source>Status</source>
-        <translation>Estado</translation>
-    </message>
-    <message>
-        <source>Your name</source>
-        <translation>O seu nome</translation>
-    </message>
-    <message>
-        <source>Groupchat #%1</source>
-        <translation>Conversa em grupo #%1</translation>
-    </message>
-    <message>
-        <source>Create new group...</source>
-        <translation>Criar novo grupo...</translation>
+        <translation>Chỉnh sửa</translation>
     </message>
     <message>
         <source>Logout</source>
         <comment>Tray action menu to logout user</comment>
-        <translation>Encerrar sessão</translation>
+        <translation>Đăng xuất</translation>
+    </message>
+    <message>
+        <source>Filter...</source>
+        <translation>Bộ lọc...</translation>
+    </message>
+    <message>
+        <source>Contacts</source>
+        <translation>Liên hệ</translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation>Trạng thái</translation>
+    </message>
+    <message>
+        <source>Your name</source>
+        <translation>Tên của bạn</translation>
+    </message>
+    <message>
+        <source>Create new group...</source>
+        <translation>Tạo nhóm mới...</translation>
+    </message>
+    <message>
+        <source>Add new circle...</source>
+        <translation>Thêm kết nối...</translation>
+    </message>
+    <message>
+        <source>By Name</source>
+        <translation>Với Tên</translation>
+    </message>
+    <message>
+        <source>By Activity</source>
+        <translation>Với Hoạt động</translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation>Tất cả</translation>
+    </message>
+    <message>
+        <source>Online</source>
+        <translation>Trực tuyến</translation>
+    </message>
+    <message>
+        <source>Offline</source>
+        <translatorcomment>Ausgelassen</translatorcomment>
+        <translation>Ngoại tuyến</translation>
+    </message>
+    <message>
+        <source>Friends</source>
+        <translation>Bạn bè</translation>
+    </message>
+    <message>
+        <source>Groups</source>
+        <translation>Nhóm</translation>
+    </message>
+    <message>
+        <source>Search Contacts</source>
+        <translation>Tìm kiếm liên hệ</translation>
+    </message>
+    <message>
+        <source>Groupchat #%1</source>
+        <translation>Nhómchat #%1</translation>
     </message>
     <message>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
-        <translation>Mostrar</translation>
+        <translation>Hiện</translation>
     </message>
     <message>
         <source>Add friend</source>
         <comment>title of the window</comment>
-        <translation>Adicionar contacto</translation>
+        <translation>Thêm bạn</translation>
     </message>
     <message>
         <source>Group invites</source>
         <comment>title of the window</comment>
-        <translation>Convites a grupos</translation>
+        <translation>Lời mời vào nhóm</translation>
     </message>
     <message>
         <source>File transfers</source>
         <comment>title of the window</comment>
-        <translation>Transferências de ficheiros</translation>
+        <translation>Truyền tệp</translation>
     </message>
     <message>
         <source>Settings</source>
         <comment>title of the window</comment>
-        <translation>Configurações</translation>
+        <translation>Cài đặt</translation>
     </message>
     <message>
         <source>My profile</source>
         <comment>title of the window</comment>
-        <translation>Meu perfil</translation>
+        <translation>Thông tin của tôi</translation>
     </message>
     <message>
         <source>Toxcore failed to start, the application will terminate after you close this message.</source>
-        <translation>O Toxcore falhou ao iniciar, a aplicação será encerrado após fechar esta mensagem.</translation>
+        <translation>Toxcore không khởi động được, ứng dụng sẽ tắt sau khi bạn đóng thông báo này.</translation>
     </message>
     <message>
         <source>Toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
-        <translation>O Toxcore não conseguiu iniciar com as suas configurações de proxy. O qTox não pode ser executado; altere as suas configurações e reinicie.</translation>
+        <translation>Toxcore không khởi động được với cài đặt proxy của bạn. qTox không thể chạy; vui lòng sửa đổi cài đặt của bạn và khởi động lại.</translation>
     </message>
     <message>
         <source>Couldn&apos;t send friend request</source>
-        <translation>Não foi possível enviar pedido de amizade</translation>
+        <translation>Không thể gửi yêu cầu kết bạn</translation>
     </message>
     <message numerus="yes">
         <source>%n new friend request(s)</source>
         <translation>
-            <numerusform>%n novo pedido de amizade</numerusform>
-            <numerusform>%n novos pedidos de amizade</numerusform>
+            <numerusform>%n yêu cầu kết bạn mới</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n new group invite(s)</source>
         <translation>
-            <numerusform>%n novo convite de grupo</numerusform>
-            <numerusform>%n novos convites de grupo</numerusform>
+            <numerusform>%n lời mời nhóm mới</numerusform>
         </translation>
     </message>
     <message>
         <source>Exit</source>
         <comment>Tray action menu to exit Tox</comment>
-        <translation>Sair</translation>
+        <translation>Thoát</translation>
     </message>
     <message>
         <source>Change status</source>
-        <translation>Mudar estado</translation>
+        <translation>Thay đổi trạng thái</translation>
     </message>
     <message>
         <source>Edit profile</source>
-        <translation>Editar perfil</translation>
+        <translation>Chỉnh sửa thông tin</translation>
     </message>
     <message>
         <source>Logout</source>
-        <translation>Encerrar sessão</translation>
+        <translation>Đăng xuất</translation>
     </message>
     <message>
         <source>Add contact...</source>
-        <translation>Adicionar contacto...</translation>
+        <translation>Thêm liên lạc...</translation>
     </message>
     <message>
         <source>Next conversation</source>
-        <translation>Próxima conversa</translation>
+        <translation>Cuộc trò chuyện tiếp theo</translation>
     </message>
     <message>
         <source>Previous conversation</source>
-        <translation>Conversa anterior</translation>
+        <translation>Cuộc trò chuyện trước</translation>
     </message>
 </context>
 </TS>

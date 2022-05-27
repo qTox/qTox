@@ -2502,34 +2502,34 @@ Cet identifiant comprend le code NoSpam (en bleu) et la somme de contrôle (en g
     </message>
     <message>
         <source>Failed to load chat history</source>
-        <translation type="unfinished"></translation>
+        <translation>Échec du chargement de l&apos;historique des discussions</translation>
     </message>
     <message>
         <source>Database version (%1) is newer than we currently support (%2). Please upgrade qTox.</source>
-        <translation type="unfinished"></translation>
+        <translation>La version de la base de données (%1) est plus récente que celle que nous supportons actuellement (%2). Veuillez mettre à jour qTox.</translation>
     </message>
 </context>
 <context>
     <name>RemoveChatDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation type="unfinished">Supprimer ce contact</translation>
+        <translation>Supprimer ce contact</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation type="unfinished">Si activé, efface tout l&apos;historique de discussions avec ce contact</translation>
+        <translation>Si activé, efface tout l&apos;historique de discussions avec ce contact</translation>
     </message>
     <message>
         <source>Also remove chat history</source>
-        <translation type="unfinished">Supprimer également l&apos;historique de discussions</translation>
+        <translation>Supprimer également l&apos;historique de discussions</translation>
     </message>
     <message>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation type="unfinished">Êtes-vous sûr(e) de vouloir supprimer %1 de votre liste de contacts ?</translation>
+        <translation>Êtes-vous sûr(e) de vouloir supprimer %1 de votre liste de contacts ?</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Supprimer</translation>
+        <translation>Supprimer</translation>
     </message>
 </context>
 <context>

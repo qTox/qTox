@@ -2502,34 +2502,34 @@ Bu kimlik NoSpam kodunu (mavi) ve sağlama toplamını (gri) içerir.</translati
     </message>
     <message>
         <source>Failed to load chat history</source>
-        <translation type="unfinished"></translation>
+        <translation>Sohbet geçmişi yüklenemedi</translation>
     </message>
     <message>
         <source>Database version (%1) is newer than we currently support (%2). Please upgrade qTox.</source>
-        <translation type="unfinished"></translation>
+        <translation>Veri tabanı sürümü (%1) şu anda desteklediğimizden (%2) daha yeni. Lütfen qTox&apos;u yükseltin.</translation>
     </message>
 </context>
 <context>
     <name>RemoveChatDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation type="unfinished">Arkadaşı kaldır</translation>
+        <translation>Arkadaşı kaldır</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation type="unfinished">Ayarlıysa arkadaşla olan tüm sohbet geçmişini kaldırır</translation>
+        <translation>Ayarlıysa arkadaşla olan tüm sohbet geçmişini kaldır</translation>
     </message>
     <message>
         <source>Also remove chat history</source>
-        <translation type="unfinished">Sohbet geçmişini de sil</translation>
+        <translation>Sohbet geçmişini de sil</translation>
     </message>
     <message>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation type="unfinished">%1 kişisini kişiler listenizden kaldırmak istediğinize emin misiniz?</translation>
+        <translation>%1 kişisini kişiler listenizden kaldırmak istediğinize emin misiniz?</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Kaldır</translation>
+        <translation>Kaldır</translation>
     </message>
 </context>
 <context>

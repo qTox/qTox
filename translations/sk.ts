@@ -771,19 +771,19 @@ so you can save the file on Windows.</translation>
     <name>ChatWidget</name>
     <message>
         <source>pending</source>
-        <translation type="unfinished">prebieha</translation>
+        <translation>čakajúci</translation>
     </message>
     <message>
         <source>%1 is typing</source>
-        <translation type="unfinished">%1 píše</translation>
+        <translation>%1 píše</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Kopírovať</translation>
+        <translation>Kopírovať</translation>
     </message>
     <message>
         <source>Select all</source>
-        <translation type="unfinished">Vybrať všetko</translation>
+        <translation>Vybrať všetko</translation>
     </message>
 </context>
 <context>
@@ -1210,7 +1210,7 @@ namiesto toho, že by sa zavrel úplne.</translation>
     </message>
     <message>
         <source>Add a chat message when a user joins or leaves a group</source>
-        <translation type="unfinished"></translation>
+        <translation>Pridať správu, keď sa užívateľ pridá alebo opustí skupinu</translation>
     </message>
 </context>
 <context>
@@ -1520,7 +1520,7 @@ Zdieľajte ho s vašimi priateľmi pre začatie chatovania.</translation>
     </message>
     <message>
         <source>Load history from:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nahrať históriu z:</translation>
     </message>
 </context>
 <context>
@@ -1777,12 +1777,12 @@ Prosím, uistite sa, že ste zadali to isté heslo dvakrát.</translation>
     <message>
         <source>Executable file</source>
         <comment>popup title</comment>
-        <translation type="unfinished">Spustiteľný súbor</translation>
+        <translation>Spustiteľný súbor</translation>
     </message>
     <message>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
-        <translation type="unfinished">Požiadali ste qTox o spustenie spustiteľného súboru. Spustiteľné súbory môžu poškodiť váš počítač. Naozaj chcete tento súbor otvoriť?</translation>
+        <translation>Požiadali ste qTox o otvorenie spustiteľného súboru. Spustiteľné súbory môžu poškodiť váš počítač. Naozaj chcete tento súbor otvoriť?</translation>
     </message>
 </context>
 <context>
@@ -2401,116 +2401,116 @@ Toto ID obsahuje kód NoSpam (modrou) a kontrolný súčet (šedou).</translatio
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation type="unfinished">Nepodarilo sa odoslať súbor &quot;%1&quot;</translation>
+        <translation>Nepodarilo sa odoslať súbor &quot;%1&quot;</translation>
     </message>
     <message>
         <source>%1 has joined the group</source>
-        <translation type="unfinished">%1 sa pridal/a do skupiny</translation>
+        <translation>%1 sa pridal/a do skupiny</translation>
     </message>
     <message>
         <source>%1 has left the group</source>
-        <translation type="unfinished">%1 opustil/a skupinu</translation>
+        <translation>%1 opustil/a skupinu</translation>
     </message>
     <message>
         <source>%1 is now known as %2</source>
-        <translation type="unfinished">%1 je teraz známy/a ako %2</translation>
+        <translation>%1 je teraz známy/a ako %2</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
-        <translation type="unfinished">%1 nastavil názov konverzácie na %2</translation>
+        <translation>%1 nastavil názov konverzácie na %2</translation>
     </message>
     <message>
         <source>Cleared</source>
-        <translation type="unfinished">Vyčistené</translation>
+        <translation>Vyčistené</translation>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
-        <translation type="unfinished">Hovor s %1 nečakane skončil. %2</translation>
+        <translation>Hovor s %1 nečakane skončil. %2</translation>
     </message>
     <message>
         <source>Call with %1 ended. %2</source>
-        <translation type="unfinished">Hovor s %1 skončil. %2</translation>
+        <translation>Hovor s %1 skončil. %2</translation>
     </message>
     <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation type="unfinished">%1 je %2</translation>
+        <translation>%1 je teraz %2</translation>
     </message>
     <message>
         <source>Calling %1</source>
-        <translation type="unfinished">Volanie %1</translation>
+        <translation>Volanie %1</translation>
     </message>
     <message>
         <source>%1 calling</source>
-        <translation type="unfinished">%1 volá</translation>
+        <translation>%1 volá</translation>
     </message>
     <message>
         <source>Message failed to send</source>
-        <translation type="unfinished">Správu sa nepodarilo odoslať</translation>
+        <translation>Správu sa nepodarilo odoslať</translation>
     </message>
     <message>
         <source>Initializing</source>
-        <translation type="unfinished"></translation>
+        <translation>Inicializácia</translation>
     </message>
     <message>
         <source>Transmitting</source>
-        <translation type="unfinished"></translation>
+        <translation>Vysielanie</translation>
     </message>
     <message>
         <source>Finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukončené</translation>
     </message>
     <message>
         <source>Broken</source>
-        <translation type="unfinished"></translation>
+        <translation>Prerušené</translation>
     </message>
     <message>
         <source>Canceled</source>
-        <translation type="unfinished"></translation>
+        <translation>Zrušené</translation>
     </message>
     <message>
         <source>Paused</source>
-        <translation type="unfinished">Pozastavený</translation>
+        <translation>Pozastavené</translation>
     </message>
     <message>
         <source>Remote paused</source>
-        <translation type="unfinished">Pozastavené vzdialene</translation>
+        <translation>Vzdialene pozastavené</translation>
     </message>
     <message>
         <source>File Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Názov súboru</translation>
     </message>
     <message>
         <source>Contact</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontakt</translation>
     </message>
     <message>
         <source>Progress</source>
-        <translation type="unfinished"></translation>
+        <translation>Vývoj</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Veľkosť</translation>
     </message>
     <message>
         <source>Speed</source>
-        <translation type="unfinished"></translation>
+        <translation>Rýchlosť</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished">Stav</translation>
+        <translation>Stav</translation>
     </message>
     <message>
         <source>Control</source>
-        <translation type="unfinished"></translation>
+        <translation>Ovládanie</translation>
     </message>
     <message>
         <source>You have joined the group</source>
-        <translation type="unfinished"></translation>
+        <translation>Pridali ste sa do skupiny</translation>
     </message>
     <message>
         <source>You have left the group</source>
-        <translation type="unfinished"></translation>
+        <translation>Opustili ste skupinu</translation>
     </message>
     <message>
         <source>Failed to load chat history</source>
@@ -2525,23 +2525,23 @@ Toto ID obsahuje kód NoSpam (modrou) a kontrolný súčet (šedou).</translatio
     <name>RemoveChatDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation type="unfinished">Odstrániť priateľa</translation>
+        <translation>Odstrániť priateľa</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation type="unfinished">Ak je zaškrtnuté, vymazať celú chatovú históriu s daným priateľom</translation>
+        <translation>Ak je nastavené, vymazať celú chatovú históriu s daným priateľom</translation>
     </message>
     <message>
         <source>Also remove chat history</source>
-        <translation type="unfinished">Odstrániť aj históriu chatu</translation>
+        <translation>Odstrániť aj históriu chatu</translation>
     </message>
     <message>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation type="unfinished">Naozaj chcete odstrániť %1 zo zoznamu kontaktov?</translation>
+        <translation>Naozaj chcete odstrániť %1 zo zoznamu kontaktov?</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Odstrániť</translation>
+        <translation>Odstrániť</translation>
     </message>
 </context>
 <context>
@@ -2627,11 +2627,11 @@ Toto ID obsahuje kód NoSpam (modrou) a kontrolný súčet (šedou).</translatio
     </message>
     <message>
         <source>Select Date Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Zvoľte dátum dialógu</translation>
     </message>
     <message>
         <source>Select a date</source>
-        <translation type="unfinished">Zvoľte dátum</translation>
+        <translation>Zvoľte dátum</translation>
     </message>
 </context>
 <context>
@@ -2685,15 +2685,15 @@ Toto ID obsahuje kód NoSpam (modrou) a kontrolný súčet (šedou).</translatio
     </message>
     <message>
         <source>Failed to load personal settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodarilo sa nahrať osobné nastavenia</translation>
     </message>
     <message>
         <source>Unable to upgrade settings from version %1 to version %2. Cannot start qTox.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie je možné povýšiť nastavenia z verzie %1 na verziu %2. Nedá sa spustiť qTox.</translation>
     </message>
     <message>
         <source>Failed to load global settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodarilo sa nahrať globálne nastavenia</translation>
     </message>
 </context>
 <context>

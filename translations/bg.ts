@@ -1767,12 +1767,12 @@ Please make sure to enter the same password twice.</source>
     <message>
         <source>Executable file</source>
         <comment>popup title</comment>
-        <translation type="unfinished">Изпълним файл</translation>
+        <translation>Изпълним файл</translation>
     </message>
     <message>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
-        <translation type="unfinished">Поискали сте qTox да отвори изпълним файл. Изпълнимите файлове могат да навредят на компютъра. Сигурни ли сте, че искате да файлът да бъде отворен?</translation>
+        <translation>Поискали сте qTox да отвори изпълним файл. Изпълнимите файлове могат да навредят на компютъра. Сигурни ли сте, че желаете файлът да бъде отворен?</translation>
     </message>
 </context>
 <context>
@@ -2503,11 +2503,11 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Failed to load chat history</source>
-        <translation type="unfinished"></translation>
+        <translation>Историята на разговора не е заредена</translation>
     </message>
     <message>
         <source>Database version (%1) is newer than we currently support (%2). Please upgrade qTox.</source>
-        <translation type="unfinished"></translation>
+        <translation>Изданието не банката от данни (%1) е по-нова от поддържаната в момента (%2). Обновете qTox.</translation>
     </message>
 </context>
 <context>
@@ -2530,7 +2530,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation type="unfinished">Премахнете цялата история на чатовете с приятел, ако е зададено</translation>
+        <translation>Ако е отметнато премахва и разговорите с приятеля</translation>
     </message>
 </context>
 <context>
@@ -2682,7 +2682,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Failed to load global settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Неуспешно зареждане на общите настройки</translation>
     </message>
 </context>
 <context>

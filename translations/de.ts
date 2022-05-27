@@ -770,19 +770,19 @@ um sie in Windows speichern zu können.</translation>
     <name>ChatWidget</name>
     <message>
         <source>pending</source>
-        <translation type="unfinished">Ausstehend</translation>
+        <translation>Ausstehend</translation>
     </message>
     <message>
         <source>%1 is typing</source>
-        <translation type="unfinished">%1 tippt gerade</translation>
+        <translation>%1 tippt gerade</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Kopieren</translation>
+        <translation>Kopieren</translation>
     </message>
     <message>
         <source>Select all</source>
-        <translation type="unfinished">Alles auswählen</translation>
+        <translation>Alles auswählen</translation>
     </message>
 </context>
 <context>
@@ -1209,7 +1209,7 @@ anstatt ganz zu schließen.</translation>
     </message>
     <message>
         <source>Add a chat message when a user joins or leaves a group</source>
-        <translation type="unfinished"></translation>
+        <translation>Hinzufügen einer Chat-Nachricht, wenn ein Benutzer einer Gruppe beitritt oder sie verlässt</translation>
     </message>
 </context>
 <context>
@@ -1774,12 +1774,12 @@ Bitte gib in beide Felder das gleiche Passwort ein.</translation>
     <message>
         <source>Executable file</source>
         <comment>popup title</comment>
-        <translation type="unfinished">Ausführbare Datei</translation>
+        <translation>Ausführbare Datei</translation>
     </message>
     <message>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
-        <translation type="unfinished">Du hast qTox aufgefordert, eine Datei auszuführen. Bitte beachte, dass ausführbare Dateien ein Sicherheitsrisiko darstellen können. Bist du dir sicher, dass du die Datei ausführen möchtest?</translation>
+        <translation>Du hast qTox aufgefordert, eine Datei auszuführen. Bitte beachte, dass ausführbare Dateien ein Sicherheitsrisiko darstellen können. Bist du dir sicher, dass du die Datei ausführen möchtest?</translation>
     </message>
 </context>
 <context>
@@ -2398,52 +2398,52 @@ Diese ID enthält den NoSpam-Code (in blau) und die Prüfsumme (in grau).</trans
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation type="unfinished">Datei „%1“ konnte nicht gesendet werden</translation>
+        <translation>Datei „%1“ konnte nicht gesendet werden</translation>
     </message>
     <message>
         <source>%1 has joined the group</source>
-        <translation type="unfinished">%1 ist der Gruppe beigetreten</translation>
+        <translation>%1 ist der Gruppe beigetreten</translation>
     </message>
     <message>
         <source>%1 has left the group</source>
-        <translation type="unfinished">%1 hat die Gruppe verlassen</translation>
+        <translation>%1 hat die Gruppe verlassen</translation>
     </message>
     <message>
         <source>%1 is now known as %2</source>
-        <translation type="unfinished">%1 heißt ab sofort %2</translation>
+        <translation>%1 heißt ab sofort %2</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
-        <translation type="unfinished">%1 hat den Titel zu %2 geändert.</translation>
+        <translation>%1 hat den Titel zu %2 geändert</translation>
     </message>
     <message>
         <source>Cleared</source>
-        <translation type="unfinished">Gelöscht</translation>
+        <translation>Gelöscht</translation>
     </message>
     <message>
         <source>Call with %1 ended unexpectedly. %2</source>
-        <translation type="unfinished">Anruf mit %1 brach unerwartet ab. %2</translation>
+        <translation>Anruf mit %1 brach unerwartet ab. %2</translation>
     </message>
     <message>
         <source>Call with %1 ended. %2</source>
-        <translation type="unfinished">Anruf mit %1 beendet. %2</translation>
+        <translation>Anruf mit %1 beendet. %2</translation>
     </message>
     <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation type="unfinished">%1 ist jetzt %2</translation>
+        <translation>%1 ist jetzt %2</translation>
     </message>
     <message>
         <source>Calling %1</source>
-        <translation type="unfinished">%1 anrufen</translation>
+        <translation>%1 anrufen</translation>
     </message>
     <message>
         <source>%1 calling</source>
-        <translation type="unfinished">%1 ruft an</translation>
+        <translation>%1 ruft an</translation>
     </message>
     <message>
         <source>Message failed to send</source>
-        <translation type="unfinished">Nachricht konnte nicht gesendet werden</translation>
+        <translation>Nachricht konnte nicht gesendet werden</translation>
     </message>
     <message>
         <source>Initializing</source>
@@ -2455,7 +2455,7 @@ Diese ID enthält den NoSpam-Code (in blau) und die Prüfsumme (in grau).</trans
     </message>
     <message>
         <source>Finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Fertig</translation>
     </message>
     <message>
         <source>Broken</source>
@@ -2467,39 +2467,39 @@ Diese ID enthält den NoSpam-Code (in blau) und die Prüfsumme (in grau).</trans
     </message>
     <message>
         <source>Paused</source>
-        <translation type="unfinished">Angehalten</translation>
+        <translation>Angehalten</translation>
     </message>
     <message>
         <source>Remote paused</source>
-        <translation type="unfinished">Fernverbindung pausiert</translation>
+        <translation>Fernverbindung pausiert</translation>
     </message>
     <message>
         <source>File Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Dateiname</translation>
     </message>
     <message>
         <source>Contact</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontakt</translation>
     </message>
     <message>
         <source>Progress</source>
-        <translation type="unfinished"></translation>
+        <translation>Fortschritt</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Größe</translation>
     </message>
     <message>
         <source>Speed</source>
-        <translation type="unfinished"></translation>
+        <translation>Geschwindigkeit</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished">Status</translation>
+        <translation>Status</translation>
     </message>
     <message>
         <source>Control</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolle</translation>
     </message>
     <message>
         <source>You have joined the group</source>
@@ -2522,23 +2522,23 @@ Diese ID enthält den NoSpam-Code (in blau) und die Prüfsumme (in grau).</trans
     <name>RemoveChatDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation type="unfinished">Freund entfernen</translation>
+        <translation>Freund entfernen</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation type="unfinished">Löscht den gesamten Chatverlauf mit diesem Freund, wenn aktiviert</translation>
+        <translation>Löscht den gesamten Chatverlauf mit diesem Freund, wenn aktiviert</translation>
     </message>
     <message>
         <source>Also remove chat history</source>
-        <translation type="unfinished">Gesprächsverlauf ebenfalls löschen</translation>
+        <translation>Gesprächsverlauf ebenfalls löschen</translation>
     </message>
     <message>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation type="unfinished">Bist du dir sicher, dass du %1 aus deiner Kontaktliste entfernen möchtest?</translation>
+        <translation>Bist du dir sicher, dass du %1 aus deiner Kontaktliste entfernen möchtest?</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Löschen</translation>
+        <translation>Löschen</translation>
     </message>
 </context>
 <context>
@@ -2624,11 +2624,11 @@ Diese ID enthält den NoSpam-Code (in blau) und die Prüfsumme (in grau).</trans
     </message>
     <message>
         <source>Select Date Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Dialogfeld &quot;Datum auswählen&quot;</translation>
     </message>
     <message>
         <source>Select a date</source>
-        <translation type="unfinished">Wähle ein Datum</translation>
+        <translation>Wähle ein Datum</translation>
     </message>
 </context>
 <context>

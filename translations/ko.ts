@@ -29,15 +29,15 @@
     </message>
     <message>
         <source>Gain</source>
-        <translation type="unfinished"></translation>
+        <translation>게인</translation>
     </message>
     <message>
         <source>Playback device</source>
-        <translation>재생 기기</translation>
+        <translation>재생 장치</translation>
     </message>
     <message>
         <source>Capture device</source>
-        <translation>캡쳐장치</translation>
+        <translation>캡쳐 장치</translation>
     </message>
     <message>
         <source>Volume</source>
@@ -49,7 +49,7 @@
     </message>
     <message>
         <source>Video device</source>
-        <translation>비디오장치</translation>
+        <translation>비디오 장치</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -57,9 +57,11 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation>카메라 해상도를 설정하십시오.
-해상도가 높으면 고품질 비디오를 전송합니다.
-고품질 비디오는 인터넷 연결상태가 좋은곳에서 사용하실것을 추천합니다.</translation>
+        <translation>카메라의 해상도를 설정합니다.
+값이 높을수록 친구가 얻을 수 있는 비디오 품질이 향상됩니다.
+더 나은 비디오 품질을 위해서는 더 나은 인터넷 연결이 필요합니다.
+때때로 연결 상태가 좋지 않아 더 높은 화질을 처리할 수 없어 화상 통화에
+문제가 발생할 수 있습니다.</translation>
     </message>
     <message>
         <source>Resolution</source>
@@ -67,7 +69,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Rescan devices</source>
-        <translation>장치 검색</translation>
+        <translation>장치 다시 스캔</translation>
     </message>
     <message>
         <source>Test Sound</source>
@@ -119,18 +121,18 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation type="unfinished"></translation>
+        <translation>슬라이더를 사용하여 사용자의 입력 장치 게인을 %1dB에서 %2dB 범위로 지정합니다.</translation>
     </message>
     <message>
         <source>Use slider to set the activation volume for your input device.</source>
-        <translation type="unfinished"></translation>
+        <translation>슬라이더를 사용하여 사용자의 입력 장치 활성화 볼륨을 지정합니다.</translation>
     </message>
 </context>
 <context>
     <name>AboutForm</name>
     <message>
         <source>About</source>
-        <translation>About</translation>
+        <translation>정보</translation>
     </message>
     <message>
         <source>Original author: %1</source>
@@ -146,7 +148,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>toxcore version: %1</source>
-        <translation>toxcore version: %1</translation>
+        <translation>toxcore 버전: %1</translation>
     </message>
     <message>
         <source>Qt version: %1</source>
@@ -487,7 +489,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Logs (*.log)</source>
-        <translation>Logs (*.log)</translation>
+        <translation>로그 (*.log)</translation>
     </message>
     <message>
         <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.%3</source>
@@ -627,7 +629,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">오류</translation>
     </message>
     <message>
         <source>Failed to load profile automatically.</source>
@@ -660,7 +662,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>qTox wasn&apos;t able to save the screenshot</source>
         <translatorcomment>laut Duden ist Screenshot schon deutsch</translatorcomment>
-        <translation>스크린샷을 저장할 수 없었습니다.</translation>
+        <translation>qTox가 스크린샷을 저장할 수 없습니다</translation>
     </message>
     <message>
         <source>Call duration: </source>
@@ -1150,7 +1152,7 @@ so you can save the file on Windows.</source>
     </message>
     <message>
         <source>Auto away after (0 to disable):</source>
-        <translation></translation>
+        <translation>이후 자동 자리비움 (비활성화: 0):</translation>
     </message>
     <message>
         <source>Show contacts&apos; status changes</source>
@@ -1979,7 +1981,7 @@ Save format changes are possible, which may result in data loss.</source>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">오류</translation>
     </message>
     <message>
         <source>Rename &quot;%1&quot;</source>
@@ -2279,7 +2281,7 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     </message>
     <message>
         <source>Incoming call...</source>
-        <translation type="unfinished"></translation>
+        <translation>전화 받는 중...</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
@@ -2289,16 +2291,16 @@ This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
     <message>
         <source>None</source>
         <comment>No camera device set</comment>
-        <translation type="unfinished">없음</translation>
+        <translation>없음</translation>
     </message>
     <message>
         <source>Desktop</source>
         <comment>Desktop as a camera input for screen sharing</comment>
-        <translation type="unfinished"></translation>
+        <translation>데스크톱</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>오류</translation>
     </message>
     <message>
         <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>

@@ -2503,34 +2503,34 @@ Este ID incluye el código NoSpam (en azul), y la suma de comprobación (en gris
     </message>
     <message>
         <source>Failed to load chat history</source>
-        <translation type="unfinished"></translation>
+        <translation>Error al cargar el historial de chat</translation>
     </message>
     <message>
         <source>Database version (%1) is newer than we currently support (%2). Please upgrade qTox.</source>
-        <translation type="unfinished"></translation>
+        <translation>La versión de la base de datos (%1) es más reciente que la que actualmente soportamos (%2). Por favor, actualice qTox.</translation>
     </message>
 </context>
 <context>
     <name>RemoveChatDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation type="unfinished">Suprimir amigo</translation>
+        <translation>Suprimir amigo</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation type="unfinished">Eliminar todo el historial del chat con el amigo si está establecido</translation>
+        <translation>Eliminar todo el historial del chat con el amigo si está establecido</translation>
     </message>
     <message>
         <source>Also remove chat history</source>
-        <translation type="unfinished">Eliminar también el historial del chat</translation>
+        <translation>Eliminar también el historial del chat</translation>
     </message>
     <message>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation type="unfinished">¿Estás seguro de que deseas eliminar a %1 de tu lista de contactos?</translation>
+        <translation>¿Estás seguro de que deseas eliminar a %1 de tu lista de contactos?</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Eliminar</translation>
+        <translation>Remover</translation>
     </message>
 </context>
 <context>
