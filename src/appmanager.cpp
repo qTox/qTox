@@ -172,8 +172,8 @@ AppManager::AppManager(int argc, char** argv)
 void AppManager::preConstructionInitialization()
 {
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
-    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QGuiApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 #endif
     qInstallMessageHandler(logMessageHandler);
 }
