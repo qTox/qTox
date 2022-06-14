@@ -162,7 +162,7 @@ bool toxURIEventHandler(const QByteArray& eventData, void* userData)
 }
 } // namespace
 
-AppManager::AppManager(int argc, char** argv)
+AppManager::AppManager(int& argc, char** argv)
     : qapp((preConstructionInitialization(), new QApplication(argc, argv)))
     , messageBoxManager(new MessageBoxManager(nullptr))
     , settings(new Settings(*messageBoxManager))

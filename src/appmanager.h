@@ -36,7 +36,7 @@ class AppManager : public QObject
     Q_OBJECT
 
 public:
-    AppManager(int argc, char** argv);
+    AppManager(int& argc, char** argv);
     ~AppManager();
     int run();
 
