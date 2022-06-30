@@ -151,8 +151,6 @@ if(WIN32)
   search_dependency(TOXENCRYPTSAVE      PACKAGE toxencryptsave   OPTIONAL STATIC_PACKAGE)
 else()
   search_dependency(TOXCORE             PACKAGE toxcore          OPTIONAL)
-  search_dependency(TOXAV               PACKAGE toxav            OPTIONAL)
-  search_dependency(TOXENCRYPTSAVE      PACKAGE toxencryptsave   OPTIONAL)
 endif()
 
 # If not found, use automake toxcore libraries
