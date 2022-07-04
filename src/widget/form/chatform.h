@@ -102,6 +102,7 @@ private slots:
     void onAnswerCallTriggered(bool video);
     void onRejectCallTriggered();
     void onMicMuteToggle();
+    void onMicMuteShortcutToggle();
     void onVolMuteToggle();
 
     void onFriendStatusChanged(const ToxPk& friendPk, Status::Status status);

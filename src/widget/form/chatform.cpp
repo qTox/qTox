@@ -58,6 +58,7 @@
 #include <QScrollBar>
 #include <QSplitter>
 #include <QStringBuilder>
+#include <QShortcut>
 
 #include <cassert>
 
@@ -221,6 +222,9 @@ ChatForm::ChatForm(Profile& profile_, Friend* chatFriend, IChatLog& chatLog_,
     setAcceptDrops(true);
     retranslateUi();
     Translator::registerHandler(std::bind(&ChatForm::retranslateUi, this), this);
+
+    // shortcut for mute (SHIFT+ `), (SHIFT + grave accent, gives tilde)
+    new QShortcut(Qt::SHIFT | 0x60, this, SLOT(onMicMuteShortcutToggle()));
 }
 
 ChatForm::~ChatForm()
@@ -456,6 +460,15 @@ void ChatForm::onMicMuteToggle()
     CoreAV* av = core.getAv();
     av->toggleMuteCallInput(f);
     updateMuteMicButton();
+}
+
+void ChatForm::onMicMuteShortcutToggle()
+{
+    CoreAV* av = core.getAv();
+    if(av->isCallActive(f))
+    {
+        onMicMuteToggle();
+    }
 }
 
 void ChatForm::onVolMuteToggle()
