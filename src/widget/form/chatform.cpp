@@ -465,7 +465,7 @@ void ChatForm::onMicMuteToggle()
 void ChatForm::onMicMuteShortcutToggle()
 {
     CoreAV* av = core.getAv();
-    if(av->isCallActive(f))
+    if (av->isCallActive(f))
     {
         onMicMuteToggle();
     }
