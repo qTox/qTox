@@ -147,8 +147,6 @@ endif()
 # Try to find cmake toxcore libraries
 if(WIN32)
   search_dependency(TOXCORE             PACKAGE toxcore          OPTIONAL STATIC_PACKAGE)
-  search_dependency(TOXAV               PACKAGE toxav            OPTIONAL STATIC_PACKAGE)
-  search_dependency(TOXENCRYPTSAVE      PACKAGE toxencryptsave   OPTIONAL STATIC_PACKAGE)
 else()
   search_dependency(TOXCORE             PACKAGE toxcore          OPTIONAL)
 endif()
