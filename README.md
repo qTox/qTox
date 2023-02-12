@@ -2,7 +2,7 @@
 
 Due to a lack of resources, qTox is no longer maintained.
 
-If someone with proveable C++ experience and sufficient resources to maintain
+If someone with provable C++ experience and sufficient resources to maintain
 qTox wants to take over I'm happy to discuss that. Meanwhile **be careful about
 "official forks" of qTox** unless you read it here, they are probably not
 official.
