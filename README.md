@@ -1,3 +1,28 @@
+# This repository and qTox are unmaintained!
+
+Due to a lack of resources, qTox is no longer maintained.
+
+If someone with proveable C++ experience and sufficient resources to maintain
+qTox wants to take over I'm happy to discuss that. Meanwhile **be careful about
+"official forks" of qTox** unless you read it here, they are probably not
+official.
+
+I want to take the time and thank all
+[contributors](https://github.com/qTox/qTox/graphs/contributors) and
+especially the long term contributors and founders:
+
+- [anthonybilinski](https://github.com/anthonybilinski)
+- [Diadlo](https://github.com/Diadlo)
+- [iphydf](https://github.com/iphydf)
+- [nurupo](https://github.com/nurupo)
+- [tux3](https://github.com/tux3)
+- [zetok](https://github.com/zetok)
+
+It was fun working with all of you and I learned a lot!
+
+`So long, and thanks for all the fish!` - [sudden6](https://github.com/sudden6)
+
+
 <a name="qtox" />
 
 <p align="center">
