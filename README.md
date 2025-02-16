@@ -1,11 +1,9 @@
 # This repository and qTox are unmaintained!
 
-Due to a lack of resources, qTox is no longer maintained.
+Due to a lack of resources, this repository of qTox is no longer maintained.
 
-If someone with provable C++ experience and sufficient resources to maintain
-qTox wants to take over I'm happy to discuss that. Meanwhile **be careful about
-"official forks" of qTox** unless you read it here, they are probably not
-official.
+There is an active fork of qTox at [TokTok/qTox](https://github.com/TokTok/qTox)
+which I recommend for future releases.
 
 I want to take the time and thank all
 [contributors](https://github.com/qTox/qTox/graphs/contributors) and
