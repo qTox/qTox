@@ -27,9 +27,12 @@ function(check_working_cxx_atomics varname)
   set(CMAKE_REQUIRED_FLAGS "${CMAKE_REQUIRED_FLAGS} -std=c++11")
   CHECK_CXX_SOURCE_COMPILES("
 #include <atomic>
-std::atomic<int> x;
+#include <cstdint>
+std::atomic<uint8_t> x1;
+std::atomic<uint16_t> x2;
+std::atomic<uint32_t> x3;
 int main() {
-  return x;
+  return ++x1 + ++x2 + ++x3;
 }
 " ${varname})
   set(CMAKE_REQUIRED_FLAGS ${OLD_CMAKE_REQUIRED_FLAGS})
