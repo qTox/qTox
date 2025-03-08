@@ -177,7 +177,7 @@ ContentDialog* ContentDialogManager::getGroupDialog(const GroupId& groupId) cons
 void ContentDialogManager::addContentDialog(ContentDialog& dialog)
 {
     currentDialog = &dialog;
-    connect(&dialog, &ContentDialog::willClose, this, &ContentDialogManager::onDialogClose);
+    connect(&dialog, &ContentDialog::willClose, this, &ContentDialogManager::onDialogClose, Qt::QueuedConnection);
     connect(&dialog, &ContentDialog::activated, this, &ContentDialogManager::onDialogActivate);
 }
 
